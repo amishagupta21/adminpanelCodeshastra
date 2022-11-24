@@ -1,0 +1,251 @@
+.add-curriculum-button {
+    margin-top: -45px;
+    display: flex;
+    justify-content: end;
+}
+
+
+
+.edit-icon {
+  background-color: grey;
+  height: 20px;
+  width: 40px;
+  justify-content: center;
+  display: flex;
+}
+.delete-icon {
+  background-color: rgb(218, 108, 45);
+  height: 20px;
+  width: 40px;
+  justify-content: center;
+  display: flex;
+}
+.manage-curriculum-btn {
+    background-color: rgb(240, 185, 66);
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+  }
+
+.curriculum-button {
+  background-color: rgb(18, 141, 212);
+}
+
+.icon-div {
+  display: flex;
+  justify-items: center;
+  margin-top: -4px;
+  gap: 2px;
+  margin-left: 8px;
+}
+
+.common-color {
+  background-color: rgb(165, 165, 165);
+}
+.icon-with-button {
+  width: 45px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clone-text {
+  color: black;
+}
+.section-modal {
+  background-color: rgb(170, 170, 216);
+}
+.section-modal-text {
+  color: rgb(17, 17, 17);
+}
+.clone-p {
+  color: rgb(18, 141, 212);
+}
+
+
+.section-table{
+  height: 558px;
+  background: #F8F9FA;
+border: 2px solid #EFF2F7;
+width: 100%;
+padding: 10px;    
+overflow: auto;
+
+}
+.section-table-content{
+
+}
+.section-box{
+  padding: 3px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 2px solid #EFF2F7;
+  &.selected{
+    background: #D4DAF9;
+    .section-count{
+      color: #D4DAF9;
+      background: #556EE6;
+    }
+  }
+}
+.section-count{
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  width: 35px;
+height: 35px;
+font-weight: 600;
+font-size: 12px;
+line-height: 18px;
+color: #556EE6;
+background: #D4DAF9;
+border-radius: 6px;
+
+}
+.section-data{
+  font-weight: 300;
+font-size: 12px;
+line-height: 18px;
+/* identical to box height */
+color: #ADB5BD;
+
+}
+.section-name{
+  font-weight: 400;
+font-size: 14px;
+line-height: 21px;
+/* identical to box height */
+color: #495057;
+}
+.section-icon .dropdown > button{
+  padding: 0;
+  border: none;
+  background: transparent !important;
+  outline: none !important;
+}
+.section-icon .dropdown > button + button{
+  margin-left: 15px;
+}
+.section-icon button i{
+  color: #556EE6;
+}
+.section-desp-table{
+  height: 150px;
+  background: #F8F9FA;
+border: 2px solid #EFF2F7;
+width: 100%;
+padding: 10px;    
+overflow: auto;
+}
+
+
+.material-button{
+  height: 47px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.material-table{
+  height: 150px;
+  background: #F8F9FA;
+border: 2px solid #EFF2F7;
+width: 100%;
+padding: 10px;    
+overflow: auto;
+
+}
+// .add-remove-btn{
+//     background: #DAE0F6;
+//     border: 1px solid #556EE6;
+//     border-radius: 4px;
+// }
+// .para{
+//     font-family: 'Poppins';
+// font-style: normal;
+// font-weight: 400;
+// font-size: 12px;
+// line-height: 18px;
+// text-align: center;
+
+// color: #808080;
+// }
+// .button-title{
+//     background: rgba(85, 110, 230, 0.25098);
+//     color:#556EE6
+// }
+// .modal-heading{
+//     color:#556EE6
+
+// }
+// .input-cur{
+//     background: #FFFFFF;
+//     border: 1px solid #CED4DA;
+//     border-radius: 4px;
+// }
+
+// .cur-btn2{
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-end;
+//     column-gap: 11px;
+//     background: #DAE0F6;
+// border: 1px solid #556EE6;
+// border-radius: 4px;
+// }
+// .scrollbar
+// {
+// 	margin-left: 30px;
+// 	float: left;
+// 	height: 300px;
+// 	width: 600px;
+// 	background: #F5F5F5;
+// 	overflow-y: scroll;
+// 	margin-bottom: 25px;
+
+// }
+
+// .force-overflow
+// {
+// 	min-height: 450px;
+//     // background: #D4DAF9;
+//     border-radius: 5px;
+// }
+// .para-cur2{
+//     font-family: 'Poppins';
+// font-style: normal;
+// font-weight: 500;
+// font-size: 20px;
+// line-height: 30px;
+// /* identical to box height */
+
+// color: #C7D0F6;
+// // padding: 30px 30px;
+// }
+
+// .text-color{
+//     color: #808080;
+// }
+
+// .top-heading{
+//     display: flex;
+//     gap: 20px;
+//     list-style: none;
+//     border-bottom: 1px solid #FFFFFF;
+//     border-radius: 4px;
+// }
+// .top-heading li{
+
+// font-family: 'Poppins';
+// font-style: normal;
+// font-weight: 400;
+// font-size: 18px;
+// line-height: 27px;
+// /* identical to box height */
+
+// text-align: center;
+
+// color: #495057;
+
+// }

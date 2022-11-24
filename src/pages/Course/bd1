@@ -1,0 +1,250 @@
+import React, {
+    LocalizationProvider,
+    DatePicker,
+    TextField,
+    MenuList,
+    MenuItem,
+    useState,
+    useEffect,
+  } from "react"
+  import { Container } from "reactstrap"
+  import Card from "react-bootstrap/Card"
+  import Row from "react-bootstrap/Row"
+  import Col from "react-bootstrap/Col"
+  import Button from "react-bootstrap/Button"
+  import SimpleBar from "simplebar-react"
+  import { Link } from "react-router-dom"
+  import BasicDetails from "./BasicDetails"
+  import CourseLandingPage from "./CourseLandingPage"
+  import { post, get, patch } from "../../helpers/api_helper"
+  import * as url from "../../helpers/url_helper"
+  import { each } from "lodash"
+  import { uploadUsingSignedUrl } from "../../helpers/external_api_helper"
+  import tosterMsg from "components/Common/toster"
+  
+  export default function CreateCourse(props) {
+    const [banner_assets, setbanner_assets] = useState([
+      {
+        file_name: "",
+        file_path: "",
+        type: "media",
+      },
+    ])
+    const [courseDetails, setcourseDetails] = useState({
+      course_title: "",
+      sections: {},
+    })
+    const [currentTab, setcurrentTab] = useState("basic_details")
+    const [isLoading, setLoading] = useState(false)
+    const [editCourse, seteditCourse] = useState(false)
+    const [course_id, setcourse_id] = useState()
+    const [rating, setrating] = useState(0);
+    const [ratinghover, setratinghover] = React.useState(-1);
+  
+    useEffect(() => {
+      setLoading(true)
+      if (props.location.search) {
+        let course_id = props.location.search.split("c_id=")
+        seteditCourse(true)
+        setcourse_id(course_id[1])
+        getCourseDetails(course_id[1])
+      } else {
+        setLoading(false)
+      }
+    }, [])
+    const setCourseDetails = data => {
+      let obj = {
+        course_title: data.course_title ? data.course_title : "",
+        sections: data.sections ? data.sections : {},      
+      }    
+      setcourseDetails(obj)
+      if(data.banner_assets) {
+        setbanner_assets(data.banner_assets)
+      }
+      setLoading(false)
+    }
+    const getCourseDetails = async c_id => {
+      get(url.GET_COURSEDETAILS + "/" + c_id)
+        .then(async response => {
+          if (response.data) {
+            setCourseDetails(response.data)
+          }
+        })
+        .catch(error => {
+          console.log("error", error)
+        })
+    }
+  
+    const saveCourse = (values) => {
+      uploadFiles(banner_assets)
+      let payload = {
+        course_title: values.course_title,
+        banner_assets: banner_assets,
+        sections: courseDetails.sections,
+        faqs: null,
+        course_status: "Draft",
+        course_type: "Live",
+        visibility: "Public",
+        sub_category: 2,
+      }
+      if (editCourse) {
+        updateCourse(payload, course_id)
+      } else {
+        post(url.CREATE_COURSE, payload)
+          .then(async response => {
+            tosterMsg("Sucessfully Created")
+            setLoading(false)
+            setcurrentTab("landing_page")
+          })
+          .catch(error => {
+            console.log("error", error)
+          })
+      }
+      setCourseDetails(payload)    
+    }
+    const uploadFiles = asstes => {
+      _.forEach(asstes, async function (each) {
+        await uploadToS3(each)
+      })
+    }
+  
+    const updateCourse = (payload, c_id) => {
+      console.log("payload",payload)
+      patch(url.UPDATE_COURSE + "/" + c_id, payload)
+        .then(async response => {
+          tosterMsg("Sucessfully updated")
+          setcurrentTab("landing_page")
+          setLoading(false)
+        })
+        .catch(error => {
+          console.log("error", error)
+        })
+    }
+  
+    const uploadToS3 = data => {
+      if (data.file) {
+        let promise = new Promise((resolve, reject) => {
+          let payload = {
+            file_name: "course/BannerAssets/" + data.file_name,
+            type: data.file.type,
+            bucketDetails: false,
+            publickey: false,
+            bucketType: "content",
+            extend: false,
+          }
+          post(url.GET_SIGHNEDURL, payload)
+            .then(responce => {
+              if (responce.data) {
+                uploadUsingSignedUrl(responce.data, data.file).then(res => {
+                  resolve(true)
+                })
+              }
+            })
+            .catch(error => {
+              console.log("error", error)
+            })
+        })
+      }
+    }
+  
+    return (
+      <>
+        <Row className="sticky-header">
+          <Col sm="5 p-3">
+            <span className="span-align">Add course</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="3">
+            <div className="course-create-sidebardiv">
+              <SimpleBar className="h-100">
+                <div id="course-sidebar" className="margin5">
+                  <ul className="metismenu list-unstyled">
+                    <li>
+                      <div
+                        onClick={() => setcurrentTab("basic_details")}
+                        className={
+                          currentTab === "basic_details" ? "backcolor" : ""
+                        }
+                      >
+                        <i className="bx bx-home-circle p-2" />
+                        <span className="p-2">Basic Details</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div
+                        onClick={() => setcurrentTab("landing_page")}
+                        className={
+                          currentTab === "landing_page" ? "backcolor" : ""
+                        }
+                      >
+                        <i className="bx bx-book-open p-2" />
+                        <span className="p-2">Landing Page</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <i className="bx bx-book-open p-2" />
+                        <span className="p-2">Course Plan</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <i className="bx bx-book-open p-2" />
+                        <span className="p-2">Setting</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <i className="bx bx-book-open p-2" />
+                        <span className="p-2">Pricing</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </SimpleBar>
+            </div>
+          </Col>
+          <Col sm="8">
+            <div className="course-create-maindiv">
+              <div className="course-create-div">
+                {currentTab === "basic_details" && !isLoading && (
+                  <>
+                    <BasicDetails
+                      courseDetails={courseDetails}
+                      setcourseDetails={setcourseDetails}
+                      banner_assets={banner_assets}
+                      setbanner_assets={setbanner_assets}
+                      isLoading={isLoading}
+                      saveCourse={saveCourse}
+                    ></BasicDetails>
+                  </>
+                )}
+                {currentTab === "landing_page" && (
+                  <>
+                    <CourseLandingPage
+                    isLoading = {isLoading}
+                    courseDetails = {courseDetails}
+                    setCourseDetails = {setCourseDetails}
+                    rating = {rating}
+                    setrating = {setrating}
+                    ratinghover = {ratinghover}
+                    setratinghover = {setratinghover}
+                    ></CourseLandingPage>
+                  </>
+                )}
+              </div>
+            </div>
+          </Col>
+        </Row>
+        {/* <Row className="sticky-footer">
+          <div className="text-sm-center d-none d-sm-block p-2">
+            <Button variant="primary" onClick={saveCourse}>
+              Save and Next
+            </Button>
+          </div>
+        </Row> */}
+      </>
+    )
+  }
+  
