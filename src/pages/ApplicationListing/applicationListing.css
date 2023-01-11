@@ -47,6 +47,7 @@
 .filter-chips {
   border: 1px solid hsl(0, 0%, 80%) !important;
   padding: 3px 7px !important;
+  font-size: 11px !important;
 }
 
 .filter-chips span {
@@ -54,4 +55,12 @@
   font-size: 12px;
   position: relative !important;
   top: 0px !important;
+}
+
+.filter-status li {
+  list-style: none;
+}
+
+.filter-status {
+  padding-left: 0.5em !important;
 }

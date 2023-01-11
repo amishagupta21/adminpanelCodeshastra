@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import _debounce from "lodash/debounce";
-import { isEmpty, size } from "lodash";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from "react"
+import _debounce from "lodash/debounce"
+import { isEmpty, size } from "lodash"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 import {
   Row,
   Col,
@@ -13,25 +13,25 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
-} from "reactstrap";
+} from "reactstrap"
 // datatable related plugins
-import BootstrapTable from "react-bootstrap-table-next";
+import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider, {
   Search,
-} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
-import Breadcrumbs from "components/Common/Breadcrumb";
-import { getApplicationListing } from "store/actions";
-import dateFormate from "common/dateFormatter";
-import { DeBounceSearch } from "components/Common/DeBounceSearch";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import Select from "react-select";
-import "./applicationListing.css";
+} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
+import Breadcrumbs from "components/Common/Breadcrumb"
+import { getApplicationListing } from "store/actions"
+import dateFormate from "common/dateFormatter"
+import { DeBounceSearch } from "components/Common/DeBounceSearch"
+import paginationFactory from "react-bootstrap-table2-paginator"
+import Select from "react-select"
+import "./applicationListing.css"
 
-const { SearchBar } = Search;
+const { SearchBar } = Search
 
 class ApplicationListing extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       deleteModal: false,
       user: {},
@@ -105,75 +105,75 @@ class ApplicationListing extends Component {
           ),
         },
       ],
-    };
+    }
   }
 
   componentDidMount() {
-    const { manageUser, userRoles, onGetApplicationListing } = this.props;
+    const { manageUser, userRoles, onGetApplicationListing } = this.props
     if (manageUser && !manageUser.length) {
-      onGetApplicationListing({ search: "" });
+      onGetApplicationListing({ search: "" })
     }
-    this.setState({ manageUser, userRoles });
+    this.setState({ manageUser, userRoles })
   }
 
   componentDidUpdate(prevProps) {
-    const { manageUser, userRoles } = this.props;
+    const { manageUser, userRoles } = this.props
     if (
       !isEmpty(manageUser) &&
       size(prevProps.manageUser) !== size(manageUser)
     ) {
-      this.setState({ manageUser, isEdit: false });
+      this.setState({ manageUser, isEdit: false })
     }
     if (prevProps.userRoles !== userRoles) {
-      this.setState({ userRoles });
+      this.setState({ userRoles })
     }
   }
 
   handlePageChange = page => {
-    this.setState({ currentPage: page });
+    this.setState({ currentPage: page })
     const data = {
       page: page,
       pageSize: this.state.manageUserDataCount,
-    };
-    this.props.onGetmanageUser(data);
-  };
+    }
+    this.props.onGetmanageUser(data)
+  }
 
   handleSearch = e => {
-    const { onGetApplicationListing } = this.props;
+    const { onGetApplicationListing } = this.props
 
     const data = {
       search: e,
-    };
-    onGetApplicationListing(data);
-    const { ApplicationListing } = this.props;
-    this.setState({ ApplicationListing });
-  };
+    }
+    onGetApplicationListing(data)
+    const { ApplicationListing } = this.props
+    this.setState({ ApplicationListing })
+  }
 
   options = [
     { label: "INVITED ", value: "invited" },
     { label: "  ONBOARDED", value: "onboarded" },
     { label: "  SUSPENDED ", value: "suspended" },
     { label: "    DEACTIVATED ", value: "de-activated" },
-  ];
+  ]
 
   render() {
-    const { manageUserDataCount } = this.state;
-    const { usersCount, manageUser } = this.props;
+    const { manageUserDataCount } = this.state
+    const { usersCount, manageUser } = this.props
     const pageCount = parseInt(
       (usersCount + manageUserDataCount - 1) / manageUserDataCount
-    );
-    const paginationPage = Array.apply(null, new Array(pageCount));
+    )
+    const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
       {
         dataField: "id",
         order: "desc",
       },
-    ];
+    ]
 
     const selectRow = {
       mode: "checkbox",
-    };
+    }
 
     return (
       <React.Fragment>
@@ -262,10 +262,48 @@ class ApplicationListing extends Component {
                             </Col>
                           </Row>
                           <Row className="mt-3">
-                            <h6 className="filter-text">Filter Applied:</h6>
-                            <h6 className="filter-text mb-3 mt-1">Status: </h6>
-                            <h6 className="filter-text mb-3">Test Result: </h6>
-                            <h6 className="filter-text mb-3">Course Name: </h6>
+                            <h6 className="filter-text">Filter Applied: </h6>
+                            <h6 className="filter-text d-flex align-items-baseline mt-1 mb-0">
+                              Status:{" "}
+                              <ul className="filter-status">
+                                <li>
+                                  <button
+                                    type="button"
+                                    className="btn filter-chips"
+                                  >
+                                    Student <span className="badge">X</span>
+                                  </button>
+                                </li>
+                              </ul>
+                            </h6>
+                            <h6 className="filter-text d-flex align-items-baseline mb-0">
+                              Test Result:
+                              <ul className="filter-status">
+                                <li>
+                                  <button
+                                    type="button"
+                                    className="btn filter-chips"
+                                  >
+                                    Working Professional{" "}
+                                    <span className="badge">X</span>
+                                  </button>
+                                </li>
+                              </ul>
+                            </h6>
+                            <h6 className="filter-text d-flex align-items-baseline mb-3">
+                              Course Name:
+                              <ul className="filter-status">
+                                <li>
+                                  <button
+                                    type="button"
+                                    className="btn filter-chips"
+                                  >
+                                    Full Stack Web Developer (Full Time)
+                                    <span className="badge">X</span>
+                                  </button>
+                                </li>
+                              </ul>
+                            </h6>
                           </Row>
 
                           <Col xl="12">
@@ -361,7 +399,7 @@ class ApplicationListing extends Component {
           </Container>
         </div>
       </React.Fragment>
-    );
+    )
   }
 }
 
@@ -370,7 +408,7 @@ ApplicationListing.propTypes = {
   usersCount: PropTypes.number,
   className: PropTypes.any,
   ApplicationListing: PropTypes.array,
-};
+}
 
 const mapStateToProps = ({ ApplicationListing, state }) => (
   console.log(ApplicationListing, "ApplicationListing////"),
@@ -379,10 +417,10 @@ const mapStateToProps = ({ ApplicationListing, state }) => (
     usersCount: ApplicationListing?.count,
     userRoles: ApplicationListing?.roles,
   }
-);
+)
 
 const mapDispatchToProps = dispatch => ({
   onGetApplicationListing: data => dispatch(getApplicationListing(data)),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicationListing);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicationListing)

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import _debounce from "lodash/debounce";
-import { isEmpty, size } from "lodash";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from "react"
+import _debounce from "lodash/debounce"
+import { isEmpty, size } from "lodash"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 import {
   Row,
   Col,
@@ -13,20 +13,20 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
-} from "reactstrap";
+} from "reactstrap"
 // datatable related plugins
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
-import Breadcrumbs from "components/Common/Breadcrumb";
-import { getLearner } from "store/actions";
-import dateFormate from "common/dateFormatter";
-import { DeBounceSearch } from "components/Common/DeBounceSearch";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import Select from "react-select";
+import BootstrapTable from "react-bootstrap-table-next"
+import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
+import Breadcrumbs from "components/Common/Breadcrumb"
+import { getLearner } from "store/actions"
+import dateFormate from "common/dateFormatter"
+import { DeBounceSearch } from "components/Common/DeBounceSearch"
+import paginationFactory from "react-bootstrap-table2-paginator"
+import Select from "react-select"
 
 class Learner extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       deleteModal: false,
       user: {},
@@ -79,74 +79,74 @@ class Learner extends Component {
           ),
         },
       ],
-    };
+    }
   }
 
   componentDidMount() {
-    const { manageUser, userRoles, onGetLearner } = this.props;
+    const { manageUser, userRoles, onGetLearner } = this.props
     if (manageUser && !manageUser.length) {
-      onGetLearner({ search: "" });
+      onGetLearner({ search: "" })
     }
-    this.setState({ manageUser, userRoles });
+    this.setState({ manageUser, userRoles })
   }
 
   componentDidUpdate(prevProps) {
-    const { manageUser, userRoles } = this.props;
+    const { manageUser, userRoles } = this.props
     if (
       !isEmpty(manageUser) &&
       size(prevProps.manageUser) !== size(manageUser)
     ) {
-      this.setState({ manageUser, isEdit: false });
+      this.setState({ manageUser, isEdit: false })
     }
     if (prevProps.userRoles !== userRoles) {
-      this.setState({ userRoles });
+      this.setState({ userRoles })
     }
   }
 
   handlePageChange = page => {
-    this.setState({ currentPage: page });
+    this.setState({ currentPage: page })
     const data = {
       page: page,
       pageSize: this.state.manageUserDataCount,
-    };
-    this.props.onGetmanageUser(data);
-  };
+    }
+    this.props.onGetmanageUser(data)
+  }
 
   handleSearch = e => {
-    const { onGetLearner } = this.props;
+    const { onGetLearner } = this.props
     const data = {
       search: e,
-    };
-    onGetLearner(data);
-    const { Learner } = this.props;
-    this.setState({ Learner });
-  };
+    }
+    onGetLearner(data)
+    const { Learner } = this.props
+    this.setState({ Learner })
+  }
 
   options = [
     { label: "INVITED ", value: "invited" },
     { label: "  ONBOARDED", value: "onboarded" },
     { label: "  SUSPENDED ", value: "suspended" },
     { label: "    DEACTIVATED ", value: "de-activated" },
-  ];
+  ]
 
   render() {
-    const { manageUserDataCount } = this.state;
-    const { usersCount, manageUser } = this.props;
+    const { manageUserDataCount } = this.state
+    const { usersCount, manageUser } = this.props
     const pageCount = parseInt(
       (usersCount + manageUserDataCount - 1) / manageUserDataCount
-    );
-    const paginationPage = Array.apply(null, new Array(pageCount));
+    )
+    const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
       {
         dataField: "id",
         order: "desc",
       },
-    ];
+    ]
 
     const selectRow = {
       mode: "checkbox",
-    };
+    }
 
     return (
       <React.Fragment>
@@ -176,7 +176,7 @@ class Learner extends Component {
                                     className="form-control"
                                     type="text"
                                     name="search"
-                                    placeholder="Search by Application No"
+                                    placeholder="Search by Name, email or Mobile number"
                                     handleSearch={this.handleSearch}
                                   />
                                   <span className="bx bx-search-alt" />
@@ -234,26 +234,48 @@ class Learner extends Component {
                             </Col>
                           </Row>
                           <Row className="mt-3">
-                            <h6 className="filter-text">
-                              Filter Applied:{" "}
-                              <button
-                                type="button"
-                                className="btn filter-chips"
-                              >
-                                Active <span className="badge">X</span>
-                              </button>
-                            </h6>
-                            <h6 className="filter-text mb-3 mt-1">
+                            <h6 className="filter-text">Filter Applied: </h6>
+                            <h6 className="filter-text d-flex align-items-baseline mt-1 mb-0">
                               Status:{" "}
-                              <button
-                                type="button"
-                                className="btn filter-chips"
-                              >
-                                Student <span className="badge">X</span>
-                              </button>
+                              <ul className="filter-status">
+                                <li>
+                                  <button
+                                    type="button"
+                                    className="btn filter-chips"
+                                  >
+                                    Student <span className="badge">X</span>
+                                  </button>
+                                </li>
+                              </ul>
                             </h6>
-                            <h6 className="filter-text mb-3">Test Result: </h6>
-                            <h6 className="filter-text mb-3">Course Name: </h6>
+                            <h6 className="filter-text d-flex align-items-baseline mb-0">
+                              Test Result:
+                              <ul className="filter-status">
+                                <li>
+                                  <button
+                                    type="button"
+                                    className="btn filter-chips"
+                                  >
+                                    Working Professional{" "}
+                                    <span className="badge">X</span>
+                                  </button>
+                                </li>
+                              </ul>
+                            </h6>
+                            <h6 className="filter-text d-flex align-items-baseline mb-3">
+                              Course Name:
+                              <ul className="filter-status">
+                                <li>
+                                  <button
+                                    type="button"
+                                    className="btn filter-chips"
+                                  >
+                                    Full Stack Web Developer (Full Time)
+                                    <span className="badge">X</span>
+                                  </button>
+                                </li>
+                              </ul>
+                            </h6>
                           </Row>
                           <Col xl="12">
                             <div className="table-responsive">
@@ -348,7 +370,7 @@ class Learner extends Component {
           </Container>
         </div>
       </React.Fragment>
-    );
+    )
   }
 }
 
@@ -357,16 +379,16 @@ Learner.propTypes = {
   usersCount: PropTypes.number,
   className: PropTypes.any,
   Learner: PropTypes.array,
-};
+}
 
 const mapStateToProps = ({ Learner, state }) => ({
   manageUser: Learner?.manageUser,
   usersCount: Learner?.count,
   userRoles: Learner?.roles,
-});
+})
 
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Learner);
+export default connect(mapStateToProps, mapDispatchToProps)(Learner)
