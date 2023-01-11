@@ -17,6 +17,7 @@ import Courses from "pages/Course/index"
 import CreateCourse from "pages/Course/CreateCourse"
 import Learner from "pages/Learner/Learner"
 import ApplicationListing from "pages/ApplicationListing/ApplicationListing"
+import LearnerDetails from "pages/LearnerDetails/LearnerDetails"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -25,6 +26,7 @@ const authProtectedRoutes = [
   { path: "/courses/create", component: CreateCourse },
   { path: "/learner", component: Learner },
   { path: "/application", component: ApplicationListing },
+  { path: "/learner-details", component: LearnerDetails },
 
   // //profile
   { path: "/profile", component: UserProfile },

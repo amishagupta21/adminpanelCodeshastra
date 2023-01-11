@@ -17,6 +17,7 @@ import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 
 import Nav from "react-bootstrap/Nav"
+import PersonalDetails from "./PersonalDetails"
 
 const LearnerDetails = () => {
   const [key, setKey] = useState("home")
@@ -105,31 +106,7 @@ const LearnerDetails = () => {
               </CardBody>
             </Card>
           </Col>
-          <Col sm="4">
-            <Card>
-              <CardBody>
-                <Tabs
-                  id="controlled-tab-example"
-                  activeKey={value}
-                  onSelect={k => setValue(k)}
-                >
-                  <Tab eventKey="home" title="Live Course">
-                    <div className="mt-3">
-                      <h4>Full Stack Web Developer (Full Time)</h4>
-                      <p>Batch #23</p>
-                      <p className="mt-2 mb-2">
-                        Next Live - Monday, 23 Aug 2022
-                      </p>
-                      <p>8:00 AM to 5:00 PM (IST)</p>
-                    </div>
-                  </Tab>
-                  <Tab eventKey="profile" title="Library">
-                    Library
-                  </Tab>
-                </Tabs>
-              </CardBody>
-            </Card>
-          </Col>
+          <PersonalDetails />
         </Row>
       </Container>
     </div>
