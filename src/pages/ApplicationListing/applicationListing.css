@@ -1,0 +1,57 @@
+.filter-text {
+  font-weight: 600;
+}
+.app-search .form-control {
+  border-radius: 4px !important;
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  background-color: transparent !important;
+}
+
+.table-responsive {
+  overflow-x: hidden !important;
+}
+
+.react-bootstrap-table-pagination-list {
+  display: flex !important;
+}
+
+.page-item .page-link {
+  border-radius: 50% !important;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-item {
+  margin-right: 10px;
+}
+
+.react-bs-table-sizePerPage-dropdown::before {
+  content: "Show";
+}
+
+.react-bs-table-sizePerPage-dropdown::after {
+  content: "entries";
+}
+
+#pageDropDown {
+  margin: 0 5px;
+  height: 35px;
+  background: transparent;
+  color: #000000 !important;
+  padding: 3px 10px;
+}
+
+.filter-chips {
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  padding: 3px 7px !important;
+}
+
+.filter-chips span {
+  color: #828080;
+  font-size: 12px;
+  position: relative !important;
+  top: 0px !important;
+}
