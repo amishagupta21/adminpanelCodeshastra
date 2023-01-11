@@ -15,12 +15,16 @@ import Dashboard from "../pages/Dashboard/index"
 import Users from "pages/Users/users.connector"
 import Courses from "pages/Course/index"
 import CreateCourse from "pages/Course/CreateCourse"
+import Learner from "pages/Learner/Learner"
+import ApplicationListing from "pages/ApplicationListing/ApplicationListing"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/users", component: Users },
   { path: "/courses", component: Courses },
   { path: "/courses/create", component: CreateCourse },
+  { path: "/learner", component: Learner },
+  { path: "/application", component: ApplicationListing },
 
   // //profile
   { path: "/profile", component: UserProfile },
