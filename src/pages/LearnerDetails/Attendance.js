@@ -1,4 +1,7 @@
 import React from "react"
+import Select from "react-select"
+
+import { Table } from "reactstrap"
 import {
   Row,
   Col,
@@ -6,97 +9,83 @@ import {
   CardBody,
   Button,
   Container,
-  CardGroup,
-  ListGroup,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Label,
-  Input,
-  Form,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap"
-import { Link } from "react-router-dom"
-import userplaceholder from "../../assets/images/userplaceholder.png"
+import BootstrapTable from "react-bootstrap-table-next"
 
 const Attendance = () => {
+  const options = [
+    { label: "INVITED ", value: "invited" },
+    { label: "  ONBOARDED", value: "onboarded" },
+    { label: "  SUSPENDED ", value: "suspended" },
+    { label: "    DEACTIVATED ", value: "de-activated" },
+  ]
+
+  const defaultSorted = [
+    {
+      dataField: "id",
+      order: "desc",
+    },
+  ]
+
+  const columns = [
+    {
+      dataField: "id",
+      text: "Product ID",
+    },
+    {
+      dataField: "name",
+      text: "Product Name",
+    },
+    {
+      dataField: "price",
+      text: "Product Price",
+    },
+  ]
+
+  const data = [
+    {
+      dataField: "id",
+      text: "Product",
+    },
+    {
+      dataField: "name",
+      text: "Product Name",
+    },
+  ]
+
   return (
     <>
       <div>
-        <h4>CoursesEnrolled Details</h4>
-        <div className="d-flex align-items-center">
-          <img src={userplaceholder} height="50px" alt="" />
-          &nbsp;&nbsp;
-          <div>
-            <p>Profile Picture</p>
-            <Link to="/">View</Link>&nbsp;&nbsp;
-            <Link to="/">Delete</Link>
-          </div>
-        </div>
-        <div className="p-2">
-          <Form className="form-vertical">
+        <h4 className="text-primary">Attendance</h4>
+        <Row className="align-items-center mt-4">
+          <Col sm={8}>
+            <h5>Full Stack Web Developer</h5>
+          </Col>
+          <Col sm={4}>
             <Row>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Email</Label>
-                  <Input
-                    name="email"
-                    className="form-control"
-                    placeholder="Enter email"
-                    type="email"
-                  />
-                </div>
+              <Col sm={6}>
+                <Select
+                  name="filter"
+                  placeholder="Test Result"
+                  options={options}
+                />
               </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <div className="mt-3 d-flex justify-content-end">
-                <Button color="primary" className="me-3" outline type="submit">
-                  Reset
+              <Col sm={6}>
+                <Button type="button" className="btn mb-2 me-2">
+                  Export
                 </Button>
-                <Button color="primary" type="submit">
-                  Save
-                </Button>
-              </div>
+              </Col>
             </Row>
-          </Form>
-        </div>
+          </Col>
+        </Row>
+        <Col xl="12">
+          <div className="table-responsive">
+            <BootstrapTable keyField="id" data={data} columns={columns} />
+          </div>
+        </Col>
       </div>
     </>
   )

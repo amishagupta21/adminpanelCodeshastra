@@ -1,101 +1,116 @@
 import React from "react"
-import {
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Button,
-  Container,
-  CardGroup,
-  ListGroup,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Label,
-  Input,
-  Form,
-} from "reactstrap"
-import { Link } from "react-router-dom"
-import userplaceholder from "../../assets/images/userplaceholder.png"
+
+import { Table } from "reactstrap"
 
 const CoursesEnrolled = () => {
+  const courseTable = [
+    {
+      title: "Course Name",
+      value: "Full Stack Web Developer",
+    },
+    {
+      title: "Course type",
+      value: "Full Time",
+    },
+    {
+      title: "Mentor",
+      value: "Venkatesh H.",
+    },
+    {
+      title: "Starting Date",
+      value: "12-10-2022",
+    },
+    {
+      title: "Batch",
+      value: "#Batch_25",
+    },
+    {
+      title: "Status",
+      value: "70% Completed",
+    },
+  ]
+
+  const libraryCourse = [
+    {
+      title: "Course Name",
+      value: "Introduction to Solftware Testing [English]",
+      value1: "sdfdsfsdfs",
+    },
+    {
+      title: "Category",
+      value: "Full Time",
+    },
+    {
+      title: "Mentor",
+      value: "Venkatesh H.",
+    },
+    {
+      title: "Starting Date",
+      value: "12-10-2022",
+    },
+    {
+      title: "Status",
+      value: "70% Completed",
+    },
+  ]
+
   return (
     <>
       <div>
-        <h4>CoursesEnrolled Details</h4>
-        <div className="d-flex align-items-center">
-          <img src={userplaceholder} height="50px" alt="" />
-          &nbsp;&nbsp;
-          <div>
-            <p>Profile Picture</p>
-            <Link to="/">View</Link>&nbsp;&nbsp;
-            <Link to="/">Delete</Link>
-          </div>
+        <h4 className="text-primary">Courses Enrolled</h4>
+        <div className="mt-3">
+          <h5>Live Course</h5>
+          <Table>
+            <thead>
+              <tr>
+                {courseTable.map(item => {
+                  return (
+                    <>
+                      <th>{item.title}</th>
+                    </>
+                  )
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {courseTable.map(item => {
+                  return (
+                    <>
+                      <td>{item.value}</td>
+                    </>
+                  )
+                })}
+              </tr>
+            </tbody>
+          </Table>
         </div>
-        <div className="p-2">
-          <Form className="form-vertical">
-            <Row>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Email</Label>
-                  <Input
-                    name="email"
-                    className="form-control"
-                    placeholder="Enter email"
-                    type="email"
-                  />
-                </div>
-              </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
-              <div className="mt-3 d-flex justify-content-end">
-                <Button color="primary" className="me-3" outline type="submit">
-                  Reset
-                </Button>
-                <Button color="primary" type="submit">
-                  Save
-                </Button>
-              </div>
-            </Row>
-          </Form>
+        <div className="mt-5">
+          <h5>Library Course</h5>
+          <Table>
+            <thead>
+              <tr>
+                {libraryCourse.map(item => {
+                  return (
+                    <>
+                      <th>{item.title}</th>
+                    </>
+                  )
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {libraryCourse.map(item => {
+                  return (
+                    <>
+                      <td>{item.value}</td>
+                    </>
+                  )
+                })}
+              </tr>
+            </tbody>
+          </Table>
         </div>
       </div>
     </>

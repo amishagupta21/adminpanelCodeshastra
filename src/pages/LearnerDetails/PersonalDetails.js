@@ -23,6 +23,10 @@ import PersonalDetailForm from "./PersonalDetailForm"
 import EducationDetails from "./EducationDetails"
 import WorkDetails from "./WorkDetails"
 import CoursesEnrolled from "./CoursesEnrolled"
+import Attendance from "./Attendance"
+import DocumentKyc from "./DocumentKyc"
+import Billing from "./Billing"
+import Notifications from "./Notifications"
 
 const PersonalDetails = () => {
   const [value, setValue] = useState("details")
@@ -48,21 +52,21 @@ const PersonalDetails = () => {
       title: "Courses Enrolled",
       component: <CoursesEnrolled />,
     },
-    { eventKey: "attendance", title: "Attendance", component: <WorkDetails /> },
+    { eventKey: "attendance", title: "Attendance", component: <Attendance /> },
     {
       eventKey: "document",
       title: "Documnet & KYC",
-      component: <WorkDetails />,
+      component: <DocumentKyc />,
     },
     {
       eventKey: "billing",
       title: "Billing & Invoice",
-      component: <WorkDetails />,
+      component: <Billing />,
     },
     {
       eventKey: "notification",
       title: "Notifications",
-      component: <WorkDetails />,
+      component: <Notifications />,
     },
   ]
 
@@ -71,7 +75,7 @@ const PersonalDetails = () => {
       <Container className="personal-detail-tab" fluid>
         <Row>
           <Col sm="4">
-            <Card>
+            <Card className="card-height">
               <CardBody className="personal-detail-section">
                 <Tabs
                   id="controlled-tab-example"
@@ -93,7 +97,7 @@ const PersonalDetails = () => {
             </Card>
           </Col>
           <Col sm="8">
-            <Card>
+            <Card className="card-height">
               <CardBody>
                 <Tabs
                   id="controlled-tab-example"

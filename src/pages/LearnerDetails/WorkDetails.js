@@ -22,7 +22,7 @@ const WorkDetails = () => {
   return (
     <>
       <div>
-        <h4>Work Details</h4>
+        <h4 className="text-primary">Work Details</h4>
 
         <div className="p-2">
           <Form className="form-vertical">

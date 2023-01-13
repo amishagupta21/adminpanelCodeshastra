@@ -22,7 +22,7 @@ const EducationDetails = () => {
   return (
     <>
       <div>
-        <h4 className="ms-2 mb-0 primary">Education Details</h4>
+        <h4 className="ms-2 mb-0 text-primary ">Education Details</h4>
         <div className="p-2">
           <Form className="form-vertical">
             <Row>

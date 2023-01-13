@@ -135,6 +135,12 @@ const SidebarContent = props => {
                 <span>{props.t("Application")}</span>
               </Link>
             </li>
+            <li>
+              <Link to="/learner-details">
+                <i className="bx bx-user" />
+                <span>{props.t("LearnerDetails")}</span>
+              </Link>
+            </li>
           </ul>
         </div>
       </SimpleBar>
