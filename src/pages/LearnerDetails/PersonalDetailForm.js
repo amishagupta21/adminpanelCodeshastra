@@ -22,7 +22,7 @@ const PersonalDetailForm = () => {
   return (
     <>
       <div>
-        <h4>Personal Details</h4>
+        <h4 className="text-primary">Personal Details</h4>
         <div className="d-flex align-items-center">
           <img src={userplaceholder} height="50px" alt="" />
           &nbsp;&nbsp;
