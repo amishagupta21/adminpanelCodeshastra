@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Row,
   Col,
@@ -17,8 +17,14 @@ import {
 } from "reactstrap"
 import { Link } from "react-router-dom"
 import userplaceholder from "../../assets/images/userplaceholder.png"
+import DatePicker from "react-datepicker"
+import "./personalDetailForm.css"
+
+import "react-datepicker/dist/react-datepicker.css"
 
 const PersonalDetailForm = () => {
+  const [startDate, setStartDate] = useState(new Date())
+
   return (
     <>
       <div>
@@ -37,7 +43,7 @@ const PersonalDetailForm = () => {
             <Row>
               <Col sm={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Email</Label>
+                  <Label className="form-label">Full Name</Label>
                   <Input
                     name="email"
                     className="form-control"
@@ -48,44 +54,36 @@ const PersonalDetailForm = () => {
               </Col>
               <Col sm={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Password</Label>
+                  <Label className="form-label">Email</Label>
+                  <Input name="text" type="email" placeholder="Enter Email" />
+                </div>
+              </Col>
+              <Col sm={3}>
+                <div className="mb-3">
+                  <Label className="form-label">Mobile Number</Label>
                   <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
+                    name="text"
+                    type="text"
+                    placeholder="Enter Mobile Number"
                   />
                 </div>
               </Col>
               <Col sm={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
+                  <Label className="form-label">Date of Birth</Label>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date: Date) => setStartDate(date)}
                   />
                 </div>
               </Col>
               <Col sm={3}>
                 <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
+                  <Label className="form-label">Guardian Detail</Label>
+                  <Input name="text" type="text" placeholder="Enter Detail" />
                 </div>
               </Col>
-              <Col sm={3}>
-                <div className="mb-3">
-                  <Label className="form-label">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter Password"
-                  />
-                </div>
-              </Col>
+
               <div className="mt-3 d-flex justify-content-end">
                 <Button color="primary" className="me-3" outline type="submit">
                   Reset

@@ -34,7 +34,6 @@ const CoursesEnrolled = () => {
     {
       title: "Course Name",
       value: "Introduction to Solftware Testing [English]",
-      value1: "sdfdsfsdfs",
     },
     {
       title: "Category",

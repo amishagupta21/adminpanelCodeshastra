@@ -410,14 +410,11 @@ ApplicationListing.propTypes = {
   ApplicationListing: PropTypes.array,
 }
 
-const mapStateToProps = ({ ApplicationListing, state }) => (
-  console.log(ApplicationListing, "ApplicationListing////"),
-  {
-    manageUser: ApplicationListing?.manageUser,
-    usersCount: ApplicationListing?.count,
-    userRoles: ApplicationListing?.roles,
-  }
-)
+const mapStateToProps = ({ ApplicationListing, state }) => ({
+  manageUser: ApplicationListing?.manageUser,
+  usersCount: ApplicationListing?.count,
+  userRoles: ApplicationListing?.roles,
+})
 
 const mapDispatchToProps = dispatch => ({
   onGetApplicationListing: data => dispatch(getApplicationListing(data)),

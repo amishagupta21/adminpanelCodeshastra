@@ -30,29 +30,30 @@ const Attendance = () => {
     },
   ]
 
-  const columns = [
+  const libraryCourse = [
     {
-      dataField: "id",
-      text: "Product ID",
+      title: "Lecture",
+      value: "#Lecture-1",
     },
     {
-      dataField: "name",
-      text: "Product Name",
+      title: "Date",
+      value: "12-10-2022",
     },
     {
-      dataField: "price",
-      text: "Product Price",
-    },
-  ]
-
-  const data = [
-    {
-      dataField: "id",
-      text: "Product",
+      title: "Start Time",
+      value: "08:00 AM",
     },
     {
-      dataField: "name",
-      text: "Product Name",
+      title: "End Time",
+      value: "05:00 PM",
+    },
+    {
+      title: "Attendance",
+      value: "Present",
+    },
+    {
+      title: "Action",
+      value: "70% Completed",
     },
   ]
 
@@ -82,10 +83,39 @@ const Attendance = () => {
           </Col>
         </Row>
         <Col xl="12">
-          <div className="table-responsive">
-            <BootstrapTable keyField="id" data={data} columns={columns} />
-          </div>
+          <Table>
+            <thead>
+              <tr>
+                {libraryCourse.map(item => {
+                  return (
+                    <>
+                      <th>{item.title}</th>
+                    </>
+                  )
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {libraryCourse.map(item => {
+                  return (
+                    <>
+                      <td>{item.value}</td>
+                    </>
+                  )
+                })}
+              </tr>
+            </tbody>
+          </Table>
         </Col>
+        <div className="mt-3 d-flex justify-content-end">
+          <Button color="primary" className="me-3" outline type="submit">
+            Reset
+          </Button>
+          <Button color="primary" type="submit">
+            Save
+          </Button>
+        </div>
       </div>
     </>
   )
