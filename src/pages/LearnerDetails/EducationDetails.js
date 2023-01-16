@@ -15,14 +15,34 @@ import {
   Input,
   Form,
 } from "reactstrap"
-import { Link } from "react-router-dom"
-import userplaceholder from "../../assets/images/userplaceholder.png"
+import Select from "react-select"
 
 const EducationDetails = () => {
+  const options = [
+    { label: "Diploma_or_12th ", value: "12" },
+    { label: "UG", value: "UG" },
+    { label: "PG", value: "PG" },
+    { label: "First_year", value: "First year" },
+    { label: "Second_year", value: "Second year" },
+    { label: "Pre_Final ", value: "Pre Final" },
+    { label: "Final_Year ", value: "Final Year" },
+  ]
+
   return (
     <>
       <div>
-        <h4 className="ms-2 mb-0 text-primary ">Education Details</h4>
+        <h4 className="ms-2 mb-3 text-primary ">Education Details</h4>
+        <Row>
+          <Col sm={4}>
+            <Select
+              name="filter"
+              // value={value}
+              // onChange={this.handleFilter}
+              placeholder="Status"
+              options={options}
+            />
+          </Col>
+        </Row>
         <div className="p-2">
           <Form className="form-vertical">
             <Row>

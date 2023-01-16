@@ -85,7 +85,6 @@ const PersonalDetails = () => {
                   {initialTabs.map(item => {
                     return (
                       <Tab
-                        className="sdfsfdfsdf"
                         key={item.eventKey}
                         eventKey={item.eventKey}
                         title={item.title}

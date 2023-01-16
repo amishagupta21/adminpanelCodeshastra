@@ -18,6 +18,7 @@ import Tabs from "react-bootstrap/Tabs"
 
 import Nav from "react-bootstrap/Nav"
 import PersonalDetails from "./PersonalDetails"
+import "./learnerDetail.css"
 
 const LearnerDetails = () => {
   const [key, setKey] = useState("home")
@@ -60,7 +61,7 @@ const LearnerDetails = () => {
             </Card>
           </Col>
           <Col sm="4">
-            <Card>
+            <Card className="courses">
               <CardBody>
                 <CardTitle tag="h5">Courses</CardTitle>
 

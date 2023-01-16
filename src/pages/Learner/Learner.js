@@ -112,15 +112,15 @@ class Learner extends Component {
     this.props.onGetmanageUser(data)
   }
 
-  handleSearch = e => {
-    const { onGetLearner } = this.props
-    const data = {
-      search: e,
-    }
-    onGetLearner(data)
-    const { Learner } = this.props
-    this.setState({ Learner })
-  }
+  // handleSearch = e => {
+  //   const { onGetLearner } = this.props
+  //   const data = {
+  //     search: e,
+  //   }
+  //   onGetLearner(data)
+  //   const { Learner } = this.props
+  //   this.setState({ Learner })
+  // }
 
   options = [
     { label: "INVITED ", value: "invited" },
@@ -135,7 +135,7 @@ class Learner extends Component {
     const pageCount = parseInt(
       (usersCount + manageUserDataCount - 1) / manageUserDataCount
     )
-    const paginationPage = Array.apply(null, new Array(pageCount))
+    // const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
       {
@@ -177,7 +177,7 @@ class Learner extends Component {
                                     type="text"
                                     name="search"
                                     placeholder="Search by Name, email or Mobile number"
-                                    handleSearch={this.handleSearch}
+                                    // handleSearch={this.handleSearch}
                                   />
                                   <span className="bx bx-search-alt" />
                                 </div>

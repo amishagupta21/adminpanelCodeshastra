@@ -1,0 +1,19 @@
+.courses .nav-tabs .nav-link {
+  border: none !important;
+}
+
+.courses .nav {
+  height: 40px !important;
+  margin-left: 0 !important;
+}
+
+.courses .nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #556ee6;
+  border-bottom: 3px solid #556ee6 !important;
+  height: 40px;
+}
+
+.courses .nav-link {
+  color: #495057;
+}
