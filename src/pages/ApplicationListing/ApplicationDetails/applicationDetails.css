@@ -1,0 +1,18 @@
+.bg-image {
+  background-image: url("https://picsum.photos/300/200");
+  height: 130px;
+  position: relative;
+}
+
+.bg-image img {
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+}
+
+.profile-detail {
+  position: absolute;
+  bottom: 5px;
+  left: 80px;
+}
