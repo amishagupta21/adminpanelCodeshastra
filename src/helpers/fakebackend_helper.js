@@ -90,7 +90,7 @@ const postJwtRegister = (url, data) => {
 const getLearnerList = data =>
   getData(
     url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.page || 100}&search=${
+      `?page=${data?.page || 1}&perPage=${data?.page || 5102}&search=${
         data?.search
       }`
   )
@@ -98,10 +98,16 @@ const getLearnerList = data =>
 const getApplicationListing = data =>
   getData(
     url.GET_APPLICATION_LISTING +
-      `?page=${data?.page || 1}&perPage=${data?.page || 20}&search=${
+      `?page=${data?.page || 1}&perPage=${data?.page || 51}&search=${
         data?.search
       }`
   )
+
+// get dashboard charts data
+export const getDashboardData = data =>
+  getData(url.GET_DASHBOARD_DATA + `?day=${data?.day || 10}`)
+// export const getYearlyData = () => getCount(url.GET_YEARLY_DATA)
+// export const getMonthlyData = () => getCount(url.GET_MONTHLY_DATA)
 
 // Login Method
 const postJwtLogin = data => post(url.POST_FAKE_JWT_LOGIN, data)
@@ -256,11 +262,6 @@ export const getTrashMails = () => get(url.GET_TRASH_MAILS)
 
 // get starredmail
 export const getDraftMails = () => get(url.GET_DRAFT_MAILS)
-
-// get dashboard charts data
-export const getWeeklyData = () => get(url.GET_WEEKLY_DATA)
-export const getYearlyData = () => get(url.GET_YEARLY_DATA)
-export const getMonthlyData = () => get(url.GET_MONTHLY_DATA)
 
 export const topSellingData = month =>
   get(`${url.TOP_SELLING_DATA}/${month}`, { params: { month } })

@@ -13,6 +13,10 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap"
 // datatable related plugins
 import BootstrapTable from "react-bootstrap-table-next"
@@ -23,6 +27,7 @@ import dateFormate from "common/dateFormatter"
 import { DeBounceSearch } from "components/Common/DeBounceSearch"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import Select from "react-select"
+import { Link } from "react-router-dom"
 
 class Learner extends Component {
   constructor(props) {
@@ -44,15 +49,26 @@ class Learner extends Component {
           formatter: (cellContent, user) => <>{row?._id}</>,
         },
         {
+          dataField: "userProfileData.personal_details.full_name",
+          text: "Name",
+          sort: true,
+        },
+        {
           dataField: "email",
           text: "Email",
           sort: true,
         },
         {
           dataField: "phone",
-          text: "Phone",
+          text: "Mobile",
           sort: true,
         },
+        {
+          dataField: "status",
+          text: "Status",
+          sort: true,
+        },
+
         {
           dataField: "Updated At",
           text: "Updated At",
@@ -69,13 +85,23 @@ class Learner extends Component {
           dataField: "Actions",
           text: "Actions",
           formatter: (cellContent, user) => (
-            <Button
-              type="button"
-              color="success"
-              className="btn-rounded mb-2 me-2"
-            >
-              View
-            </Button>
+            <UncontrolledDropdown>
+              <DropdownToggle className="card-drop" tag="a">
+                <i className="mdi mdi-dots-horizontal font-size-18" />
+              </DropdownToggle>
+              <DropdownMenu className="dropdown-menu-end">
+                <Link to="/learner-details">
+                  <DropdownItem onClick={() => handleUserClick(user)}>
+                    <i className="mdi mdi-pencil font-size-16 text-success me-1" />
+                    Edit
+                  </DropdownItem>
+                </Link>
+                <DropdownItem onClick={() => onClickDelete(user)}>
+                  <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />
+                  Delete
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           ),
         },
       ],
@@ -135,7 +161,7 @@ class Learner extends Component {
     const pageCount = parseInt(
       (usersCount + manageUserDataCount - 1) / manageUserDataCount
     )
-    const paginationPage = Array.apply(null, new Array(pageCount))
+    // const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
       {
@@ -169,16 +195,16 @@ class Learner extends Component {
                             <Col sm="2">
                               <div className="app-search p-0">
                                 <div className="position-relative">
-                                  {/* <DeBounceSearch
+                                  <DeBounceSearch
                                     handleSearch={this.handleSearch}
-                                  /> */}
-                                  <input
+                                  />
+                                  {/* <input
                                     className="form-control"
                                     type="text"
                                     name="search"
                                     placeholder="Search by Name, email or Mobile number"
                                     handleSearch={this.handleSearch}
-                                  />
+                                  /> */}
                                   <span className="bx bx-search-alt" />
                                 </div>
                               </div>
@@ -218,7 +244,7 @@ class Learner extends Component {
                               <Button
                                 type="button"
                                 className="btn mb-2 me-2"
-                                onClick={this.handleUserClicks}
+                                // onClick={this.handleUserClicks}
                               >
                                 <i className="mdi mdi-filter me-1" /> Apply
                                 Filter
@@ -227,7 +253,7 @@ class Learner extends Component {
                                 type="button"
                                 color="secondary"
                                 className="btn mb-2 me-2"
-                                onClick={this.handleUserClicks}
+                                // onClick={this.handleUserClicks}
                               >
                                 Export
                               </Button>
@@ -381,7 +407,7 @@ Learner.propTypes = {
   Learner: PropTypes.array,
 }
 
-const mapStateToProps = ({ Learner, state }) => ({
+const mapStateToProps = ({ Learner, state, count }) => ({
   manageUser: Learner?.manageUser,
   usersCount: Learner?.count,
   userRoles: Learner?.roles,

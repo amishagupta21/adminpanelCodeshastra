@@ -7,8 +7,7 @@ export * from "./auth/forgetpwd/actions"
 export * from "./auth/profile/actions"
 export * from "./Learner/actions"
 export * from "./ApplicationListing/actions"
-export * from "./Learner/actions"
-export * from "./ApplicationListing/actions"
+export * from "./dashboard/actions"
 
 //Ecommerce
 export * from "./e-commerce/actions"
