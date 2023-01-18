@@ -16,7 +16,6 @@ import {
   Form,
 } from "reactstrap"
 import { Link } from "react-router-dom"
-import userplaceholder from "../../assets/images/userplaceholder.png"
 import DatePicker from "react-datepicker"
 import "./personalDetailForm.css"
 
@@ -28,20 +27,8 @@ const PersonalDetailForm = () => {
   return (
     <>
       <div>
-        <h4 className="text-primary">Personal Details</h4>
-        <div className="d-flex align-items-center">
-          <img src={userplaceholder} height="50px" alt="" />
-          &nbsp;&nbsp;
-          <div>
-            <p>Profile Picture</p>
-            <div>
-              <Link to="/">View</Link>&nbsp;&nbsp;&nbsp;
-              <Link className="text-danger" to="/">
-                Delete
-              </Link>
-            </div>
-          </div>
-        </div>
+        <p className="font-bold">Personal Details</p>
+
         <div className="p-2">
           <Form className="form-vertical">
             <Row>
@@ -85,6 +72,16 @@ const PersonalDetailForm = () => {
                 <div className="mb-3">
                   <Label className="form-label">Guardian Detail</Label>
                   <Input name="text" type="text" placeholder="Enter Detail" />
+                </div>
+              </Col>
+              <Col sm={3}>
+                <div className="mb-3">
+                  <Label className="form-label">Learner Type</Label>
+                  <Input
+                    name="text"
+                    type="text"
+                    placeholder="Working Professional"
+                  />
                 </div>
               </Col>
 

@@ -1,0 +1,48 @@
+.application-detail-section .application-top-tab {
+  height: 35px !important;
+  margin-left: 0 !important;
+  display: flex;
+  justify-content: space-between;
+}
+.application-tab {
+  height: 30px !important;
+}
+
+.application-detail-section .nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  font-size: 13px !important;
+  border-bottom: 2px solid #556ee6 !important;
+  background-color: transparent;
+  width: 100%;
+  height: 35px;
+  display: flex;
+  font-weight: 600;
+  color: #556ee6;
+  border-radius: 0;
+}
+.personal-detail-tab .card-height {
+  height: 100vh;
+}
+
+.application-detail-section .nav-tabs .nav-link {
+  border: none !important;
+}
+
+.application-detail-section .nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  border: none;
+}
+
+.application-detail-section .nav-tabs .nav-link {
+  font-size: 13px !important;
+  color: #495057;
+  width: 100%;
+  text-align: left;
+}
+.application-detail-section {
+  padding: 0 !important;
+}
+
+.application-tab {
+  border-bottom: none !important;
+}

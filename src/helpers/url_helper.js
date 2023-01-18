@@ -87,9 +87,9 @@ export const DELETE_PROJECT = "/delete/project"
 export const GET_TASKS = "/tasks"
 
 //dashboard charts data
-export const GET_WEEKLY_DATA = "/weekly-data"
-export const GET_YEARLY_DATA = "/yearly-data"
-export const GET_MONTHLY_DATA = "/monthly-data"
+export const GET_DASHBOARD_DATA = "/admin/dashboard"
+// export const GET_YEARLY_DATA = "/yearly-data"
+// export const GET_MONTHLY_DATA = "/monthly-data"
 
 export const TOP_SELLING_DATA = "/top-selling-data"
 

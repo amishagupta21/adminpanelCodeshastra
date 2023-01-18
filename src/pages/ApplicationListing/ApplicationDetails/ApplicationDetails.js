@@ -15,24 +15,22 @@ import {
 import Breadcrumbs from "components/Common/Breadcrumb"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
+import ApplicationForm from "./ApplicationForm"
+import "./applicationDetails.css"
+import userPlaceholder from "../../../assets/images/userplaceholder.png"
 
-import Nav from "react-bootstrap/Nav"
-import PersonalDetails from "./PersonalDetails"
-import "./learnerDetail.css"
-import userPlaceholder from "../../assets/images/userplaceholder.png"
-
-const LearnerDetails = () => {
+const ApplicationDetails = () => {
   const [key, setKey] = useState("home")
   const [value, setValue] = useState("home")
 
   return (
     <div className="page-content">
       <Container fluid>
-        <Breadcrumbs title="Unikaksha" breadcrumbItem="Learner" />
+        <Breadcrumbs title="Unikaksha" breadcrumbItem="Application Details" />
         <Row>
           <Col sm="4">
             <Card>
-              <div className="learner-bg-image">
+              <div className="bg-image">
                 <div className="d-flex justify-content-center">
                   <img height="50px" src={userPlaceholder} />
                   <div className="profile-detail">
@@ -41,7 +39,7 @@ const LearnerDetails = () => {
                   </div>
                 </div>
               </div>
-
+              {/* <img alt="Sample" height="120px" src="" /> */}
               <CardBody>
                 <Row>
                   <Col sm="4">
@@ -65,59 +63,31 @@ const LearnerDetails = () => {
                 </Row>
               </CardBody>
             </Card>
-          </Col>
-          <Col sm="4">
-            <Card className="courses">
-              <CardBody>
-                <CardTitle tag="h5">Courses</CardTitle>
-
-                <Tabs
-                  id="controlled-tab-example"
-                  activeKey={key}
-                  onSelect={k => setKey(k)}
-                >
-                  <Tab eventKey="home" title="Live Course">
-                    <div className="mt-3">
-                      <h4>Full Stack Web Developer (Full Time)</h4>
-                      <p>Batch #23</p>
-                      <p className="mt-2 mb-2">
-                        Next Live - Monday, 23 Aug 2022
-                      </p>
-                      <p>8:00 AM to 5:00 PM (IST)</p>
-                    </div>
-                  </Tab>
-                  <Tab eventKey="profile" title="Library">
-                    Library
-                  </Tab>
-                </Tabs>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col sm="4">
             <Card>
               <CardBody>
-                <CardTitle tag="h5">Attendance Summary</CardTitle>
-                <p className="mt-3">This month</p>
-                <Row>
-                  <Col sm="6">
-                    <h4 className="mt-3">July 2022 - Aug 2022</h4>
-                    <p className="mt-1">
-                      Shubham attended 10 out of 11 live sessions.
-                    </p>
-                    <Button className="mt-3" color="primary">
-                      View More
-                    </Button>
-                  </Col>
-                  <Col sm="6"></Col>
-                </Row>
+                <CardTitle tag="h5">Application Summary</CardTitle>
+                <h4 className="mt-3">Full Stack Web Developer (Full Time)</h4>
+
+                <p className="mt-3">
+                  Course Type: <span>Fresher/Working Professional</span>
+                </p>
+                <p className="mt-2">
+                  Application number: <span>ANKG54216384</span>
+                </p>
+                <p className="mt-2">
+                  Applied on: <span>12-10-2020, 09:45</span>
+                </p>
               </CardBody>
             </Card>
           </Col>
-          <PersonalDetails />
+
+          <Col sm="8">
+            <ApplicationForm />
+          </Col>
         </Row>
       </Container>
     </div>
   )
 }
 
-export default LearnerDetails
+export default ApplicationDetails

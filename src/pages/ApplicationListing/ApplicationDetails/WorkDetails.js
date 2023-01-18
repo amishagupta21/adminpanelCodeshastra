@@ -16,7 +16,6 @@ import {
   Form,
 } from "reactstrap"
 import { Link } from "react-router-dom"
-import userplaceholder from "../../assets/images/userplaceholder.png"
 
 const WorkDetails = () => {
   return (

@@ -159,11 +159,11 @@ const Notifications = () => {
             </div>
           </div>
         </div>
-        <div className="mt-3 d-flex justify-content-end">
-          <Button color="primary" className="me-3 px-5" outline type="submit">
+        <div className="mt-5 d-flex justify-content-end">
+          <Button color="primary" className="me-3" outline type="submit">
             Reset
           </Button>
-          <Button className="px-5" color="primary" type="submit">
+          <Button color="primary" type="submit">
             Save
           </Button>
         </div>
