@@ -26,6 +26,7 @@ import { DeBounceSearch } from "components/Common/DeBounceSearch"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import Select from "react-select"
 import "./applicationListing.css"
+import { Link } from "react-router-dom"
 
 const { SearchBar } = Search
 
@@ -86,7 +87,7 @@ class ApplicationListing extends Component {
           sort: true,
         },
         {
-          dataField: "m_status",
+          dataField: "courseDetail.course_status",
           text: "Status",
           sort: true,
         },
@@ -95,13 +96,9 @@ class ApplicationListing extends Component {
           dataField: "Actions",
           text: "Actions",
           formatter: (cellContent, user) => (
-            <Button
-              type="button"
-              color="success"
-              className="btn-rounded mb-2 me-2"
-            >
-              View
-            </Button>
+            <Link to="/application-details">
+              <i className="mdi mdi-eye font-size-16 text-primary me-1" />
+            </Link>
           ),
         },
       ],
@@ -138,16 +135,16 @@ class ApplicationListing extends Component {
     this.props.onGetmanageUser(data)
   }
 
-  handleSearch = e => {
-    const { onGetApplicationListing } = this.props
+  // handleSearch = e => {
+  //   const { onGetApplicationListing } = this.props
 
-    const data = {
-      search: e,
-    }
-    onGetApplicationListing(data)
-    const { ApplicationListing } = this.props
-    this.setState({ ApplicationListing })
-  }
+  //   const data = {
+  //     search: e,
+  //   }
+  //   onGetApplicationListing(data)
+  //   const { ApplicationListing } = this.props
+  //   this.setState({ ApplicationListing })
+  // }
 
   options = [
     { label: "INVITED ", value: "invited" },
@@ -204,7 +201,7 @@ class ApplicationListing extends Component {
                                     className="form-control"
                                     type="text"
                                     name="search"
-                                    handleSearch={this.handleSearch}
+                                    // handleSearch={this.handleSearch}
                                     placeholder="Search by Application No"
                                   />
                                   <span className="bx bx-search-alt" />

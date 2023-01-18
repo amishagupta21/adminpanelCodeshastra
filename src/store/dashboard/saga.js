@@ -1,42 +1,35 @@
-import { call, put, takeEvery, all, fork } from "redux-saga/effects";
+import { call, put, takeEvery, all, fork } from "redux-saga/effects"
 
 // Crypto Redux States
-import { GET_CHARTS_DATA } from "./actionTypes";
-import { apiSuccess, apiFail } from "./actions";
+import {
+  GET_CHARTS_DATA,
+  API_SUCCESS,
+  API_FETCH,
+  API_FAIL,
+} from "./actionTypes"
+import { apiSuccess, apiFail, getChartsData } from "./actions"
 
 //Include Both Helper File with needed methods
-import {
-    getWeeklyData,
-    getYearlyData,
-    getMonthlyData
-}
-    from "../../helpers/fakebackend_helper";
+import { getDashboardData } from "../../helpers/fakebackend_helper"
+import tosterMsg from "components/Common/toster"
 
-function* getChartsData({ payload: periodType }) {
-    try {
-        var response;
-        if (periodType == "monthly") {
-            response = yield call(getWeeklyData, periodType);
-        }
-        if (periodType == "yearly") {
-            response = yield call(getYearlyData, periodType);
-        }
-        if (periodType == "weekly") {
-            response = yield call(getMonthlyData, periodType);
-        }
-
-        yield put(apiSuccess(GET_CHARTS_DATA, response));
-    } catch (error) {
-        yield put(apiFail(GET_CHARTS_DATA, error));
-    }
+function* fetchDashboardData({ payload: data }) {
+  try {
+    const response = yield call(getDashboardData, data)
+    tosterMsg("Update Data Success")
+    yield put(apiSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(apiFail(error))
+  }
 }
 
-export function* watchGetChartsData() {
-    yield takeEvery(GET_CHARTS_DATA, getChartsData);
+export function* watchGetDashboardData() {
+  yield takeEvery(API_FETCH, fetchDashboardData)
 }
 
 function* dashboardSaga() {
-    yield all([fork(watchGetChartsData)]);
+  yield all([fork(watchGetDashboardData)])
 }
 
-export default dashboardSaga;
+export default dashboardSaga
