@@ -105,7 +105,7 @@ const getApplicationListing = data =>
 
 // get dashboard charts data
 export const getDashboardData = data =>
-  getData(url.GET_DASHBOARD_DATA + `?day=${data?.day || 10}`)
+  getData(url.GET_DASHBOARD_DATA + `?day=${data?.day}`)
 // export const getYearlyData = () => getCount(url.GET_YEARLY_DATA)
 // export const getMonthlyData = () => getCount(url.GET_MONTHLY_DATA)
 
