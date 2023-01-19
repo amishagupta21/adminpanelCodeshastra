@@ -28,12 +28,13 @@ class Dashboard extends Component {
   componentDidMount() {
     const { learnersData, userRoles, onGetDashboard } = this.props
     // if (learnersData && !learnersData.length) {
-    onGetDashboard({ search: "", day: 7 })
+    onGetDashboard({ search: "", day: 0 })
     // }
     this.setState({ learnersData, userRoles })
   }
 
   options = [
+    { label: "Today", value: "0" },
     { label: "Last 7 days ", value: "7" },
     { label: "Last 30 days", value: "30" },
     { label: "Last 60 days", value: "60" },
