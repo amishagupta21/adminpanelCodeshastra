@@ -198,13 +198,7 @@ class Learner extends Component {
                                   <DeBounceSearch
                                     handleSearch={this.handleSearch}
                                   />
-                                  {/* <input
-                                    className="form-control"
-                                    type="text"
-                                    name="search"
-                                    placeholder="Search by Name, email or Mobile number"
-                                    handleSearch={this.handleSearch}
-                                  /> */}
+
                                   <span className="bx bx-search-alt" />
                                 </div>
                               </div>
