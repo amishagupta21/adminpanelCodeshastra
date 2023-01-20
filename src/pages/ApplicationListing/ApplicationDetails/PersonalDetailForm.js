@@ -84,20 +84,6 @@ const PersonalDetailForm = () => {
                   />
                 </div>
               </Col>
-
-              <div className="mt-3 d-flex justify-content-end">
-                <Button
-                  color="primary"
-                  className="me-3 px-5"
-                  outline
-                  type="submit"
-                >
-                  Reset
-                </Button>
-                <Button className="px-5" color="primary" type="submit">
-                  Save
-                </Button>
-              </div>
             </Row>
           </Form>
         </div>

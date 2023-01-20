@@ -60,7 +60,7 @@ const ApplicationStatus = () => {
               <Label check>I have read and I understand</Label>
             </FormGroup>
           </div>
-          <Button color="primary" className="mt-3" type="submit">
+          <Button color="primary" className="mt-3 px-4" type="submit">
             Submit
           </Button>
         </Form>

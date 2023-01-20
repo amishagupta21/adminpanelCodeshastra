@@ -135,16 +135,16 @@ class ApplicationListing extends Component {
     this.props.onGetmanageUser(data)
   }
 
-  // handleSearch = e => {
-  //   const { onGetApplicationListing } = this.props
+  handleSearch = e => {
+    const { onGetApplicationListing } = this.props
 
-  //   const data = {
-  //     search: e,
-  //   }
-  //   onGetApplicationListing(data)
-  //   const { ApplicationListing } = this.props
-  //   this.setState({ ApplicationListing })
-  // }
+    const data = {
+      search: e,
+    }
+    onGetApplicationListing(data)
+    const { ApplicationListing } = this.props
+    this.setState({ ApplicationListing })
+  }
 
   options = [
     { label: "INVITED ", value: "invited" },
@@ -194,16 +194,16 @@ class ApplicationListing extends Component {
                             <Col sm="2">
                               <div className="app-search p-0">
                                 <div className="position-relative">
-                                  {/* <DeBounceSearch
+                                  <DeBounceSearch
                                     handleSearch={this.handleSearch}
-                                  /> */}
-                                  <input
+                                  />
+                                  {/* <input
                                     className="form-control"
                                     type="text"
                                     name="search"
-                                    // handleSearch={this.handleSearch}
+                                     handleSearch={this.handleSearch}
                                     placeholder="Search by Application No"
-                                  />
+                                  /> */}
                                   <span className="bx bx-search-alt" />
                                 </div>
                               </div>

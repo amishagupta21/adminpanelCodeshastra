@@ -111,7 +111,7 @@ const DocumentKyc = () => {
               <Input type="checkbox" />{" "}
               <Label check>I have read and I understand</Label>
             </FormGroup>
-            <Button color="primary" className="mt-3" type="submit">
+            <Button color="primary" className="mt-3 px-4" type="submit">
               Submit
             </Button>
           </div>
