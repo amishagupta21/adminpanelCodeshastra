@@ -109,6 +109,7 @@ export const GET_USERSLIST = "/users"
 //Learner
 export const GET_LEARNER = "/admin/user/list"
 export const GET_APPLICATION_LISTING = "/admin/application/list"
+export const GET_DELETE_LEARNER = "/admin/user/uid/"
 
 //Course API's
 export const GET_COURSELIST = "/courses"

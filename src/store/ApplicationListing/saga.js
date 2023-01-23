@@ -1,15 +1,23 @@
 import { takeEvery, put, call } from "redux-saga/effects"
 
 // Login Redux States
-import { GET_APPLICATION_LISTING } from "./actionTypes"
+import {
+  GET_APPLICATION_LISTING,
+  DELETE_APPLICATION_LISTING,
+} from "./actionTypes"
 
 import {
   getApplicationListingSuccess,
   getApplicationListingFail,
   getApplicationListingCountFail,
   getApplicationListingCountSuccess,
+  deleteApplicationListingSuccess,
+  deleteApplicationListingFail,
 } from "./actions"
-import { getApplicationListing } from "helpers/fakebackend_helper"
+import {
+  getApplicationListing,
+  getDeleteData,
+} from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
 
 function* fetchDemoData({ payload: data }) {
@@ -32,8 +40,19 @@ function* fetchDemoData({ payload: data }) {
   }
 }
 
+function* onDeleteApplicationListing({ payload: event }) {
+  try {
+    const response = yield call(getDeleteData, event)
+    console.log(response, "/////////response")
+    yield put(deleteApplicationListingSuccess(response))
+  } catch (error) {
+    yield put(deleteApplicationListingFail(error))
+  }
+}
+
 function* usersManageSaga() {
   yield takeEvery(GET_APPLICATION_LISTING, fetchDemoData)
+  yield takeEvery(DELETE_APPLICATION_LISTING, onDeleteApplicationListing)
 }
 
 export default usersManageSaga

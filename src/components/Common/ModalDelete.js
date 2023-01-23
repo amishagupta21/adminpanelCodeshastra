@@ -1,10 +1,10 @@
-import PropTypes from "prop-types"
 import React from "react"
 import { Col, Modal, ModalBody, Row } from "reactstrap"
 
-const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
+const ModalDelete = ({ isOpen, toggle, deleteRow, uid }) => {
+  console.log(uid)
   return (
-    <Modal isOpen={show} toggle={onCloseClick} centered={true}>
+    <Modal isOpen={isOpen} toggle={toggle} centered={true}>
       <ModalBody className="py-3 px-5">
         <Row>
           <Col lg={12}>
@@ -24,14 +24,14 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
               <button
                 type="button"
                 className="btn btn-success btn-lg ms-2"
-                onClick={onDeleteClick}
+                onClick={() => deleteRow(uid)}
               >
                 Yes, delete it!
               </button>
               <button
                 type="button"
                 className="btn btn-danger btn-lg ms-2"
-                onClick={onCloseClick}
+                onClick={toggle}
               >
                 Cancel
               </button>
@@ -43,10 +43,4 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
   )
 }
 
-DeleteModal.propTypes = {
-  onCloseClick: PropTypes.func,
-  onDeleteClick: PropTypes.func,
-  show: PropTypes.any,
-}
-
-export default DeleteModal
+export default ModalDelete
