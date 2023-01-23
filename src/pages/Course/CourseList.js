@@ -13,7 +13,7 @@ import dateFormate from "common/dateFormatter"
 import "./CourseStyle.scss"
 import { Pagination, PaginationLink, PaginationItem } from "reactstrap"
 import Select from "react-select"
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"
 
 export function CourseList({
   courseList,
@@ -28,7 +28,7 @@ export function CourseList({
   let courses = courseList?.data?.result
   const columnsPerRow = 4
   const defaultPageCount = 5
-  const history = useHistory();
+  const history = useHistory()
   const pageCount = parseInt(
     (courseList.data.count + defaultPageCount - 1) / defaultPageCount
   )
@@ -37,8 +37,8 @@ export function CourseList({
     { label: "Published", value: "Published" },
   ]
   const paginationPage = Array.apply(null, new Array(pageCount))
-  const openCourse = (element) => {    
-    history.push('/courses/create?c_id='+element.id)
+  const openCourse = element => {
+    history.push("/courses/create?c_id=" + element.id)
   }
 
   const getColumnsForRow = () => {
@@ -50,7 +50,10 @@ export function CourseList({
               <Card.Img src={courseIMG} />
               <span className="best-seller-tag">
                 <div className="best-seller-content">
-                  <img src={liveIcon} style={{height : "20px", width: "40px"}} />
+                  <img
+                    src={liveIcon}
+                    style={{ height: "20px", width: "40px" }}
+                  />
                 </div>
               </span>
               <Card.Body>
@@ -61,14 +64,20 @@ export function CourseList({
               <ListGroup className="list-group-flush">
                 <ListGroup.Item>
                   <Row>
-                    <Col >{element.description}</Col>
-                      
+                    <Col>{element.description}</Col>
                   </Row>
                 </ListGroup.Item>
               </ListGroup>
               <Card.Body>
                 <div className="text-center">
-                  <Button variant="outline-primary" onClick={() => {openCourse(element)}}>Manage Course</Button>
+                  <Button
+                    variant="outline-primary"
+                    onClick={() => {
+                      openCourse(element)
+                    }}
+                  >
+                    Manage Course
+                  </Button>
                 </div>
               </Card.Body>
             </Card>
@@ -110,7 +119,7 @@ export function CourseList({
                   variant="success"
                   className="btn-rounded mb-2 me-2"
                   onClick={e => {
-                    history.push('/courses/create');
+                    history.push("/courses/create")
                   }}
                 >
                   <i className="mdi mdi-plus me-1" /> Create Course

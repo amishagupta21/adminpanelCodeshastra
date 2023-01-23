@@ -17,23 +17,32 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap"
 // datatable related plugins
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import Breadcrumbs from "components/Common/Breadcrumb"
-import { getLearner } from "store/actions"
+import { getLearner, deleteLearner } from "store/actions"
 import dateFormate from "common/dateFormatter"
 import { DeBounceSearch } from "components/Common/DeBounceSearch"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import Select from "react-select"
 import { Link } from "react-router-dom"
+import "./learnerListing.css"
+import ModalDelete from "components/Common/ModalDelete"
+import { use } from "i18next"
 
 class Learner extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      deleteModal: false,
+      modal: false,
+      deleteData: false,
+      uid: "",
       user: {},
       manageUser: [],
       manageUserDataCount: 20,
@@ -91,12 +100,18 @@ class Learner extends Component {
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-end">
                 <Link to="/learner-details">
-                  <DropdownItem onClick={() => handleUserClick(user)}>
+                  <DropdownItem>
                     <i className="mdi mdi-pencil font-size-16 text-success me-1" />
                     Edit
                   </DropdownItem>
                 </Link>
-                <DropdownItem onClick={() => onClickDelete(user)}>
+                <DropdownItem
+                  onClick={() => {
+                    this.toggle()
+                    this.setState({ uid: user.uid })
+                  }}
+                  // onClick={() => this.deleteRow(user.uid)}
+                >
                   <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />
                   Delete
                 </DropdownItem>
@@ -106,6 +121,13 @@ class Learner extends Component {
         },
       ],
     }
+    this.toggle = this.toggle.bind(this)
+  }
+
+  deleteRow = uid => {
+    const { onGetDeleteLearner } = this.props
+    onGetDeleteLearner(uid)
+    this.toggle(!this.state.modal)
   }
 
   componentDidMount() {
@@ -117,7 +139,7 @@ class Learner extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { manageUser, userRoles } = this.props
+    const { manageUser, userRoles, onGetLearner, deleteData } = this.props
     if (
       !isEmpty(manageUser) &&
       size(prevProps.manageUser) !== size(manageUser)
@@ -126,6 +148,10 @@ class Learner extends Component {
     }
     if (prevProps.userRoles !== userRoles) {
       this.setState({ userRoles })
+    }
+
+    if (prevProps.deleteData !== deleteData) {
+      onGetLearner({ search: "" })
     }
   }
 
@@ -155,6 +181,16 @@ class Learner extends Component {
     { label: "    DEACTIVATED ", value: "de-activated" },
   ]
 
+  handleFilter = status => {
+    setFilters(prev => ({ ...prev, page: 1, status: status.value }))
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    })
+  }
+
   render() {
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser } = this.props
@@ -177,8 +213,15 @@ class Learner extends Component {
     return (
       <React.Fragment>
         <div className="page-content">
-          <Container fluid>
+          <Container fluid className="learnerListing">
             <Breadcrumbs title="Unikaksha" breadcrumbItem="Learner" />
+
+            <ModalDelete
+              isOpen={this.state.modal}
+              toggle={this.toggle}
+              deleteRow={this.deleteRow}
+              uid={this.state.uid}
+            />
             <Row>
               <Col className="col-12">
                 <Card>
@@ -208,7 +251,7 @@ class Learner extends Component {
                               <Select
                                 name="filter"
                                 // value={filter}
-                                // onChange={this.handleFilter}
+                                onChange={this.handleFilter}
                                 placeholder="Status"
                                 options={this.options}
                               />
@@ -316,73 +359,6 @@ class Learner extends Component {
                         </React.Fragment>
                       )}
                     </ToolkitProvider>
-                    {/* <Pagination className="pagination pagination-rounded justify-content-end mb-2">
-                      {this.state.currentPage !== 1 && (
-                        <>
-                          <PaginationItem>
-                            <PaginationLink
-                              first
-                              onClick={() => this.handlePageChange(1)}
-                            />
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink
-                              onClick={() =>
-                                this.handlePageChange(
-                                  this.state.currentPage - 1
-                                )
-                              }
-                              previous
-                            />
-                          </PaginationItem>
-                        </>
-                      )}
-
-                      {paginationPage.map((page, index) => {
-                        if (this.state.currentPage === index + 1) {
-                          return (
-                            <PaginationItem key={index + 1} active>
-                              <PaginationLink
-                                onClick={() => this.handlePageChange(index + 1)}
-                              >
-                                {index + 1}
-                              </PaginationLink>
-                            </PaginationItem>
-                          );
-                        } else {
-                          return (
-                            <PaginationItem key={index + 1}>
-                              <PaginationLink
-                                onClick={() => this.handlePageChange(index + 1)}
-                              >
-                                {index + 1}
-                              </PaginationLink>
-                            </PaginationItem>
-                          );
-                        }
-                      })}
-
-                      {this.state.currentPage !== pageCount && (
-                        <>
-                          <PaginationItem>
-                            <PaginationLink
-                              onClick={() =>
-                                this.handlePageChange(
-                                  this.state.currentPage + 1
-                                )
-                              }
-                              next
-                            />
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink
-                              onClick={() => this.handlePageChange(pageCount)}
-                              last
-                            />
-                          </PaginationItem>
-                        </>
-                      )}
-                    </Pagination> */}
                   </CardBody>
                 </Card>
               </Col>
@@ -405,10 +381,12 @@ const mapStateToProps = ({ Learner, state, count }) => ({
   manageUser: Learner?.manageUser,
   usersCount: Learner?.count,
   userRoles: Learner?.roles,
+  deleteData: false,
 })
 
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),
+  onGetDeleteLearner: id => dispatch(deleteLearner(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Learner)

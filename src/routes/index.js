@@ -17,7 +17,7 @@ import Courses from "pages/Course/index"
 import CreateCourse from "pages/Course/CreateCourse"
 import Learner from "pages/Learner/Learner"
 import ApplicationListing from "pages/ApplicationListing/ApplicationListing"
-import LearnerDetails from "pages/LearnerDetails/LearnerDetails"
+import LearnerDetails from "pages/Learner/LearnerDetails/LearnerDetails"
 import ApplicationDetails from "pages/ApplicationListing/ApplicationDetails/ApplicationDetails"
 
 const authProtectedRoutes = [
