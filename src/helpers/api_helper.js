@@ -35,6 +35,10 @@ export async function getData(url, config = {}) {
   return await Api.get(url, { ...config }).then(response => response.data)
 }
 
+export async function deleteData(url, config = {}) {
+  return await Api.delete(url, { ...config }).then(response => response.data)
+}
+
 export async function get(url, config = {}) {
   return await axiosApi.get(url, { ...config }).then(response => response.data)
 }

@@ -16,7 +16,7 @@ import {
   Form,
 } from "reactstrap"
 import { Link } from "react-router-dom"
-import userplaceholder from "../../assets/images/userplaceholder.png"
+import userplaceholder from "../../../assets/images/userplaceholder.png"
 import DatePicker from "react-datepicker"
 import "./personalDetailForm.css"
 

@@ -4,13 +4,15 @@ import {
   GET_LEARNER_FAIL,
   GET_LEARNER_COUNT_SUCCESS,
   GET_LEARNER_COUNT_FAIL,
-} from "./actionTypes";
+  DELETE_LEARNER_SUCCESS,
+  DELETE_LEARNER_FAIL,
+} from "./actionTypes"
 
 const INIT_STATE = {
   manageUser: [],
   roles: [],
   count: 0,
-};
+}
 
 const Learner = (state = INIT_STATE, action) => {
   switch (action.type) {
@@ -18,33 +20,47 @@ const Learner = (state = INIT_STATE, action) => {
       return {
         ...state,
         data: action.payload,
-      };
+      }
     case GET_LEARNER_SUCCESS:
       return {
         ...state,
         manageUser: action.payload,
-      };
+      }
 
     case GET_LEARNER_FAIL:
       return {
         ...state,
         error: action.payload,
-      };
+      }
 
     case GET_LEARNER_COUNT_SUCCESS:
       return {
         ...state,
         count: action.payload,
-      };
+      }
 
     case GET_LEARNER_COUNT_FAIL:
       return {
         ...state,
         error: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+      }
+    case DELETE_LEARNER_SUCCESS:
+      console.log(DELETE_LEARNER_SUCCESS, "///////DELETE_LEARNER_SUCCESS")
+      return {
+        ...state,
+        // events: state.events.filter(
+        //   event => event.id.toString() !== action.payload.id.toString()
+        // ),
+      }
 
-export default Learner;
+    case DELETE_LEARNER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export default Learner

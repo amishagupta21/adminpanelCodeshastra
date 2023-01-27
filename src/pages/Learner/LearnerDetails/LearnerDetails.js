@@ -19,7 +19,7 @@ import Tabs from "react-bootstrap/Tabs"
 import Nav from "react-bootstrap/Nav"
 import PersonalDetails from "./PersonalDetails"
 import "./learnerDetail.css"
-import userPlaceholder from "../../assets/images/userplaceholder.png"
+import userPlaceholder from "../../../assets/images/userplaceholder.png"
 
 const LearnerDetails = () => {
   const [key, setKey] = useState("home")
