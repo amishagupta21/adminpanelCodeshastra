@@ -44,23 +44,6 @@ const ApplicationListing = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
-    case DELETE_APPLICATION_LISTING_SUCCESS:
-      console.log(
-        DELETE_APPLICATION_LISTING_SUCCESS,
-        "///////DELETE_LEARNER_SUCCESS"
-      )
-      return {
-        ...state,
-        events: state.events.filter(
-          event => event.id.toString() !== action.payload.id.toString()
-        ),
-      }
-
-    case DELETE_APPLICATION_LISTING_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      }
 
     default:
       return state

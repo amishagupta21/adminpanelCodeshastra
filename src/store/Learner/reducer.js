@@ -45,7 +45,6 @@ const Learner = (state = INIT_STATE, action) => {
         error: action.payload,
       }
     case DELETE_LEARNER_SUCCESS:
-      console.log(DELETE_LEARNER_SUCCESS, "///////DELETE_LEARNER_SUCCESS")
       return {
         ...state,
         // events: state.events.filter(

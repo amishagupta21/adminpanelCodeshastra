@@ -2,7 +2,6 @@ import React from "react"
 import { Col, Modal, ModalBody, Row } from "reactstrap"
 
 const ModalDelete = ({ isOpen, toggle, deleteRow, uid }) => {
-  console.log(uid)
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered={true}>
       <ModalBody className="py-3 px-5">
