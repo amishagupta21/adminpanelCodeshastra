@@ -1,5 +1,5 @@
 import axios from "axios"
-import { del, get, post, put, getData } from "./api_helper"
+import { del, get, post, put, getData, deleteData } from "./api_helper"
 import * as url from "./url_helper"
 
 // Gets the logged in user data from local session
@@ -103,9 +103,13 @@ const getApplicationListing = data =>
       }`
   )
 
+const getDeleteData = uid => deleteData(url.GET_DELETE_LEARNER + `${uid}`)
+
 // get dashboard charts data
 export const getDashboardData = data =>
-  getData(url.GET_DASHBOARD_DATA + `?day=${data?.day}`)
+  getData(
+    url.GET_DASHBOARD_DATA + (data.day !== "All" ? `?day=${data?.day}` : "")
+  )
 
 // Login Method
 const postJwtLogin = data => post(url.POST_FAKE_JWT_LOGIN, data)
@@ -310,4 +314,5 @@ export {
   onAddComment,
   getLearnerList,
   getApplicationListing,
+  getDeleteData,
 }

@@ -17,7 +17,7 @@ import {
 } from "reactstrap"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
-import style from "../LearnerDetails/personalDetails.css"
+import style from "./personalDetails.css"
 import { Link } from "react-router-dom"
 import PersonalDetailForm from "./PersonalDetailForm"
 import EducationDetails from "./EducationDetails"

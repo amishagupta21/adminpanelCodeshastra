@@ -14,7 +14,7 @@ import {
   PaginationLink,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
-import progressbar from "../../assets/images/progress.gif"
+import progressbar from "../../../assets/images/progress.gif"
 
 const DocumentKyc = () => {
   let inputRef

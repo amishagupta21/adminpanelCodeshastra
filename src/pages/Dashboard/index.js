@@ -10,30 +10,19 @@ class Dashboard extends Component {
     super(props)
     this.state = {
       update: 0,
-      //   user: {},
-      //   manageUser: [],
-      //   manageUserDataCount: 20,
-      //   userRoles: [],
-      //   selectedMulti: [],
-      //   expanded: false,
-      //   currentPage: 1,
     }
   }
-  // componentDidMount() {
-  //   const { manageUser, userRoles, onGetDashboard } = this.props
-  //   onGetDashboard({ search: "" })
-  //   this.setState({ manageUser, userRoles })
-  // }
 
   componentDidMount() {
     const { learnersData, userRoles, onGetDashboard } = this.props
     // if (learnersData && !learnersData.length) {
-    onGetDashboard({ search: "", day: 0 })
+    onGetDashboard({ search: "", day: "All" })
     // }
     this.setState({ learnersData, userRoles })
   }
 
   options = [
+    { label: "All", value: "All" },
     { label: "Today", value: "0" },
     { label: "Last 7 days ", value: "7" },
     { label: "Last 30 days", value: "30" },
@@ -47,10 +36,11 @@ class Dashboard extends Component {
       <React.Fragment>
         <div className="page-content">
           <Container fluid>
-            <Row className="align-items-center">
+            <Row>
               <Col md={2}>
                 <Select
                   name="filter"
+                  className="mb-4"
                   placeholder="Update"
                   options={this.options}
                   defaultValue={this.options[0]}
@@ -61,7 +51,7 @@ class Dashboard extends Component {
                 />
               </Col>
             </Row>
-            <Row className="mt-4">
+            <Row className="mt-5">
               <Col md={4}>
                 <Card className="card-height">
                   <CardBody>

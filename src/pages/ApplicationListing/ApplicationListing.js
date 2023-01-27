@@ -175,7 +175,7 @@ class ApplicationListing extends Component {
     return (
       <React.Fragment>
         <div className="page-content">
-          <Container fluid>
+          <Container fluid className="applicationListing">
             <Breadcrumbs title="Unikaksha" breadcrumbItem="All Applications" />
             <Row>
               <Col className="col-12">
@@ -213,7 +213,7 @@ class ApplicationListing extends Component {
                               <Select
                                 name="filter"
                                 // value={filter}
-                                // onChange={this.handleFilter}
+                                onChange={this.handleFilter}
                                 placeholder="Status"
                                 options={this.options}
                               />
