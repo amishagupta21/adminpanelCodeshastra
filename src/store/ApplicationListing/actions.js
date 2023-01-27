@@ -34,18 +34,3 @@ export const getApplicationListingCountFail = error => ({
   type: GET_APPLICATION_LISTING_COUNT_FAIL,
   payload: error,
 })
-
-export const deleteApplicationListing = id => ({
-  type: DELETE_APPLICATION_LISTING,
-  payload: id,
-})
-
-export const deleteApplicationListingSuccess = event => ({
-  type: DELETE_APPLICATION_LISTING_SUCCESS,
-  payload: event,
-})
-
-export const deleteApplicationListingFail = error => ({
-  type: DELETE_APPLICATION_LISTING_FAIL,
-  payload: error,
-})
