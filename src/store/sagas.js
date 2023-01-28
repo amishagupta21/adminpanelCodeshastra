@@ -14,9 +14,11 @@ import invoiceSaga from "./invoices/saga"
 import projectsSaga from "./projects/saga"
 import tasksSaga from "./tasks/saga"
 import mailsSaga from "./mails/saga"
-import contactsSaga from "./contacts/saga";
-import dashboardSaga from "./dashboard/saga";
-import dashboardSaasSaga from "./dashboard-saas/saga";
+import contactsSaga from "./contacts/saga"
+import dashboardSaga from "./dashboard/saga"
+import dashboardSaasSaga from "./dashboard-saas/saga"
+import learner from "./Learner/saga"
+import applicationListing from "./ApplicationListing/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -36,6 +38,8 @@ export default function* rootSaga() {
     fork(tasksSaga),
     fork(contactsSaga),
     fork(dashboardSaga),
-    fork(dashboardSaasSaga)
+    fork(dashboardSaasSaga),
+    fork(learner),
+    fork(applicationListing),
   ])
 }

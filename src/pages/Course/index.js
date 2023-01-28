@@ -35,9 +35,9 @@ export default function Courses() {
   }
 
   const handleFilter = filter => {
-    console.log("filter",filter);
+    console.log("filter", filter)
     const data = {
-      status : filter.value,
+      status: filter.value,
     }
     getSearchCourse(data)
   }

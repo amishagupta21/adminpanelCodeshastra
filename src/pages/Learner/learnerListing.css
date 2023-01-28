@@ -1,0 +1,66 @@
+.learnerListing .filter-text {
+  font-weight: 600;
+}
+.learnerListing .app-search .form-control {
+  border-radius: 4px !important;
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  background-color: transparent !important;
+}
+
+.learnerListing .table-responsive {
+  overflow-x: hidden !important;
+}
+
+.learnerListing .react-bootstrap-table-pagination-list {
+  display: flex !important;
+}
+
+.learnerListing .page-item .page-link {
+  border-radius: 50% !important;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.learnerListing .page-item {
+  margin-right: 10px;
+}
+
+.learnerListing .react-bs-table-sizePerPage-dropdown::before {
+  content: "Show";
+}
+
+.learnerListing .react-bs-table-sizePerPage-dropdown::after {
+  content: "entries";
+}
+
+.learnerListing #pageDropDown {
+  margin: 0 5px;
+  height: 35px;
+  background: transparent;
+  color: #000000 !important;
+  padding: 3px 10px;
+}
+
+.learnerListing .filter-chips {
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  padding: 3px 7px !important;
+  font-size: 11px !important;
+}
+
+.learnerListing .filter-chips span {
+  color: #828080;
+  font-size: 12px;
+  position: relative !important;
+  top: 0px !important;
+}
+
+.learnerListing .filter-status li {
+  list-style: none;
+}
+
+.learnerListing .filter-status {
+  padding-left: 0.5em !important;
+}
