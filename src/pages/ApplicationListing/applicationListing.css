@@ -1,0 +1,66 @@
+.applicationListing .filter-text {
+  font-weight: 600;
+}
+.applicationListing .app-search .form-control {
+  border-radius: 4px !important;
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  background-color: transparent !important;
+}
+
+.applicationListing .table-responsive {
+  overflow-x: hidden !important;
+}
+
+.applicationListing .react-bootstrap-table-pagination-list {
+  display: flex !important;
+}
+
+.applicationListing .page-item .page-link {
+  border-radius: 50% !important;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.applicationListing .page-item {
+  margin-right: 10px;
+}
+
+.applicationListing .react-bs-table-sizePerPage-dropdown::before {
+  content: "Show";
+}
+
+.applicationListing .react-bs-table-sizePerPage-dropdown::after {
+  content: "entries";
+}
+
+.applicationListing #pageDropDown {
+  margin: 0 5px;
+  height: 35px;
+  background: transparent;
+  color: #000000 !important;
+  padding: 3px 10px;
+}
+
+.applicationListing .filter-chips {
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  padding: 3px 7px !important;
+  font-size: 11px !important;
+}
+
+.applicationListing .filter-chips span {
+  color: #828080;
+  font-size: 12px;
+  position: relative !important;
+  top: 0px !important;
+}
+
+.applicationListing .filter-status li {
+  list-style: none;
+}
+
+.applicationListing .filter-status {
+  padding-left: 0.5em !important;
+}
