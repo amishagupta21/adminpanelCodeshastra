@@ -95,6 +95,28 @@ const getLearnerList = data =>
       }`
   )
 
+const getFilters = data => {
+  if (data?.status) {
+    return `&status=${data?.status || ""}`
+  }
+
+  if (data?.learnerType) {
+    return `&learner_type=${data?.learnerType || ""}`
+  }
+
+  if (data?.courseType) {
+    return `&course_type=${data?.courseType || ""}`
+  }
+}
+
+const getStatusFilter = data =>
+  getData(
+    url.GET_LEARNER +
+      `?page=${data?.page || 1}&perPage=${data?.perPage || 5102}&search=${
+        data?.search || ""
+      }${getFilters(data)}`
+  )
+
 const getApplicationListing = data =>
   getData(
     url.GET_APPLICATION_LISTING +
@@ -315,4 +337,5 @@ export {
   getLearnerList,
   getApplicationListing,
   getDeleteData,
+  getStatusFilter,
 }
