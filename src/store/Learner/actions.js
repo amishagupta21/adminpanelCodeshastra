@@ -7,6 +7,7 @@ import {
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
+  FILTER_STATUS_LEARNER,
 } from "./actionTypes"
 
 export const getLearner = data => ({
@@ -47,4 +48,9 @@ export const deleteLearnerSuccess = event => ({
 export const deleteLearnerFail = error => ({
   type: DELETE_LEARNER_FAIL,
   payload: error,
+})
+
+export const getStatusFilter = data => ({
+  type: FILTER_STATUS_LEARNER,
+  payload: data,
 })
