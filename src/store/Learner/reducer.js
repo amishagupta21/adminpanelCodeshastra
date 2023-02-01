@@ -6,6 +6,7 @@ import {
   GET_LEARNER_COUNT_FAIL,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
+  FILTER_STATUS_LEARNER,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -56,6 +57,11 @@ const Learner = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      }
+    case FILTER_STATUS_LEARNER:
+      return {
+        ...state,
+        data: action.payload,
       }
     default:
       return state

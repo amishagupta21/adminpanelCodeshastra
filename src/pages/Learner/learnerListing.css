@@ -64,3 +64,7 @@
 .learnerListing .filter-status {
   padding-left: 0.5em !important;
 }
+
+.badge {
+  cursor: pointer;
+}
