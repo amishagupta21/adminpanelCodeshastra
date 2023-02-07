@@ -32,7 +32,6 @@ const contacts = (state = INIT_STATE, action) => {
       }
 
     case ADD_USER_SUCCESS:
-
       return {
         ...state,
         users: [...state.users, action.payload],
@@ -50,35 +49,35 @@ const contacts = (state = INIT_STATE, action) => {
         userProfile: action.payload,
       }
 
-      case UPDATE_USER_SUCCESS:
-        return {
-          ...state,
-          users: state.users.map(user =>
-            user.id.toString() === action.payload.id.toString()
-              ? { user, ...action.payload }
-              : user
-          ),
-        }
-  
-      case UPDATE_USER_FAIL:
-        return {
-          ...state,
-          error: action.payload,
-        }
-  
-      case DELETE_USER_SUCCESS:
-        return {
-          ...state,
-          users: state.users.filter(
-            user => user.id.toString() !== action.payload.id.toString()
-          ),
-        }
-  
-      case DELETE_USER_FAIL:
-        return {
-          ...state,
-          error: action.payload,
-        }
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        users: state.users.map(user =>
+          user.id.toString() === action.payload.id.toString()
+            ? { user, ...action.payload }
+            : user
+        ),
+      }
+
+    case UPDATE_USER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        users: state?.users?.filter(
+          user => user.id.toString() !== action.payload.id.toString()
+        ),
+      }
+
+    case DELETE_USER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
 
     case GET_USER_PROFILE_FAIL:
       return {

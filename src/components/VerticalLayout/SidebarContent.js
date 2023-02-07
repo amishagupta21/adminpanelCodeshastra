@@ -106,13 +106,13 @@ const SidebarContent = props => {
               </Link>
             </li>
             <li>
-              <Link to="/curriculum">
+              <Link to="/curriculum" className="disabled-link">
                 <i className="bx bx-bar-chart-alt-2" />
                 <span>{props.t("Curriculum")}</span>
               </Link>
             </li>
             <li>
-              <Link to="/contentbank">
+              <Link to="/contentbank" className="disabled-link">
                 <i className="bx bx-bar-chart-alt-2" />
                 <span>{props.t("Content Bank")}</span>
               </Link>

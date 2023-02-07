@@ -17,7 +17,9 @@ import {
 } from "reactstrap"
 import Select from "react-select"
 
-const EducationDetails = () => {
+const EducationDetails = props => {
+  const { user, userProfile } = props
+
   const options = [
     { label: "Diploma_or_12th ", value: "12" },
     { label: "UG", value: "UG" },
@@ -52,23 +54,43 @@ const EducationDetails = () => {
                   <div className="mb-3">
                     <Label className="form-label">PG College Name</Label>
                     <Input
-                      name="email"
+                      name="text"
                       className="form-control"
                       placeholder="College of Management"
                       type="text"
+                      value={
+                        userProfile?.education_details?.qualification[2]
+                          ?.college_name
+                      }
                     />
                   </div>
                 </Col>
                 <Col sm={4}>
                   <div className="mb-3">
                     <Label className="form-label">Year of Completion</Label>
-                    <Input name="text" type="text" placeholder="2022" />
+                    <Input
+                      name="number"
+                      type="number"
+                      placeholder="2022"
+                      value={
+                        userProfile?.education_details?.qualification[2]
+                          ?.year_of_completion
+                      }
+                    />
                   </div>
                 </Col>
                 <Col sm={4}>
                   <div className="mb-3">
                     <Label className="form-label">PG Passing Marks</Label>
-                    <Input name="text" type="text" placeholder="89%" />
+                    <Input
+                      name="text"
+                      type="text"
+                      placeholder="89%"
+                      value={
+                        userProfile?.education_details?.qualification[2]
+                          ?.passing_marks + "%"
+                      }
+                    />
                   </div>
                 </Col>
               </Row>
@@ -83,13 +105,25 @@ const EducationDetails = () => {
                       name="text"
                       type="text"
                       placeholder="College of Engineering"
+                      value={
+                        userProfile?.education_details?.qualification[1]
+                          ?.college_name
+                      }
                     />
                   </div>
                 </Col>
                 <Col sm={4}>
                   <div className="mb-3">
                     <Label className="form-label">Year of Completion</Label>
-                    <Input name="text" type="text" placeholder="2022" />
+                    <Input
+                      name="text"
+                      type="text"
+                      placeholder="2022"
+                      value={
+                        userProfile?.education_details?.qualification[1]
+                          ?.year_of_completion
+                      }
+                    />
                   </div>
                 </Col>
                 <Col sm={4}>
@@ -97,7 +131,15 @@ const EducationDetails = () => {
                     <Label className="form-label">
                       UG/Bachelors Passing Marks
                     </Label>
-                    <Input name="text" type="text" placeholder="89%" />
+                    <Input
+                      name="text"
+                      type="text"
+                      placeholder="89%"
+                      value={
+                        userProfile?.education_details?.qualification[1]
+                          ?.passing_marks + "%"
+                      }
+                    />
                   </div>
                 </Col>
               </Row>
@@ -106,19 +148,31 @@ const EducationDetails = () => {
                 <Col sm={4}>
                   <div className="mb-3">
                     <Label className="form-label">
-                      12th/Diploma Course Details
+                      12th/Diploma College Name
                     </Label>
                     <Input
                       name="text"
                       type="text"
                       placeholder="Institute of Technology"
+                      value={
+                        userProfile?.education_details?.qualification[0]
+                          ?.college_name
+                      }
                     />
                   </div>
                 </Col>
                 <Col sm={4}>
                   <div className="mb-3">
                     <Label className="form-label">Year of Completion</Label>
-                    <Input name="text" type="text" placeholder="2016" />
+                    <Input
+                      name="text"
+                      type="text"
+                      placeholder="2016"
+                      value={
+                        userProfile?.education_details?.qualification[0]
+                          ?.year_of_completion
+                      }
+                    />
                   </div>
                 </Col>
                 <Col sm={4}>
@@ -126,7 +180,15 @@ const EducationDetails = () => {
                     <Label className="form-label">
                       12th/Diploma Passing Marks
                     </Label>
-                    <Input name="text" type="text" placeholder="89%" />
+                    <Input
+                      name="text"
+                      type="text"
+                      placeholder="89%"
+                      value={
+                        userProfile?.education_details?.qualification[0]
+                          ?.passing_marks + "%"
+                      }
+                    />
                   </div>
                 </Col>
               </Row>
@@ -139,6 +201,7 @@ const EducationDetails = () => {
                       name="text"
                       type="text"
                       placeholder="Software Developer"
+                      value={userProfile?.education_details?.other_program_name}
                     />
                   </div>
                 </Col>
@@ -149,13 +212,25 @@ const EducationDetails = () => {
                       name="text"
                       type="text"
                       placeholder="The Coding Institute"
+                      value={
+                        userProfile?.education_details
+                          ?.other_program_college_name
+                      }
                     />
                   </div>
                 </Col>
                 <Col sm={4}>
                   <div className="mb-3">
                     <Label className="form-label">Duration in Months</Label>
-                    <Input name="text" type="text" placeholder="4 Months" />
+                    <Input
+                      name="text"
+                      type="text"
+                      placeholder="4 Months"
+                      value={
+                        userProfile?.education_details
+                          ?.other_program_course_duration + " days"
+                      }
+                    />
                   </div>
                 </Col>
               </Row>

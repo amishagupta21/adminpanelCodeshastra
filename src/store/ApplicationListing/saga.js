@@ -16,9 +16,7 @@ function* fetchDemoData({ payload: data }) {
   try {
     const response = yield call(getApplicationListing, data)
     tosterMsg(response?.message)
-    yield put(
-      getApplicationListingSuccess(response?.data?.applicationsData?.docs)
-    )
+    yield put(getApplicationListingSuccess(response?.data?.applicationsData))
     yield put(
       getApplicationListingCountSuccess(
         response?.data?.applicationsData?.docs,
