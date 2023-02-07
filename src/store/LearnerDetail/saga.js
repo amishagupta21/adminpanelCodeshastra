@@ -19,6 +19,7 @@ import {
   uploadProfilePictureFail,
   uploadProfilePictureSuccessUrl,
   uploadProfilePictureFailUrl,
+  profilePicture,
 } from "./actions"
 import {
   getLearnerDetailsList,
@@ -40,7 +41,7 @@ function* fetchDemoData({ payload: data }) {
   }
 }
 
-function* profilePicture({ payload: data }) {
+function* profilePictureApi({ payload: data }) {
   try {
     const response = yield call(getProfilePicture, data)
     // tosterMsg(response?.message)
@@ -69,7 +70,9 @@ function* uploadProfilePicture({ payload: data }) {
       url: response?.data?.signedUrl,
       data: data?.img,
     })
-
+    yield put(
+      profilePicture({ uid: data?.data?.uid, document_type: "profile_picture" })
+    )
     // tosterMsg(response?.message)
     yield put(uploadProfilePictureSuccess(response?.data?.signedUrl))
   } catch (error) {
@@ -80,7 +83,7 @@ function* uploadProfilePicture({ payload: data }) {
 
 function* usersManageSaga() {
   yield takeEvery(GET_LEARNER_DETAILS, fetchDemoData)
-  yield takeEvery(PROFILE_PICTURE, profilePicture)
+  yield takeEvery(PROFILE_PICTURE, profilePictureApi)
   yield takeEvery(DELETE_PROFILE_PICTURE, deleteProfilePicture)
   yield takeEvery(UPLOAD_PROFILE_PICTURE, uploadProfilePicture)
   // yield takeEvery(UPLOAD_PROFILE_PICTURE_URL, uploadProfilePictureUrl)
