@@ -56,7 +56,7 @@ const Mails = (state = INIT_STATE, action) => {
     case DELETE_INBOX_MAIL_SUCCESS:
       return {
         ...state,
-        inboxmails: state.inboxmails.filter(
+        inboxmails: state?.inboxmails?.filter(
           user => user.id.toString() !== action.payload.id.toString()
         ),
       }
@@ -78,8 +78,6 @@ const Mails = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
-
-
 
     case GET_IMPORTANT_MAILS_SUCCESS:
       return {

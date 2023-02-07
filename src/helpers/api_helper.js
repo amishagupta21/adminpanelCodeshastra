@@ -39,6 +39,18 @@ export async function deleteData(url, config = {}) {
   return await Api.delete(url, { ...config }).then(response => response.data)
 }
 
+export async function deleteProfilePicture(url, data, config = {}) {
+  return await Api.delete(url, { data: { ...data } }, { ...config }).then(
+    response => response.data
+  )
+}
+
+export async function postImage(url, data, config = {}) {
+  return await Api.post(url, { ...data }, { ...config }).then(
+    response => response.data
+  )
+}
+
 export async function get(url, config = {}) {
   return await axiosApi.get(url, { ...config }).then(response => response.data)
 }
@@ -53,6 +65,10 @@ export async function put(url, data, config = {}) {
   return axiosApi
     .put(url, { ...data }, { ...config })
     .then(response => response.data)
+}
+
+export async function putImage(url, data, config = {}) {
+  return axios.put(url, data, { ...config }).then(response => response.data)
 }
 
 export async function del(url, config = {}) {

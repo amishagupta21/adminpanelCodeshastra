@@ -9,6 +9,7 @@ import Account from "./auth/register/reducer"
 import ForgetPassword from "./auth/forgetpwd/reducer"
 import Profile from "./auth/profile/reducer"
 import Learner from "./Learner/reducer"
+import LearnerDetails from "./LearnerDetail/reducer"
 import ApplicationListing from "./ApplicationListing/reducer"
 
 //E-commerce
@@ -64,6 +65,7 @@ const rootReducer = combineReducers({
   DashboardSaas,
   Learner,
   ApplicationListing,
+  LearnerDetails,
 })
 
 export default rootReducer
