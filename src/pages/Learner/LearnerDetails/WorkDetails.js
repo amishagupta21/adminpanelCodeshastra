@@ -16,7 +16,9 @@ import {
   Form,
 } from "reactstrap"
 
-const WorkDetails = () => {
+const WorkDetails = props => {
+  const { userProfile } = props
+
   return (
     <>
       <div>
@@ -33,6 +35,7 @@ const WorkDetails = () => {
                     className="form-control"
                     placeholder="Software Developer"
                     type="text"
+                    value={userProfile?.work_details[0]?.position}
                   />
                 </div>
               </Col>
@@ -41,7 +44,12 @@ const WorkDetails = () => {
                   <Label className="form-label">
                     Total technical exp. in years
                   </Label>
-                  <Input name="text" type="text" placeholder="2 years" />
+                  <Input
+                    name="text"
+                    type="text"
+                    placeholder="2 years"
+                    value={userProfile?.work_details[0]?.experience + " years"}
+                  />
                 </div>
               </Col>
               <Col sm={3}>
@@ -49,13 +57,23 @@ const WorkDetails = () => {
                   <Label className="form-label">
                     Total coding exp. in years
                   </Label>
-                  <Input name="text" type="text" placeholder="1 year" />
+                  <Input
+                    name="text"
+                    type="text"
+                    placeholder="1 year"
+                    value={userProfile?.work_details[0]?.experience + " years"}
+                  />
                 </div>
               </Col>
               <Col sm={3}>
                 <div className="mb-3">
                   <Label className="form-label">Organization working in</Label>
-                  <Input name="text" type="text" placeholder="Code Shashtra" />
+                  <Input
+                    name="text"
+                    type="text"
+                    placeholder="Code Shashtra"
+                    value={userProfile?.work_details[0]?.organization_name}
+                  />
                 </div>
               </Col>
 

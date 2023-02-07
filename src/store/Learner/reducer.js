@@ -48,9 +48,6 @@ const Learner = (state = INIT_STATE, action) => {
     case DELETE_LEARNER_SUCCESS:
       return {
         ...state,
-        // events: state.events.filter(
-        //   event => event.id.toString() !== action.payload.id.toString()
-        // ),
       }
 
     case DELETE_LEARNER_FAIL:

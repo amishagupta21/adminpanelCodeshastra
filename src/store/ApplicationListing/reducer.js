@@ -19,30 +19,30 @@ const ApplicationListing = (state = INIT_STATE, action) => {
     case GET_APPLICATION_LISTING:
       return {
         ...state,
-        data: action.payload,
+        data: action?.payload,
       }
     case GET_APPLICATION_LISTING_SUCCESS:
       return {
         ...state,
-        manageUser: action.payload,
+        manageUser: action?.payload,
       }
 
     case GET_APPLICATION_LISTING_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action?.payload,
       }
 
     case GET_APPLICATION_LISTING_COUNT_SUCCESS:
       return {
         ...state,
-        count: action.count,
+        count: action?.count,
       }
 
     case GET_APPLICATION_LISTING_COUNT_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action?.payload,
       }
 
     default:

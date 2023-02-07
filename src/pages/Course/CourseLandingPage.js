@@ -5,10 +5,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react"
 import { Formik } from "formik"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
-import {
-  Col,
-  Collapse, Label, Row
-} from "reactstrap"
+import { Col, Collapse, Label, Row } from "reactstrap"
 import { FormButton } from "./formbutton"
 
 import classnames from "classnames"
@@ -62,7 +59,7 @@ export default function BasicDetails({
   )
   const [highlights, sethighlights] = useState(
     courseDetails.sections?.highlights?.value ?? [
-      {        
+      {
         value: "",
       },
     ]
@@ -146,7 +143,7 @@ export default function BasicDetails({
     ])
   }
   const removeOverview = index => {
-    setcourse_overview(assets => assets.filter((_, idx) => idx !== index))
+    setcourse_overview(assets => assets?.filter((_, idx) => idx !== index))
   }
   const addmoreHighlights = () => {
     sethighlights(event => [
@@ -157,7 +154,7 @@ export default function BasicDetails({
     ])
   }
   const removeHighlights = index => {
-    sethighlights(assets => assets.filter((_, idx) => idx !== index))
+    sethighlights(assets => assets?.filter((_, idx) => idx !== index))
   }
   const addMoreLearnings = () => {
     setlearnings(event => [
@@ -169,7 +166,7 @@ export default function BasicDetails({
     ])
   }
   const removeLearnings = index => {
-    setlearnings(assets => assets.filter((_, idx) => idx !== index))
+    setlearnings(assets => assets?.filter((_, idx) => idx !== index))
   }
   const handleDelete = () => {}
   return (
@@ -179,8 +176,8 @@ export default function BasicDetails({
           initialValues={{
             students_enrolled: courseDetails?.students_enrolled ?? null,
             ratings: courseDetails?.sections?.ratings?.value ?? null,
-            description : courseDetails?.description ?? null,
-            course_url : courseDetails?.course_url ?? null
+            description: courseDetails?.description ?? null,
+            course_url: courseDetails?.course_url ?? null,
           }}
           onSubmit={(values, { setSubmitting }) => {
             values.sections = {}
@@ -208,23 +205,24 @@ export default function BasicDetails({
             values.sections.whatYouCanBecome = {
               label: "The Best Job Roles You Can Get",
               type: "blocks",
-              value : job_roles
-            }            
+              value: job_roles,
+            }
             values.sections.ratings = {
-              label : "Ratings",
-              type : "string",
-              value : values.ratings
+              label: "Ratings",
+              type: "string",
+              value: values.ratings,
             }
             values.sections.highlights = {
-              label : "Highlights",
-              type : "block",
-              value : highlights
+              label: "Highlights",
+              type: "block",
+              value: highlights,
             }
-            values.sections.batches = courseDetails.sections?.batches;
-            values.sections.feesStructure = courseDetails.sections?.feesStructure;
-            values.sections.placementPartner = courseDetails.sections?.placementPartner; 
-            values.course_status = "Published",                     
-            console.log("values", values)
+            values.sections.batches = courseDetails.sections?.batches
+            values.sections.feesStructure =
+              courseDetails.sections?.feesStructure
+            values.sections.placementPartner =
+              courseDetails.sections?.placementPartner
+            ;(values.course_status = "Published"), console.log("values", values)
             saveCourse(values)
           }}
         >
@@ -625,10 +623,13 @@ export default function BasicDetails({
                                     <Form.Control
                                       type="text"
                                       onKeyDown={e => {
-                                        if (e.key === "Enter") {                                          
-                                          setjob_roles(event => [...event, {value : e.target.value}])
-                                          e.preventDefault();
-                                          e.target.value = null                                          
+                                        if (e.key === "Enter") {
+                                          setjob_roles(event => [
+                                            ...event,
+                                            { value: e.target.value },
+                                          ])
+                                          e.preventDefault()
+                                          e.target.value = null
                                         }
                                       }}
                                       placeholder="Enter Jobs"
@@ -660,7 +661,7 @@ export default function BasicDetails({
                             </div>
                           </div>
                         </Collapse>
-                      </div>                      
+                      </div>
                       <div className="accordion-item">
                         <h2 className="accordion-header" id="headingFlushOne">
                           <button
@@ -713,7 +714,7 @@ export default function BasicDetails({
                                                       index
                                                     ),
                                                     {
-                                                      value: event.target.value,                                                      
+                                                      value: event.target.value,
                                                     },
                                                     ...highlights.slice(
                                                       index + 1
@@ -724,7 +725,7 @@ export default function BasicDetails({
                                                 placeholder="Enter Details"
                                               />
                                             </div>
-                                          </Col>                                          
+                                          </Col>
                                         </Row>
                                       </React.Fragment>
                                     )
@@ -755,7 +756,7 @@ export default function BasicDetails({
                             <div className="text-muted">
                               <Row>
                                 <Col lg="6">
-                                <div className="mb-3">
+                                  <div className="mb-3">
                                     <Label for="basicpill-firstname-input1">
                                       Ratings
                                     </Label>
@@ -787,7 +788,7 @@ export default function BasicDetails({
                               </Row>
                               <Row>
                                 <Col lg="12">
-                                <div className="mb-3">
+                                  <div className="mb-3">
                                     <Label for="basicpill-firstname-input1">
                                       Description
                                     </Label>
@@ -801,11 +802,11 @@ export default function BasicDetails({
                                       rows={5}
                                     />
                                   </div>
-                                </Col>                                
+                                </Col>
                               </Row>
                               <Row>
                                 <Col lg="12">
-                                <div className="mb-3">
+                                  <div className="mb-3">
                                     <Label for="basicpill-firstname-input1">
                                       Course URL
                                     </Label>
@@ -819,7 +820,7 @@ export default function BasicDetails({
                                       rows={5}
                                     />
                                   </div>
-                                </Col>                                
+                                </Col>
                               </Row>
                             </div>
                           </div>
