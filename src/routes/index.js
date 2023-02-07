@@ -27,7 +27,7 @@ const authProtectedRoutes = [
   { path: "/courses/create", component: CreateCourse },
   { path: "/learner", component: Learner },
   { path: "/application", component: ApplicationListing },
-  { path: "/learner-details", component: LearnerDetails },
+  { path: "/learner-details/:id", component: LearnerDetails },
   { path: "/application-details", component: ApplicationDetails },
 
   // //profile

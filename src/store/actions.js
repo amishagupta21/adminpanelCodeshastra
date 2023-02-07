@@ -8,6 +8,7 @@ export * from "./auth/profile/actions"
 export * from "./Learner/actions"
 export * from "./ApplicationListing/actions"
 export * from "./dashboard/actions"
+export * from "./LearnerDetail/actions"
 
 //Ecommerce
 export * from "./e-commerce/actions"

@@ -112,7 +112,7 @@ class Learner extends Component {
                 <i className="mdi mdi-dots-horizontal font-size-18" />
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-end">
-                <Link to="/learner-details">
+                <Link to={`/learner-details/${user.uid}`}>
                   <DropdownItem>
                     <i className="mdi mdi-pencil font-size-16 text-success me-1" />
                     Edit
@@ -259,19 +259,19 @@ class Learner extends Component {
   }
 
   removeStatus = removeItem => {
-    const options = this.state.selectedStatus.filter(
+    const options = this?.state?.selectedStatus?.filter(
       item => item !== removeItem
     )
     this.setState({ selectedStatus: options })
   }
   removeTest = removeItem => {
-    const options = this.state.selectedTestResult.filter(
+    const options = this?.state?.selectedTestResult?.filter(
       item => item !== removeItem
     )
     this.setState({ selectedTestResult: options })
   }
   removeCourse = removeItem => {
-    const options = this.state.selectedCourseType.filter(
+    const options = this?.state?.selectedCourseType?.filter(
       item => item !== removeItem
     )
     this.setState({ selectedCourseType: options })

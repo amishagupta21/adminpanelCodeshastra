@@ -16,7 +16,8 @@ import {
 import BootstrapTable from "react-bootstrap-table-next"
 import progressbar from "../../../assets/images/progress.gif"
 
-const DocumentKyc = () => {
+const DocumentKyc = props => {
+  const { userProfile } = props
   let inputRef
 
   const options = [
@@ -79,8 +80,29 @@ const DocumentKyc = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Pan Card</td>
+              {userProfile?.kyc &&
+                Object?.keys(userProfile?.kyc).map(item => {
+                  return (
+                    <>
+                      <tr>
+                        <td>{item}</td>
+                      </tr>
+                      {/* <tr>
+                        {userProfile?.kyc &&
+                          Object?.values(userProfile?.kyc).map(item => {
+                            return (
+                              <>
+                                <td>{item}</td>
+                              </>
+                            )
+                          })}
+                      </tr> */}
+                    </>
+                  )
+                })}
+
+              {/* <tr>
+                <td>{userProfile?.kyc?.aadhar_card}</td>
                 <td colSpan={5}>
                   <input
                     type="file"
@@ -102,14 +124,7 @@ const DocumentKyc = () => {
                     Upload
                   </button>
                 </td>
-                {/* {libraryCourse.map(item => {
-                  return (
-                    <>
-                      <td>{item.value}</td>
-                    </>
-                  )
-                })} */}
-              </tr>
+              </tr> */}
             </tbody>
           </Table>
         </Col>

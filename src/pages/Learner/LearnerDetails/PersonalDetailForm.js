@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Row,
   Col,
@@ -19,27 +19,112 @@ import { Link } from "react-router-dom"
 import userplaceholder from "../../../assets/images/userplaceholder.png"
 import DatePicker from "react-datepicker"
 import "./personalDetailForm.css"
-
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import {
+  deleteProfilePicture,
+  uploadProfilePicture,
+} from "store/LearnerDetail/actions"
+import userPlaceholder from "../../../assets/images/userplaceholder.png"
+import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
 
-const PersonalDetailForm = () => {
-  const [startDate, setStartDate] = useState(new Date())
+const PersonalDetailForm = props => {
+  const { user, userProfile, profilePictureUrl, uploadProfilePicture } = props
+  const [image, setImage] = useState({ preview: "", raw: "" })
+
+  const [startDate, setStartDate] = useState()
+
+  useEffect(() => {
+    if (userProfile?.personal_details) {
+      setStartDate(
+        userProfile?.personal_details?.birth_date /
+          userProfile?.personal_details?.birth_month /
+          userProfile?.personal_details?.birth_year
+      )
+    }
+  }, [userProfile])
+
+  const deleteProfilePicture = uid => {
+    const { onGetDeleteProfilePicture } = props
+    onGetDeleteProfilePicture({ uid: uid, document_type: "profile_picture" })
+  }
+
+  const handleChange = e => {
+    // console.log(e.target.files)
+    // setImage(e.target.files[0])
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+      })
+    }
+  }
+
+  const handleUpload = async id => {
+    // e.preventDefault()
+    const formData = new FormData()
+    formData.append("image", image)
+    const { onGetUploadProfilePicture } = props
+    onGetUploadProfilePicture({
+      img: image,
+      data: {
+        uid: id,
+        document_type: "profile_picture",
+        file_name: "progile_picture.png",
+        type: "image/png",
+      },
+    })
+  }
 
   return (
     <>
       <div>
         <h4 className="text-primary">Personal Details</h4>
-        <div className="d-flex align-items-center">
-          <img src={userplaceholder} height="50px" alt="" />
+        <div className="d-flex align-items-center personal-detail">
+          {props?.profilePictureUrl ? (
+            <img height="50px" width="50px" src={props?.profilePictureUrl} />
+          ) : (
+            <img height="50px" width="50px" src={userPlaceholder} />
+          )}
           &nbsp;&nbsp;
           <div>
             <p>Profile Picture</p>
             <div>
               <Link to="/">View</Link>&nbsp;&nbsp;&nbsp;
-              <Link className="text-danger" to="/">
+              <Link
+                className="text-danger"
+                onClick={() => deleteProfilePicture(userProfile?.uid)}
+              >
                 Delete
               </Link>
+              &nbsp;&nbsp;
+              {/* <Link
+                className="text-danger"
+              >
+                Upload
+              </Link> */}
             </div>
+            {/* {image.preview ? (
+              <img src={image?.preview} alt="dummy" width="100" height="100" />
+            ) : (
+              <>
+                <span className="fa-stack fa-2x mt-3 mb-2">
+                  <i className="fas fa-circle fa-stack-2x" />
+                  <i className="fas fa-store fa-stack-1x fa-inverse" />
+                </span>
+              </>
+            )}
+            <input
+              type="file"
+              id="upload-button"
+              style={{ display: "none" }}
+              onChange={handleChange}
+            />
+            <br />
+            <button onClick={() => handleUpload(userProfile?.uid)}>
+              Upload
+            </button> */}
           </div>
         </div>
         <div className="p-2">
@@ -49,17 +134,23 @@ const PersonalDetailForm = () => {
                 <div className="mb-3">
                   <Label className="form-label">Full Name</Label>
                   <Input
-                    name="email"
+                    name="text"
                     className="form-control"
-                    placeholder="Enter email"
-                    type="email"
+                    placeholder="Full Name"
+                    type="text"
+                    value={userProfile?.personal_details?.full_name}
                   />
                 </div>
               </Col>
               <Col sm={3}>
                 <div className="mb-3">
                   <Label className="form-label">Email</Label>
-                  <Input name="text" type="email" placeholder="Enter Email" />
+                  <Input
+                    name="text"
+                    type="email"
+                    placeholder="Enter Email"
+                    value={userProfile?.personal_details?.email}
+                  />
                 </div>
               </Col>
               <Col sm={3}>
@@ -69,6 +160,7 @@ const PersonalDetailForm = () => {
                     name="text"
                     type="text"
                     placeholder="Enter Mobile Number"
+                    value={userProfile?.personal_details?.mobile_number}
                   />
                 </div>
               </Col>
@@ -78,13 +170,19 @@ const PersonalDetailForm = () => {
                   <DatePicker
                     selected={startDate}
                     onChange={(date: Date) => setStartDate(date)}
+                    value={startDate}
                   />
                 </div>
               </Col>
               <Col sm={3}>
                 <div className="mb-3">
                   <Label className="form-label">Guardian Detail</Label>
-                  <Input name="text" type="text" placeholder="Enter Detail" />
+                  <Input
+                    name="text"
+                    type="text"
+                    placeholder="Enter Detail"
+                    value={userProfile?.personal_details?.guardian_details}
+                  />
                 </div>
               </Col>
 
@@ -109,4 +207,22 @@ const PersonalDetailForm = () => {
   )
 }
 
-export default PersonalDetailForm
+PersonalDetailForm.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  LearnerDetails: PropTypes.any,
+}
+
+const mapStateToProps = ({ LearnerDetails, state, count }) => ({
+  user: LearnerDetails?.data?.user,
+  userProfile: LearnerDetails?.data?.userProfile,
+  uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onGetDeleteProfilePicture: uid => dispatch(deleteProfilePicture(uid)),
+  onGetUploadProfilePicture: data => dispatch(uploadProfilePicture(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalDetailForm)
