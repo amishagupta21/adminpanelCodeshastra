@@ -31,7 +31,6 @@ import "react-datepicker/dist/react-datepicker.css"
 
 const PersonalDetailForm = props => {
   const { user, userProfile, profilePictureUrl, uploadProfilePicture } = props
-  // console.log(uploadProfilePicture, "////////uploadProfilePicture")
   const [image, setImage] = useState({ preview: "", raw: "" })
 
   const [startDate, setStartDate] = useState()
@@ -65,7 +64,6 @@ const PersonalDetailForm = props => {
   const handleUpload = async id => {
     // e.preventDefault()
     const formData = new FormData()
-    console.log(formData, "//////////formData")
     formData.append("image", image)
     const { onGetUploadProfilePicture } = props
     onGetUploadProfilePicture({
@@ -216,14 +214,11 @@ PersonalDetailForm.propTypes = {
   LearnerDetails: PropTypes.any,
 }
 
-const mapStateToProps = ({ LearnerDetails, state, count }) => (
-  console.log(LearnerDetails, "/////////////"),
-  {
-    user: LearnerDetails?.data?.user,
-    userProfile: LearnerDetails?.data?.userProfile,
-    uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
-  }
-)
+const mapStateToProps = ({ LearnerDetails, state, count }) => ({
+  user: LearnerDetails?.data?.user,
+  userProfile: LearnerDetails?.data?.userProfile,
+  uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
+})
 
 const mapDispatchToProps = dispatch => ({
   onGetDeleteProfilePicture: uid => dispatch(deleteProfilePicture(uid)),
