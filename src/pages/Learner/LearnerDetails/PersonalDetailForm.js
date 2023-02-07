@@ -34,6 +34,7 @@ const PersonalDetailForm = props => {
   const [image, setImage] = useState({ preview: "", raw: "" })
 
   const [startDate, setStartDate] = useState()
+  const hiddenFileInput = React.useRef(null)
 
   useEffect(() => {
     if (userProfile?.personal_details) {
@@ -44,18 +45,24 @@ const PersonalDetailForm = props => {
       )
     }
   }, [userProfile])
+  useEffect(() => {
+    if (image.preview !== "") {
+      handleUpload(userProfile?.uid)
+    }
+  }, [image])
 
   const deleteProfilePicture = uid => {
     const { onGetDeleteProfilePicture } = props
     onGetDeleteProfilePicture({ uid: uid, document_type: "profile_picture" })
   }
+  const handleClick = () => {
+    hiddenFileInput.current.click()
+  }
 
   const handleChange = e => {
-    // console.log(e.target.files)
-    // setImage(e.target.files[0])
     if (e.target.files.length) {
       setImage({
-        preview: URL.createObjectURL(e.target.files[0]),
+        preview: e.target.files[0],
         raw: e.target.files[0],
       })
     }
@@ -99,32 +106,19 @@ const PersonalDetailForm = props => {
                 Delete
               </Link>
               &nbsp;&nbsp;
-              {/* <Link
-                className="text-danger"
-              >
+              <Link className="text-danger" onClick={() => handleClick()}>
                 Upload
-              </Link> */}
+              </Link>
             </div>
-            {/* {image.preview ? (
-              <img src={image?.preview} alt="dummy" width="100" height="100" />
-            ) : (
-              <>
-                <span className="fa-stack fa-2x mt-3 mb-2">
-                  <i className="fas fa-circle fa-stack-2x" />
-                  <i className="fas fa-store fa-stack-1x fa-inverse" />
-                </span>
-              </>
-            )}
+
             <input
               type="file"
               id="upload-button"
+              ref={hiddenFileInput}
               style={{ display: "none" }}
               onChange={handleChange}
             />
             <br />
-            <button onClick={() => handleUpload(userProfile?.uid)}>
-              Upload
-            </button> */}
           </div>
         </div>
         <div className="p-2">
