@@ -5,6 +5,7 @@ import {
   DELETE_PROFILE_PICTURE,
   GET_LEARNER_DETAILS,
   PROFILE_PICTURE,
+  EDIT_LEARNER_DETAIL,
   UPLOAD_PROFILE_PICTURE,
 } from "./actionTypes"
 
@@ -20,6 +21,8 @@ import {
   uploadProfilePictureSuccessUrl,
   uploadProfilePictureFailUrl,
   profilePicture,
+  editLearnerDetailSuccess,
+  editLearnerDetailFail,
 } from "./actions"
 import {
   getLearnerDetailsList,
@@ -27,6 +30,7 @@ import {
   getDeleteProfilePicture,
   getUploadProfilePicture,
   uploadProfilePictureUrl,
+  editLearnerDetail,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
 
@@ -81,12 +85,23 @@ function* uploadProfilePicture({ payload: data }) {
   }
 }
 
+function* editData({ payload: data }) {
+  try {
+    const response = yield call(editLearnerDetail, data)
+    tosterMsg(response?.message)
+    yield put(editLearnerDetailSuccess(response))
+  } catch (error) {
+    toasterMsg(error?.message)
+    yield put(editLearnerDetailFail(error))
+  }
+}
+
 function* usersManageSaga() {
   yield takeEvery(GET_LEARNER_DETAILS, fetchDemoData)
   yield takeEvery(PROFILE_PICTURE, profilePictureApi)
   yield takeEvery(DELETE_PROFILE_PICTURE, deleteProfilePicture)
   yield takeEvery(UPLOAD_PROFILE_PICTURE, uploadProfilePicture)
-  // yield takeEvery(UPLOAD_PROFILE_PICTURE_URL, uploadProfilePictureUrl)
+  yield takeEvery(EDIT_LEARNER_DETAIL, editData)
 }
 
 export default usersManageSaga

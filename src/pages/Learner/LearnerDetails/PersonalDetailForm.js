@@ -24,14 +24,39 @@ import { connect } from "react-redux"
 import {
   deleteProfilePicture,
   uploadProfilePicture,
+  editLearnerDetail,
 } from "store/LearnerDetail/actions"
 import userPlaceholder from "../../../assets/images/userplaceholder.png"
 import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
 
 const PersonalDetailForm = props => {
-  const { user, userProfile, profilePictureUrl, uploadProfilePicture } = props
+  const {
+    user,
+    userProfile,
+    profilePictureUrl,
+    uploadProfilePicture,
+    editLearnerDetail,
+  } = props
   const [image, setImage] = useState({ preview: "", raw: "" })
+  const [learnerData, setLearnerData] = useState({
+    full_name: userProfile?.personal_details?.full_name,
+    email: userProfile?.personal_details?.email,
+    mobile_number: userProfile?.personal_details?.mobile_number,
+    guardian_details: userProfile?.personal_details?.guardian_details,
+  })
+
+  // const { full_name, email, mobile_number, guardian_details } = learnerData
+
+  useEffect(() => {
+    setLearnerData({
+      full_name: userProfile?.personal_details?.full_name,
+      email: userProfile?.personal_details?.email,
+      mobile_number: userProfile?.personal_details?.mobile_number,
+
+      guardian_details: userProfile?.personal_details?.guardian_details,
+    })
+  }, [userProfile])
 
   const [startDate, setStartDate] = useState()
   const hiddenFileInput = React.useRef(null)
@@ -68,18 +93,40 @@ const PersonalDetailForm = props => {
     }
   }
 
-  const handleUpload = async id => {
-    // e.preventDefault()
+  const handleUpload = async uid => {
     const formData = new FormData()
     formData.append("image", image)
+
     const { onGetUploadProfilePicture } = props
     onGetUploadProfilePicture({
       img: image,
       data: {
-        uid: id,
+        uid: uid,
         document_type: "profile_picture",
         file_name: "progile_picture.png",
         type: "image/png",
+      },
+    })
+  }
+
+  const editData = (event, uid) => {
+    event.preventDefault()
+    const { onGetEditLearnerDetail } = props
+    onGetEditLearnerDetail({
+      uid: uid,
+      occupation: "STUDENT",
+      personal_details: {
+        full_name: "Marshal Aroraa",
+        email: "marshal.arora@codeshastra.com",
+        mobile_number: "+91 7015493577",
+        mobile_cc: "+91 7015493577",
+        whatsapp_number: "+91 7015493577",
+        whatsapp_cc: "+91 7015493577",
+        gender: "Male",
+        birth_date: 31,
+        birth_month: 12,
+        birth_year: 1967,
+        guardian_details: "details",
       },
     })
   }
@@ -132,7 +179,8 @@ const PersonalDetailForm = props => {
                     className="form-control"
                     placeholder="Full Name"
                     type="text"
-                    value={userProfile?.personal_details?.full_name}
+                    onChange={e => setLearnerData(e.target.value)}
+                    value={learnerData?.full_name}
                   />
                 </div>
               </Col>
@@ -143,7 +191,8 @@ const PersonalDetailForm = props => {
                     name="text"
                     type="email"
                     placeholder="Enter Email"
-                    value={userProfile?.personal_details?.email}
+                    onChange={e => setLearnerData(e.target.value)}
+                    value={learnerData?.email}
                   />
                 </div>
               </Col>
@@ -154,7 +203,8 @@ const PersonalDetailForm = props => {
                     name="text"
                     type="text"
                     placeholder="Enter Mobile Number"
-                    value={userProfile?.personal_details?.mobile_number}
+                    onChange={e => setLearnerData(e.target.value)}
+                    value={learnerData?.mobile_number}
                   />
                 </div>
               </Col>
@@ -175,7 +225,8 @@ const PersonalDetailForm = props => {
                     name="text"
                     type="text"
                     placeholder="Enter Detail"
-                    value={userProfile?.personal_details?.guardian_details}
+                    onChange={e => setLearnerData(e.target.value)}
+                    value={learnerData?.guardian_details}
                   />
                 </div>
               </Col>
@@ -189,7 +240,12 @@ const PersonalDetailForm = props => {
                 >
                   Reset
                 </Button>
-                <Button className="px-5" color="primary" type="submit">
+                <Button
+                  className="px-5"
+                  color="primary"
+                  // type="submit"
+                  onClick={editData}
+                >
                   Save
                 </Button>
               </div>
@@ -212,11 +268,13 @@ const mapStateToProps = ({ LearnerDetails, state, count }) => ({
   user: LearnerDetails?.data?.user,
   userProfile: LearnerDetails?.data?.userProfile,
   uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
+  editLearnerDetail: LearnerDetails?.editLearnerDetail,
 })
 
 const mapDispatchToProps = dispatch => ({
   onGetDeleteProfilePicture: uid => dispatch(deleteProfilePicture(uid)),
   onGetUploadProfilePicture: data => dispatch(uploadProfilePicture(data)),
+  onGetEditLearnerDetail: data => dispatch(editLearnerDetail(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonalDetailForm)
