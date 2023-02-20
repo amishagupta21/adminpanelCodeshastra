@@ -15,6 +15,9 @@ import {
   UPLOAD_PROFILE_PICTURE_URL,
   UPLOAD_PROFILE_PICTURE_SUCCESS_URL,
   UPLOAD_PROFILE_PICTURE_FAIL_URL,
+  EDIT_LEARNER_DETAIL_SUCCESS,
+  EDIT_LEARNER_DETAIL_FAIL,
+  EDIT_LEARNER_DETAIL,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -114,6 +117,23 @@ const LearnerDetails = (state = INIT_STATE, action) => {
       }
 
     case UPLOAD_PROFILE_PICTURE_FAIL_URL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case EDIT_LEARNER_DETAIL:
+      return {
+        ...state,
+        uploadProfilePicture: action.payload,
+      }
+    case EDIT_LEARNER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        uploadProfilePicture: action.payload,
+      }
+
+    case EDIT_LEARNER_DETAIL_FAIL:
       return {
         ...state,
         error: action.payload,
