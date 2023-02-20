@@ -16,6 +16,9 @@ import {
   UPLOAD_PROFILE_PICTURE_URL,
   UPLOAD_PROFILE_PICTURE_SUCCESS_URL,
   UPLOAD_PROFILE_PICTURE_FAIL_URL,
+  EDIT_LEARNER_DETAIL,
+  EDIT_LEARNER_DETAIL_SUCCESS,
+  EDIT_LEARNER_DETAIL_FAIL,
 } from "./actionTypes"
 
 export const getLearnerDetails = data => {
@@ -102,5 +105,20 @@ export const uploadProfilePictureSuccessUrl = data => ({
 
 export const uploadProfilePictureFailUrl = error => ({
   type: UPLOAD_PROFILE_PICTURE_FAIL_URL,
+  payload: error,
+})
+
+export const editLearnerDetail = data => ({
+  type: EDIT_LEARNER_DETAIL,
+  payload: data,
+})
+
+export const editLearnerDetailSuccess = data => ({
+  type: EDIT_LEARNER_DETAIL_SUCCESS,
+  payload: data,
+})
+
+export const editLearnerDetailFail = error => ({
+  type: EDIT_LEARNER_DETAIL_FAIL,
   payload: error,
 })
