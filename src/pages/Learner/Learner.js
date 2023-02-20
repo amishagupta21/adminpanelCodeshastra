@@ -26,7 +26,12 @@ import {
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import Breadcrumbs from "components/Common/Breadcrumb"
-import { getLearner, deleteLearner } from "store/actions"
+import {
+  getLearner,
+  deleteLearner,
+  getStatusFilter,
+  registerUser,
+} from "store/actions"
 import dateFormate from "common/dateFormatter"
 import { DeBounceSearch } from "components/Common/DeBounceSearch"
 import paginationFactory from "react-bootstrap-table2-paginator"
@@ -34,7 +39,6 @@ import Select from "react-select"
 import { Link } from "react-router-dom"
 import "./learnerListing.css"
 import ModalDelete from "components/Common/ModalDelete"
-import { use } from "i18next"
 
 class Learner extends Component {
   constructor(props) {
@@ -50,6 +54,10 @@ class Learner extends Component {
       selectedMulti: [],
       expanded: false,
       currentPage: 1,
+
+      selectedTestResult: [],
+      selectedStatus: [],
+      selectedCourseType: [],
       columns: [
         {
           dataField: "id",
@@ -65,6 +73,11 @@ class Learner extends Component {
         {
           dataField: "email",
           text: "Email",
+          sort: true,
+        },
+        {
+          dataField: "userProfileData.occupation",
+          text: "Occupation",
           sort: true,
         },
         {
@@ -99,7 +112,7 @@ class Learner extends Component {
                 <i className="mdi mdi-dots-horizontal font-size-18" />
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-end">
-                <Link to="/learner-details">
+                <Link to={`/learner-details/${user.uid}`}>
                   <DropdownItem>
                     <i className="mdi mdi-pencil font-size-16 text-success me-1" />
                     Edit
@@ -131,7 +144,8 @@ class Learner extends Component {
   }
 
   componentDidMount() {
-    const { manageUser, userRoles, onGetLearner } = this.props
+    const { manageUser, userRoles, onGetLearner, onGetStatusFilter } =
+      this.props
     if (manageUser && !manageUser.length) {
       onGetLearner({ search: "" })
     }
@@ -174,24 +188,97 @@ class Learner extends Component {
     this.setState({ Learner })
   }
 
-  options = [
-    { label: "INVITED ", value: "invited" },
-    { label: "  ONBOARDED", value: "onboarded" },
-    { label: "  SUSPENDED ", value: "suspended" },
-    { label: "    DEACTIVATED ", value: "de-activated" },
-  ]
-
-  handleFilter = status => {
-    setFilters(prev => ({ ...prev, page: 1, status: status.value }))
-  }
-
   toggle() {
     this.setState({
       modal: !this.state.modal,
     })
   }
 
+  options = [
+    { label: "true ", value: "true" },
+    { label: "false", value: "false" },
+  ]
+
+  testResult = [
+    { label: "Student ", value: "Student" },
+    { label: "Professional", value: "Professional" },
+    { label: "Unemployed", value: "Unemployed" },
+  ]
+
+  courseType = [{ label: "Live", value: "Live" }]
+
+  handleFilterStatus = selectedOption => {
+    if (this.state.selectedStatus.length === 0)
+      this.setState({
+        selectedStatus: [...this.state.selectedStatus, selectedOption.value],
+      })
+  }
+
+  handleTestStatus = selectedOption => {
+    if (this.state.selectedTestResult.length === 0)
+      this.setState({
+        selectedTestResult: [
+          ...this.state.selectedTestResult,
+          selectedOption.value,
+        ],
+      })
+    console.log(selectedOption)
+  }
+
+  handleCourseType = selectedOption => {
+    if (this.state.selectedCourseType.length === 0)
+      this.setState({
+        selectedCourseType: [
+          ...this.state.selectedCourseType,
+          selectedOption.value,
+        ],
+      })
+  }
+
+  applyFilter = () => {
+    const { selectedTestResult, selectedStatus, selectedCourseType } =
+      this.state
+    let params = {
+      page: 1,
+      perPage: 5102,
+    }
+
+    if (selectedStatus.length) {
+      params.status = selectedStatus[0]
+    }
+
+    if (selectedTestResult.length) {
+      params.learnerType = selectedTestResult[0]?.toUpperCase()
+    }
+
+    if (selectedCourseType.length) {
+      params.courseType = selectedCourseType[0]
+    }
+
+    this.props.onGetStatusFilter(params)
+  }
+
+  removeStatus = removeItem => {
+    const options = this?.state?.selectedStatus?.filter(
+      item => item !== removeItem
+    )
+    this.setState({ selectedStatus: options })
+  }
+  removeTest = removeItem => {
+    const options = this?.state?.selectedTestResult?.filter(
+      item => item !== removeItem
+    )
+    this.setState({ selectedTestResult: options })
+  }
+  removeCourse = removeItem => {
+    const options = this?.state?.selectedCourseType?.filter(
+      item => item !== removeItem
+    )
+    this.setState({ selectedCourseType: options })
+  }
+
   render() {
+    const { options, value } = this.state
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser } = this.props
     const pageCount = parseInt(
@@ -246,13 +333,13 @@ class Learner extends Component {
                                 </div>
                               </div>
                             </Col>
-                            <Col sm="1"></Col>
-                            <Col sm="1">
+                            <Col sm="2"></Col>
+                            <Col sm="2">
                               <Select
                                 name="filter"
-                                // value={filter}
-                                onChange={this.handleFilter}
                                 placeholder="Status"
+                                value={value}
+                                onChange={this.handleFilterStatus}
                                 options={this.options}
                               />
                             </Col>
@@ -260,28 +347,24 @@ class Learner extends Component {
                               <Select
                                 name="filter"
                                 placeholder="Test Result"
-                                options={this.options}
+                                onChange={this.handleTestStatus}
+                                options={this.testResult}
                               />
                             </Col>
                             <Col sm="2">
                               <Select
                                 name="filter"
                                 placeholder="Course Type"
-                                options={this.options}
+                                onChange={this.handleCourseType}
+                                options={this.courseType}
                               />
                             </Col>
-                            <Col sm="2">
-                              <Select
-                                name="filter"
-                                placeholder="Course Name"
-                                options={this.options}
-                              />
-                            </Col>
+
                             <Col className="text-end" sm="2">
                               <Button
                                 type="button"
                                 className="btn mb-2 me-2"
-                                // onClick={this.handleUserClicks}
+                                onClick={this.applyFilter}
                               >
                                 <i className="mdi mdi-filter me-1" /> Apply
                                 Filter
@@ -296,51 +379,88 @@ class Learner extends Component {
                               </Button>
                             </Col>
                           </Row>
-                          <Row className="mt-3">
-                            <h6 className="filter-text">Filter Applied: </h6>
-                            <h6 className="filter-text d-flex align-items-baseline mt-1 mb-0">
-                              Status:{" "}
-                              <ul className="filter-status">
-                                <li>
-                                  <button
-                                    type="button"
-                                    className="btn filter-chips"
-                                  >
-                                    Student <span className="badge">X</span>
-                                  </button>
-                                </li>
-                              </ul>
-                            </h6>
-                            <h6 className="filter-text d-flex align-items-baseline mb-0">
-                              Test Result:
-                              <ul className="filter-status">
-                                <li>
-                                  <button
-                                    type="button"
-                                    className="btn filter-chips"
-                                  >
-                                    Working Professional{" "}
-                                    <span className="badge">X</span>
-                                  </button>
-                                </li>
-                              </ul>
-                            </h6>
-                            <h6 className="filter-text d-flex align-items-baseline mb-3">
-                              Course Name:
-                              <ul className="filter-status">
-                                <li>
-                                  <button
-                                    type="button"
-                                    className="btn filter-chips"
-                                  >
-                                    Full Stack Web Developer (Full Time)
-                                    <span className="badge">X</span>
-                                  </button>
-                                </li>
-                              </ul>
-                            </h6>
-                          </Row>
-                          <Col xl="12">
+                          {(this.state?.selectedTestResult?.length > 0 ||
+                            this.state?.selectedStatus.length > 0 ||
+                            this.state?.selectedCourseType?.length > 0) && (
+                            <Row className="mt-3">
+                              <h6 className="filter-text">Filter Applied: </h6>
+                              <h6 className="filter-text d-flex align-items-baseline mt-1 mb-0">
+                                Status:{" "}
+                                <div className="filter-status mb-3 d-flex">
+                                  {this.state.selectedStatus.length > 0 &&
+                                    this.state.selectedStatus.map(item => {
+                                      return (
+                                        <>
+                                          <div className="filter-chips me-3">
+                                            {item}
+                                            <span
+                                              onClick={() =>
+                                                this.removeStatus(item)
+                                              }
+                                              className="badge"
+                                            >
+                                              X
+                                            </span>
+                                          </div>
+                                        </>
+                                      )
+                                    })}{" "}
+                                </div>
+                              </h6>
+                              <h6 className="filter-text d-flex align-items-baseline mb-0">
+                                Test Result:
+                                <div className="filter-status mb-3 d-flex">
+                                  {this.state.selectedTestResult.map(
+                                    (item, index) => {
+                                      return (
+                                        <div
+                                          key={index}
+                                          className="filter-chips me-3 "
+                                        >
+                                          {item}
+                                          <span
+                                            className="badge"
+                                            onClick={() =>
+                                              this.removeTest(item)
+                                            }
+                                          >
+                                            X
+                                          </span>
+                                        </div>
+                                      )
+                                    }
+                                  )}
+                                </div>
+                              </h6>
+                              <h6 className="filter-text d-flex align-items-baseline">
+                                Course Name:
+                                <div className="filter-status d-flex">
+                                  {this.state.selectedCourseType.map(
+                                    (item, index) => {
+                                      return (
+                                        <div
+                                          key={index}
+                                          className="filter-chips me-3"
+                                        >
+                                          {item}
+                                          <span
+                                            className="badge"
+                                            onClick={() =>
+                                              this.removeCourse(item)
+                                            }
+                                          >
+                                            X
+                                          </span>
+                                        </div>
+                                      )
+                                    }
+                                  )}{" "}
+                                </div>
+                              </h6>
+                            </Row>
+                          )}
+
+                          <Col className="mt-3" xl="12">
                             <div className="table-responsive">
                               <BootstrapTable
                                 keyField={"id"}
@@ -387,6 +507,7 @@ const mapStateToProps = ({ Learner, state, count }) => ({
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),
   onGetDeleteLearner: id => dispatch(deleteLearner(id)),
+  onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Learner)

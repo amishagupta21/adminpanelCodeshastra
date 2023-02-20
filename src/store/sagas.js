@@ -18,6 +18,7 @@ import contactsSaga from "./contacts/saga"
 import dashboardSaga from "./dashboard/saga"
 import dashboardSaasSaga from "./dashboard-saas/saga"
 import learner from "./Learner/saga"
+import learnerDetails from "./LearnerDetail/saga"
 import applicationListing from "./ApplicationListing/saga"
 
 export default function* rootSaga() {
@@ -41,5 +42,6 @@ export default function* rootSaga() {
     fork(dashboardSaasSaga),
     fork(learner),
     fork(applicationListing),
+    fork(learnerDetails),
   ])
 }

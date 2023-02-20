@@ -58,7 +58,7 @@ class ApplicationListing extends Component {
           dataField: "created_at",
           text: "Created At",
           sort: true,
-          formatter: (cellContent, user) => dateFormate(user.createdAt),
+          formatter: (cellContent, user) => dateFormate(user?.createdAt),
         },
         {
           dataField: "course_title",
@@ -66,17 +66,17 @@ class ApplicationListing extends Component {
           sort: true,
         },
         {
-          dataField: "courseDetail.course_type",
+          dataField: "courseDetail?.course_type",
           text: "Course Type",
           sort: true,
         },
         {
-          dataField: "userDetail.email",
+          dataField: "userDetail?.email",
           text: "Email",
           sort: true,
         },
         {
-          dataField: "userDetail.phone",
+          dataField: "userDetail?.phone",
           text: "Phone",
           sort: true,
         },
@@ -87,7 +87,7 @@ class ApplicationListing extends Component {
           sort: true,
         },
         {
-          dataField: "courseDetail.course_status",
+          dataField: "courseDetail?.course_status",
           text: "Status",
           sort: true,
         },
@@ -106,22 +106,22 @@ class ApplicationListing extends Component {
   }
 
   componentDidMount() {
-    const { manageUser, userRoles, onGetApplicationListing } = this.props
-    if (manageUser && !manageUser.length) {
+    const { manageUser, userRoles, onGetApplicationListing } = this?.props
+    if (manageUser && !manageUser?.length) {
       onGetApplicationListing({ search: "" })
     }
     this.setState({ manageUser, userRoles })
   }
 
   componentDidUpdate(prevProps) {
-    const { manageUser, userRoles } = this.props
+    const { manageUser, userRoles } = this?.props
     if (
       !isEmpty(manageUser) &&
-      size(prevProps.manageUser) !== size(manageUser)
+      size(prevProps?.manageUser) !== size(manageUser)
     ) {
       this.setState({ manageUser, isEdit: false })
     }
-    if (prevProps.userRoles !== userRoles) {
+    if (prevProps?.userRoles !== userRoles) {
       this.setState({ userRoles })
     }
   }
@@ -130,19 +130,19 @@ class ApplicationListing extends Component {
     this.setState({ currentPage: page })
     const data = {
       page: page,
-      pageSize: this.state.manageUserDataCount,
+      pageSize: this?.state?.manageUserDataCount,
     }
-    this.props.onGetmanageUser(data)
+    this?.props?.onGetmanageUser(data)
   }
 
   handleSearch = e => {
-    const { onGetApplicationListing } = this.props
+    const { onGetApplicationListing } = this?.props
 
     const data = {
       search: e,
     }
     onGetApplicationListing(data)
-    const { ApplicationListing } = this.props
+    const { ApplicationListing } = this?.props
     this.setState({ ApplicationListing })
   }
 
@@ -154,12 +154,12 @@ class ApplicationListing extends Component {
   ]
 
   render() {
-    const { manageUserDataCount } = this.state
-    const { usersCount, manageUser } = this.props
-    const pageCount = parseInt(
-      (usersCount + manageUserDataCount - 1) / manageUserDataCount
-    )
-    const paginationPage = Array.apply(null, new Array(pageCount))
+    const { manageUserDataCount } = this?.state
+    const { usersCount, manageUser } = this?.props
+    // const pageCount = parseInt(
+    //   (usersCount + manageUserDataCount - 1) / manageUserDataCount
+    // )
+    //const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
       {
@@ -182,9 +182,9 @@ class ApplicationListing extends Component {
                 <Card>
                   <CardBody>
                     <ToolkitProvider
-                      key={this.state.expanded}
+                      key={this?.state?.expanded}
                       keyField="id"
-                      columns={this.state.columns}
+                      columns={this?.state?.columns}
                       data={manageUser}
                       search
                     >
@@ -195,7 +195,7 @@ class ApplicationListing extends Component {
                               <div className="app-search p-0">
                                 <div className="position-relative">
                                   <DeBounceSearch
-                                    handleSearch={this.handleSearch}
+                                    handleSearch={this?.handleSearch}
                                   />
                                   {/* <input
                                     className="form-control"
@@ -213,37 +213,37 @@ class ApplicationListing extends Component {
                               <Select
                                 name="filter"
                                 // value={filter}
-                                onChange={this.handleFilter}
+                                // onChange={this.handleFilter}
                                 placeholder="Status"
-                                options={this.options}
+                                options={this?.options}
                               />
                             </Col>
                             <Col sm="2">
                               <Select
                                 name="filter"
                                 placeholder="Test Result"
-                                options={this.options}
+                                options={this?.options}
                               />
                             </Col>
                             <Col sm="2">
                               <Select
                                 name="filter"
                                 placeholder="Course Type"
-                                options={this.options}
+                                options={this?.options}
                               />
                             </Col>
                             <Col sm="2">
                               <Select
                                 name="filter"
                                 placeholder="Course Name"
-                                options={this.options}
+                                options={this?.options}
                               />
                             </Col>
                             <Col className="text-end" sm="2">
                               <Button
                                 type="button"
                                 className="btn mb-2 me-2"
-                                onClick={this.handleUserClicks}
+                                // onClick={this.handleUserClicks}
                               >
                                 <i className="mdi mdi-filter me-1" /> Apply
                                 Filter
@@ -252,7 +252,7 @@ class ApplicationListing extends Component {
                                 type="button"
                                 color="secondary"
                                 className="btn mb-2 me-2"
-                                onClick={this.handleUserClicks}
+                                // onClick={this.handleUserClicks}
                               >
                                 Export
                               </Button>
@@ -315,7 +315,7 @@ class ApplicationListing extends Component {
                                 classes={"table align-middle table-nowrap"}
                                 headerWrapperClasses={"thead-light"}
                                 pagination={paginationFactory()}
-                                {...toolkitProps.baseProps}
+                                {...toolkitProps?.baseProps}
                               />
                             </div>
                           </Col>
@@ -401,10 +401,10 @@ class ApplicationListing extends Component {
 }
 
 ApplicationListing.propTypes = {
-  userRoles: PropTypes.array,
-  usersCount: PropTypes.number,
-  className: PropTypes.any,
-  ApplicationListing: PropTypes.array,
+  userRoles: PropTypes?.array,
+  usersCount: PropTypes?.number,
+  className: PropTypes?.any,
+  ApplicationListing: PropTypes?.array,
 }
 
 const mapStateToProps = ({ ApplicationListing, state }) => ({

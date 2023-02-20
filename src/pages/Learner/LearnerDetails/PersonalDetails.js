@@ -28,24 +28,32 @@ import DocumentKyc from "./DocumentKyc"
 import Billing from "./Billing"
 import Notifications from "./Notifications"
 
-const PersonalDetails = () => {
+const PersonalDetails = props => {
+  const { user, userProfile, profilePictureUrl } = props
+
   const [value, setValue] = useState("details")
 
   const initialTabs = [
     {
       eventKey: "details",
       title: "Personal Details",
-      component: <PersonalDetailForm />,
+      component: (
+        <PersonalDetailForm
+          user={user}
+          userProfile={userProfile}
+          profilePictureUrl={profilePictureUrl}
+        />
+      ),
     },
     {
       eventKey: "education-detail",
       title: "Education Details",
-      component: <EducationDetails />,
+      component: <EducationDetails user={user} userProfile={userProfile} />,
     },
     {
       eventKey: "work-detail",
       title: "Work Details",
-      component: <WorkDetails />,
+      component: <WorkDetails userProfile={userProfile} />,
     },
     {
       eventKey: "courses-enrolled",
@@ -56,7 +64,7 @@ const PersonalDetails = () => {
     {
       eventKey: "document",
       title: "Documnet & KYC",
-      component: <DocumentKyc />,
+      component: <DocumentKyc userProfile={userProfile} />,
     },
     {
       eventKey: "billing",

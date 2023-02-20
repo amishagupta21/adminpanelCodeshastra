@@ -108,8 +108,14 @@ export const GET_USERSLIST = "/users"
 
 //Learner
 export const GET_LEARNER = "/admin/user/list"
+export const GET_LEARNER_DETAIL = "/admin/user/user"
+export const GET_PROFILE_PICTURE = "/admin/user"
+export const UPLOAD_PROFILE_PICTURE = "/admin/user"
+export const EDIT_LEARNER_DETAIL = "/admin/user"
+
 export const GET_APPLICATION_LISTING = "/admin/application/list"
 export const GET_DELETE_LEARNER = "/admin/user/uid/"
+export const GET_DELETE_PROFILE_PICTURE = "/admin/user/profile-picture"
 
 //Course API's
 export const GET_COURSELIST = "/courses"
