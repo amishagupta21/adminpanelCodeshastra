@@ -9,6 +9,7 @@ import {
   deleteProfilePicture,
   postImage,
   putImage,
+  putDetail,
 } from "./api_helper"
 import * as url from "./url_helper"
 
@@ -105,7 +106,7 @@ const getLearnerList = data =>
       }`
   )
 
-const getLearnerDetailsList = uid =>
+const getLearnerDetailsList = async uid =>
   getData(url.GET_LEARNER_DETAIL + `/${uid}/detail`)
 
 const getProfilePicture = async data => {
@@ -157,6 +158,16 @@ const getApplicationListing = data =>
         data?.search
       }`
   )
+
+export const editLearnerDetail = async data => {
+  console.log(data, "/////////data")
+  const resp = await putDetail(
+    url.EDIT_LEARNER_DETAIL + `/personal-detail`,
+    data
+  )
+  return resp
+  // putDetail(url.EDIT_LEARNER_DETAIL + "/personal-detail", data)
+}
 
 const getDeleteData = uid => deleteData(url?.GET_DELETE_LEARNER + `${uid}`)
 
