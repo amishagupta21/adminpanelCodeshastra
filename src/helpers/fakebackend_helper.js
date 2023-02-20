@@ -1,5 +1,16 @@
 import axios from "axios"
-import { del, get, post, put, getData, deleteData } from "./api_helper"
+import {
+  del,
+  get,
+  post,
+  put,
+  getData,
+  deleteData,
+  deleteProfilePicture,
+  postImage,
+  putImage,
+  putDetail,
+} from "./api_helper"
 import * as url from "./url_helper"
 
 // Gets the logged in user data from local session
@@ -95,6 +106,51 @@ const getLearnerList = data =>
       }`
   )
 
+const getLearnerDetailsList = async uid =>
+  getData(url.GET_LEARNER_DETAIL + `/${uid}/detail`)
+
+const getProfilePicture = async data => {
+  const resp = await postImage(
+    url.GET_PROFILE_PICTURE + `/get-profile-picture`,
+    data
+  )
+  return resp
+}
+
+const getUploadProfilePicture = async data => {
+  const resp = await postImage(
+    url.UPLOAD_PROFILE_PICTURE + `/profile-picture`,
+    data
+  )
+  return resp
+}
+
+const uploadProfilePictureUrl = data => {
+  putImage(data?.url, data?.data?.preview)
+}
+
+const getFilters = data => {
+  if (data?.status) {
+    return `&status=${data?.status || ""}`
+  }
+
+  if (data?.learnerType) {
+    return `&learner_type=${data?.learnerType || ""}`
+  }
+
+  if (data?.courseType) {
+    return `&course_type=${data?.courseType || ""}`
+  }
+}
+
+const getStatusFilter = data =>
+  getData(
+    url.GET_LEARNER +
+      `?page=${data?.page || 1}&perPage=${data?.perPage || 5102}&search=${
+        data?.search || ""
+      }${getFilters(data)}`
+  )
+
 const getApplicationListing = data =>
   getData(
     url.GET_APPLICATION_LISTING +
@@ -103,12 +159,25 @@ const getApplicationListing = data =>
       }`
   )
 
-const getDeleteData = uid => deleteData(url.GET_DELETE_LEARNER + `${uid}`)
+export const editLearnerDetail = async data => {
+  console.log(data, "/////////data")
+  const resp = await putDetail(
+    url.EDIT_LEARNER_DETAIL + `/personal-detail`,
+    data
+  )
+  return resp
+  // putDetail(url.EDIT_LEARNER_DETAIL + "/personal-detail", data)
+}
+
+const getDeleteData = uid => deleteData(url?.GET_DELETE_LEARNER + `${uid}`)
+
+const getDeleteProfilePicture = uid =>
+  deleteProfilePicture(url?.GET_DELETE_PROFILE_PICTURE, uid)
 
 // get dashboard charts data
 export const getDashboardData = data =>
   getData(
-    url.GET_DASHBOARD_DATA + (data.day !== "All" ? `?day=${data?.day}` : "")
+    url.GET_DASHBOARD_DATA + (data?.day !== "All" ? `?day=${data?.day}` : "")
   )
 
 // Login Method
@@ -315,4 +384,10 @@ export {
   getLearnerList,
   getApplicationListing,
   getDeleteData,
+  getStatusFilter,
+  getLearnerDetailsList,
+  getProfilePicture,
+  getDeleteProfilePicture,
+  getUploadProfilePicture,
+  uploadProfilePictureUrl,
 }

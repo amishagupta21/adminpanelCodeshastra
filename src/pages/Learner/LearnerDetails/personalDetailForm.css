@@ -3,3 +3,8 @@
   border: 1px solid #ced4da !important;
   border-radius: 0.25rem;
 }
+
+.personal-detail img {
+  border-radius: 50%;
+  width: 50px;
+}

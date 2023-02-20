@@ -67,7 +67,7 @@ const projects = (state = INIT_STATE, action) => {
     case DELETE_PROJECT_SUCCESS:
       return {
         ...state,
-        projects: state.projects.filter(
+        projects: state?.projects?.filter(
           project => project.id.toString() !== action.payload.id.toString()
         ),
       }
@@ -77,7 +77,6 @@ const projects = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
-
 
     case GET_PROJECT_DETAIL_FAIL:
       return {

@@ -981,3 +981,7 @@ body[data-sidebar-image] {
 .gradient-strong-great-whale {
   background-image: linear-gradient(to right, darken($primary, 10%), #50a5f1);
 }
+
+.disabled-link {
+  pointer-events: none;
+}
