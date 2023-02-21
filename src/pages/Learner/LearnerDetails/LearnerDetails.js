@@ -84,9 +84,9 @@ const LearnerDetails = props => {
                     <CardTitle tag="h5">DOB</CardTitle>
                     <CardSubtitle className="mb-2 text-muted" tag="h6">
                       {/* {user?.birth_date} */}
-                      {userProfile?.information_data?.birth_date}&nbsp;
-                      {userProfile?.information_data?.birth_month}&nbsp;
-                      {userProfile?.information_data?.birth_year}
+                      {userProfile?.personal_details?.birth_date}&nbsp;
+                      {userProfile?.personal_details?.birth_month}&nbsp;
+                      {userProfile?.personal_details?.birth_year}
                     </CardSubtitle>
                   </Col>
                   <Col sm="4">
