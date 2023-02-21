@@ -125,6 +125,11 @@ const getUploadProfilePicture = async data => {
   return resp
 }
 
+const getDeleteProfilePicture = uid => {
+  console.log(uid, "//////////uid")
+  deleteProfilePicture(url?.GET_DELETE_PROFILE_PICTURE, uid)
+}
+
 const uploadProfilePictureUrl = data => {
   putImage(data?.url, data?.data?.preview)
 }
@@ -170,9 +175,6 @@ export const editLearnerDetail = async data => {
 }
 
 const getDeleteData = uid => deleteData(url?.GET_DELETE_LEARNER + `${uid}`)
-
-const getDeleteProfilePicture = uid =>
-  deleteProfilePicture(url?.GET_DELETE_PROFILE_PICTURE, uid)
 
 // get dashboard charts data
 export const getDashboardData = data =>
