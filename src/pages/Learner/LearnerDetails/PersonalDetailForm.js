@@ -44,17 +44,20 @@ const PersonalDetailForm = props => {
     email: userProfile?.personal_details?.email,
     mobile_number: userProfile?.personal_details?.mobile_number,
     guardian_details: userProfile?.personal_details?.guardian_details,
+    birth_date: userProfile?.personal_details?.birth_date,
+    birth_month: userProfile?.personal_details?.birth_month,
+    birth_year: userProfile?.personal_details?.birth_year,
   })
-
-  // const { full_name, email, mobile_number, guardian_details } = learnerData
 
   useEffect(() => {
     setLearnerData({
       full_name: userProfile?.personal_details?.full_name,
       email: userProfile?.personal_details?.email,
       mobile_number: userProfile?.personal_details?.mobile_number,
-
       guardian_details: userProfile?.personal_details?.guardian_details,
+      birth_date: userProfile?.personal_details?.birth_date,
+      birth_month: userProfile?.personal_details?.birth_month,
+      birth_year: userProfile?.personal_details?.birth_year,
     })
   }, [userProfile])
 
@@ -64,9 +67,9 @@ const PersonalDetailForm = props => {
   useEffect(() => {
     if (userProfile?.personal_details) {
       setStartDate(
-        userProfile?.personal_details?.birth_date /
-          userProfile?.personal_details?.birth_month /
-          userProfile?.personal_details?.birth_year
+        new Date(
+          `${userProfile?.personal_details?.birth_year}-${userProfile?.personal_details?.birth_month}-${userProfile?.personal_details?.birth_date}`
+        )
       )
     }
   }, [userProfile])
@@ -77,6 +80,7 @@ const PersonalDetailForm = props => {
   }, [image])
 
   const deleteProfilePicture = uid => {
+    console.log(uid)
     const { onGetDeleteProfilePicture } = props
     onGetDeleteProfilePicture({ uid: uid, document_type: "profile_picture" })
   }
@@ -114,19 +118,14 @@ const PersonalDetailForm = props => {
     const { onGetEditLearnerDetail } = props
     onGetEditLearnerDetail({
       uid: uid,
-      occupation: "STUDENT",
       personal_details: {
-        full_name: "Marshal Aroraa",
-        email: "marshal.arora@codeshastra.com",
-        mobile_number: "+91 7015493577",
-        mobile_cc: "+91 7015493577",
-        whatsapp_number: "+91 7015493577",
-        whatsapp_cc: "+91 7015493577",
-        gender: "Male",
-        birth_date: 31,
-        birth_month: 12,
-        birth_year: 1967,
-        guardian_details: "details",
+        full_name: learnerData?.full_name,
+        email: learnerData?.email,
+        mobile_number: learnerData?.mobile_number,
+        birth_date: learnerData?.birth_date,
+        birth_month: learnerData?.birth_month,
+        birth_year: learnerData?.birth_year,
+        guardian_details: learnerData?.guardian_details,
       },
     })
   }
@@ -145,7 +144,7 @@ const PersonalDetailForm = props => {
           <div>
             <p>Profile Picture</p>
             <div>
-              <Link to="/">View</Link>&nbsp;&nbsp;&nbsp;
+              {/* <Link to="/">View</Link>&nbsp;&nbsp;&nbsp; */}
               <Link
                 className="text-danger"
                 onClick={() => deleteProfilePicture(userProfile?.uid)}
@@ -179,7 +178,12 @@ const PersonalDetailForm = props => {
                     className="form-control"
                     placeholder="Full Name"
                     type="text"
-                    onChange={e => setLearnerData(e.target.value)}
+                    onChange={e =>
+                      setLearnerData({
+                        ...learnerData,
+                        full_name: e.target.value,
+                      })
+                    }
                     value={learnerData?.full_name}
                   />
                 </div>
@@ -191,7 +195,12 @@ const PersonalDetailForm = props => {
                     name="text"
                     type="email"
                     placeholder="Enter Email"
-                    onChange={e => setLearnerData(e.target.value)}
+                    onChange={e =>
+                      setLearnerData({
+                        ...learnerData,
+                        email: e.target.value,
+                      })
+                    }
                     value={learnerData?.email}
                   />
                 </div>
@@ -200,10 +209,15 @@ const PersonalDetailForm = props => {
                 <div className="mb-3">
                   <Label className="form-label">Mobile Number</Label>
                   <Input
-                    name="text"
-                    type="text"
+                    name="mobile_number"
+                    type="mobile_number"
                     placeholder="Enter Mobile Number"
-                    onChange={e => setLearnerData(e.target.value)}
+                    onChange={e =>
+                      setLearnerData({
+                        ...learnerData,
+                        mobile_number: e.target.value,
+                      })
+                    }
                     value={learnerData?.mobile_number}
                   />
                 </div>
@@ -212,9 +226,24 @@ const PersonalDetailForm = props => {
                 <div className="mb-3">
                   <Label className="form-label">Date of Birth</Label>
                   <DatePicker
+                    dateFormat="yyyy/MM/dd"
                     selected={startDate}
-                    onChange={(date: Date) => setStartDate(date)}
-                    value={startDate}
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    onChange={(date: Date) => {
+                      setLearnerData({
+                        ...learnerData,
+                        birth_month: date.getMonth(),
+                        birth_date: date.getDate(),
+                        birth_year: date.getFullYear(),
+                      })
+                    }}
+                    value={
+                      learnerData.birth_date
+                        ? `${learnerData.birth_date}/${learnerData.birth_month}/${learnerData.birth_year}`
+                        : "YYYY/MM/DD"
+                    }
                   />
                 </div>
               </Col>
@@ -225,7 +254,12 @@ const PersonalDetailForm = props => {
                     name="text"
                     type="text"
                     placeholder="Enter Detail"
-                    onChange={e => setLearnerData(e.target.value)}
+                    onChange={e =>
+                      setLearnerData({
+                        ...learnerData,
+                        guardian_details: e.target.value,
+                      })
+                    }
                     value={learnerData?.guardian_details}
                   />
                 </div>
