@@ -126,7 +126,6 @@ const getUploadProfilePicture = async data => {
 }
 
 const getDeleteProfilePicture = uid => {
-  console.log(uid, "//////////uid")
   deleteProfilePicture(url?.GET_DELETE_PROFILE_PICTURE, uid)
 }
 
@@ -165,7 +164,6 @@ const getApplicationListing = data =>
   )
 
 export const editLearnerDetail = async data => {
-  console.log(data, "/////////data")
   const resp = await putDetail(
     url.EDIT_LEARNER_DETAIL + `/personal-detail`,
     data
