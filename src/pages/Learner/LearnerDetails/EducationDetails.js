@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Row,
   Col,
@@ -16,9 +16,55 @@ import {
   Form,
 } from "reactstrap"
 import Select from "react-select"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
 const EducationDetails = props => {
   const { user, userProfile } = props
+  const [personalData, setPersonalData] = useState({
+    college_name: userProfile?.education_details?.qualification[2]?.full_name,
+    email: userProfile?.education_details?.qualification[2]?.year_of_completion,
+    passing_marks:
+      userProfile?.education_details?.qualification[2]?.passing_marks,
+    college_name: userProfile?.education_details?.qualification[1]?.full_name,
+    email: userProfile?.education_details?.qualification[1]?.year_of_completion,
+    passing_marks:
+      userProfile?.education_details?.qualification[1]?.passing_marks,
+    college_name: userProfile?.education_details?.qualification[0]?.full_name,
+    email: userProfile?.education_details?.qualification[0]?.year_of_completion,
+    passing_marks:
+      userProfile?.education_details?.qualification[0]?.passing_marks,
+    other_program_name: userProfile?.education_details?.other_program_name,
+    other_program_college_name:
+      userProfile?.education_details?.other_program_college_name,
+    other_program_course_duration:
+      userProfile?.education_details?.other_program_course_duration,
+  })
+
+  useEffect(() => {
+    setPersonalData({
+      college_name: userProfile?.education_details?.qualification[2]?.full_name,
+      email:
+        userProfile?.education_details?.qualification[2]?.year_of_completion,
+      passing_marks:
+        userProfile?.education_details?.qualification[2]?.passing_marks,
+      college_name: userProfile?.education_details?.qualification[1]?.full_name,
+      email:
+        userProfile?.education_details?.qualification[1]?.year_of_completion,
+      passing_marks:
+        userProfile?.education_details?.qualification[1]?.passing_marks,
+      college_name: userProfile?.education_details?.qualification[0]?.full_name,
+      email:
+        userProfile?.education_details?.qualification[0]?.year_of_completion,
+      passing_marks:
+        userProfile?.education_details?.qualification[0]?.passing_marks,
+      other_program_name: userProfile?.education_details?.other_program_name,
+      other_program_college_name:
+        userProfile?.education_details?.other_program_college_name,
+      other_program_course_duration:
+        userProfile?.education_details?.other_program_course_duration,
+    })
+  }, [userProfile])
 
   const options = [
     { label: "Diploma_or_12th ", value: "12" },
@@ -29,6 +75,8 @@ const EducationDetails = props => {
     { label: "Pre_Final ", value: "Pre Final" },
     { label: "Final_Year ", value: "Final Year" },
   ]
+
+  const editPersonalDetail = () => {}
 
   return (
     <>
@@ -58,10 +106,13 @@ const EducationDetails = props => {
                       className="form-control"
                       placeholder="College of Management"
                       type="text"
-                      value={
-                        userProfile?.education_details?.qualification[2]
-                          ?.college_name
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          college_name: e.target.value,
+                        })
                       }
+                      value={personalData?.college_name}
                     />
                   </div>
                 </Col>
@@ -72,10 +123,13 @@ const EducationDetails = props => {
                       name="number"
                       type="number"
                       placeholder="2022"
-                      value={
-                        userProfile?.education_details?.qualification[2]
-                          ?.year_of_completion
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          year_of_completion: e.target.value,
+                        })
                       }
+                      value={personalData?.year_of_completion}
                     />
                   </div>
                 </Col>
@@ -86,10 +140,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="89%"
-                      value={
-                        userProfile?.education_details?.qualification[2]
-                          ?.passing_marks + "%"
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          passing_marks: e.target.value,
+                        })
                       }
+                      value={personalData?.passing_marks + "%"}
                     />
                   </div>
                 </Col>
@@ -105,10 +162,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="College of Engineering"
-                      value={
-                        userProfile?.education_details?.qualification[1]
-                          ?.college_name
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          college_name: e.target.value,
+                        })
                       }
+                      value={personalData?.college_name}
                     />
                   </div>
                 </Col>
@@ -119,10 +179,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="2022"
-                      value={
-                        userProfile?.education_details?.qualification[1]
-                          ?.year_of_completion
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          year_of_completion: e.target.value,
+                        })
                       }
+                      value={personalData?.year_of_completion}
                     />
                   </div>
                 </Col>
@@ -135,10 +198,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="89%"
-                      value={
-                        userProfile?.education_details?.qualification[1]
-                          ?.passing_marks + "%"
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          passing_marks: e.target.value,
+                        })
                       }
+                      value={personalData?.passing_marks + "%"}
                     />
                   </div>
                 </Col>
@@ -154,10 +220,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="Institute of Technology"
-                      value={
-                        userProfile?.education_details?.qualification[0]
-                          ?.college_name
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          college_name: e.target.value,
+                        })
                       }
+                      value={personalData?.college_name}
                     />
                   </div>
                 </Col>
@@ -168,10 +237,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="2016"
-                      value={
-                        userProfile?.education_details?.qualification[0]
-                          ?.year_of_completion
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          year_of_completion: e.target.value,
+                        })
                       }
+                      value={personalData?.year_of_completion}
                     />
                   </div>
                 </Col>
@@ -184,10 +256,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="89%"
-                      value={
-                        userProfile?.education_details?.qualification[0]
-                          ?.passing_marks + "%"
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          passing_marks: e.target.value,
+                        })
                       }
+                      value={personalData?.passing_marks + "%"}
                     />
                   </div>
                 </Col>
@@ -201,7 +276,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="Software Developer"
-                      value={userProfile?.education_details?.other_program_name}
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          other_program_name: e.target.value,
+                        })
+                      }
+                      value={personalData?.other_program_name}
                     />
                   </div>
                 </Col>
@@ -212,10 +293,13 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="The Coding Institute"
-                      value={
-                        userProfile?.education_details
-                          ?.other_program_college_name
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          other_program_college_name: e.target.value,
+                        })
                       }
+                      value={personalData?.other_program_college_name}
                     />
                   </div>
                 </Col>
@@ -226,9 +310,14 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="4 Months"
+                      onChange={e =>
+                        setPersonalData({
+                          ...personalData,
+                          other_program_course_duration: e.target.value,
+                        })
+                      }
                       value={
-                        userProfile?.education_details
-                          ?.other_program_course_duration + " days"
+                        personalData?.other_program_course_duration + " days"
                       }
                     />
                   </div>
@@ -243,7 +332,12 @@ const EducationDetails = props => {
                 >
                   Reset
                 </Button>
-                <Button className="px-5" color="primary" type="submit">
+                <Button
+                  className="px-5"
+                  onClick={editPersonalDetail}
+                  color="primary"
+                  type="submit"
+                >
                   Save
                 </Button>
               </div>
@@ -255,4 +349,22 @@ const EducationDetails = props => {
   )
 }
 
-export default EducationDetails
+EducationDetails.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  LearnerDetails: PropTypes.any,
+}
+
+const mapStateToProps = ({ LearnerDetails, state, count }) => ({
+  user: LearnerDetails?.data?.user,
+  userProfile: LearnerDetails?.data?.userProfile,
+  uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
+  editLearnerDetail: LearnerDetails?.editLearnerDetail,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onGetEditLearnerDetail: data => dispatch(editLearnerDetail(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EducationDetails)
