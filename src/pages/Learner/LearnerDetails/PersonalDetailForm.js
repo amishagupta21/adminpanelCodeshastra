@@ -80,7 +80,6 @@ const PersonalDetailForm = props => {
   }, [image])
 
   const deleteProfilePicture = uid => {
-    console.log(uid)
     const { onGetDeleteProfilePicture } = props
     onGetDeleteProfilePicture({ uid: uid, document_type: "profile_picture" })
   }
