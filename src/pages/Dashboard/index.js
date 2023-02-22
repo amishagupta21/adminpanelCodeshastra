@@ -24,6 +24,7 @@ class Dashboard extends Component {
   options = [
     { label: "All", value: "All" },
     { label: "Today", value: "0" },
+    { label: "Yesterday", value: "1" },
     { label: "Last 7 days ", value: "7" },
     { label: "Last 30 days", value: "30" },
     { label: "Last 60 days", value: "60" },
