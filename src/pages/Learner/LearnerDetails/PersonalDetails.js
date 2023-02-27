@@ -63,7 +63,7 @@ const PersonalDetails = props => {
     { eventKey: "attendance", title: "Attendance", component: <Attendance /> },
     {
       eventKey: "document",
-      title: "Documnet & KYC",
+      title: "Document & KYC",
       component: <DocumentKyc userProfile={userProfile} />,
     },
     {

@@ -47,7 +47,10 @@ const PersonalDetailForm = props => {
     birth_date: userProfile?.personal_details?.birth_date,
     birth_month: userProfile?.personal_details?.birth_month,
     birth_year: userProfile?.personal_details?.birth_year,
+    uid: userProfile?.uid,
   })
+
+  console.log(learnerData, "learnerData")
 
   useEffect(() => {
     setLearnerData({
@@ -58,6 +61,7 @@ const PersonalDetailForm = props => {
       birth_date: userProfile?.personal_details?.birth_date,
       birth_month: userProfile?.personal_details?.birth_month,
       birth_year: userProfile?.personal_details?.birth_year,
+      uid: userProfile?.uid,
     })
   }, [userProfile])
 
@@ -75,13 +79,17 @@ const PersonalDetailForm = props => {
   }, [userProfile])
   useEffect(() => {
     if (image.preview !== "") {
-      handleUpload(userProfile?.uid)
+      handleUpload(learnerData.uid)
     }
   }, [image])
 
-  const deleteProfilePicture = uid => {
+  const deleteProfilePicture = () => {
     const { onGetDeleteProfilePicture } = props
-    onGetDeleteProfilePicture({ uid: uid, document_type: "profile_picture" })
+    console.log(learnerData?.uid)
+    onGetDeleteProfilePicture({
+      uid: learnerData?.uid,
+      document_type: "profile_picture",
+    })
   }
   const handleClick = () => {
     hiddenFileInput.current.click()
@@ -112,11 +120,11 @@ const PersonalDetailForm = props => {
     })
   }
 
-  const editData = (event, uid) => {
+  const editData = event => {
     event.preventDefault()
     const { onGetEditLearnerDetail } = props
     onGetEditLearnerDetail({
-      uid: uid,
+      uid: learnerData?.uid,
       personal_details: {
         full_name: learnerData?.full_name,
         email: learnerData?.email,
@@ -146,7 +154,7 @@ const PersonalDetailForm = props => {
               {/* <Link to="/">View</Link>&nbsp;&nbsp;&nbsp; */}
               <Link
                 className="text-danger"
-                onClick={() => deleteProfilePicture(userProfile?.uid)}
+                onClick={() => deleteProfilePicture()}
               >
                 Delete
               </Link>

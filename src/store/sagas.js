@@ -20,6 +20,8 @@ import dashboardSaasSaga from "./dashboard-saas/saga"
 import learner from "./Learner/saga"
 import learnerDetails from "./LearnerDetail/saga"
 import applicationListing from "./ApplicationListing/saga"
+import EducationDetails from "./EducationDetail/saga"
+import WorkDetail from "./WorkDetail/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -43,5 +45,7 @@ export default function* rootSaga() {
     fork(learner),
     fork(applicationListing),
     fork(learnerDetails),
+    fork(WorkDetail),
+    fork(EducationDetails),
   ])
 }

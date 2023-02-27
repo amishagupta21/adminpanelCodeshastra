@@ -9,6 +9,7 @@ export * from "./Learner/actions"
 export * from "./ApplicationListing/actions"
 export * from "./dashboard/actions"
 export * from "./LearnerDetail/actions"
+export * from "./WorkDetail/actions"
 
 //Ecommerce
 export * from "./e-commerce/actions"
