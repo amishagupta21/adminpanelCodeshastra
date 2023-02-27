@@ -11,6 +11,7 @@ import Profile from "./auth/profile/reducer"
 import Learner from "./Learner/reducer"
 import LearnerDetails from "./LearnerDetail/reducer"
 import ApplicationListing from "./ApplicationListing/reducer"
+import WorkDetail from "./WorkDetail/reducer"
 
 //E-commerce
 import ecommerce from "./e-commerce/reducer"
@@ -66,6 +67,7 @@ const rootReducer = combineReducers({
   Learner,
   ApplicationListing,
   LearnerDetails,
+  WorkDetail,
 })
 
 export default rootReducer

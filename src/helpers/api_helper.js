@@ -52,9 +52,9 @@ export async function deleteData(url, config = {}) {
 }
 
 export async function deleteProfilePicture(url, data, config = {}) {
-  return await Api.delete(url, { data: { ...data } }, { ...config }).then(
-    response => response.data
-  )
+  return await Api.delete(url, { data: { ...data } }, { ...config })
+    .then(response => response.data)
+    .then(console.log(response.data))
 }
 
 export async function putDetail(url, data, config = {}) {

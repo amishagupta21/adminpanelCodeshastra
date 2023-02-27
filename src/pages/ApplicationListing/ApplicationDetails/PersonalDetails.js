@@ -55,7 +55,7 @@ const PersonalDetails = () => {
     { eventKey: "attendance", title: "Attendance", component: <Attendance /> },
     {
       eventKey: "document",
-      title: "Documnet & KYC",
+      title: "Document & KYC",
       component: <DocumentKyc />,
     },
     {

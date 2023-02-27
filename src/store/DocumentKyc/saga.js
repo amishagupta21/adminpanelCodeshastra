@@ -2,7 +2,7 @@ import { takeEvery, put, call } from "redux-saga/effects"
 
 // Login Redux States
 import {
-  DELETE_PROFILE_PICTURE,
+  DELETE_DOCUMENT_KYC,
   GET_LEARNER_DETAILS,
   PROFILE_PICTURE,
   EDIT_LEARNER_DETAIL,
@@ -14,15 +14,13 @@ import {
   getLearnerDetailsFail,
   profilePictureSuccess,
   profilePictureFail,
-  deleteProfilePictureSuccess,
-  deleteProfilePictureFail,
+  deleteDocumentKycSuccess,
+  deleteDocumentKycFail,
   uploadProfilePictureSuccess,
   uploadProfilePictureFail,
   uploadProfilePictureSuccessUrl,
   uploadProfilePictureFailUrl,
   profilePicture,
-  editLearnerDetailSuccess,
-  editLearnerDetailFail,
 } from "./actions"
 import {
   getLearnerDetailsList,
@@ -30,7 +28,6 @@ import {
   getDeleteProfilePicture,
   getUploadProfilePicture,
   uploadProfilePictureUrl,
-  editLearnerDetail,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
 
@@ -60,10 +57,10 @@ function* deleteProfilePicture({ payload: uid }) {
   try {
     const response = yield call(getDeleteProfilePicture, uid)
     tosterMsg(response?.message)
-    yield put(deleteProfilePictureSuccess(response))
+    yield put(deleteDocumentKycSuccess(response))
   } catch (error) {
     toasterMsg(error?.message)
-    yield put(deleteProfilePictureFail(error))
+    yield put(deleteDocumentKycFail(error))
   }
 }
 
@@ -85,23 +82,11 @@ function* uploadProfilePicture({ payload: data }) {
   }
 }
 
-function* editData({ payload: data }) {
-  try {
-    const response = yield call(editLearnerDetail, data)
-    tosterMsg(response?.message)
-    yield put(editLearnerDetailSuccess(response))
-  } catch (error) {
-    toasterMsg(error?.message)
-    yield put(editLearnerDetailFail(error))
-  }
-}
-
 function* usersManageSaga() {
   yield takeEvery(GET_LEARNER_DETAILS, fetchDemoData)
   yield takeEvery(PROFILE_PICTURE, profilePictureApi)
-  yield takeEvery(DELETE_PROFILE_PICTURE, deleteProfilePicture)
+  yield takeEvery(DELETE_DOCUMENT_KYC, deleteProfilePicture)
   yield takeEvery(UPLOAD_PROFILE_PICTURE, uploadProfilePicture)
-  yield takeEvery(EDIT_LEARNER_DETAIL, editData)
 }
 
 export default usersManageSaga

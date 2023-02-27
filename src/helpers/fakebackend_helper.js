@@ -163,13 +163,26 @@ const getApplicationListing = data =>
       }`
   )
 
-export const editLearnerDetail = async data => {
+const editLearnerDetail = async data => {
   const resp = await putDetail(
     url.EDIT_LEARNER_DETAIL + `/personal-detail`,
     data
   )
   return resp
   // putDetail(url.EDIT_LEARNER_DETAIL + "/personal-detail", data)
+}
+
+const editEducationDetail = async data => {
+  const resp = await putDetail(
+    url.EDIT_EDUCATION_DETAIL + `/education-detail`,
+    data
+  )
+  return resp
+}
+
+const getEditWorkDetail = async data => {
+  const resp = await putDetail(url.EDIT_WORK_DETAIL + `/work-detail`, data)
+  return resp
 }
 
 const getDeleteData = uid => deleteData(url?.GET_DELETE_LEARNER + `${uid}`)
@@ -390,4 +403,7 @@ export {
   getDeleteProfilePicture,
   getUploadProfilePicture,
   uploadProfilePictureUrl,
+  editLearnerDetail,
+  editEducationDetail,
+  getEditWorkDetail,
 }

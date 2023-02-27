@@ -50,7 +50,7 @@ const ApplicationForm = () => {
     },
     {
       eventKey: "document",
-      title: "Documnet & KYC",
+      title: "Document & KYC",
       component: <DocumentKyc />,
     },
   ]

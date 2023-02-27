@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Row,
   Col,
@@ -16,8 +16,42 @@ import {
   Form,
 } from "reactstrap"
 
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { editWorkDetail } from "store/WorkDetail/actions"
+
 const WorkDetails = props => {
   const { userProfile } = props
+  const [workData, setWorkData] = useState({
+    position: userProfile?.work_details[0]?.position,
+    experience: userProfile?.work_details[0]?.experience,
+    organization_name: userProfile?.work_details[0]?.organization_name,
+    uid: userProfile?.uid,
+  })
+
+  useEffect(() => {
+    setWorkData({
+      position: userProfile?.work_details[0]?.position,
+      experience: userProfile?.work_details[0]?.experience,
+      organization_name: userProfile?.work_details[0]?.organization_name,
+      uid: userProfile?.uid,
+    })
+  }, [userProfile])
+
+  const editWorkData = event => {
+    event.preventDefault()
+    const { onGetEditWorkDetail } = props
+    onGetEditWorkDetail({
+      uid: workData?.uid,
+      work_details: [
+        {
+          position: workData?.position,
+          experience: workData?.experience,
+          organization_name: workData?.organization_name,
+        },
+      ],
+    })
+  }
 
   return (
     <>
@@ -33,9 +67,15 @@ const WorkDetails = props => {
                   <Input
                     name="text"
                     className="form-control"
-                    placeholder="Software Developer"
+                    placeholder="Working Position"
                     type="text"
-                    value={userProfile?.work_details[0]?.position}
+                    onChange={e =>
+                      setWorkData({
+                        ...workData,
+                        position: e.target.value,
+                      })
+                    }
+                    value={workData?.position}
                   />
                 </div>
               </Col>
@@ -47,8 +87,14 @@ const WorkDetails = props => {
                   <Input
                     name="text"
                     type="text"
-                    placeholder="2 years"
-                    value={userProfile?.work_details[0]?.experience + " years"}
+                    placeholder="Total Experience"
+                    onChange={e =>
+                      setWorkData({
+                        ...workData,
+                        experience: e.target.value,
+                      })
+                    }
+                    value={workData?.experience}
                   />
                 </div>
               </Col>
@@ -60,8 +106,14 @@ const WorkDetails = props => {
                   <Input
                     name="text"
                     type="text"
-                    placeholder="1 year"
-                    value={userProfile?.work_details[0]?.experience + " years"}
+                    placeholder="Total Experience"
+                    onChange={e =>
+                      setWorkData({
+                        ...workData,
+                        experience: e.target.value,
+                      })
+                    }
+                    value={workData?.experience}
                   />
                 </div>
               </Col>
@@ -71,8 +123,14 @@ const WorkDetails = props => {
                   <Input
                     name="text"
                     type="text"
-                    placeholder="Code Shashtra"
-                    value={userProfile?.work_details[0]?.organization_name}
+                    placeholder="Organization Working"
+                    onChange={e =>
+                      setWorkData({
+                        ...workData,
+                        organization_name: e.target.value,
+                      })
+                    }
+                    value={workData?.organization_name}
                   />
                 </div>
               </Col>
@@ -86,7 +144,12 @@ const WorkDetails = props => {
                 >
                   Reset
                 </Button>
-                <Button className="px-5" color="primary" type="submit">
+                <Button
+                  onClick={editWorkData}
+                  className="px-5"
+                  color="primary"
+                  type="submit"
+                >
                   Save
                 </Button>
               </div>
@@ -98,4 +161,22 @@ const WorkDetails = props => {
   )
 }
 
-export default WorkDetails
+WorkDetails.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  LearnerDetails: PropTypes.any,
+}
+
+const mapStateToProps = ({ LearnerDetails, state, count }) => ({
+  user: LearnerDetails?.data?.user,
+  userProfile: LearnerDetails?.data?.userProfile,
+  uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
+  editWorkDetail: LearnerDetails?.editWorkDetail,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onGetEditWorkDetail: data => dispatch(editWorkDetail(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkDetails)

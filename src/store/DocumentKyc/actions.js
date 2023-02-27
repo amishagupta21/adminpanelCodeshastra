@@ -7,18 +7,15 @@ import {
   PROFILE_PICTURE,
   PROFILE_PICTURE_SUCCESS,
   PROFILE_PICTURE_FAIL,
-  DELETE_PROFILE_PICTURE,
-  DELETE_PROFILE_PICTURE_SUCCESS,
-  DELETE_PROFILE_PICTURE_FAIL,
+  DELETE_DOCUMENT_KYC,
+  DELETE_DOCUMENT_KYC_SUCCESS,
+  DELETE_DOCUMENT_KYC_FAIL,
   UPLOAD_PROFILE_PICTURE,
   UPLOAD_PROFILE_PICTURE_SUCCESS,
   UPLOAD_PROFILE_PICTURE_FAIL,
   UPLOAD_PROFILE_PICTURE_URL,
   UPLOAD_PROFILE_PICTURE_SUCCESS_URL,
   UPLOAD_PROFILE_PICTURE_FAIL_URL,
-  EDIT_LEARNER_DETAIL,
-  EDIT_LEARNER_DETAIL_SUCCESS,
-  EDIT_LEARNER_DETAIL_FAIL,
 } from "./actionTypes"
 
 export const getLearnerDetails = data => {
@@ -63,23 +60,23 @@ export const profilePictureFail = error => ({
   payload: error,
 })
 
-export const deleteProfilePicture = uid => ({
-  type: DELETE_PROFILE_PICTURE,
+export const deletedDocument = uid => ({
+  type: DELETE_DOCUMENT_KYC,
   payload: uid,
 })
 
-export const deleteProfilePictureSuccess = event => ({
-  type: DELETE_PROFILE_PICTURE_SUCCESS,
+export const deletedDocumentSuccess = event => ({
+  type: DELETE_DOCUMENT_KYC_SUCCESS,
   payload: event,
 })
 
-export const deleteProfilePictureFail = error => ({
-  type: DELETE_PROFILE_PICTURE_FAIL,
+export const deletedDocumentFail = error => ({
+  type: DELETE_DOCUMENT_KYC_FAIL,
   payload: error,
 })
 
 export const uploadProfilePicture = id => ({
-  type: UPLOAD_PROFILE_PICTURE,
+  type: UPLOAD_DOCUMENT_KYC,
   payload: id,
 })
 
@@ -105,20 +102,5 @@ export const uploadProfilePictureSuccessUrl = data => ({
 
 export const uploadProfilePictureFailUrl = error => ({
   type: UPLOAD_PROFILE_PICTURE_FAIL_URL,
-  payload: error,
-})
-
-export const editLearnerDetail = data => ({
-  type: EDIT_LEARNER_DETAIL,
-  payload: data,
-})
-
-export const editLearnerDetailSuccess = data => ({
-  type: EDIT_LEARNER_DETAIL_SUCCESS,
-  payload: data,
-})
-
-export const editLearnerDetailFail = error => ({
-  type: EDIT_LEARNER_DETAIL_FAIL,
   payload: error,
 })
