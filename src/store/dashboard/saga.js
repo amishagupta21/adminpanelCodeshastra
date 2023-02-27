@@ -16,7 +16,6 @@ import tosterMsg from "components/Common/toster"
 function* fetchDashboardData({ payload: data }) {
   try {
     const response = yield call(getDashboardData, data)
-    // debugger
     tosterMsg("Update Data Success")
     yield put(apiSuccess(response?.data))
   } catch (error) {
