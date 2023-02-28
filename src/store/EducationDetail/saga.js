@@ -10,7 +10,6 @@ import tosterMsg from "components/Common/toster"
 function* editData({ payload: data }) {
   try {
     const response = yield call(editEducationDetail, data)
-    console.log(response, "/////////response")
     tosterMsg(response?.message)
     yield put(editEducationDetailSuccess(response))
   } catch (error) {
