@@ -50,8 +50,6 @@ const PersonalDetailForm = props => {
     uid: userProfile?.uid,
   })
 
-  console.log(learnerData, "learnerData")
-
   useEffect(() => {
     setLearnerData({
       full_name: userProfile?.personal_details?.full_name,
@@ -85,7 +83,6 @@ const PersonalDetailForm = props => {
 
   const deleteProfilePicture = () => {
     const { onGetDeleteProfilePicture } = props
-    console.log(learnerData?.uid)
     onGetDeleteProfilePicture({
       uid: learnerData?.uid,
       document_type: "profile_picture",
