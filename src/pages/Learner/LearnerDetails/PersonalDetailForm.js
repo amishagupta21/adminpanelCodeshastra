@@ -170,6 +170,7 @@ const PersonalDetailForm = props => {
               ref={hiddenFileInput}
               style={{ display: "none" }}
               onChange={handleChange}
+              onClick={e => (e.target.value = null)}
             />
             <br />
           </div>
