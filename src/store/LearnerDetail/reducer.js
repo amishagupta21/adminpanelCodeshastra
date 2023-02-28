@@ -59,11 +59,11 @@ const LearnerDetails = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
-    case PROFILE_PICTURE:
-      return {
-        ...state,
-        data: action.payload,
-      }
+    // case PROFILE_PICTURE:
+    //   return {
+    //     ...state,
+    //     data: action.payload,
+    //   }
     case PROFILE_PICTURE_SUCCESS:
       return {
         ...state,
