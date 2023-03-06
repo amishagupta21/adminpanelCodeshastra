@@ -114,10 +114,13 @@ export const UPLOAD_PROFILE_PICTURE = "/admin/user"
 export const EDIT_LEARNER_DETAIL = "/admin/user"
 export const EDIT_EDUCATION_DETAIL = "/admin/user"
 export const EDIT_WORK_DETAIL = "/admin/user"
+export const GET_UPLOAD_DOCUMENT = "/admin/user"
+export const UPLOAD_DOCUMENT_PICTURE = "/admin/user"
 
 export const GET_APPLICATION_LISTING = "/admin/application/list"
 export const GET_DELETE_LEARNER = "/admin/user/uid/"
 export const GET_DELETE_PROFILE_PICTURE = "/admin/user/profile-picture"
+export const DELETE_DOCUMENT_KYC = "/admin/user/delete-document"
 
 //Course API's
 export const GET_COURSELIST = "/courses"

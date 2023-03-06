@@ -3,59 +3,44 @@ import { takeEvery, put, call } from "redux-saga/effects"
 // Login Redux States
 import {
   DELETE_DOCUMENT_KYC,
-  GET_LEARNER_DETAILS,
-  PROFILE_PICTURE,
-  EDIT_LEARNER_DETAIL,
-  UPLOAD_PROFILE_PICTURE,
+  DOCUMENT_PICTURE,
+  UPLOAD_DOCUMENT_PICTURE,
 } from "./actionTypes"
 
 import {
-  getLearnerDetailsSuccess,
-  getLearnerDetailsFail,
-  profilePictureSuccess,
-  profilePictureFail,
+  documentPictureSuccess,
+  documentPictureFail,
   deleteDocumentKycSuccess,
   deleteDocumentKycFail,
-  uploadProfilePictureSuccess,
-  uploadProfilePictureFail,
-  uploadProfilePictureSuccessUrl,
-  uploadProfilePictureFailUrl,
-  profilePicture,
+  uploadDocumentPictureSuccess,
+  uploadDocumentPictureFail,
+  uploadDocumentPictureSuccessUrl,
+  uploadDocumentPictureFailUrl,
+  documentPicture,
 } from "./actions"
 import {
-  getLearnerDetailsList,
-  getProfilePicture,
-  getDeleteProfilePicture,
-  getUploadProfilePicture,
-  uploadProfilePictureUrl,
+  getUploadDocument,
+  getdeleteDocumentKyc,
+  getUploadDocumentPicture,
+  uploadDocumentPictureUrl,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
 
-function* fetchDemoData({ payload: data }) {
+function* documentPictureApi({ payload: data }) {
   try {
-    const response = yield call(getLearnerDetailsList, data)
-    tosterMsg(response?.message)
-    yield put(getLearnerDetailsSuccess(response?.data))
-  } catch (error) {
-    tosterMsg(error?.message)
-    yield put(getLearnerDetailsFail(error))
-  }
-}
-
-function* profilePictureApi({ payload: data }) {
-  try {
-    const response = yield call(getProfilePicture, data)
+    const response = yield call(getUploadDocument, data)
+    console.log(response, "////////response")
     // tosterMsg(response?.message)
-    yield put(profilePictureSuccess(response?.data))
+    yield put(documentPictureSuccess(response?.data))
   } catch (error) {
     toasterMsg(error?.message)
-    yield put(profilePictureFail(error))
+    yield put(documentPictureFail(error))
   }
 }
 
-function* deleteProfilePicture({ payload: uid }) {
+function* deleteDocumentKyc({ payload: uid }) {
   try {
-    const response = yield call(getDeleteProfilePicture, uid)
+    const response = yield call(getdeleteDocumentKyc, uid)
     tosterMsg(response?.message)
     yield put(deleteDocumentKycSuccess(response))
   } catch (error) {
@@ -64,29 +49,32 @@ function* deleteProfilePicture({ payload: uid }) {
   }
 }
 
-function* uploadProfilePicture({ payload: data }) {
+function* uploadDocumentPicture({ payload: data }) {
   try {
-    const response = yield call(getUploadProfilePicture, data?.data)
-    const uploadResponse = yield call(uploadProfilePictureUrl, {
+    const response = yield call(getUploadDocumentPicture, data?.data)
+    const uploadResponse = yield call(uploadDocumentPictureUrl, {
       url: response?.data?.signedUrl,
       data: data?.img,
     })
+    console.log(uploadResponse, "///////uploadResponse")
     yield put(
-      profilePicture({ uid: data?.data?.uid, document_type: "profile_picture" })
+      documentPicture({
+        uid: data?.data?.uid,
+        document_type: "pan_card",
+      })
     )
     // tosterMsg(response?.message)
-    yield put(uploadProfilePictureSuccess(response?.data?.signedUrl))
+    yield put(uploadDocumentPictureSuccess(response?.data?.signedUrl))
   } catch (error) {
     // toasterMsg(error?.message)
-    yield put(uploadProfilePictureFail(error))
+    yield put(uploadDocumentPictureFaildata(error))
   }
 }
 
 function* usersManageSaga() {
-  yield takeEvery(GET_LEARNER_DETAILS, fetchDemoData)
-  yield takeEvery(PROFILE_PICTURE, profilePictureApi)
-  yield takeEvery(DELETE_DOCUMENT_KYC, deleteProfilePicture)
-  yield takeEvery(UPLOAD_PROFILE_PICTURE, uploadProfilePicture)
+  yield takeEvery(DOCUMENT_PICTURE, documentPictureApi)
+  yield takeEvery(DELETE_DOCUMENT_KYC, deleteDocumentKyc)
+  yield takeEvery(UPLOAD_DOCUMENT_PICTURE, uploadDocumentPicture)
 }
 
 export default usersManageSaga

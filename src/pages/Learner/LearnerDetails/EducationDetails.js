@@ -381,14 +381,14 @@ const EducationDetails = props => {
                 </Col>
               </Row>
               <div className="mt-3 d-flex justify-content-end">
-                <Button
+                {/* <Button
                   color="primary"
                   className="me-3 px-5"
                   outline
                   type="submit"
                 >
                   Reset
-                </Button>
+                </Button> */}
                 <Button
                   className="px-5"
                   onClick={editEducationDetail}

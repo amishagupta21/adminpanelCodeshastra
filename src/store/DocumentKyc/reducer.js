@@ -1,20 +1,15 @@
 import {
-  GET_LEARNER_DETAILS,
-  GET_LEARNER_DETAILS_SUCCESS,
-  GET_LEARNER_DETAILS_FAIL,
-  GET_LEARNER_DETAILS_COUNT_SUCCESS,
-  GET_LEARNER_DETAILS_COUNT_FAIL,
-  PROFILE_PICTURE,
-  PROFILE_PICTURE_SUCCESS,
-  PROFILE_PICTURE_FAIL,
+  DOCUMENT_PICTURE,
+  DOCUMENT_PICTURE_SUCCESS,
+  DOCUMENT_PICTURE_FAIL,
   DELETE_DOCUMENT_KYC_FAIL,
   DELETE_DOCUMENT_KYC_SUCCESS,
-  UPLOAD_PROFILE_PICTURE,
-  UPLOAD_PROFILE_PICTURE_SUCCESS,
-  UPLOAD_PROFILE_PICTURE_FAIL,
-  UPLOAD_PROFILE_PICTURE_URL,
-  UPLOAD_PROFILE_PICTURE_SUCCESS_URL,
-  UPLOAD_PROFILE_PICTURE_FAIL_URL,
+  UPLOAD_DOCUMENT_PICTURE,
+  UPLOAD_DOCUMENT_PICTURE_SUCCESS,
+  UPLOAD_DOCUMENT_PICTURE_FAIL,
+  UPLOAD_DOCUMENT_PICTURE_URL,
+  UPLOAD_DOCUMENT_PICTURE_SUCCESS_URL,
+  UPLOAD_DOCUMENT_PICTURE_FAIL_URL,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -26,48 +21,20 @@ const INIT_STATE = {
   uploadProfilePicture: "",
 }
 
-const LearnerDetails = (state = INIT_STATE, action) => {
+const DocumentKyc = (state = INIT_STATE, action) => {
   switch (action.type) {
-    case GET_LEARNER_DETAILS:
+    case DOCUMENT_PICTURE:
       return {
         ...state,
         data: action.payload,
       }
-    case GET_LEARNER_DETAILS_SUCCESS:
-      return {
-        ...state,
-        data: action.payload,
-      }
-
-    case GET_LEARNER_DETAILS_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      }
-
-    case GET_LEARNER_DETAILS_COUNT_SUCCESS:
-      return {
-        ...state,
-        count: action.payload,
-      }
-
-    case GET_LEARNER_DETAILS_COUNT_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      }
-    case PROFILE_PICTURE:
-      return {
-        ...state,
-        data: action.payload,
-      }
-    case PROFILE_PICTURE_SUCCESS:
+    case DOCUMENT_PICTURE_SUCCESS:
       return {
         ...state,
         profilePictureUrl: action.payload,
       }
 
-    case PROFILE_PICTURE_FAIL:
+    case DOCUMENT_PICTURE_FAIL:
       return {
         ...state,
         error: action.payload,
@@ -85,35 +52,35 @@ const LearnerDetails = (state = INIT_STATE, action) => {
         profilePictureUrl: "",
       }
 
-    case UPLOAD_PROFILE_PICTURE:
+    case UPLOAD_DOCUMENT_PICTURE:
       return {
         ...state,
         uploadProfilePicture: action.payload,
       }
-    case UPLOAD_PROFILE_PICTURE_SUCCESS:
+    case UPLOAD_DOCUMENT_PICTURE_SUCCESS:
       return {
         ...state,
         uploadProfilePicture: action.payload,
       }
 
-    case UPLOAD_PROFILE_PICTURE_FAIL:
+    case UPLOAD_DOCUMENT_PICTURE_FAIL:
       return {
         ...state,
         error: action.payload,
       }
 
-    case UPLOAD_PROFILE_PICTURE_URL:
+    case UPLOAD_DOCUMENT_PICTURE_URL:
       return {
         ...state,
         uploadProfilePicture: action.payload,
       }
-    case UPLOAD_PROFILE_PICTURE_SUCCESS_URL:
+    case UPLOAD_DOCUMENT_PICTURE_SUCCESS_URL:
       return {
         ...state,
         uploadProfilePicture: action.payload,
       }
 
-    case UPLOAD_PROFILE_PICTURE_FAIL_URL:
+    case UPLOAD_DOCUMENT_PICTURE_FAIL_URL:
       return {
         ...state,
         error: action.payload,
@@ -124,4 +91,4 @@ const LearnerDetails = (state = INIT_STATE, action) => {
   }
 }
 
-export default LearnerDetails
+export default DocumentKyc
