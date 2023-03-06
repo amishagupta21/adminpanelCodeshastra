@@ -38,6 +38,7 @@ const PersonalDetailForm = props => {
     uploadProfilePicture,
     editLearnerDetail,
   } = props
+  // console.log(props?.profilePictureUrl)
   const [image, setImage] = useState({ preview: "", raw: "" })
   const [learnerData, setLearnerData] = useState({
     full_name: userProfile?.personal_details?.full_name,
@@ -271,14 +272,6 @@ const PersonalDetailForm = props => {
               </Col>
 
               <div className="mt-3 d-flex justify-content-end">
-                <Button
-                  color="primary"
-                  className="me-3 px-5"
-                  outline
-                  type="submit"
-                >
-                  Reset
-                </Button>
                 <Button
                   className="px-5"
                   color="primary"

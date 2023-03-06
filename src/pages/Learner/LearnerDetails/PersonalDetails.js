@@ -64,7 +64,13 @@ const PersonalDetails = props => {
     {
       eventKey: "document",
       title: "Document & KYC",
-      component: <DocumentKyc userProfile={userProfile} />,
+      component: (
+        <DocumentKyc
+          user={user}
+          userProfile={userProfile}
+          profilePictureUrl={profilePictureUrl}
+        />
+      ),
     },
     {
       eventKey: "billing",

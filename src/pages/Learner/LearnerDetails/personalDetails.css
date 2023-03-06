@@ -35,3 +35,19 @@
 .personal-detail-section {
   padding: 0 !important;
 }
+
+.personal-detail-section li:nth-child(4) {
+  pointer-events: none;
+}
+
+.personal-detail-section li:nth-child(5) {
+  pointer-events: none;
+}
+
+.personal-detail-section li:nth-child(7) {
+  pointer-events: none;
+}
+
+.personal-detail-section li:nth-child(8) {
+  pointer-events: none;
+}
