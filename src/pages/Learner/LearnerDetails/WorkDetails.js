@@ -137,14 +137,6 @@ const WorkDetails = props => {
 
               <div className="mt-3 d-flex justify-content-end">
                 <Button
-                  color="primary"
-                  className="me-3 px-5"
-                  outline
-                  type="submit"
-                >
-                  Reset
-                </Button>
-                <Button
                   onClick={editWorkData}
                   className="px-5"
                   color="primary"

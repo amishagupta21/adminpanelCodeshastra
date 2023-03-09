@@ -14,6 +14,10 @@ import {
   Label,
   Input,
   Form,
+  Modal,
+  ModalFooter,
+  ModalHeader,
+  ModalBody,
 } from "reactstrap"
 import { Link } from "react-router-dom"
 import userplaceholder from "../../../assets/images/userplaceholder.png"
@@ -29,6 +33,8 @@ import {
 import userPlaceholder from "../../../assets/images/userplaceholder.png"
 import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
+import DeleteProfileModal from "./DeleteProfileModal"
+import ImagePreviewModal from "./ImagePreviewModal"
 
 const PersonalDetailForm = props => {
   const {
@@ -38,6 +44,7 @@ const PersonalDetailForm = props => {
     uploadProfilePicture,
     editLearnerDetail,
   } = props
+  // console.log(props?.profilePictureUrl)
   const [image, setImage] = useState({ preview: "", raw: "" })
   const [learnerData, setLearnerData] = useState({
     full_name: userProfile?.personal_details?.full_name,
@@ -65,6 +72,16 @@ const PersonalDetailForm = props => {
 
   const [startDate, setStartDate] = useState()
   const hiddenFileInput = React.useRef(null)
+  // Modal open state
+  const [modal, setModal] = React.useState(false)
+  const [profilePictureModal, setProfilePictureModal] = useState(false)
+
+  // Toggle for Modal
+  const openModal = () => setModal(true)
+  const closeModal = () => setModal(false)
+
+  const toggle = () => setProfilePictureModal(!profilePictureModal)
+  const closeProfilePicture = () => setProfilePictureModal(false)
 
   useEffect(() => {
     if (userProfile?.personal_details) {
@@ -75,6 +92,7 @@ const PersonalDetailForm = props => {
       )
     }
   }, [userProfile])
+
   useEffect(() => {
     if (image.preview !== "") {
       handleUpload(learnerData.uid)
@@ -87,6 +105,7 @@ const PersonalDetailForm = props => {
       uid: learnerData?.uid,
       document_type: "profile_picture",
     })
+    setModal(false)
   }
   const handleClick = () => {
     hiddenFileInput.current.click()
@@ -140,7 +159,12 @@ const PersonalDetailForm = props => {
         <h4 className="text-primary">Personal Details</h4>
         <div className="d-flex align-items-center personal-detail">
           {props?.profilePictureUrl ? (
-            <img height="50px" width="50px" src={props?.profilePictureUrl} />
+            <img
+              height="50px"
+              width="50px"
+              onClick={toggle}
+              src={props?.profilePictureUrl}
+            />
           ) : (
             <img height="50px" width="50px" src={userPlaceholder} />
           )}
@@ -149,16 +173,16 @@ const PersonalDetailForm = props => {
             <p>Profile Picture</p>
             <div>
               {/* <Link to="/">View</Link>&nbsp;&nbsp;&nbsp; */}
-              <Link
-                className="text-danger"
-                onClick={() => deleteProfilePicture()}
-              >
-                Delete
-              </Link>
+              {props?.profilePictureUrl ? (
+                <Link className="text-danger" onClick={openModal}>
+                  Delete
+                </Link>
+              ) : (
+                <Link className="text-danger" onClick={() => handleClick()}>
+                  Upload
+                </Link>
+              )}
               &nbsp;&nbsp;
-              <Link className="text-danger" onClick={() => handleClick()}>
-                Upload
-              </Link>
             </div>
 
             <input
@@ -172,6 +196,19 @@ const PersonalDetailForm = props => {
             <br />
           </div>
         </div>
+
+        <ImagePreviewModal
+          modal={profilePictureModal}
+          closeProfilePicture={closeProfilePicture}
+          imagePreview={props?.profilePictureUrl}
+          toggle={toggle}
+        />
+
+        <DeleteProfileModal
+          modal={modal}
+          closeModal={closeModal}
+          deleteProfilePicture={deleteProfilePicture}
+        />
         <div className="p-2">
           <Form className="form-vertical">
             <Row>
@@ -271,14 +308,6 @@ const PersonalDetailForm = props => {
               </Col>
 
               <div className="mt-3 d-flex justify-content-end">
-                <Button
-                  color="primary"
-                  className="me-3 px-5"
-                  outline
-                  type="submit"
-                >
-                  Reset
-                </Button>
                 <Button
                   className="px-5"
                   color="primary"

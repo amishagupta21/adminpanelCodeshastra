@@ -55,27 +55,33 @@ const PersonalDetails = props => {
       title: "Work Details",
       component: <WorkDetails userProfile={userProfile} />,
     },
-    {
-      eventKey: "courses-enrolled",
-      title: "Courses Enrolled",
-      component: <CoursesEnrolled />,
-    },
-    { eventKey: "attendance", title: "Attendance", component: <Attendance /> },
+    // {
+    //   eventKey: "courses-enrolled",
+    //   title: "Courses Enrolled",
+    //   component: <CoursesEnrolled />,
+    // },
+    // { eventKey: "attendance", title: "Attendance", component: <Attendance /> },
     {
       eventKey: "document",
       title: "Document & KYC",
-      component: <DocumentKyc userProfile={userProfile} />,
+      component: (
+        <DocumentKyc
+          user={user}
+          userProfile={userProfile}
+          profilePictureUrl={profilePictureUrl}
+        />
+      ),
     },
-    {
-      eventKey: "billing",
-      title: "Billing & Invoice",
-      component: <Billing />,
-    },
-    {
-      eventKey: "notification",
-      title: "Notifications",
-      component: <Notifications />,
-    },
+    // {
+    //   eventKey: "billing",
+    //   title: "Billing & Invoice",
+    //   component: <Billing />,
+    // },
+    // {
+    //   eventKey: "notification",
+    //   title: "Notifications",
+    //   component: <Notifications />,
+    // },
   ]
 
   return (
