@@ -1,0 +1,14 @@
+.image-modal .modal-content {
+  background: transparent;
+  border: none;
+}
+
+.modal-background-color {
+  background-color: #000000 !important;
+  opacity: 0.7 !important;
+}
+
+.image-modal .adjust-image {
+  width: 500px;
+  height: 500px;
+}

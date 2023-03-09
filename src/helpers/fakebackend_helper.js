@@ -10,6 +10,7 @@ import {
   postImage,
   putImage,
   putDetail,
+  deleteDocumentKyc,
 } from "./api_helper"
 import * as url from "./url_helper"
 
@@ -145,8 +146,8 @@ const getDeleteProfilePicture = uid => {
   deleteProfilePicture(url?.GET_DELETE_PROFILE_PICTURE, uid)
 }
 
-const getdeleteDocumentKyc = uid => {
-  deleteProfilePicture(url?.DELETE_DOCUMENT_KYC, uid)
+const getdeleteDocumentKyc = data => {
+  deleteDocumentKyc(url?.DELETE_DOCUMENT_KYC + "/delete-document", data)
 }
 
 const uploadProfilePictureUrl = data => {

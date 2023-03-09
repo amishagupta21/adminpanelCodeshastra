@@ -29,18 +29,23 @@ import tosterMsg from "components/Common/toster"
 function* documentPictureApi({ payload: data }) {
   try {
     const response = yield call(getUploadDocument, data)
-    console.log(response, "////////response")
+    // yield put(
+    //   documentPicture({
+    //     uid: data?.data?.uid,
+    //     document_type: data?.file_name,
+    //   })
+    // )
     // tosterMsg(response?.message)
-    yield put(documentPictureSuccess(response?.data))
+    yield put(documentPictureSuccess(response?.data?.signedUrl))
   } catch (error) {
     toasterMsg(error?.message)
     yield put(documentPictureFail(error))
   }
 }
 
-function* deleteDocumentKyc({ payload: uid }) {
+function* deleteDocumentKyc({ payload: data }) {
   try {
-    const response = yield call(getdeleteDocumentKyc, uid)
+    const response = yield call(getdeleteDocumentKyc, data)
     tosterMsg(response?.message)
     yield put(deleteDocumentKycSuccess(response))
   } catch (error) {
@@ -56,14 +61,8 @@ function* uploadDocumentPicture({ payload: data }) {
       url: response?.data?.signedUrl,
       data: data?.img,
     })
-    console.log(uploadResponse, "///////uploadResponse")
-    yield put(
-      documentPicture({
-        uid: data?.data?.uid,
-        document_type: "pan_card",
-      })
-    )
-    // tosterMsg(response?.message)
+
+    tosterMsg(response?.message)
     yield put(uploadDocumentPictureSuccess(response?.data?.signedUrl))
   } catch (error) {
     // toasterMsg(error?.message)

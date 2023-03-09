@@ -51,10 +51,17 @@ export async function deleteData(url, config = {}) {
   return await Api.delete(url, { ...config }).then(response => response.data)
 }
 
+export async function deleteDocumentKyc(url, data, config = {}) {
+  return await Api.delete(url, { data: { ...data } }, { ...config }).then(
+    response => response.data
+  )
+}
+
 export async function deleteProfilePicture(url, data, config = {}) {
-  return await Api.delete(url, { data: { ...data } }, { ...config })
-    .then(response => response.data)
-    .then(console.log(response.data))
+  return await Api.delete(url, { data: { ...data } }, { ...config }).then(
+    response => response.data
+  )
+  // .then(console.log(response.data))
 }
 
 export async function putDetail(url, data, config = {}) {

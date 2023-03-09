@@ -120,7 +120,7 @@ export const UPLOAD_DOCUMENT_PICTURE = "/admin/user"
 export const GET_APPLICATION_LISTING = "/admin/application/list"
 export const GET_DELETE_LEARNER = "/admin/user/uid/"
 export const GET_DELETE_PROFILE_PICTURE = "/admin/user/profile-picture"
-export const DELETE_DOCUMENT_KYC = "/admin/user/delete-document"
+export const DELETE_DOCUMENT_KYC = "/admin/user"
 
 //Course API's
 export const GET_COURSELIST = "/courses"

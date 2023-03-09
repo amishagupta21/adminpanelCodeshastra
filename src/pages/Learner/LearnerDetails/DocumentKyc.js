@@ -20,16 +20,23 @@ import { connect } from "react-redux"
 import {
   deleteDocumentKyc,
   uploadDocumentPicture,
+  documentPicture,
+  downloadAllImage,
 } from "store/DocumentKyc/actions"
 import { Link } from "react-router-dom"
 import { saveAs } from "file-saver"
 import { useHistory } from "react-router-dom"
 import userPlaceholder from "../../../assets/images/userplaceholder.png"
+import { useParams } from "react-router-dom"
 
 const DocumentKyc = props => {
-  const { userProfile, documentUrl } = props
+  const { userProfile, documentUrl, documentPicture } = props
+  const params = useParams()
+
   const [documentKyc, setDocumentKyc] = useState(userProfile)
   const [image, setImage] = useState({ preview: "", raw: "" })
+  const [loading, setLoading] = useState(false)
+  const [activeDocumentImage, setActiveDocumentImage] = useState("")
   const history = useHistory()
   const hiddenFileInput = React.useRef(null)
   const [document, setDocument] = useState({
@@ -98,13 +105,10 @@ const DocumentKyc = props => {
     setDocumentKyc({ ...documentKyc, kyc: response })
   }
 
-  const allImage = userProfile?.kyc ? Object.values(userProfile?.kyc) : []
-  const download = () => {
-    saveAs(allImage, "aadhar_card.png")
-  }
-
-  const handleClick = () => {
+  const handleClick = name => {
+    setActiveDocumentImage(name)
     hiddenFileInput.current.click()
+    // console.log(item)
   }
 
   const handleDocumentChange = e => {
@@ -123,6 +127,7 @@ const DocumentKyc = props => {
   }, [image])
 
   const handleDocumentUpload = async uid => {
+    console.log(activeDocumentImage, "activeDocumentImage")
     const formData = new FormData()
     formData.append("image", image)
 
@@ -131,15 +136,29 @@ const DocumentKyc = props => {
       img: image,
       data: {
         uid: uid,
-        document_type: "qualification_certificate",
-        file_name: "qualification.png",
+        document_type: activeDocumentImage,
+        file_name: `${activeDocumentImage}.png`,
         type: "image/png",
       },
     })
   }
 
-  // const response = item[1]
-  // console.log(response)
+  const downloadDocument = (event, result) => {
+    setLoading(true)
+    event.preventDefault()
+    const { onGetKycSignedDoc } = props
+    onGetKycSignedDoc({
+      uid: document?.uid,
+      document_type: result,
+    })
+  }
+
+  useEffect(() => {
+    if (props.downloadImage) {
+      saveAs(documentUrl, result)
+      props.onResetDownload()
+    }
+  }, [props.downloadImage])
 
   return (
     <>
@@ -177,33 +196,41 @@ const DocumentKyc = props => {
                   return (
                     <tr key={item}>
                       <td>{result}</td>
-                      <td>
-                        <img src={item[1]} />
-                        &nbsp;&nbsp;
-                        {fileName[fileName.length - 1]}
-                      </td>
-                      {/* <td>
-                        {" "}
-                        <img
-                          height="50px"
-                          width="50px"
-                          src={props?.documentUrl}
-                        />
-                        <i
-                          onClick={() => handleClick()}
-                          className="mdi mdi-upload font-size-18 text-success me-3"
-                        />
-                        <input
-                          type="file"
-                          id="upload-button"
-                          ref={hiddenFileInput}
-                          style={{ display: "none" }}
-                          onChange={handleDocumentChange}
-                          onClick={e => (e.target.value = null)}
-                        />
-                      </td> */}
-                      <td>
-                        <div>
+
+                      {item[1] ? (
+                        <td>{fileName[fileName.length - 1]}</td>
+                      ) : (
+                        // <td>{item[1]}</td>
+                        // <img src={item[1]} width="50px" height="50px" />
+                        <td colSpan="2">
+                          {/* <h5>{documentUrl}</h5> */}
+                          <div
+                            onClick={() => handleClick(documentName)}
+                            // onClick={() => documentUpload(result[0])}
+                            style={{
+                              border: "1px dashed #556ee6",
+                              borderRadius: "8px",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "75%",
+                            }}
+                          >
+                            <i className="mdi mdi-upload font-size-15 text-success me-1"></i>
+                            Upload
+                          </div>
+                          <input
+                            type="file"
+                            id="upload-button"
+                            ref={hiddenFileInput}
+                            style={{ display: "none" }}
+                            onChange={handleDocumentChange}
+                            onClick={e => (e.target.value = null)}
+                          />
+                        </td>
+                      )}
+                      {item[1] && (
+                        <td>
                           <i
                             onClick={() =>
                               history.push({
@@ -215,17 +242,16 @@ const DocumentKyc = props => {
                             }
                             className="mdi mdi-eye font-size-18 text-primary me-3"
                           ></i>
-
                           <i
-                            onClick={() => download()}
+                            onClick={e => downloadDocument(e, item[0])}
                             className="mdi mdi-download font-size-18 text-success me-3"
                           />
                           <i
-                            onClick={() => deleteDocument(item[0])}
-                            className="mdi mdi-trash-can font-size-18 text-danger me-3"
+                            onClick={e => deleteDocument(item[0])}
+                            className="mdi mdi-trash-can font-size-18 text-danger"
                           />
-                        </div>
-                      </td>
+                        </td>
+                      )}
                     </tr>
                   )
                 })}
@@ -244,17 +270,19 @@ DocumentKyc.propTypes = {
   LearnerDetails: PropTypes.any,
 }
 
-const mapStateToProps = ({ LearnerDetails, state, count }) => ({
+const mapStateToProps = ({ LearnerDetails, state, count, DocumentKyc }) => ({
   user: LearnerDetails?.data?.user,
   userProfile: LearnerDetails?.data?.userProfile,
   uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
-  documentUrl: LearnerDetails?.profilePictureUrl?.signedUrl,
-  // editLearnerDetail: LearnerDetails?.editLearnerDetail,
+  documentUrl: DocumentKyc?.documentUrl,
+  downloadImage: DocumentKyc?.downloadImage,
 })
 
 const mapDispatchToProps = dispatch => ({
   onGetDeleteDocumentKyc: uid => dispatch(deleteDocumentKyc(uid)),
   onGetUploadDocumentPicture: data => dispatch(uploadDocumentPicture(data)),
+  onGetKycSignedDoc: uid => dispatch(documentPicture(uid)),
+  onResetDownload: () => dispatch(downloadAllImage()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentKyc)

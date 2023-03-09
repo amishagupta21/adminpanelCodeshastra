@@ -11,6 +11,7 @@ import {
   UPLOAD_DOCUMENT_PICTURE_URL,
   UPLOAD_DOCUMENT_PICTURE_SUCCESS_URL,
   UPLOAD_DOCUMENT_PICTURE_FAIL_URL,
+  DOWNLOAD_IMAGE,
 } from "./actionTypes"
 
 export const documentPicture = data => ({
@@ -71,4 +72,8 @@ export const uploadDocumentPictureSuccessUrl = data => ({
 export const uploadDocumentPictureFailUrl = error => ({
   type: UPLOAD_DOCUMENT_PICTURE_FAIL_URL,
   payload: error,
+})
+
+export const downloadAllImage = () => ({
+  type: DOWNLOAD_IMAGE,
 })

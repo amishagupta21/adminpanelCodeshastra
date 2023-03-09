@@ -10,6 +10,7 @@ import {
   UPLOAD_DOCUMENT_PICTURE_URL,
   UPLOAD_DOCUMENT_PICTURE_SUCCESS_URL,
   UPLOAD_DOCUMENT_PICTURE_FAIL_URL,
+  DOWNLOAD_IMAGE,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -19,6 +20,8 @@ const INIT_STATE = {
   data: [],
   profilePictureUrl: "",
   uploadProfilePicture: "",
+  documentUrl: "",
+  downloadImage: false,
 }
 
 const DocumentKyc = (state = INIT_STATE, action) => {
@@ -31,7 +34,8 @@ const DocumentKyc = (state = INIT_STATE, action) => {
     case DOCUMENT_PICTURE_SUCCESS:
       return {
         ...state,
-        profilePictureUrl: action.payload,
+        documentUrl: action.payload,
+        downloadImage: true,
       }
 
     case DOCUMENT_PICTURE_FAIL:
@@ -84,6 +88,12 @@ const DocumentKyc = (state = INIT_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      }
+
+    case DOWNLOAD_IMAGE:
+      return {
+        ...state,
+        downloadImage: false,
       }
 
     default:
