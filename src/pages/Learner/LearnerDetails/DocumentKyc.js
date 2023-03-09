@@ -108,7 +108,6 @@ const DocumentKyc = props => {
   const handleClick = name => {
     setActiveDocumentImage(name)
     hiddenFileInput.current.click()
-    // console.log(item)
   }
 
   const handleDocumentChange = e => {
@@ -127,7 +126,6 @@ const DocumentKyc = props => {
   }, [image])
 
   const handleDocumentUpload = async uid => {
-    console.log(activeDocumentImage, "activeDocumentImage")
     const formData = new FormData()
     formData.append("image", image)
 
@@ -183,14 +181,11 @@ const DocumentKyc = props => {
 
               {documentKyc?.kyc &&
                 Object?.entries(documentKyc?.kyc).map(item => {
-                  // console.log(Object?.entries(documentKyc?.kyc))
-
                   const documentName = item[0]
                   const str2 =
                     documentName.charAt(0).toUpperCase() + documentName.slice(1)
                   const result = str2.replace("_", " ")
 
-                  // console.log(item)
                   const fileName = item[1].split("/")
 
                   return (
