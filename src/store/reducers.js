@@ -12,6 +12,7 @@ import Learner from "./Learner/reducer"
 import LearnerDetails from "./LearnerDetail/reducer"
 import ApplicationListing from "./ApplicationListing/reducer"
 import WorkDetail from "./WorkDetail/reducer"
+import DocumentKyc from "./DocumentKyc/reducer"
 
 //E-commerce
 import ecommerce from "./e-commerce/reducer"
@@ -68,6 +69,7 @@ const rootReducer = combineReducers({
   ApplicationListing,
   LearnerDetails,
   WorkDetail,
+  DocumentKyc,
 })
 
 export default rootReducer

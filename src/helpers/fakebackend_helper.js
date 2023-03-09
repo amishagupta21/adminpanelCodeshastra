@@ -10,6 +10,7 @@ import {
   postImage,
   putImage,
   putDetail,
+  deleteDocumentKyc,
 } from "./api_helper"
 import * as url from "./url_helper"
 
@@ -117,9 +118,25 @@ const getProfilePicture = async data => {
   return resp
 }
 
+const getUploadDocument = async data => {
+  const resp = await postImage(
+    url.GET_UPLOAD_DOCUMENT + `/get-kyc-singed-doc`,
+    data
+  )
+  return resp
+}
+
 const getUploadProfilePicture = async data => {
   const resp = await postImage(
     url.UPLOAD_PROFILE_PICTURE + `/profile-picture`,
+    data
+  )
+  return resp
+}
+
+const getUploadDocumentPicture = async data => {
+  const resp = await postImage(
+    url.UPLOAD_DOCUMENT_PICTURE + `/upload-document`,
     data
   )
   return resp
@@ -129,7 +146,15 @@ const getDeleteProfilePicture = uid => {
   deleteProfilePicture(url?.GET_DELETE_PROFILE_PICTURE, uid)
 }
 
+const getdeleteDocumentKyc = data => {
+  deleteDocumentKyc(url?.DELETE_DOCUMENT_KYC + "/delete-document", data)
+}
+
 const uploadProfilePictureUrl = data => {
+  putImage(data?.url, data?.data?.preview)
+}
+
+const uploadDocumentPictureUrl = data => {
   putImage(data?.url, data?.data?.preview)
 }
 
@@ -406,4 +431,8 @@ export {
   editLearnerDetail,
   editEducationDetail,
   getEditWorkDetail,
+  getdeleteDocumentKyc,
+  getUploadDocument,
+  getUploadDocumentPicture,
+  uploadDocumentPictureUrl,
 }
