@@ -60,10 +60,10 @@ function* deleteProfilePicture({ payload: uid }) {
   try {
     const response = yield call(getDeleteProfilePicture, uid)
     tosterMsg(response?.message)
-    fetchDemoData()
+    // fetchDemoData()
     yield put(deleteProfilePictureSuccess(response))
   } catch (error) {
-    toasterMsg(error?.message)
+    tosterMsg(error?.message)
     yield put(deleteProfilePictureFail(error))
   }
 }

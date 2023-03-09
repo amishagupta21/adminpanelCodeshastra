@@ -5,17 +5,21 @@ import { useLocation, useParams } from "react-router-dom"
 
 const DocumentData = ({ props }) => {
   // const { userProfile } = props
-  // console.log(.kyc)
   const params = useParams()
 
   const location = useLocation()
+
+  const response = location.state.data[1].split("/")
+  const result = response[response.length - 1]
+  // const result = item
+  console.log(result)
 
   return (
     <>
       <div className="page-content">
         {/* <h1>Document Data</h1> */}
-        <h5>{location.state.data[0]}</h5>
-        <h5>{location.state.data[1]}</h5>
+        <h5>Document Name: {location.state.data[0]}</h5>
+        <h5>File Name: {result}</h5>
       </div>
     </>
   )
