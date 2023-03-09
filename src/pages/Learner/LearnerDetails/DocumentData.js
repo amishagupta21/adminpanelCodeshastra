@@ -12,7 +12,6 @@ const DocumentData = ({ props }) => {
   const response = location.state.data[1].split("/")
   const result = response[response.length - 1]
   // const result = item
-  console.log(result)
 
   return (
     <>

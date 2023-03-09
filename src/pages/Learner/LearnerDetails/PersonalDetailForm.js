@@ -44,7 +44,6 @@ const PersonalDetailForm = props => {
     uploadProfilePicture,
     editLearnerDetail,
   } = props
-  // console.log(props?.profilePictureUrl)
   const [image, setImage] = useState({ preview: "", raw: "" })
   const [learnerData, setLearnerData] = useState({
     full_name: userProfile?.personal_details?.full_name,
