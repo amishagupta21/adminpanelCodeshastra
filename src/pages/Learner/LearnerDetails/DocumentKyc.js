@@ -38,7 +38,7 @@ const DocumentKyc = props => {
   const [loading, setLoading] = useState(false)
   const [activeDocumentImage, setActiveDocumentImage] = useState("")
   const history = useHistory()
-  const hiddenFileInput = React.useRef(null)
+  const hiddenFileInput = React.useRef([])
   const [document, setDocument] = useState({
     uid: userProfile?.uid,
   })
@@ -105,9 +105,9 @@ const DocumentKyc = props => {
     setDocumentKyc({ ...documentKyc, kyc: response })
   }
 
-  const handleClick = name => {
+  const handleClick = (name, index) => {
     setActiveDocumentImage(name)
-    hiddenFileInput.current.click()
+    hiddenFileInput.current[index].click()
   }
 
   const handleDocumentChange = e => {
@@ -216,7 +216,7 @@ const DocumentKyc = props => {
               {/* <img height="50px" width="50px" src={userPlaceholder} /> */}
 
               {documentKyc?.kyc &&
-                Object?.entries(documentKyc?.kyc).map(item => {
+                Object?.entries(documentKyc?.kyc).map((item, index) => {
                   const documentName = item[0]
                   const str2 =
                     documentName.charAt(0).toUpperCase() + documentName.slice(1)
@@ -235,7 +235,7 @@ const DocumentKyc = props => {
                         <td colSpan="2">
                           {/* <h5>{documentUrl}</h5> */}
                           <div
-                            onClick={() => handleClick(documentName)}
+                            onClick={() => handleClick(documentName, index)}
                             // onClick={() => documentUpload(result[0])}
                             style={{
                               border: "1px dashed #556ee6",
@@ -252,7 +252,7 @@ const DocumentKyc = props => {
                           <input
                             type="file"
                             id="upload-button"
-                            ref={hiddenFileInput}
+                            ref={e => (hiddenFileInput.current[index] = e)}
                             style={{ display: "none" }}
                             onChange={handleDocumentChange}
                             onClick={e => (e.target.value = null)}
