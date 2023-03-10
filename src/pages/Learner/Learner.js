@@ -222,7 +222,6 @@ class Learner extends Component {
           selectedOption.value,
         ],
       })
-    console.log(selectedOption)
   }
 
   handleCourseType = selectedOption => {
@@ -460,7 +459,11 @@ class Learner extends Component {
                             </Row>
                           )}
 
-                          <Col className="mt-3" xl="12">
+                          <Col
+                            className="mt-3"
+                            xl="12"
+                            style={{ position: "relative" }}
+                          >
                             <div className="table-responsive">
                               <BootstrapTable
                                 keyField={"id"}
@@ -474,6 +477,11 @@ class Learner extends Component {
                                 pagination={paginationFactory()}
                                 {...toolkitProps.baseProps}
                               />
+                              {manageUser && manageUser.length === 0 && (
+                                <div className="no_data_found_message">
+                                  No data found
+                                </div>
+                              )}
                             </div>
                           </Col>
                         </React.Fragment>

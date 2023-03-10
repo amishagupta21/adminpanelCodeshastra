@@ -130,13 +130,22 @@ const DocumentKyc = props => {
     formData.append("image", image)
 
     const { onGetUploadDocumentPicture } = props
+    const extArr = image?.preview?.name.split(".")
+    const extenstion = extArr[extArr.length - 1]
     onGetUploadDocumentPicture({
       img: image,
       data: {
         uid: uid,
         document_type: activeDocumentImage,
-        file_name: `${activeDocumentImage}.png`,
-        type: "image/png",
+        file_name: `${activeDocumentImage}.${extenstion}`,
+        type: image?.preview?.type,
+      },
+    })
+    setDocumentKyc({
+      ...documentKyc,
+      kyc: {
+        ...documentKyc?.kyc,
+        [activeDocumentImage]: `user/${uid}/kyc/${activeDocumentImage}.${extenstion}`,
       },
     })
   }
@@ -157,6 +166,33 @@ const DocumentKyc = props => {
       props.onResetDownload()
     }
   }, [props.downloadImage])
+
+  useEffect(() => {
+    const docNames = [
+      "hsc_certificate",
+      "aadhar_card",
+      "qualification_certificate",
+      "pan_card",
+      "ssc_certificate",
+    ]
+    if (documentKyc && documentKyc?.kyc) {
+      let finalDocKycObj = { ...documentKyc?.kyc }
+      docNames.map(item => {
+        if (!(item in documentKyc?.kyc)) {
+          finalDocKycObj = { ...finalDocKycObj, [item]: "" }
+        }
+      })
+      if (!_.isEqual(documentKyc?.kyc, finalDocKycObj)) {
+        setDocumentKyc({ ...documentKyc, kyc: finalDocKycObj })
+      }
+    } else if (documentKyc && !documentKyc?.kyc) {
+      let finalDocKycObj = {}
+      docNames.map(item => {
+        finalDocKycObj = { ...finalDocKycObj, [item]: "" }
+      })
+      setDocumentKyc({ ...documentKyc, kyc: finalDocKycObj })
+    }
+  }, [documentKyc])
 
   return (
     <>
@@ -187,7 +223,6 @@ const DocumentKyc = props => {
                   const result = str2.replace("_", " ")
 
                   const fileName = item[1].split("/")
-
                   return (
                     <tr key={item}>
                       <td>{result}</td>
