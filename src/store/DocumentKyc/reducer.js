@@ -11,6 +11,10 @@ import {
   UPLOAD_DOCUMENT_PICTURE_SUCCESS_URL,
   UPLOAD_DOCUMENT_PICTURE_FAIL_URL,
   DOWNLOAD_IMAGE,
+  DOCUMENT_PREVIEW,
+  DOCUMENT_PREVIEW_SUCCESS,
+  DOCUMENT_PREVIEW_FAIL,
+  PREVIEW_IMAGE_RESET,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -22,6 +26,8 @@ const INIT_STATE = {
   uploadProfilePicture: "",
   documentUrl: "",
   downloadImage: false,
+  previewImageUrl: null,
+  previewImage: false,
 }
 
 const DocumentKyc = (state = INIT_STATE, action) => {
@@ -39,6 +45,24 @@ const DocumentKyc = (state = INIT_STATE, action) => {
       }
 
     case DOCUMENT_PICTURE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case DOCUMENT_PREVIEW:
+      return {
+        ...state,
+        data: action.payload,
+      }
+    case DOCUMENT_PREVIEW_SUCCESS:
+      return {
+        ...state,
+        previewImageUrl: action.payload,
+        previewImage: true,
+      }
+
+    case DOCUMENT_PREVIEW_FAIL:
       return {
         ...state,
         error: action.payload,
@@ -94,6 +118,12 @@ const DocumentKyc = (state = INIT_STATE, action) => {
       return {
         ...state,
         downloadImage: false,
+      }
+
+    case PREVIEW_IMAGE_RESET:
+      return {
+        ...state,
+        previewImage: false,
       }
 
     default:
