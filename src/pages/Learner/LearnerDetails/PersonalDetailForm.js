@@ -35,6 +35,8 @@ import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
 import DeleteProfileModal from "./DeleteProfileModal"
 import ImagePreviewModal from "./ImagePreviewModal"
+import LearnerTable from "../LearnerTable"
+import Learner from "../Learner"
 
 const PersonalDetailForm = props => {
   const {
@@ -45,28 +47,38 @@ const PersonalDetailForm = props => {
     editLearnerDetail,
   } = props
   const [image, setImage] = useState({ preview: "", raw: "" })
-  const [learnerData, setLearnerData] = useState({
-    full_name: userProfile?.personal_details?.full_name,
-    email: userProfile?.personal_details?.email,
-    mobile_number: userProfile?.personal_details?.mobile_number,
-    guardian_details: userProfile?.personal_details?.guardian_details,
-    birth_date: userProfile?.personal_details?.birth_date,
-    birth_month: userProfile?.personal_details?.birth_month,
-    birth_year: userProfile?.personal_details?.birth_year,
-    uid: userProfile?.uid,
-  })
+
+  const data =
+    userProfile?.personal_details === null
+      ? {}
+      : {
+          full_name: userProfile?.personal_details?.full_name
+            ? userProfile?.personal_details?.full_name
+            : user?.fullName || "",
+          email: userProfile?.personal_details?.email
+            ? userProfile?.personal_details?.email
+            : user?.email || "",
+          mobile_number: userProfile?.personal_details?.mobile_number
+            ? userProfile?.personal_details?.mobile_number
+            : user?.mobileNumber || "",
+          guardian_details: userProfile?.personal_details?.guardian_details
+            ? userProfile?.personal_details?.guardian_details
+            : user?.guardianDetails || "",
+          birth_date: userProfile?.personal_details?.birth_date
+            ? userProfile?.personal_details?.birth_date
+            : user?.birthDate || "",
+          birth_month: userProfile?.personal_details?.birth_month
+            ? userProfile?.personal_details?.birth_month
+            : user?.birthMonth || "",
+          birth_year: userProfile?.personal_details?.birth_year
+            ? userProfile?.personal_details?.birth_year
+            : user?.birthYear || "",
+          uid: userProfile?.uid || user?.uid,
+        }
+  const [learnerData, setLearnerData] = useState(data)
 
   useEffect(() => {
-    setLearnerData({
-      full_name: userProfile?.personal_details?.full_name,
-      email: userProfile?.personal_details?.email,
-      mobile_number: userProfile?.personal_details?.mobile_number,
-      guardian_details: userProfile?.personal_details?.guardian_details,
-      birth_date: userProfile?.personal_details?.birth_date,
-      birth_month: userProfile?.personal_details?.birth_month,
-      birth_year: userProfile?.personal_details?.birth_year,
-      uid: userProfile?.uid,
-    })
+    setLearnerData(data)
   }, [userProfile])
 
   const [startDate, setStartDate] = useState()
@@ -83,7 +95,12 @@ const PersonalDetailForm = props => {
   const closeProfilePicture = () => setProfilePictureModal(false)
 
   useEffect(() => {
-    if (userProfile?.personal_details) {
+    if (
+      userProfile?.personal_details &&
+      userProfile?.personal_details?.birth_year &&
+      userProfile?.personal_details?.birth_month &&
+      userProfile?.personal_details?.birth_date
+    ) {
       setStartDate(
         new Date(
           `${userProfile?.personal_details?.birth_year}-${userProfile?.personal_details?.birth_month}-${userProfile?.personal_details?.birth_date}`
@@ -167,19 +184,21 @@ const PersonalDetailForm = props => {
           ) : (
             <img height="50px" width="50px" src={userPlaceholder} />
           )}
-          &nbsp;&nbsp;
           <div>
             <p>Profile Picture</p>
             <div>
               {/* <Link to="/">View</Link>&nbsp;&nbsp;&nbsp; */}
               {props?.profilePictureUrl ? (
-                <Link className="text-danger" onClick={openModal}>
+                <div className="text-danger profile-button" onClick={openModal}>
                   Delete
-                </Link>
+                </div>
               ) : (
-                <Link className="text-danger" onClick={() => handleClick()}>
+                <div
+                  className="text-danger profile-button"
+                  onClick={() => handleClick()}
+                >
                   Upload
-                </Link>
+                </div>
               )}
               &nbsp;&nbsp;
             </div>
@@ -281,8 +300,8 @@ const PersonalDetailForm = props => {
                       })
                     }}
                     value={
-                      learnerData.birth_date
-                        ? `${learnerData.birth_date}/${learnerData.birth_month}/${learnerData.birth_year}`
+                      learnerData?.birth_date
+                        ? `${learnerData?.birth_date}/${learnerData?.birth_month}/${learnerData?.birth_year}`
                         : "YYYY/MM/DD"
                     }
                   />

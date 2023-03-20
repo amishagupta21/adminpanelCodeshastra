@@ -21,21 +21,26 @@ import { connect } from "react-redux"
 import { editWorkDetail } from "store/WorkDetail/actions"
 
 const WorkDetails = props => {
-  const { userProfile } = props
-  const [workData, setWorkData] = useState({
-    position: userProfile?.work_details[0]?.position,
-    experience: userProfile?.work_details[0]?.experience,
-    organization_name: userProfile?.work_details[0]?.organization_name,
-    uid: userProfile?.uid,
-  })
+  const { userProfile, user } = props
+  const data =
+    userProfile?.work_details === null
+      ? {}
+      : {
+          position: userProfile?.work_details[0]?.position
+            ? userProfile?.work_details[0]?.position
+            : user?.position || "",
+          experience: userProfile?.work_details[0]?.experience
+            ? userProfile?.work_details[0]?.experience
+            : user?.experience || "",
+          organization_name: userProfile?.work_details[0]?.organization_name
+            ? userProfile?.work_details[0]?.organization_name
+            : user?.organization_name || "",
+          uid: userProfile?.uid || user?.uid,
+        }
+  const [workData, setWorkData] = useState(data)
 
   useEffect(() => {
-    setWorkData({
-      position: userProfile?.work_details[0]?.position,
-      experience: userProfile?.work_details[0]?.experience,
-      organization_name: userProfile?.work_details[0]?.organization_name,
-      uid: userProfile?.uid,
-    })
+    setWorkData(data)
   }, [userProfile])
 
   const editWorkData = event => {

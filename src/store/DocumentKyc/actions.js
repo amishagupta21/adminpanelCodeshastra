@@ -12,6 +12,10 @@ import {
   UPLOAD_DOCUMENT_PICTURE_SUCCESS_URL,
   UPLOAD_DOCUMENT_PICTURE_FAIL_URL,
   DOWNLOAD_IMAGE,
+  DOCUMENT_PREVIEW,
+  DOCUMENT_PREVIEW_SUCCESS,
+  DOCUMENT_PREVIEW_FAIL,
+  PREVIEW_IMAGE_RESET,
 } from "./actionTypes"
 
 export const documentPicture = data => ({
@@ -26,6 +30,21 @@ export const documentPictureSuccess = data => ({
 
 export const documentPictureFail = error => ({
   type: DOCUMENT_PICTURE_FAIL,
+  payload: error,
+})
+
+export const documentPreview = data => ({
+  type: DOCUMENT_PREVIEW,
+  payload: data,
+})
+
+export const documentPreviewSuccess = data => ({
+  type: DOCUMENT_PREVIEW_SUCCESS,
+  payload: data,
+})
+
+export const documentPreviewFail = error => ({
+  type: DOCUMENT_PREVIEW_FAIL,
   payload: error,
 })
 
@@ -76,4 +95,8 @@ export const uploadDocumentPictureFailUrl = error => ({
 
 export const downloadAllImage = () => ({
   type: DOWNLOAD_IMAGE,
+})
+
+export const resetPreviewImage = () => ({
+  type: PREVIEW_IMAGE_RESET,
 })

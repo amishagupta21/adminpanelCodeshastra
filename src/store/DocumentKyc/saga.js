@@ -5,6 +5,7 @@ import {
   DELETE_DOCUMENT_KYC,
   DOCUMENT_PICTURE,
   UPLOAD_DOCUMENT_PICTURE,
+  DOCUMENT_PREVIEW,
 } from "./actionTypes"
 
 import {
@@ -17,6 +18,8 @@ import {
   uploadDocumentPictureSuccessUrl,
   uploadDocumentPictureFailUrl,
   documentPicture,
+  documentPreviewSuccess,
+  documentPreviewFail,
 } from "./actions"
 import {
   getUploadDocument,
@@ -40,6 +43,17 @@ function* documentPictureApi({ payload: data }) {
   } catch (error) {
     toasterMsg(error?.message)
     yield put(documentPictureFail(error))
+  }
+}
+
+function* documentPreviewApi({ payload: data }) {
+  try {
+    const response = yield call(getUploadDocument, data)
+
+    yield put(documentPreviewSuccess(response?.data?.signedUrl))
+  } catch (error) {
+    toasterMsg(error?.message)
+    yield put(documentPreviewFail(error))
   }
 }
 
@@ -72,6 +86,7 @@ function* uploadDocumentPicture({ payload: data }) {
 
 function* usersManageSaga() {
   yield takeEvery(DOCUMENT_PICTURE, documentPictureApi)
+  yield takeEvery(DOCUMENT_PREVIEW, documentPreviewApi)
   yield takeEvery(DELETE_DOCUMENT_KYC, deleteDocumentKyc)
   yield takeEvery(UPLOAD_DOCUMENT_PICTURE, uploadDocumentPicture)
 }

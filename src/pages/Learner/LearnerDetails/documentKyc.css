@@ -1,0 +1,5 @@
+.modalContent {
+  height: 80vh;
+  display: grid !important;
+  place-items: center;
+}

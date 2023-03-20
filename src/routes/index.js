@@ -19,7 +19,6 @@ import Learner from "pages/Learner/Learner"
 import ApplicationListing from "pages/ApplicationListing/ApplicationListing"
 import LearnerDetails from "pages/Learner/LearnerDetails/LearnerDetails"
 import ApplicationDetails from "pages/ApplicationListing/ApplicationDetails/ApplicationDetails"
-import DocumentData from "pages/Learner/LearnerDetails/DocumentData"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -30,10 +29,6 @@ const authProtectedRoutes = [
   { path: "/application", component: ApplicationListing },
   { path: "/learner-details/:id", component: LearnerDetails },
   { path: "/application-details", component: ApplicationDetails },
-  {
-    path: "/learner-details/:id/document-data/:keys",
-    component: DocumentData,
-  },
 
   // //profile
   { path: "/profile", component: UserProfile },
