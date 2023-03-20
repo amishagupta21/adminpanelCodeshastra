@@ -184,10 +184,10 @@ const PersonalDetailForm = props => {
           ) : (
             <img height="50px" width="50px" src={userPlaceholder} />
           )}
+          &nbsp;&nbsp;&nbsp;
           <div>
             <p>Profile Picture</p>
             <div>
-              {/* <Link to="/">View</Link>&nbsp;&nbsp;&nbsp; */}
               {props?.profilePictureUrl ? (
                 <div className="text-danger profile-button" onClick={openModal}>
                   Delete
@@ -200,7 +200,6 @@ const PersonalDetailForm = props => {
                   Upload
                 </div>
               )}
-              &nbsp;&nbsp;
             </div>
 
             <input
