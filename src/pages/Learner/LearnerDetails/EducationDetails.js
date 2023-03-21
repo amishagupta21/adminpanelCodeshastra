@@ -22,70 +22,134 @@ import { editEducationDetail } from "store/EducationDetail/actions"
 
 const EducationDetails = props => {
   const { user, userProfile } = props
-  const [educationData, setEducationData] = useState([
-    {
-      pg_college_name:
-        userProfile?.education_details?.qualification[0]?.college_name,
-      pg_year_of_completion:
-        userProfile?.education_details?.qualification[0]?.year_of_completion,
-      pg_passing_marks:
-        userProfile?.education_details?.qualification[0]?.passing_marks,
-      pg_level: userProfile?.education_details?.qualification[0]?.level,
-    },
-    {
-      ug_college_name:
-        userProfile?.education_details?.qualification[1]?.college_name,
-      ug_year_of_completion:
-        userProfile?.education_details?.qualification[1]?.year_of_completion,
-      ug_passing_marks:
-        userProfile?.education_details?.qualification[1]?.passing_marks,
-      ug_level: userProfile?.education_details?.qualification[1]?.level,
-    },
-    {
-      diploma_college_name:
-        userProfile?.education_details?.qualification[2]?.college_name,
-      diploma_year_of_completion:
-        userProfile?.education_details?.qualification[2]?.year_of_completion,
-      diploma_passing_marks:
-        userProfile?.education_details?.qualification[2]?.passing_marks,
-      diploma_level: userProfile?.education_details?.qualification[2]?.level,
-    },
-    {
-      other_program_name: userProfile?.education_details?.other_program_name,
-      other_program_college_name:
-        userProfile?.education_details?.other_program_college_name,
-      other_program_course_duration:
-        userProfile?.education_details?.other_program_course_duration,
-      uid: userProfile?.uid,
-    },
-  ])
+
+  const data =
+    userProfile?.personal_details === null
+      ? {}
+      : [
+          {
+            pg_college_name: userProfile?.education_details?.qualification[0]
+              ?.college_name
+              ? userProfile?.education_details?.qualification[0]?.college_name
+              : user?.college_name || "",
+            pg_year_of_completion: userProfile?.education_details
+              ?.qualification[0]?.year_of_completion
+              ? userProfile?.education_details?.qualification[0]
+                  ?.year_of_completion
+              : user?.year_of_completion || "",
+            pg_passing_marks: userProfile?.education_details?.qualification[0]
+              ?.passing_marks
+              ? userProfile?.education_details?.qualification[0]?.passing_marks
+              : user?.passing_marks || "",
+            pg_level: userProfile?.education_details?.qualification[0]?.level
+              ? userProfile?.education_details?.qualification[0]?.level
+              : user?.level || "",
+          },
+          {
+            ug_college_name: userProfile?.education_details?.qualification[1]
+              ?.college_name
+              ? userProfile?.education_details?.qualification[1]?.college_name
+              : user?.college_name || "",
+            ug_year_of_completion: userProfile?.education_details
+              ?.qualification[1]?.year_of_completion
+              ? userProfile?.education_details?.qualification[1]
+                  ?.year_of_completion
+              : user?.year_of_completion || "",
+            ug_passing_marks: userProfile?.education_details?.qualification[1]
+              ?.passing_marks
+              ? userProfile?.education_details?.qualification[1]?.passing_marks
+              : user?.passing_marks || "",
+            ug_level: userProfile?.education_details?.qualification[1]?.level
+              ? userProfile?.education_details?.qualification[1]?.level
+              : user?.level || "",
+          },
+          {
+            diploma_college_name: userProfile?.education_details
+              ?.qualification[2]?.college_name
+              ? userProfile?.education_details?.qualification[2]?.college_name
+              : user?.college_name || "",
+            diploma_year_of_completion: userProfile?.education_details
+              ?.qualification[2]?.year_of_completion
+              ? userProfile?.education_details?.qualification[2]
+                  ?.year_of_completion
+              : user?.year_of_completion || "",
+            diploma_passing_marks: userProfile?.education_details
+              ?.qualification[2]?.passing_marks
+              ? userProfile?.education_details?.qualification[2]?.passing_marks
+              : user?.passing_marks || "",
+            diploma_level: userProfile?.education_details?.qualification[2]
+              ?.level
+              ? userProfile?.education_details?.qualification[2]?.level
+              : user?.level || "",
+          },
+          {
+            other_program_name: userProfile?.education_details
+              ?.other_program_name
+              ? userProfile?.education_details?.other_program_name
+              : user?.level || "",
+            other_program_college_name: userProfile?.education_details
+              ?.other_program_college_name
+              ? userProfile?.education_details?.other_program_college_name
+              : user?.other_program_college_name || "",
+            other_program_course_duration: userProfile?.education_details
+              ?.other_program_course_duration
+              ? userProfile?.education_details?.other_program_course_duration
+              : user?.other_program_course_duration || "",
+            uid: userProfile?.uid || user?.uid,
+          },
+        ]
+  const [educationData, setEducationData] = useState(data)
 
   useEffect(() => {
     setEducationData({
-      pg_college_name:
-        userProfile?.education_details?.qualification[0]?.college_name,
-      pg_year_of_completion:
-        userProfile?.education_details?.qualification[0]?.year_of_completion,
-      pg_passing_marks:
-        userProfile?.education_details?.qualification[0]?.passing_marks,
-      ug_college_name:
-        userProfile?.education_details?.qualification[1]?.college_name,
-      ug_year_of_completion:
-        userProfile?.education_details?.qualification[1]?.year_of_completion,
-      ug_passing_marks:
-        userProfile?.education_details?.qualification[1]?.passing_marks,
-      diploma_college_name:
-        userProfile?.education_details?.qualification[2]?.college_name,
-      diploma_year_of_completion:
-        userProfile?.education_details?.qualification[2]?.year_of_completion,
-      diploma_passing_marks:
-        userProfile?.education_details?.qualification[2]?.passing_marks,
-      other_program_name: userProfile?.education_details?.other_program_name,
-      other_program_college_name:
-        userProfile?.education_details?.other_program_college_name,
-      other_program_course_duration:
-        userProfile?.education_details?.other_program_course_duration,
-      uid: userProfile?.uid,
+      pg_college_name: userProfile?.education_details?.qualification[0]
+        ?.college_name
+        ? userProfile?.education_details?.qualification[0]?.college_name
+        : user?.college_name || "",
+      pg_year_of_completion: userProfile?.education_details?.qualification[0]
+        ?.year_of_completion
+        ? userProfile?.education_details?.qualification[0]?.year_of_completion
+        : user?.year_of_completion || "",
+      pg_passing_marks: userProfile?.education_details?.qualification[0]
+        ?.passing_marks
+        ? userProfile?.education_details?.qualification[0]?.passing_marks
+        : user?.passing_marks || "",
+      ug_college_name: userProfile?.education_details?.qualification[1]
+        ?.college_name
+        ? userProfile?.education_details?.qualification[1]?.college_name
+        : user?.college_name || "",
+      ug_year_of_completion: userProfile?.education_details?.qualification[1]
+        ?.year_of_completion
+        ? userProfile?.education_details?.qualification[1]?.year_of_completion
+        : user?.year_of_completion || "",
+      ug_passing_marks: userProfile?.education_details?.qualification[1]
+        ?.passing_marks
+        ? userProfile?.education_details?.qualification[1]?.passing_marks
+        : user?.passing_marks || "",
+      diploma_college_name: userProfile?.education_details?.qualification[2]
+        ?.college_name
+        ? userProfile?.education_details?.qualification[2]?.college_name
+        : user?.college_name || "",
+      diploma_year_of_completion: userProfile?.education_details
+        ?.qualification[2]?.year_of_completion
+        ? userProfile?.education_details?.qualification[2]?.year_of_completion
+        : user?.year_of_completion || "",
+      diploma_passing_marks: userProfile?.education_details?.qualification[2]
+        ?.passing_marks
+        ? userProfile?.education_details?.qualification[2]?.passing_marks
+        : user?.passing_marks || "",
+      other_program_name: userProfile?.education_details?.other_program_name
+        ? userProfile?.education_details?.other_program_name
+        : user?.other_program_name || "",
+      other_program_college_name: userProfile?.education_details
+        ?.other_program_college_name
+        ? userProfile?.education_details?.other_program_college_name
+        : user?.other_program_college_name || "",
+      other_program_course_duration: userProfile?.education_details
+        ?.other_program_course_duration
+        ? userProfile?.education_details?.other_program_course_duration
+        : user?.other_program_course_duration || "",
+      uid: userProfile?.uid || user?.uid,
     })
   }, [userProfile])
 
@@ -141,6 +205,7 @@ const EducationDetails = props => {
     <>
       <div>
         <h4 className="ms-2 mb-3 text-primary ">Education Details</h4>
+
         <Row>
           <Col sm={4}>
             <Select
@@ -199,12 +264,12 @@ const EducationDetails = props => {
                       name="text"
                       type="text"
                       placeholder="Passing Marks"
-                      onChange={e =>
+                      onChange={e => {
                         setEducationData({
                           ...educationData,
                           pg_passing_marks: e.target.value,
                         })
-                      }
+                      }}
                       value={educationData?.pg_passing_marks}
                     />
                   </div>

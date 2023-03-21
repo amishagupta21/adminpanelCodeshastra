@@ -12,6 +12,8 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
+  Modal,
+  ModalBody,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
 import progressbar from "../../../assets/images/progress.gif"
@@ -22,23 +24,30 @@ import {
   uploadDocumentPicture,
   documentPicture,
   downloadAllImage,
+  documentPreview,
+  previewImageUrl,
+  resetPreviewImage,
 } from "store/DocumentKyc/actions"
 import { Link } from "react-router-dom"
 import { saveAs } from "file-saver"
 import { useHistory } from "react-router-dom"
 import userPlaceholder from "../../../assets/images/userplaceholder.png"
-import { useParams } from "react-router-dom"
+import Learner from "../Learner"
+import Users from "pages/Users"
+import "./documentKyc.css"
 
 const DocumentKyc = props => {
-  const { userProfile, documentUrl, documentPicture } = props
-  const params = useParams()
+  const { userProfile, documentUrl, documentPicture, profilePictureUrl } = props
 
   const [documentKyc, setDocumentKyc] = useState(userProfile)
   const [image, setImage] = useState({ preview: "", raw: "" })
   const [loading, setLoading] = useState(false)
   const [activeDocumentImage, setActiveDocumentImage] = useState("")
   const history = useHistory()
-  const hiddenFileInput = React.useRef(null)
+  const hiddenFileInput = React.useRef([])
+  const [modal, setModal] = React.useState(false)
+
+  // const hiddenFileInput = React.useRef(null)
   const [document, setDocument] = useState({
     uid: userProfile?.uid,
   })
@@ -105,9 +114,9 @@ const DocumentKyc = props => {
     setDocumentKyc({ ...documentKyc, kyc: response })
   }
 
-  const handleClick = name => {
+  const handleClick = (name, index) => {
     setActiveDocumentImage(name)
-    hiddenFileInput.current.click()
+    hiddenFileInput.current[index].click()
   }
 
   const handleDocumentChange = e => {
@@ -130,13 +139,22 @@ const DocumentKyc = props => {
     formData.append("image", image)
 
     const { onGetUploadDocumentPicture } = props
+    const extArr = image?.preview?.name.split(".")
+    const extenstion = extArr[extArr.length - 1]
     onGetUploadDocumentPicture({
       img: image,
       data: {
         uid: uid,
         document_type: activeDocumentImage,
-        file_name: `${activeDocumentImage}.png`,
-        type: "image/png",
+        file_name: `${activeDocumentImage}.${extenstion}`,
+        type: image?.preview?.type,
+      },
+    })
+    setDocumentKyc({
+      ...documentKyc,
+      kyc: {
+        ...documentKyc?.kyc,
+        [activeDocumentImage]: `user/${uid}/kyc/${activeDocumentImage}.${extenstion}`,
       },
     })
   }
@@ -151,12 +169,57 @@ const DocumentKyc = props => {
     })
   }
 
+  const imagePreview = (event, result) => {
+    setLoading(true)
+    event.preventDefault()
+    const { onGetImagePreview } = props
+    onGetImagePreview({
+      uid: document?.uid,
+      document_type: result,
+    })
+  }
+
   useEffect(() => {
     if (props.downloadImage) {
       saveAs(documentUrl, result)
       props.onResetDownload()
     }
   }, [props.downloadImage])
+
+  useEffect(() => {
+    const docNames = [
+      "hsc_certificate",
+      "aadhar_card",
+      "qualification_certificate",
+      "pan_card",
+      "ssc_certificate",
+    ]
+    if (documentKyc && documentKyc?.kyc) {
+      let finalDocKycObj = { ...documentKyc?.kyc }
+      docNames.map(item => {
+        if (!(item in documentKyc?.kyc)) {
+          finalDocKycObj = { ...finalDocKycObj, [item]: "" }
+        }
+      })
+      if (!_.isEqual(documentKyc?.kyc, finalDocKycObj)) {
+        setDocumentKyc({ ...documentKyc, kyc: finalDocKycObj })
+      }
+    } else if (documentKyc && !documentKyc?.kyc) {
+      let finalDocKycObj = {}
+      docNames.map(item => {
+        finalDocKycObj = { ...finalDocKycObj, [item]: "" }
+      })
+      setDocumentKyc({ ...documentKyc, kyc: finalDocKycObj })
+    }
+  }, [documentKyc])
+  const toggle = () => setModal(!modal)
+
+  useEffect(() => {
+    if (props.previewImage) {
+      toggle()
+      props.onResetPreviewImg()
+    }
+  }, [props.previewImage])
 
   return (
     <>
@@ -180,14 +243,13 @@ const DocumentKyc = props => {
               {/* <img height="50px" width="50px" src={userPlaceholder} /> */}
 
               {documentKyc?.kyc &&
-                Object?.entries(documentKyc?.kyc).map(item => {
+                Object?.entries(documentKyc?.kyc).map((item, index) => {
                   const documentName = item[0]
                   const str2 =
                     documentName.charAt(0).toUpperCase() + documentName.slice(1)
                   const result = str2.replace("_", " ")
 
                   const fileName = item[1].split("/")
-
                   return (
                     <tr key={item}>
                       <td>{result}</td>
@@ -195,13 +257,9 @@ const DocumentKyc = props => {
                       {item[1] ? (
                         <td>{fileName[fileName.length - 1]}</td>
                       ) : (
-                        // <td>{item[1]}</td>
-                        // <img src={item[1]} width="50px" height="50px" />
                         <td colSpan="2">
-                          {/* <h5>{documentUrl}</h5> */}
                           <div
-                            onClick={() => handleClick(documentName)}
-                            // onClick={() => documentUpload(result[0])}
+                            onClick={() => handleClick(documentName, index)}
                             style={{
                               border: "1px dashed #556ee6",
                               borderRadius: "8px",
@@ -217,7 +275,7 @@ const DocumentKyc = props => {
                           <input
                             type="file"
                             id="upload-button"
-                            ref={hiddenFileInput}
+                            ref={e => (hiddenFileInput.current[index] = e)}
                             style={{ display: "none" }}
                             onChange={handleDocumentChange}
                             onClick={e => (e.target.value = null)}
@@ -227,14 +285,15 @@ const DocumentKyc = props => {
                       {item[1] && (
                         <td>
                           <i
-                            onClick={() =>
-                              history.push({
-                                pathname: `/learner-details/${documentKyc?.uid}/document-data/${item[0]}`,
-                                state: {
-                                  data: item,
-                                },
-                              })
-                            }
+                            onClick={e => {
+                              imagePreview(e, item[0])
+                              // history.push({
+                              //   pathname: `/learner-details/${documentKyc?.uid}/document-data/${item[0]}`,
+                              //   state: {
+                              //     previewImageUrl: previewImageUrl,
+                              //   },
+                              // })
+                            }}
                             className="mdi mdi-eye font-size-18 text-primary me-3"
                           ></i>
                           <i
@@ -252,6 +311,24 @@ const DocumentKyc = props => {
                 })}
             </tbody>
           </Table>
+          <Modal
+            isOpen={modal}
+            toggle={toggle}
+            modalTransition={{ timeout: 500 }}
+            centered={true}
+            fade={false}
+            contentClassName="modalContent"
+            size="lg"
+          >
+            <img
+              src={props.previewImageUrl}
+              style={{
+                width: "600px",
+                height: "auto",
+                borderRadius: "10px",
+              }}
+            />
+          </Modal>
         </Col>
       </div>
     </>
@@ -265,19 +342,20 @@ DocumentKyc.propTypes = {
   LearnerDetails: PropTypes.any,
 }
 
-const mapStateToProps = ({ LearnerDetails, state, count, DocumentKyc }) => ({
-  user: LearnerDetails?.data?.user,
-  userProfile: LearnerDetails?.data?.userProfile,
-  uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
+const mapStateToProps = ({ DocumentKyc }) => ({
   documentUrl: DocumentKyc?.documentUrl,
   downloadImage: DocumentKyc?.downloadImage,
+  previewImageUrl: DocumentKyc?.previewImageUrl,
+  previewImage: DocumentKyc?.previewImage,
 })
 
 const mapDispatchToProps = dispatch => ({
   onGetDeleteDocumentKyc: uid => dispatch(deleteDocumentKyc(uid)),
   onGetUploadDocumentPicture: data => dispatch(uploadDocumentPicture(data)),
   onGetKycSignedDoc: uid => dispatch(documentPicture(uid)),
+  onGetImagePreview: uid => dispatch(documentPreview(uid)),
   onResetDownload: () => dispatch(downloadAllImage()),
+  onResetPreviewImg: () => dispatch(resetPreviewImage()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentKyc)

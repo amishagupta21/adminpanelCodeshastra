@@ -99,9 +99,9 @@ const PersonalDetails = props => {
                   {initialTabs.map(item => {
                     return (
                       <Tab
-                        key={item.eventKey}
-                        eventKey={item.eventKey}
-                        title={item.title}
+                        key={item?.eventKey}
+                        eventKey={item?.eventKey}
+                        title={item?.title || ""}
                       ></Tab>
                     )
                   })}{" "}
@@ -120,7 +120,7 @@ const PersonalDetails = props => {
                   {initialTabs.map(item => {
                     return (
                       <Tab key={item.eventKey} eventKey={item.eventKey}>
-                        {item.component}
+                        {item?.component}
                       </Tab>
                     )
                   })}
