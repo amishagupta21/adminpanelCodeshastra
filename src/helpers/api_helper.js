@@ -25,7 +25,7 @@ const Api = axios.create({
   baseURL: URL,
 })
 
-Api.defaults.headers.common["access_key"] = "fD3T+LGHC&eIV5nh"
+Api.defaults.headers.common["access-key"] = "fD3T+LGHC&eIV5nh"
 
 Api.interceptors.response.use(
   response => response,
@@ -61,7 +61,6 @@ export async function deleteProfilePicture(url, data, config = {}) {
   return await Api.delete(url, { data: { ...data } }, { ...config }).then(
     response => response.data
   )
-  // .then(console.log(response.data))
 }
 
 export async function putDetail(url, data, config = {}) {
