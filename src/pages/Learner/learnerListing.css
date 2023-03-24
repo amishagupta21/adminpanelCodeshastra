@@ -68,3 +68,10 @@
 .badge {
   cursor: pointer;
 }
+.no_data_found_message {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  font-size: 25px;
+  font-weight: 800;
+}
