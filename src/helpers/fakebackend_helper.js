@@ -99,6 +99,16 @@ const postJwtRegister = (url, data) => {
     })
 }
 
+//COURSES API
+
+const getCoursesList = data =>
+  getData(
+    url.GET_LEARNER +
+      `?page=${data?.page || 1}&perPage=${data?.page || 5102}&search=${
+        data?.search
+      }`
+  )
+
 const getLearnerList = data =>
   getData(
     url.GET_LEARNER +
@@ -435,4 +445,5 @@ export {
   getUploadDocument,
   getUploadDocumentPicture,
   uploadDocumentPictureUrl,
+  getCoursesList,
 }

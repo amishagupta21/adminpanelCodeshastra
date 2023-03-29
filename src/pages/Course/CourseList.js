@@ -1,210 +1,286 @@
-import { React, useState, Container } from "react"
-import { DeBounceSearch } from "components/Common/DeBounceSearch"
-import Card from "react-bootstrap/Card"
-import ListGroup from "react-bootstrap/ListGroup"
-import Button from "react-bootstrap/Button"
-import { CardGroup } from "react-bootstrap"
-import courseIMG from "../../assets/images/stack.webp"
-import liveIcon from "../../assets/images/live.png"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import { Form } from "react-bootstrap"
+import { React, useEffect, useState } from "react"
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  Button,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Container,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  Label,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  ListGroup,
+} from "reactstrap"
+import BootstrapTable from "react-bootstrap-table-next"
+import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import dateFormate from "common/dateFormatter"
-import "./CourseStyle.scss"
-import { Pagination, PaginationLink, PaginationItem } from "reactstrap"
 import Select from "react-select"
-import { useHistory } from "react-router-dom"
+import { DeBounceSearch } from "common/DeBounceSearch"
+import DeleteModal from "components/Common/DeleteModal"
+import { ErrorMessage, Field, Formik } from "formik"
+import * as Yup from "yup"
+import tosterMsg from "components/Common/toster"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+// import {
+//   getLearner,
+//   deleteLearner,
+//   getStatusFilter,
+//   registerUser,
+// } from "store/actions"
+import { getCourses } from "store/Courses/actions"
 
-export function CourseList({
-  courseList,
-  isLoading,
-  handleSearch,
-  handlePageChange,
-  currentPage,
-  handleFilter,
-  filter,
-}) {
-  document.title = "Course List"
-  let courses = courseList?.data?.result
-  const columnsPerRow = 4
-  const defaultPageCount = 5
-  const history = useHistory()
-  const pageCount = parseInt(
-    (courseList.data.count + defaultPageCount - 1) / defaultPageCount
-  )
-  const filterOptions = [
-    { label: "Draft ", value: "Draft" },
-    { label: "Published", value: "Published" },
-  ]
-  const paginationPage = Array.apply(null, new Array(pageCount))
-  const openCourse = element => {
-    history.push("/courses/create?c_id=" + element.id)
+function CourseList(props) {
+  document.title = "Users List"
+  const [isExpanded, setIsExpanded] = useState(null)
+
+  const [usersListData, setUsersListData] = useState([])
+  const { userProfile, data, profilePictureUrl } = props
+
+  const selectRow = {
+    mode: "checkbox",
   }
 
-  const getColumnsForRow = () => {
-    let items = courses.map((element, index) => {
-      return (
-        <CardGroup key={index}>
-          <Col>
-            <Card className="cardStyle">
-              <Card.Img src={courseIMG} />
-              <span className="best-seller-tag">
-                <div className="best-seller-content">
-                  <img
-                    src={liveIcon}
-                    style={{ height: "20px", width: "40px" }}
-                  />
-                </div>
-              </span>
-              <Card.Body>
-                <div className="title-div">
-                  <Card.Title>{element.course_title}</Card.Title>
-                </div>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-                <ListGroup.Item>
-                  <Row>
-                    <Col>{element.description}</Col>
-                  </Row>
-                </ListGroup.Item>
-              </ListGroup>
-              <Card.Body>
-                <div className="text-center">
-                  <Button
-                    variant="outline-primary"
-                    onClick={() => {
-                      openCourse(element)
-                    }}
-                  >
-                    Manage Course
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </CardGroup>
-      )
-    })
-    return items
+  const options = [
+    { label: "Full Stack Web Developer(Full Time)", value: "invited" },
+    { label: "Full Stack Web Developer(Full Time)", value: "onboarded" },
+    { label: "Python Full Stack Web Developer", value: "suspended" },
+    { label: "Data Science Program", value: "de-activated" },
+  ]
+
+  useEffect(() => {
+    const { onGetCourses } = props
+    // onGetCourses(params.id)
+  }, [])
+
+  let state = {
+    columns: [
+      {
+        dataField: "id",
+        sort: true,
+        hidden: true,
+        formatter: (cellContent, user) => <>{row?.id}</>,
+      },
+      {
+        dataField: "nickName",
+        text: "Course Name",
+        sort: true,
+      },
+
+      {
+        dataField: "created_at",
+        text: "Variant Counts",
+        sort: true,
+        formatter: (cellContent, user) => dateFormate(user.created_at),
+      },
+      {
+        dataField: "email",
+        text: "Mentors",
+        sort: true,
+      },
+      {
+        dataField: "email",
+        text: "Duration",
+        sort: true,
+      },
+      {
+        dataField: "email",
+        text: "Ongoing Batches",
+        sort: true,
+      },
+      {
+        dataField: "email",
+        text: "Learners",
+        sort: true,
+      },
+      {
+        dataField: "Actions",
+        text: "Actions",
+        formatter: (cellContent, user) => (
+          <UncontrolledDropdown>
+            <DropdownToggle className="card-drop" tag="a">
+              <i className="mdi mdi-dots-horizontal font-size-18" />
+            </DropdownToggle>
+            <DropdownMenu className="dropdown-menu-end">
+              <DropdownItem onClick={() => handleUserClick(user)}>
+                <i className="mdi mdi-pencil font-size-16 text-success me-1" />
+                Edit
+              </DropdownItem>
+              <DropdownItem onClick={() => onClickDelete(user)}>
+                <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />
+                Delete
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        ),
+      },
+    ],
   }
 
   return (
     <>
-      {!isLoading && courses.length && (
-        <>
-          <Row className="tool-bar">
-            <Col sm="4">
-              <div className="app-search p-2">
-                <div className="position-relative">
-                  <DeBounceSearch handleSearch={handleSearch} />
-                  <span className="bx bx-search-alt" />
-                </div>
-              </div>
-            </Col>
-            <Col sm="3">
-              <div className="app-search p-2">
-                <Select
-                  name="filter"
-                  value={filter}
-                  onChange={handleFilter}
-                  placeholder="Select Status"
-                  options={filterOptions}
-                />
-              </div>
-            </Col>
-            <Col sm="5">
-              <div className="text-sm-end p-2">
-                <Button
-                  type="button"
-                  variant="success"
-                  className="btn-rounded mb-2 me-2"
-                  onClick={e => {
-                    history.push("/courses/create")
-                  }}
-                >
-                  <i className="mdi mdi-plus me-1" /> Create Course
-                </Button>
-              </div>
-            </Col>
-          </Row>
-          <Row xs={1} md={columnsPerRow}>
-            {getColumnsForRow()}
-          </Row>
-          <Row>
-            <Pagination className="pagination pagination-rounded justify-content-end mb-2">
-              {currentPage !== 1 && (
-                <>
-                  <PaginationItem>
-                    <PaginationLink
-                      first
-                      onClick={() => handlePageChange(1, defaultPageCount)}
-                    />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink
-                      onClick={() =>
-                        handlePageChange(currentPage - 1, defaultPageCount)
-                      }
-                      previous
-                    />
-                  </PaginationItem>
-                </>
-              )}
+      <Container fluid>
+        <Row>
+          <h5>COURSES</h5>
+          <Col sm="4">
+            <div className="app-search p-2">
+              <Card className="cardStyle">
+                <CardBody>
+                  <div className="title-div">
+                    <p>Live Courses</p>
+                    <h5 className="pt-2">8</h5>
+                  </div>
+                </CardBody>
+              </Card>
+            </div>
+          </Col>
+          <Col sm="4">
+            <div className="app-search p-2">
+              <Card className="cardStyle">
+                <CardBody>
+                  <div className="title-div">
+                    <p>Library Courses</p>
+                    <h5 className="pt-2">39</h5>
+                  </div>
+                </CardBody>
+              </Card>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="6">
+            <div className="app-search p-2">
+              <h5>LIBRARY COURSES</h5>
+            </div>
+          </Col>
 
-              {paginationPage.map((page, index) => {
-                if (currentPage === index + 1) {
-                  return (
-                    <PaginationItem key={index + 1} active>
-                      <PaginationLink
-                        onClick={() =>
-                          handlePageChange(index + 1, defaultPageCount)
-                        }
-                      >
-                        {index + 1}
-                      </PaginationLink>
-                    </PaginationItem>
-                  )
-                } else {
-                  return (
-                    <PaginationItem key={index + 1}>
-                      <PaginationLink
-                        onClick={() =>
-                          handlePageChange(index + 1, defaultPageCount)
-                        }
-                      >
-                        {index + 1}
-                      </PaginationLink>
-                    </PaginationItem>
-                  )
-                }
-              })}
+          <Col sm="6">
+            <div className="text-sm-end p-2">
+              <Button
+                type="button"
+                variant="success"
+                color="success"
+                className="btn-rounded mb-2 me-2"
+                onClick={e => {
+                  history.push("/courses/create")
+                }}
+              >
+                <i className="mdi mdi-plus me-1" /> Create Library Course
+              </Button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="col-12">
+            <Card>
+              <CardBody>
+                {usersListData && (
+                  <>
+                    <ToolkitProvider
+                      key={isExpanded}
+                      keyField="id"
+                      columns={state.columns}
+                      data={usersListData}
+                    >
+                      {toolkitProps => (
+                        <>
+                          <Row>
+                            <Col sm="2">
+                              <div className="app-search p-0">
+                                <div className="position-relative">
+                                  <DeBounceSearch
+                                  // handleSearch={this.handleSearch}
+                                  />
 
-              {currentPage !== pageCount && (
-                <>
-                  <PaginationItem>
-                    <PaginationLink
-                      onClick={() =>
-                        handlePageChange(currentPage + 1, defaultPageCount)
-                      }
-                      next
-                    />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink
-                      onClick={() =>
-                        handlePageChange(pageCount, defaultPageCount)
-                      }
-                      last
-                    />
-                  </PaginationItem>
-                </>
-              )}
-            </Pagination>
-          </Row>
-        </>
-      )}
+                                  <span className="bx bx-search-alt" />
+                                </div>
+                              </div>
+                            </Col>
+                            <Col sm="6"></Col>
+
+                            <Col sm="2">
+                              <Select
+                                name="filter"
+                                placeholder="Course Name"
+                                options={options}
+                              />
+                            </Col>
+
+                            <Col className="text-end" sm="2">
+                              <Button
+                                type="button"
+                                className="btn mb-2 me-2"
+                                // onClick={this.applyFilter}
+                              >
+                                <i className="mdi mdi-filter me-1" /> Apply
+                                Filter
+                              </Button>
+
+                              <Button
+                                type="button"
+                                color="secondary"
+                                className="btn mb-2 me-2"
+                              >
+                                Export
+                              </Button>
+                            </Col>
+                          </Row>
+                          <Col xl="12">
+                            <div className="table-responsive">
+                              <BootstrapTable
+                                keyField={"id"}
+                                responsive
+                                bordered={false}
+                                striped={false}
+                                // defaultSorted={defaultSorted}
+                                selectRow={selectRow}
+                                classes={"table align-middle table-nowrap"}
+                                headerWrapperClasses={"thead-light"}
+                                {...toolkitProps.baseProps}
+                              />
+                            </div>
+                          </Col>
+                        </>
+                      )}
+                    </ToolkitProvider>
+                  </>
+                )}
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }
 
-export default CourseList
+CourseList.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  Courses: PropTypes.array,
+}
+
+const mapStateToProps = ({ Courses, state, count }) => ({
+  manageUser: Courses?.manageUser,
+  // usersCount: Learner?.count,
+  // userRoles: Learner?.roles,
+  // deleteData: false,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onGetCourses: data => dispatch(getCourses(data)),
+  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
+  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseList)

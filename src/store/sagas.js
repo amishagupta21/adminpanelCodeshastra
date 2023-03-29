@@ -23,6 +23,7 @@ import applicationListing from "./ApplicationListing/saga"
 import EducationDetails from "./EducationDetail/saga"
 import WorkDetail from "./WorkDetail/saga"
 import DocumentKyc from "./DocumentKyc/saga"
+import Courses from "./Courses/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -49,5 +50,6 @@ export default function* rootSaga() {
     fork(WorkDetail),
     fork(EducationDetails),
     fork(DocumentKyc),
+    fork(Courses),
   ])
 }

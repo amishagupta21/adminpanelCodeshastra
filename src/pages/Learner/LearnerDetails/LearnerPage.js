@@ -57,7 +57,7 @@ const Option = props => {
     </div>
   )
 }
-class Learner extends Component {
+class LearnerPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -592,7 +592,7 @@ class Learner extends Component {
   }
 }
 
-Learner.propTypes = {
+LearnerPage.propTypes = {
   userRoles: PropTypes.array,
   usersCount: PropTypes.number,
   className: PropTypes.any,
@@ -612,4 +612,4 @@ const mapDispatchToProps = dispatch => ({
   onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Learner)
+export default connect(mapStateToProps, mapDispatchToProps)(LearnerPage)
