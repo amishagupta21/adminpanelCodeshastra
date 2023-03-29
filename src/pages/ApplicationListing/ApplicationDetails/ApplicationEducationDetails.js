@@ -17,7 +17,7 @@ import {
 } from "reactstrap"
 import Select from "react-select"
 
-const EducationDetails = () => {
+const ApplicationEducationDetails = () => {
   return (
     <>
       <div className="p-2">
@@ -143,4 +143,4 @@ const EducationDetails = () => {
   )
 }
 
-export default EducationDetails
+export default ApplicationEducationDetails

@@ -4,15 +4,15 @@ import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 // import style from "../LearnerDetails/personalDetails.css"
 import { Link } from "react-router-dom"
-import PersonalDetailForm from "./PersonalDetailForm"
 import "./applicationForm.css"
 
-import EducationDetails from "./EducationDetails"
-import WorkDetails from "./WorkDetails"
 import Attendance from "./ApplicationStatus"
-import DocumentKyc from "./DocumentKyc"
 import Billing from "./PaymentAndBatch"
 import TestResult from "./TestResult"
+import ApplicationPersonalDetailForm from "./ApplicationPersonalDetailForm"
+import ApplicationEducationDetails from "./ApplicationEducationDetails"
+import ApplicationWorkDetails from "./ApplicationWorkDetails"
+import ApplicationDocumentKyc from "./ApplicationDocumentKyc"
 
 const ApplicationForm = () => {
   const [value, setValue] = useState("details")
@@ -21,17 +21,17 @@ const ApplicationForm = () => {
     {
       eventKey: "details",
       title: "Personal Details",
-      component: <PersonalDetailForm />,
+      component: <ApplicationPersonalDetailForm />,
     },
     {
       eventKey: "education-detail",
       title: "Education Details",
-      component: <EducationDetails />,
+      component: <ApplicationEducationDetails />,
     },
     {
       eventKey: "work-detail",
       title: "Work Details",
-      component: <WorkDetails />,
+      component: <ApplicationWorkDetails />,
     },
     {
       eventKey: "Test Result",
@@ -51,7 +51,7 @@ const ApplicationForm = () => {
     {
       eventKey: "document",
       title: "Document & KYC",
-      component: <DocumentKyc />,
+      component: <ApplicationDocumentKyc />,
     },
   ]
 

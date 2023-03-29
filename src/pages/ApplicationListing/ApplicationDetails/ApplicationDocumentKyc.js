@@ -17,7 +17,7 @@ import {
   Label,
 } from "reactstrap"
 
-const DocumentKyc = () => {
+const ApplicationDocumentKyc = () => {
   let inputRef
 
   const options = [
@@ -121,4 +121,4 @@ const DocumentKyc = () => {
   )
 }
 
-export default DocumentKyc
+export default ApplicationDocumentKyc

@@ -21,7 +21,7 @@ import "./personalDetailForm.css"
 
 import "react-datepicker/dist/react-datepicker.css"
 
-const PersonalDetailForm = () => {
+const ApplicationPersonalDetailForm = () => {
   const [startDate, setStartDate] = useState(new Date())
 
   return (
@@ -92,4 +92,4 @@ const PersonalDetailForm = () => {
   )
 }
 
-export default PersonalDetailForm
+export default ApplicationPersonalDetailForm

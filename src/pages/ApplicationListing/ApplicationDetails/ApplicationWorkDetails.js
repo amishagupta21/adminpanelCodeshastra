@@ -17,7 +17,7 @@ import {
 } from "reactstrap"
 import { Link } from "react-router-dom"
 
-const WorkDetails = () => {
+const ApplicationWorkDetails = () => {
   return (
     <>
       <div>
@@ -67,4 +67,4 @@ const WorkDetails = () => {
   )
 }
 
-export default WorkDetails
+export default ApplicationWorkDetails
