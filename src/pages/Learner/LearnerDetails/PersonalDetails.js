@@ -90,7 +90,7 @@ const PersonalDetails = props => {
         <Row>
           <Col sm="4">
             <Card className="card-height">
-              <CardBody className="personal-detail-section">
+              <CardBody className="personal-detail-section ">
                 <Tabs
                   id="controlled-tab-example"
                   activeKey={value}

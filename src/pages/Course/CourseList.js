@@ -1,4 +1,5 @@
-import { React, useEffect, useState } from "react"
+import { React, useEffect, useState } from "react";
+
 import {
   Row,
   Col,
@@ -31,6 +32,7 @@ import * as Yup from "yup"
 import tosterMsg from "components/Common/toster"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
+import {Link} from 'react-router-dom'
 // import {
 //   getLearner,
 //   deleteLearner,
@@ -49,7 +51,6 @@ function CourseList(props) {
   const selectRow = {
     mode: "checkbox",
   }
-
   const options = [
     { label: "Full Stack Web Developer(Full Time)", value: "invited" },
     { label: "Full Stack Web Developer(Full Time)", value: "onboarded" },
@@ -131,6 +132,10 @@ function CourseList(props) {
       <Container fluid>
         <Row>
           <h5>COURSES</h5>
+          <span>
+          <Link to="/courses/edit">Edit</Link>
+          </span>
+        
           <Col sm="4">
             <div className="app-search p-2">
               <Card className="cardStyle">
