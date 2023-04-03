@@ -11,6 +11,7 @@ import {
   putImage,
   putDetail,
   deleteDocumentKyc,
+  getCourseData,
 } from "./api_helper"
 import * as url from "./url_helper"
 
@@ -101,13 +102,22 @@ const postJwtRegister = (url, data) => {
 
 //COURSES API
 
-const getCoursesList = data =>
-  getData(
-    url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.page || 5102}&search=${
-        data?.search
+const getCoursesList = async data => {
+  const resp = await getCourseData(
+    url.GET_COURSELIST +
+      `?sortOrder=${data?.sortOrder || "asc"}&sortBy=${
+        data?.sortBy || "created_at"
+      }&pageSize=${data?.pageSize || 5}&page=${data?.page || 1}&keyword=${
+        data?.search || ""
       }`
   )
+  return resp
+}
+
+// &status=${
+//   filter?.status || null
+// }
+//  &keyword=${filter?.search || ""}
 
 const getLearnerList = data =>
   getData(

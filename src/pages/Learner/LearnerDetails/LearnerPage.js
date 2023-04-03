@@ -210,7 +210,7 @@ class LearnerPage extends Component {
     this.setState({ Learner })
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({
       modal: !this.state.modal,
     })
