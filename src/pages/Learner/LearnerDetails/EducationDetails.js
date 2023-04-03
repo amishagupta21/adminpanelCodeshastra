@@ -22,7 +22,7 @@ import { editEducationDetail } from "store/EducationDetail/actions"
 
 const EducationDetails = props => {
   const { user, userProfile } = props
-
+  const [filterData, setFilterData] = useState()
   const data =
     userProfile?.personal_details === null
       ? {}
@@ -153,7 +153,7 @@ const EducationDetails = props => {
     })
   }, [userProfile])
 
-  const options = [
+  const highestQualificationOption = [
     { label: "Diploma_or_12th ", value: "12" },
     { label: "UG", value: "UG" },
     { label: "PG", value: "PG" },
@@ -208,18 +208,22 @@ const EducationDetails = props => {
 
         <Row>
           <Col sm={4}>
+            {/* <h1>sfdfsd{filterData}</h1> */}
             <Select
               name="filter"
-              // value={value}
-              // onChange={this.handleFilter}
+              value={filterData}
+              onChange={event => {
+                setFilterData(event.target.value)
+              }}
               placeholder="Status"
-              options={options}
-            />
+              options={highestQualificationOption}
+            ></Select>
           </Col>
         </Row>
         <div className="p-2">
           <Form className="form-vertical">
             <Row>
+              {/* {highestQualificationOption == "PG" && ( */}
               <Row>
                 <h5 className="mb-3 mt-3">PG Degree Details </h5>
                 <Col sm={4}>
@@ -275,6 +279,8 @@ const EducationDetails = props => {
                   </div>
                 </Col>
               </Row>
+              {/* )} */}
+              {/* {highestQualificationOption == "UG" && ( */}
               <Row>
                 <h5 className="mb-3 mt-3">UG/Bachelors Degree Details </h5>
                 <Col sm={4}>
@@ -333,6 +339,8 @@ const EducationDetails = props => {
                   </div>
                 </Col>
               </Row>
+              {/* )} */}
+              {/* {highestQualificationOption == "UG" && ( */}
               <Row>
                 <h5 className="mb-3 mt-3">12th/Diploma Course Details </h5>
                 <Col sm={4}>
@@ -391,6 +399,7 @@ const EducationDetails = props => {
                   </div>
                 </Col>
               </Row>
+              {/* )} */}
               <Row>
                 <h5 className="mb-3 mt-3">Additional Course Details </h5>
                 <Col sm={4}>

@@ -123,7 +123,7 @@ export const GET_DELETE_PROFILE_PICTURE = "/admin/user/profile-picture"
 export const DELETE_DOCUMENT_KYC = "/admin/user"
 
 //Course API's
-export const GET_COURSELIST = "/courses"
+export const GET_COURSELIST = "/admin/courses"
 export const GET_COURSEDETAILS = "/courses"
 export const CREATE_COURSE = "/courses"
 export const UPDATE_COURSE = "/courses"

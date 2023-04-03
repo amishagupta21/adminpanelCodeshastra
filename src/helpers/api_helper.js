@@ -8,6 +8,7 @@ const token = accessToken || ""
 //apply base url for axios
 const API_URL = `${process.env.REACT_APP_API_URL}`
 const URL = `${process.env.REACT_APP_URL}`
+const COURSE_API_URL = "https://lms-xwsrrlwthq-uk.a.run.app/api/lms"
 
 // const putApi = axios.create({
 //   baseURL: URL,
@@ -42,6 +43,21 @@ axiosApi.interceptors.response.use(
   response => response,
   error => Promise.reject(error)
 )
+
+const courseApi = axios.create({
+  baseURL: COURSE_API_URL,
+})
+
+courseApi.defaults.headers.common["Authorization"] = token
+
+courseApi.interceptors.response.use(
+  response => response,
+  error => Promise.reject(error)
+)
+
+export async function getCourseData(url, config = {}) {
+  return await courseApi.get(url, { ...config }).then(response => response.data)
+}
 
 export async function getData(url, config = {}) {
   return await Api.get(url, { ...config }).then(response => response.data)

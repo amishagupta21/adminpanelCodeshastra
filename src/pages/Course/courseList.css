@@ -1,0 +1,77 @@
+.courseList .filter-text {
+  font-weight: 600;
+}
+.courseList .app-search .form-control {
+  border-radius: 4px !important;
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  background-color: transparent !important;
+}
+
+.courseList .table-responsive {
+  overflow-x: hidden !important;
+}
+
+.courseList .react-bootstrap-table-pagination-list {
+  display: flex !important;
+}
+
+.courseList .page-item .page-link {
+  border-radius: 50% !important;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.courseList .page-item {
+  margin-right: 10px;
+}
+
+.courseList .react-bs-table-sizePerPage-dropdown::before {
+  content: "Show";
+}
+
+.courseList .react-bs-table-sizePerPage-dropdown::after {
+  content: "entries";
+}
+
+.courseList #pageDropDown {
+  margin: 0 5px;
+  height: 35px;
+  background: transparent;
+  color: #000000 !important;
+  padding: 3px 10px;
+}
+
+.courseList .filter-chips {
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  padding: 3px 7px !important;
+  font-size: 11px !important;
+}
+
+.courseList .filter-chips span {
+  color: #828080;
+  font-size: 12px;
+  position: relative !important;
+  top: 0px !important;
+}
+
+.courseList .filter-status li {
+  list-style: none;
+}
+
+.courseList .filter-status {
+  padding-left: 0.5em !important;
+}
+
+.badge {
+  cursor: pointer;
+}
+.no_data_found_message {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  font-size: 18px;
+  font-weight: 400;
+}

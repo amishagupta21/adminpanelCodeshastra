@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState } from "react"
 
 import {
   Row,
@@ -26,13 +26,12 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap
 import dateFormate from "common/dateFormatter"
 import Select from "react-select"
 import { DeBounceSearch } from "common/DeBounceSearch"
-import DeleteModal from "components/Common/DeleteModal"
 import { ErrorMessage, Field, Formik } from "formik"
 import * as Yup from "yup"
 import tosterMsg from "components/Common/toster"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom"
 // import {
 //   getLearner,
 //   deleteLearner,
@@ -40,14 +39,18 @@ import {Link} from 'react-router-dom'
 //   registerUser,
 // } from "store/actions"
 import { getCourses } from "store/Courses/actions"
+import { useParams } from "react-router-dom"
+import paginationFactory from "react-bootstrap-table2-paginator"
+import "./courseList.css"
 
 function CourseList(props) {
+  const params = useParams()
+
   document.title = "Users List"
   const [isExpanded, setIsExpanded] = useState(null)
 
   const [usersListData, setUsersListData] = useState([])
-  const { userProfile, data, profilePictureUrl } = props
-
+  const { manageUser, usersCount } = props
   const selectRow = {
     mode: "checkbox",
   }
@@ -60,7 +63,7 @@ function CourseList(props) {
 
   useEffect(() => {
     const { onGetCourses } = props
-    // onGetCourses(params.id)
+    onGetCourses(params.id)
   }, [])
 
   let state = {
@@ -72,96 +75,105 @@ function CourseList(props) {
         formatter: (cellContent, user) => <>{row?.id}</>,
       },
       {
-        dataField: "nickName",
+        dataField: "course_title",
         text: "Course Name",
         sort: true,
       },
 
       {
-        dataField: "created_at",
+        dataField: "variant_count",
         text: "Variant Counts",
         sort: true,
-        formatter: (cellContent, user) => dateFormate(user.created_at),
       },
       {
-        dataField: "email",
+        dataField: "mentors",
         text: "Mentors",
         sort: true,
       },
       {
-        dataField: "email",
+        dataField: "course_duration",
         text: "Duration",
         sort: true,
+        formatter: (cellContent, user) => <>{user?.course_duration} months</>,
       },
       {
-        dataField: "email",
+        dataField: "ongoing_batches",
         text: "Ongoing Batches",
         sort: true,
       },
-      {
-        dataField: "email",
-        text: "Learners",
-        sort: true,
-      },
+      // {
+      //   dataField: "email",
+      //   text: "Learners",
+      //   sort: true,
+      // },
       {
         dataField: "Actions",
         text: "Actions",
         formatter: (cellContent, user) => (
-          <UncontrolledDropdown>
-            <DropdownToggle className="card-drop" tag="a">
+          <div className="d-flex">
+            {/* <DropdownToggle className="card-drop" tag="a">
               <i className="mdi mdi-dots-horizontal font-size-18" />
-            </DropdownToggle>
-            <DropdownMenu className="dropdown-menu-end">
-              <DropdownItem onClick={() => handleUserClick(user)}>
-                <i className="mdi mdi-pencil font-size-16 text-success me-1" />
-                Edit
-              </DropdownItem>
-              <DropdownItem onClick={() => onClickDelete(user)}>
-                <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />
-                Delete
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+            </DropdownToggle> */}
+            {/* <DropdownMenu className="dropdown-menu-end"> */}
+            <div className="me-2" onClick={() => onClickDelete(user)}>
+              <i className="mdi mdi-eye font-size-16 text-primary" />
+            </div>
+            <div className="me-2" onClick={() => handleUserClick(user)}>
+              <i className="mdi mdi-pencil font-size-16 text-success" />
+            </div>
+
+            {/* </DropdownMenu> */}
+          </div>
         ),
       },
     ],
   }
 
+  const handleSearch = e => {
+    const { onGetCourses } = props
+    const data = {
+      search: e,
+    }
+    onGetCourses(data)
+    const { Courses } = props
+    setState({ Courses })
+  }
+
   return (
     <>
-      <Container fluid>
+      <Container fluid className="courseList">
         <Row>
           <h5>COURSES</h5>
-          <span>
+          {/* <span>
           <Link to="/courses/edit">Edit</Link>
-          </span>
-        
-          <Col sm="4">
+          </span> */}
+
+          <Col sm="3">
             <div className="app-search p-2">
               <Card className="cardStyle">
                 <CardBody>
                   <div className="title-div">
                     <p>Live Courses</p>
-                    <h5 className="pt-2">8</h5>
+                    <h5 className="pt-2">{usersCount?.live_course_count}</h5>
                   </div>
                 </CardBody>
               </Card>
             </div>
           </Col>
-          <Col sm="4">
+          <Col sm="3">
             <div className="app-search p-2">
               <Card className="cardStyle">
                 <CardBody>
                   <div className="title-div">
                     <p>Library Courses</p>
-                    <h5 className="pt-2">39</h5>
+                    <h5 className="pt-2">{usersCount?.library_course_count}</h5>
                   </div>
                 </CardBody>
               </Card>
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row className="align-items-center">
           <Col sm="6">
             <div className="app-search p-2">
               <h5>LIBRARY COURSES</h5>
@@ -188,77 +200,77 @@ function CourseList(props) {
           <Col className="col-12">
             <Card>
               <CardBody>
-                {usersListData && (
-                  <>
-                    <ToolkitProvider
-                      key={isExpanded}
-                      keyField="id"
-                      columns={state.columns}
-                      data={usersListData}
-                    >
-                      {toolkitProps => (
-                        <>
-                          <Row>
-                            <Col sm="2">
-                              <div className="app-search p-0">
-                                <div className="position-relative">
-                                  <DeBounceSearch
-                                  // handleSearch={this.handleSearch}
-                                  />
+                <>
+                  <ToolkitProvider
+                    key={isExpanded}
+                    keyField="id"
+                    columns={state.columns}
+                    data={manageUser}
+                  >
+                    {toolkitProps => (
+                      <>
+                        <Row className="mb-3">
+                          <Col sm="2">
+                            <div className="app-search p-0">
+                              <div className="position-relative">
+                                <DeBounceSearch handleSearch={handleSearch} />
 
-                                  <span className="bx bx-search-alt" />
-                                </div>
+                                <span className="bx bx-search-alt" />
                               </div>
-                            </Col>
-                            <Col sm="6"></Col>
-
-                            <Col sm="2">
-                              <Select
-                                name="filter"
-                                placeholder="Course Name"
-                                options={options}
-                              />
-                            </Col>
-
-                            <Col className="text-end" sm="2">
-                              <Button
-                                type="button"
-                                className="btn mb-2 me-2"
-                                // onClick={this.applyFilter}
-                              >
-                                <i className="mdi mdi-filter me-1" /> Apply
-                                Filter
-                              </Button>
-
-                              <Button
-                                type="button"
-                                color="secondary"
-                                className="btn mb-2 me-2"
-                              >
-                                Export
-                              </Button>
-                            </Col>
-                          </Row>
-                          <Col xl="12">
-                            <div className="table-responsive">
-                              <BootstrapTable
-                                keyField={"id"}
-                                responsive
-                                bordered={false}
-                                striped={false}
-                                // defaultSorted={defaultSorted}
-                                selectRow={selectRow}
-                                classes={"table align-middle table-nowrap"}
-                                headerWrapperClasses={"thead-light"}
-                                {...toolkitProps.baseProps}
-                              />
                             </div>
                           </Col>
-                        </>
-                      )}
-                    </ToolkitProvider>
-                  </>
-                )}
+                          <Col sm="6"></Col>
+
+                          <Col sm="2">
+                            <Select
+                              name="filter"
+                              placeholder="Course Name"
+                              options={options}
+                            />
+                          </Col>
+
+                          <Col className="text-end" sm="2">
+                            <Button
+                              type="button"
+                              className="btn mb-2 me-2"
+                              // onClick={this.applyFilter}
+                            >
+                              <i className="mdi mdi-filter me-1" /> Apply Filter
+                            </Button>
+
+                            <Button
+                              type="button"
+                              color="secondary"
+                              className="btn mb-2 me-2"
+                            >
+                              Export
+                            </Button>
+                          </Col>
+                        </Row>
+                        <Col xl="12">
+                          <div className="table-responsive">
+                            <h6 className="mt-2">
+                              Total Live Courses: {usersCount?.count}{" "}
+                            </h6>
+                            <BootstrapTable
+                              keyField={"id"}
+                              responsive
+                              bordered={false}
+                              striped={false}
+                              // defaultSorted={defaultSorted}
+                              selectRow={selectRow}
+                              classes={"table align-middle table-nowrap"}
+                              headerWrapperClasses={"thead-light"}
+                              {...toolkitProps.baseProps}
+                              pagination={paginationFactory()}
+                              noDataIndication={"No data found"}
+                            />
+                          </div>
+                        </Col>
+                      </>
+                    )}
+                  </ToolkitProvider>
+                </>
               </CardBody>
             </Card>
           </Col>
@@ -277,8 +289,8 @@ CourseList.propTypes = {
 
 const mapStateToProps = ({ Courses, state, count }) => ({
   manageUser: Courses?.manageUser,
-  // usersCount: Learner?.count,
-  // userRoles: Learner?.roles,
+  usersCount: Courses?.count,
+  userRoles: Courses?.roles,
   // deleteData: false,
 })
 

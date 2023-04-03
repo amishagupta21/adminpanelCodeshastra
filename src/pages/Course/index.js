@@ -14,7 +14,7 @@ export default function Courses() {
 
   useEffect(() => {
     setLoading(true)
-    getSearchCourse()
+    // getSearchCourse()
   }, [])
 
   const handleSearch = e => {
@@ -54,42 +54,42 @@ export default function Courses() {
       })
   }
 
-  const getSearchCourse = React.useCallback(async filter => {
-    const res = await get(
-      url.GET_COURSELIST +
-        `?sortBy=${filter?.sortBy || "created_at"}&sortOrder=${
-          filter?.sortOrder || "DESC"
-        }&pageSize=${filter?.pageSize || 5}&page=${filter?.page || 1}&status=${
-          filter?.status || null
-        }&keyword=${filter?.search || ""}`
-    )
-      .then(async response => {
-        setLoading(false)
-        console.log("search responce", response)
-        setcourseList(response)
-      })
-      .catch(error => {
-        console.log("search error")
-      })
-  }, [])
+  // const getSearchCourse = React.useCallback(async filter => {
+  //   const res = await get(
+  //     url.GET_COURSELIST +
+  //       `?sortBy=${filter?.sortBy || "created_at"}&sortOrder=${
+  //         filter?.sortOrder || "DESC"
+  //       }&pageSize=${filter?.pageSize || 5}&page=${filter?.page || 1}&status=${
+  //         filter?.status || null
+  //       }&keyword=${filter?.search || ""}`
+  //   )
+  //     .then(async response => {
+  //       setLoading(false)
+  //       console.log("search responce", response)
+  //       setcourseList(response)
+  //     })
+  //     .catch(error => {
+  //       console.log("search error")
+  //     })
+  // }, [])
 
   return (
     <>
       <div className="page-content">
         <Container fluid>
-          {!isLoading && courseList?.data.result.length && (
-            <>
-              <CourseList
-                courseList={courseList}
-                isLoading={isLoading}
-                handleSearch={handleSearch}
-                handlePageChange={handlePageChange}
-                currentPage={currentPage}
-                handleFilter={handleFilter}
-                filter={filter}
-              />
-            </>
-          )}
+          {/* {!isLoading && courseList?.data.result.length && ( */}
+          <>
+            <CourseList
+            // courseList={courseList}
+            // isLoading={isLoading}
+            // handleSearch={handleSearch}
+            // handlePageChange={handlePageChange}
+            // currentPage={currentPage}
+            // handleFilter={handleFilter}
+            // filter={filter}
+            />
+          </>
+          {/* )} */}
         </Container>
       </div>
     </>

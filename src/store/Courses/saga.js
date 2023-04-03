@@ -26,8 +26,8 @@ function* fetchCoursesList({ payload: data }) {
   try {
     const response = yield call(getCoursesList, data)
     tosterMsg(response?.message)
-    yield put(getCoursesSuccess(response?.data?.docs))
-    yield put(getCoursesCountSuccess(response?.data?.totalDocs))
+    yield put(getCoursesSuccess(response?.data?.result))
+    yield put(getCoursesCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getCoursesFail(error))
