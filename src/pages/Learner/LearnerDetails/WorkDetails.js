@@ -38,6 +38,22 @@ const WorkDetails = props => {
           uid: userProfile?.uid || user?.uid,
         }
   const [workData, setWorkData] = useState(data)
+  const [isButtonDisabled, setButtonDisabled] = useState(true)
+
+  useEffect(() => {
+    let count = 0
+    for (let key in workData) {
+      if (workData[key] === "") {
+        count++
+        break
+      }
+    }
+    if (count === 0) {
+      setButtonDisabled(false)
+    } else {
+      setButtonDisabled(true)
+    }
+  }, [workData])
 
   useEffect(() => {
     setWorkData(data)
@@ -66,7 +82,7 @@ const WorkDetails = props => {
         <div className="p-2">
           <Form className="form-vertical">
             <Row>
-              <Col sm={3}>
+              <Col sm={4}>
                 <div className="mb-3">
                   <Label className="form-label">Current Working Position</Label>
                   <Input
@@ -84,7 +100,7 @@ const WorkDetails = props => {
                   />
                 </div>
               </Col>
-              <Col sm={3}>
+              <Col sm={4}>
                 <div className="mb-3">
                   <Label className="form-label">
                     Total technical exp. in years
@@ -103,7 +119,7 @@ const WorkDetails = props => {
                   />
                 </div>
               </Col>
-              <Col sm={3}>
+              {/* <Col sm={3}>
                 <div className="mb-3">
                   <Label className="form-label">
                     Total coding exp. in years
@@ -121,8 +137,8 @@ const WorkDetails = props => {
                     value={workData?.experience}
                   />
                 </div>
-              </Col>
-              <Col sm={3}>
+              </Col> */}
+              <Col sm={4}>
                 <div className="mb-3">
                   <Label className="form-label">Organization working in</Label>
                   <Input
@@ -144,6 +160,7 @@ const WorkDetails = props => {
                 <Button
                   onClick={editWorkData}
                   className="px-5"
+                  disabled={isButtonDisabled}
                   color="primary"
                   type="submit"
                 >
