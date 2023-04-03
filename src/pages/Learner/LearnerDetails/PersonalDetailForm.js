@@ -52,6 +52,7 @@ const PersonalDetailForm = props => {
     uploadProfilePicture,
     editLearnerDetail,
   } = props
+
   const [image, setImage] = useState({ preview: "", raw: "" })
 
   const data =
@@ -93,7 +94,7 @@ const PersonalDetailForm = props => {
     setLearnerData(data)
   }, [userProfile])
 
-  const [startDate, setStartDate] = useState()
+  const [startDate, setStartDate] = useState(new Date())
   const hiddenFileInput = React.useRef(null)
   // Modal open state
   const [modal, setModal] = React.useState(false)
@@ -320,7 +321,7 @@ const PersonalDetailForm = props => {
                     onChange={(date: Date) => {
                       setLearnerData({
                         ...learnerData,
-                        birth_month: date.getMonth(),
+                        birth_month: date.getMonth() + 1,
                         birth_date: date.getDate(),
                         birth_year: date.getFullYear(),
                       })
