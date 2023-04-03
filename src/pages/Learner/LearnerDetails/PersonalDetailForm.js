@@ -89,10 +89,26 @@ const PersonalDetailForm = props => {
           uid: userProfile?.uid || user?.uid,
         }
   const [learnerData, setLearnerData] = useState(data)
+  const [isButtonDisabled, setButtonDisabled] = useState(true)
 
   useEffect(() => {
     setLearnerData(data)
   }, [userProfile])
+
+  useEffect(() => {
+    let count = 0
+    for (let key in learnerData) {
+      if (learnerData[key] === "") {
+        count++
+        break
+      }
+    }
+    if (count === 0) {
+      setButtonDisabled(false)
+    } else {
+      setButtonDisabled(true)
+    }
+  }, [learnerData])
 
   const [startDate, setStartDate] = useState(new Date())
   const hiddenFileInput = React.useRef(null)
@@ -184,14 +200,6 @@ const PersonalDetailForm = props => {
     })
   }
 
-  // const { values, errors, handleBlur, handleSubmit } = useFormik({
-  //   initialValues: initialValues,
-  //   onSubmit: values => {
-  //     console.log(values)
-  //   },
-  // })
-  // console.log(Formik, "///////Formik")
-
   return (
     <>
       <div>
@@ -267,11 +275,6 @@ const PersonalDetailForm = props => {
                     }
                     value={learnerData?.full_name}
                   />
-                  {/* <ErrorMessage
-                    component="div"
-                    name="email"
-                    className="invalid-feedback"
-                  /> */}
                 </div>
               </Col>
               <Col sm={3}>
@@ -419,7 +422,7 @@ const PersonalDetailForm = props => {
                 <Button
                   className="px-5"
                   color="primary"
-                  // type="submit"
+                  disabled={isButtonDisabled}
                 >
                   Save
                 </Button>

@@ -22,7 +22,7 @@ import { editEducationDetail } from "store/EducationDetail/actions"
 
 const EducationDetails = props => {
   const { user, userProfile } = props
-  const [filterData, setFilterData] = useState()
+  const [filterData, setFilterData] = useState({ label: "PG", value: "PG" })
   const data =
     userProfile?.personal_details === null
       ? {}
@@ -99,6 +99,22 @@ const EducationDetails = props => {
           },
         ]
   const [educationData, setEducationData] = useState(data)
+  const [isButtonDisabled, setButtonDisabled] = useState(true)
+
+  useEffect(() => {
+    let count = 0
+    for (let key in educationData) {
+      if (educationData[key] === "") {
+        count++
+        break
+      }
+    }
+    if (count === 0) {
+      setButtonDisabled(false)
+    } else {
+      setButtonDisabled(true)
+    }
+  }, [educationData])
 
   useEffect(() => {
     setEducationData({
@@ -154,13 +170,14 @@ const EducationDetails = props => {
   }, [userProfile])
 
   const highestQualificationOption = [
+    { label: "Please Select", value: "" },
     { label: "Diploma_or_12th ", value: "12" },
     { label: "UG", value: "UG" },
     { label: "PG", value: "PG" },
-    { label: "First_year", value: "First year" },
-    { label: "Second_year", value: "Second year" },
-    { label: "Pre_Final ", value: "Pre Final" },
-    { label: "Final_Year ", value: "Final Year" },
+    // { label: "First_year", value: "First year" },
+    // { label: "Second_year", value: "Second year" },
+    // { label: "Pre_Final ", value: "Pre Final" },
+    // { label: "Final_Year ", value: "Final Year" },
   ]
 
   const editEducationDetail = event => {
@@ -201,6 +218,13 @@ const EducationDetails = props => {
     })
   }
 
+  const selectedEducationData = event => {
+    const option = highestQualificationOption.filter(
+      e => e.value === event.value
+    )
+    setFilterData(option[0])
+  }
+
   return (
     <>
       <div>
@@ -208,271 +232,269 @@ const EducationDetails = props => {
 
         <Row>
           <Col sm={4}>
-            {/* <h1>sfdfsd{filterData}</h1> */}
             <Select
               name="filter"
-              value={filterData}
-              onChange={event => {
-                setFilterData(event.target.value)
-              }}
+              onChange={selectedEducationData}
               placeholder="Status"
               options={highestQualificationOption}
-            ></Select>
+              value={filterData}
+            />
           </Col>
         </Row>
+
         <div className="p-2">
           <Form className="form-vertical">
-            <Row>
-              {/* {highestQualificationOption == "PG" && ( */}
+            {filterData?.value !== "" && (
               <Row>
-                <h5 className="mb-3 mt-3">PG Degree Details </h5>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">PG College Name</Label>
-                    <Input
-                      name="text"
-                      className="form-control"
-                      placeholder="College Name"
-                      type="text"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          pg_college_name: e.target.value,
-                        })
-                      }
-                      value={educationData?.pg_college_name}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Year of Completion</Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Year of Completion"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          pg_year_of_completion: e.target.value,
-                        })
-                      }
-                      value={educationData?.pg_year_of_completion}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">PG Passing Marks</Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Passing Marks"
-                      onChange={e => {
-                        setEducationData({
-                          ...educationData,
-                          pg_passing_marks: e.target.value,
-                        })
-                      }}
-                      value={educationData?.pg_passing_marks}
-                    />
-                  </div>
-                </Col>
+                {filterData?.value === "PG" && (
+                  <Row>
+                    <h5 className="mb-3 mt-3">PG Degree Details </h5>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">PG College Name</Label>
+                        <Input
+                          name="text"
+                          className="form-control"
+                          placeholder="College Name"
+                          type="text"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              pg_college_name: e.target.value,
+                            })
+                          }
+                          value={educationData?.pg_college_name}
+                        />
+                      </div>
+                    </Col>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">Year of Completion</Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="Year of Completion"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              pg_year_of_completion: e.target.value,
+                            })
+                          }
+                          value={educationData?.pg_year_of_completion}
+                        />
+                      </div>
+                    </Col>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">PG Passing Marks</Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="Passing Marks"
+                          onChange={e => {
+                            setEducationData({
+                              ...educationData,
+                              pg_passing_marks: e.target.value,
+                            })
+                          }}
+                          value={educationData?.pg_passing_marks}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                )}
+                {filterData?.value !== "12" && (
+                  <Row>
+                    <h5 className="mb-3 mt-3">UG/Bachelors Degree Details </h5>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          UG/Bachelors College Name
+                        </Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="College Name"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              ug_college_name: e.target.value,
+                            })
+                          }
+                          value={educationData?.ug_college_name}
+                        />
+                      </div>
+                    </Col>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">Year of Completion</Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="Year of Completion"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              ug_year_of_completion: e.target.value,
+                            })
+                          }
+                          value={educationData?.ug_year_of_completion}
+                        />
+                      </div>
+                    </Col>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          UG/Bachelors Passing Marks
+                        </Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="Passing Marks"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              ug_passing_marks: e.target.value,
+                            })
+                          }
+                          value={educationData?.ug_passing_marks}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                )}
+
+                <Row>
+                  <h5 className="mb-3 mt-3">12th/Diploma Course Details </h5>
+                  <Col sm={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        12th/Diploma College Name
+                      </Label>
+                      <Input
+                        name="text"
+                        type="text"
+                        placeholder="College Name"
+                        onChange={e =>
+                          setEducationData({
+                            ...educationData,
+                            diploma_college_name: e.target.value,
+                          })
+                        }
+                        value={educationData?.diploma_college_name}
+                      />
+                    </div>
+                  </Col>
+                  <Col sm={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">Year of Completion</Label>
+                      <Input
+                        name="text"
+                        type="text"
+                        placeholder="Year of Completion"
+                        onChange={e =>
+                          setEducationData({
+                            ...educationData,
+                            diploma_year_of_completion: e.target.value,
+                          })
+                        }
+                        value={educationData?.diploma_year_of_completion}
+                      />
+                    </div>
+                  </Col>
+                  <Col sm={4}>
+                    <div className="mb-3">
+                      <Label className="form-label">
+                        12th/Diploma Passing Marks
+                      </Label>
+                      <Input
+                        name="text"
+                        type="text"
+                        placeholder="Passing Marks"
+                        onChange={e =>
+                          setEducationData({
+                            ...educationData,
+                            diploma_passing_marks: e.target.value,
+                          })
+                        }
+                        value={educationData?.diploma_passing_marks}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+
+                {filterData?.value !== "12" && (
+                  <Row>
+                    <h5 className="mb-3 mt-3">Additional Course Details </h5>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">Program Name</Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="Software Developer"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              other_program_name: e.target.value,
+                            })
+                          }
+                          value={educationData?.other_program_name}
+                        />
+                      </div>
+                    </Col>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          College/Institute Name
+                        </Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="The Coding Institute"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              other_program_college_name: e.target.value,
+                            })
+                          }
+                          value={educationData?.other_program_college_name}
+                        />
+                      </div>
+                    </Col>
+                    <Col sm={4}>
+                      <div className="mb-3">
+                        <Label className="form-label">Duration in Months</Label>
+                        <Input
+                          name="text"
+                          type="text"
+                          placeholder="Duration in Months"
+                          onChange={e =>
+                            setEducationData({
+                              ...educationData,
+                              other_program_course_duration: e.target.value,
+                            })
+                          }
+                          value={educationData?.other_program_course_duration}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                )}
+
+                <div className="mt-3 d-flex justify-content-end">
+                  <Button
+                    className="px-5"
+                    onClick={editEducationDetail}
+                    disabled={isButtonDisabled}
+                    color="primary"
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </div>
               </Row>
-              {/* )} */}
-              {/* {highestQualificationOption == "UG" && ( */}
-              <Row>
-                <h5 className="mb-3 mt-3">UG/Bachelors Degree Details </h5>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      UG/Bachelors College Name
-                    </Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="College Name"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          ug_college_name: e.target.value,
-                        })
-                      }
-                      value={educationData?.ug_college_name}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Year of Completion</Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Year of Completion"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          ug_year_of_completion: e.target.value,
-                        })
-                      }
-                      value={educationData?.ug_year_of_completion}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      UG/Bachelors Passing Marks
-                    </Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Passing Marks"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          ug_passing_marks: e.target.value,
-                        })
-                      }
-                      value={educationData?.ug_passing_marks}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              {/* )} */}
-              {/* {highestQualificationOption == "UG" && ( */}
-              <Row>
-                <h5 className="mb-3 mt-3">12th/Diploma Course Details </h5>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      12th/Diploma College Name
-                    </Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="College Name"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          diploma_college_name: e.target.value,
-                        })
-                      }
-                      value={educationData?.diploma_college_name}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Year of Completion</Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Year of Completion"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          diploma_year_of_completion: e.target.value,
-                        })
-                      }
-                      value={educationData?.diploma_year_of_completion}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">
-                      12th/Diploma Passing Marks
-                    </Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Passing Marks"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          diploma_passing_marks: e.target.value,
-                        })
-                      }
-                      value={educationData?.diploma_passing_marks}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              {/* )} */}
-              <Row>
-                <h5 className="mb-3 mt-3">Additional Course Details </h5>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Program Name</Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Software Developer"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          other_program_name: e.target.value,
-                        })
-                      }
-                      value={educationData?.other_program_name}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">College/Institute Name</Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="The Coding Institute"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          other_program_college_name: e.target.value,
-                        })
-                      }
-                      value={educationData?.other_program_college_name}
-                    />
-                  </div>
-                </Col>
-                <Col sm={4}>
-                  <div className="mb-3">
-                    <Label className="form-label">Duration in Months</Label>
-                    <Input
-                      name="text"
-                      type="text"
-                      placeholder="Duration in Months"
-                      onChange={e =>
-                        setEducationData({
-                          ...educationData,
-                          other_program_course_duration: e.target.value,
-                        })
-                      }
-                      value={educationData?.other_program_course_duration}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <div className="mt-3 d-flex justify-content-end">
-                {/* <Button
-                  color="primary"
-                  className="me-3 px-5"
-                  outline
-                  type="submit"
-                >
-                  Reset
-                </Button> */}
-                <Button
-                  className="px-5"
-                  onClick={editEducationDetail}
-                  color="primary"
-                  type="submit"
-                >
-                  Save
-                </Button>
-              </div>
-            </Row>
+            )}
           </Form>
         </div>
       </div>
