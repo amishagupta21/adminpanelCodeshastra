@@ -34,10 +34,13 @@ import tosterMsg from "components/Common/toster"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import CourseList from "./CourseList"
-import PersonalDetailForm from "../Learner/LearnerDetails/PersonalDetailForm"
+
 import EducationDetails from "../Learner/LearnerDetails/LearnerDetails"
+import CourseInformation from "../Course/CourseInformation"
+import CardInformation from "../Course/CardInformation"
 import WorkDetails from "../Learner/LearnerDetails/WorkDetails"
 import DocumentKyc from "../Learner/LearnerDetails/DocumentKyc"
+
 // import {
 //   getLearner,
 //   deleteLearner,
@@ -61,19 +64,17 @@ function EditCourseList(props) {
   const initialTabs = [
     {
       eventKey: "details",
-      title: "Personal Details",
+      title: "Course Information",
       component: (
-        <PersonalDetailForm
-          user={user}
-          userProfile={userProfile}
-          profilePictureUrl={profilePictureUrl}
+        <CourseInformation
+         
         />
       ),
     },
     {
       eventKey: "education-detail",
-      title: "Education Details",
-      component: <EducationDetails user={user} userProfile={userProfile} />,
+      title: "Card Configuration",
+      component: <CardInformation user={user} userProfile={userProfile} />,
     },
     {
       eventKey: "work-detail",
@@ -191,7 +192,32 @@ function EditCourseList(props) {
 
   return (
     <>
-      <Container className="personal-detail-tab" fluid>
+      <Container className="personal-detail-tab space-height" fluid>
+     
+
+<Row>
+          <Col sm="6">
+            <div className="app-search p-2">
+              <h5> FULL STACK WEB DEVELOPER</h5>
+            </div>
+          </Col>
+
+          <Col sm="6">
+            <div className="text-sm-end p-2">
+              <Button
+                type="button"
+                variant="success"
+                color="success"
+                className="btn-rounded mb-2 me-2"
+                onClick={e => {
+                  history.push("/courses/create")
+                }}
+              >
+                <i className="mdi mdi-plus me-1" /> Clone This Course
+              </Button>
+            </div>
+          </Col>
+        </Row>
         <Row>
           <Col sm="4">
             <Card className="card-height">
