@@ -115,11 +115,16 @@ function CourseList(props) {
               <i className="mdi mdi-dots-horizontal font-size-18" />
             </DropdownToggle> */}
             {/* <DropdownMenu className="dropdown-menu-end"> */}
-            <div className="me-2" onClick={() => onClickDelete(user)}>
-              <i className="mdi mdi-eye font-size-16 text-primary" />
+            <div className="me-2" >
+           
+            <i className="mdi mdi-eye font-size-16 text-primary" />
+                       
+              
             </div>
             <div className="me-2" onClick={() => handleUserClick(user)}>
+            <Link to="/courses/edit" className="text-muted">
               <i className="mdi mdi-pencil font-size-16 text-success" />
+              </Link>
             </div>
 
             {/* </DropdownMenu> */}
