@@ -1,0 +1,124 @@
+.form-vertical .react-datepicker__input-container input {
+  height: 38px !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 0.25rem;
+}
+
+.personal-detail img {
+  border-radius: 50%;
+  width: 50px;
+  cursor: pointer;
+}
+
+.profile-button {
+  cursor: pointer;
+}
+.personal-detail-tab.space-height.container-fluid {
+  margin-top: 100px;
+}
+
+.course-live .form-check-label {
+  margin-right: 20px;
+}
+
+table.table-full tr td:last-child {
+  width: 30%;
+  text-align: right;padding: 5px 20px;
+}
+table.table-full tr td:first-child {
+  width: 70%;padding: 5px 20px;
+}
+table.table-full {
+  width: 100%;  
+}
+
+table.table-full tr th:last-child {
+  width: 30%;
+  text-align: right;padding: 5px 20px;
+
+}
+input.form-control.form-control-color {
+  border: 1px solid #CED4DA;
+  border-radius: 4px;
+  color: #556EE6;width: 100%;
+}
+
+input.form-control.form-control-color::-webkit-input-placeholder { /* Edge */
+  color: #556EE6; opacity: 1;
+}
+
+input.form-control.form-control-color:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #556EE6; opacity: 1;
+}
+
+input.form-control.form-control-color::placeholder {
+  color: #556EE6; opacity: 1;
+}
+.table-form {
+  border-bottom: 1px solid #CED4DA;
+  padding-bottom: 20px;padding-top: 10px;
+}
+table.table-full tr th:first-child {
+  width: 70%;padding: 5px 20px;
+
+}
+
+.card-infor-space .accordion-body{ padding: 0 !important;}
+.accordian-parts .accordion-item { margin-bottom: 20px;}
+.accordian-parts  h2.accordion-header .accordion-button {
+  background: #F9F9F9;color: #495057;
+  font-weight: 600;
+}
+table.table-full p {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 20px;
+  color: #556EE6;
+}
+table.table-full tr th {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 20px;
+  color: #495057;
+}
+table.table-full-width {
+  width: 100%;
+}
+table.table-full-width  tr th{padding: 5px 20px;}
+table.table-full-width  tr td{padding: 5px 20px;}
+table.table-full-width  tr td:first-child{ width:80%;}
+table.table-full-width  tr th:first-child{ width:80%;}
+.accordian-parts .accordion-header {
+  margin-bottom: 0;
+  border-top: 1px solid #CED4DA;
+}
+input.form-control.sml.form-control {
+  width: 58px;
+}
+
+.create-new-appointment h2 {
+  margin: 0;
+  font-size: 14px;color: #556EE6
+}
+.create-new-appointment {
+  background: #FFFFFF;
+  border: 1px dashed #556EE6;
+  border-radius: 4px;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+.accordian-parts .accordion-header svg {
+  margin-left: 6px;
+}
+
+.input-file-space input {
+ 
+  width: 200px;
+}
+.input-file-space {
+  display: flex;
+  align-items: center;
+  justify-content: unset;
+}

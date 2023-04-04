@@ -13,3 +13,9 @@
 .profile-button {
   cursor: pointer;
 }
+
+
+textarea.form-control.text-height.form-control {
+  height: 100px;
+  resize: none;
+}

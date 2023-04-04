@@ -177,3 +177,25 @@
 .iconbox {
   color: red;
 }
+
+
+
+
+table.table-full tr td:last-child {
+  width: 50%;
+  text-align: right;
+}
+table.table-full tr td:first-child {
+  width: 50%;
+}
+table.table-full {
+  width: 100%;
+}
+
+table.table-full tr th:last-child {
+  width: 50%;
+  text-align: right;
+}
+table.table-full tr th:first-child {
+  width: 50%;
+}
