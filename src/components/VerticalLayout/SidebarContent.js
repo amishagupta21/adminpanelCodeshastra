@@ -16,8 +16,13 @@ const SidebarContent = props => {
   const ref = useRef()
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
-    const pathName = props.location.pathname
+    let pathName = props.location.pathname
 
+    if (pathName.includes("/learner-details")) {
+      pathName = "/learner"
+    } else if (pathName.includes("/application-details")) {
+      pathName = "/application"
+    }
     const initMenu = () => {
       new MetisMenu("#side-menu")
       let matchingMenuItem = null
@@ -52,6 +57,7 @@ const SidebarContent = props => {
   function activateParentDropdown(item) {
     item.classList.add("active")
     const parent = item.parentElement
+
     const parent2El = parent.childNodes[1]
     if (parent2El && parent2El.id !== "side-menu") {
       parent2El.classList.add("mm-show")
@@ -59,11 +65,12 @@ const SidebarContent = props => {
 
     if (parent) {
       parent.classList.add("mm-active")
+
       const parent2 = parent.parentElement
 
       if (parent2) {
         parent2.classList.add("mm-show") // ul tag
-
+        parent2.classList.add("mm-active")
         const parent3 = parent2.parentElement // li tag
 
         if (parent3) {
