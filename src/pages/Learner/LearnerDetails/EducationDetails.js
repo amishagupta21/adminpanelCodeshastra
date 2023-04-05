@@ -19,69 +19,39 @@ import Select from "react-select"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { editEducationDetail } from "store/EducationDetail/actions"
+import EducationForm from "./EducationForm"
+
+const emptyObject = [
+  {
+    college_name: "",
+    level: "Diploma_or_12th",
+    passing_marks: "",
+    year_of_completion: "",
+  },
+  {
+    college_name: "",
+    level: "UG",
+    passing_marks: "",
+    year_of_completion: "",
+  },
+  {
+    college_name: "",
+    level: "PG",
+    passing_marks: "",
+    year_of_completion: "",
+  },
+]
 
 const EducationDetails = props => {
   const { user, userProfile } = props
   const [filterData, setFilterData] = useState({ label: "PG", value: "PG" })
+  const [qualifications, setQualification] = useState([])
+  const [filterArray, setFilterArray] = useState([])
+
   const data =
     userProfile?.personal_details === null
       ? {}
       : [
-          {
-            pg_college_name: userProfile?.education_details?.qualification[0]
-              ?.college_name
-              ? userProfile?.education_details?.qualification[0]?.college_name
-              : user?.college_name || "",
-            pg_year_of_completion: userProfile?.education_details
-              ?.qualification[0]?.year_of_completion
-              ? userProfile?.education_details?.qualification[0]
-                  ?.year_of_completion
-              : user?.year_of_completion || "",
-            pg_passing_marks: userProfile?.education_details?.qualification[0]
-              ?.passing_marks
-              ? userProfile?.education_details?.qualification[0]?.passing_marks
-              : user?.passing_marks || "",
-            pg_level: userProfile?.education_details?.qualification[0]?.level
-              ? userProfile?.education_details?.qualification[0]?.level
-              : user?.level || "",
-          },
-          {
-            ug_college_name: userProfile?.education_details?.qualification[1]
-              ?.college_name
-              ? userProfile?.education_details?.qualification[1]?.college_name
-              : user?.college_name || "",
-            ug_year_of_completion: userProfile?.education_details
-              ?.qualification[1]?.year_of_completion
-              ? userProfile?.education_details?.qualification[1]
-                  ?.year_of_completion
-              : user?.year_of_completion || "",
-            ug_passing_marks: userProfile?.education_details?.qualification[1]
-              ?.passing_marks
-              ? userProfile?.education_details?.qualification[1]?.passing_marks
-              : user?.passing_marks || "",
-            ug_level: userProfile?.education_details?.qualification[1]?.level
-              ? userProfile?.education_details?.qualification[1]?.level
-              : user?.level || "",
-          },
-          {
-            diploma_college_name: userProfile?.education_details
-              ?.qualification[2]?.college_name
-              ? userProfile?.education_details?.qualification[2]?.college_name
-              : user?.college_name || "",
-            diploma_year_of_completion: userProfile?.education_details
-              ?.qualification[2]?.year_of_completion
-              ? userProfile?.education_details?.qualification[2]
-                  ?.year_of_completion
-              : user?.year_of_completion || "",
-            diploma_passing_marks: userProfile?.education_details
-              ?.qualification[2]?.passing_marks
-              ? userProfile?.education_details?.qualification[2]?.passing_marks
-              : user?.passing_marks || "",
-            diploma_level: userProfile?.education_details?.qualification[2]
-              ?.level
-              ? userProfile?.education_details?.qualification[2]?.level
-              : user?.level || "",
-          },
           {
             other_program_name: userProfile?.education_details
               ?.other_program_name
@@ -102,6 +72,15 @@ const EducationDetails = props => {
   const [isButtonDisabled, setButtonDisabled] = useState(true)
 
   useEffect(() => {
+    if (userProfile?.education_details?.qualification.length) {
+      setQualification(userProfile?.education_details?.qualification)
+      setFilterArray(userProfile?.education_details?.qualification)
+    } else if (userProfile?.education_details?.qualification.length === 0) {
+      setQualification(emptyObject)
+      setFilterArray(emptyObject)
+    }
+  }, [userProfile])
+  useEffect(() => {
     let count = 0
     for (let key in educationData) {
       if (educationData[key] === "") {
@@ -118,42 +97,6 @@ const EducationDetails = props => {
 
   useEffect(() => {
     setEducationData({
-      pg_college_name: userProfile?.education_details?.qualification[0]
-        ?.college_name
-        ? userProfile?.education_details?.qualification[0]?.college_name
-        : user?.college_name || "",
-      pg_year_of_completion: userProfile?.education_details?.qualification[0]
-        ?.year_of_completion
-        ? userProfile?.education_details?.qualification[0]?.year_of_completion
-        : user?.year_of_completion || "",
-      pg_passing_marks: userProfile?.education_details?.qualification[0]
-        ?.passing_marks
-        ? userProfile?.education_details?.qualification[0]?.passing_marks
-        : user?.passing_marks || "",
-      ug_college_name: userProfile?.education_details?.qualification[1]
-        ?.college_name
-        ? userProfile?.education_details?.qualification[1]?.college_name
-        : user?.college_name || "",
-      ug_year_of_completion: userProfile?.education_details?.qualification[1]
-        ?.year_of_completion
-        ? userProfile?.education_details?.qualification[1]?.year_of_completion
-        : user?.year_of_completion || "",
-      ug_passing_marks: userProfile?.education_details?.qualification[1]
-        ?.passing_marks
-        ? userProfile?.education_details?.qualification[1]?.passing_marks
-        : user?.passing_marks || "",
-      diploma_college_name: userProfile?.education_details?.qualification[2]
-        ?.college_name
-        ? userProfile?.education_details?.qualification[2]?.college_name
-        : user?.college_name || "",
-      diploma_year_of_completion: userProfile?.education_details
-        ?.qualification[2]?.year_of_completion
-        ? userProfile?.education_details?.qualification[2]?.year_of_completion
-        : user?.year_of_completion || "",
-      diploma_passing_marks: userProfile?.education_details?.qualification[2]
-        ?.passing_marks
-        ? userProfile?.education_details?.qualification[2]?.passing_marks
-        : user?.passing_marks || "",
       other_program_name: userProfile?.education_details?.other_program_name
         ? userProfile?.education_details?.other_program_name
         : user?.other_program_name || "",
@@ -171,44 +114,24 @@ const EducationDetails = props => {
 
   const highestQualificationOption = [
     { label: "Please Select", value: "" },
-    { label: "Diploma_or_12th ", value: "12" },
+    { label: "Diploma_or_12th", value: "12" },
     { label: "UG", value: "UG" },
     { label: "PG", value: "PG" },
-    // { label: "First_year", value: "First year" },
-    // { label: "Second_year", value: "Second year" },
-    // { label: "Pre_Final ", value: "Pre Final" },
-    // { label: "Final_Year ", value: "Final Year" },
   ]
-
+  const getQualification = () => {
+    return qualifications.map(q => {
+      delete q._id
+      return q
+    })
+  }
   const editEducationDetail = event => {
     event.preventDefault()
     const { onGetEditEducationDetail } = props
-
     onGetEditEducationDetail({
       uid: educationData?.uid,
       education_details: {
         highest_qualification: "PG",
-        qualification: [
-          {
-            level: "PG",
-            college_name: educationData?.pg_college_name,
-            year_of_completion: educationData?.pg_year_of_completion,
-            passing_marks: educationData?.pg_passing_marks,
-          },
-          {
-            college_name: educationData?.ug_college_name,
-            year_of_completion: educationData?.ug_year_of_completion,
-            passing_marks: educationData?.ug_passing_marks,
-            level: "UG",
-          },
-          {
-            college_name: educationData?.diploma_college_name,
-            year_of_completion: educationData?.diploma_year_of_completion,
-            passing_marks: educationData?.diploma_passing_marks,
-            level: "Diploma_or_12th",
-          },
-        ],
-
+        qualification: getQualification(),
         is_enrolled_other_program: true,
         other_program_name: educationData?.other_program_name,
         other_program_college_name: educationData?.other_program_college_name,
@@ -223,6 +146,37 @@ const EducationDetails = props => {
       e => e.value === event.value
     )
     setFilterData(option[0])
+    // if (option[0].label === "PG") {
+    //   qualifications.map(data => {
+    //     console.log(data)
+    //     // if (data?.level === "Diploma_or_12th") {
+    //     arr.push(data)
+    //     // }
+    //   })
+    // }
+    if (option[0].label === "Diploma_or_12th") {
+      setFilterArray(
+        qualifications.filter(data => data?.level === "Diploma_or_12th")
+      )
+    } else if (option[0].label === "UG") {
+      setFilterArray(qualifications.filter(data => data?.level !== "PG"))
+    } else if (option[0].label === "PG") {
+      setFilterArray(qualifications)
+    }
+  }
+
+  const updateQualification = qualificationDetail => {
+    qualifications.map(qualification => {
+      if (qualification.level === qualificationDetail.level) {
+        qualification.level = qualificationDetail.level
+        qualification.college_name = qualificationDetail.college_name
+        qualification.year_of_completion =
+          qualificationDetail.year_of_completion
+        qualification.passing_marks = qualificationDetail.passing_marks
+        qualification._id = qualificationDetail._id
+      }
+    })
+    setQualification(qualifications)
   }
 
   return (
@@ -246,182 +200,18 @@ const EducationDetails = props => {
           <Form className="form-vertical">
             {filterData?.value !== "" && (
               <Row>
-                {filterData?.value === "PG" && (
-                  <Row>
-                    <h5 className="mb-3 mt-3">PG Degree Details </h5>
-                    <Col sm={4}>
-                      <div className="mb-3">
-                        <Label className="form-label">PG College Name</Label>
-                        <Input
-                          name="text"
-                          className="form-control"
-                          placeholder="College Name"
-                          type="text"
-                          onChange={e =>
-                            setEducationData({
-                              ...educationData,
-                              pg_college_name: e.target.value,
-                            })
-                          }
-                          value={educationData?.pg_college_name}
-                        />
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div className="mb-3">
-                        <Label className="form-label">Year of Completion</Label>
-                        <Input
-                          name="text"
-                          type="text"
-                          placeholder="Year of Completion"
-                          onChange={e =>
-                            setEducationData({
-                              ...educationData,
-                              pg_year_of_completion: e.target.value,
-                            })
-                          }
-                          value={educationData?.pg_year_of_completion}
-                        />
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div className="mb-3">
-                        <Label className="form-label">PG Passing Marks</Label>
-                        <Input
-                          name="text"
-                          type="text"
-                          placeholder="Passing Marks"
-                          onChange={e => {
-                            setEducationData({
-                              ...educationData,
-                              pg_passing_marks: e.target.value,
-                            })
-                          }}
-                          value={educationData?.pg_passing_marks}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                )}
-                {filterData?.value !== "12" && (
-                  <Row>
-                    <h5 className="mb-3 mt-3">UG/Bachelors Degree Details </h5>
-                    <Col sm={4}>
-                      <div className="mb-3">
-                        <Label className="form-label">
-                          UG/Bachelors College Name
-                        </Label>
-                        <Input
-                          name="text"
-                          type="text"
-                          placeholder="College Name"
-                          onChange={e =>
-                            setEducationData({
-                              ...educationData,
-                              ug_college_name: e.target.value,
-                            })
-                          }
-                          value={educationData?.ug_college_name}
-                        />
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div className="mb-3">
-                        <Label className="form-label">Year of Completion</Label>
-                        <Input
-                          name="text"
-                          type="text"
-                          placeholder="Year of Completion"
-                          onChange={e =>
-                            setEducationData({
-                              ...educationData,
-                              ug_year_of_completion: e.target.value,
-                            })
-                          }
-                          value={educationData?.ug_year_of_completion}
-                        />
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div className="mb-3">
-                        <Label className="form-label">
-                          UG/Bachelors Passing Marks
-                        </Label>
-                        <Input
-                          name="text"
-                          type="text"
-                          placeholder="Passing Marks"
-                          onChange={e =>
-                            setEducationData({
-                              ...educationData,
-                              ug_passing_marks: e.target.value,
-                            })
-                          }
-                          value={educationData?.ug_passing_marks}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                )}
-
-                <Row>
-                  <h5 className="mb-3 mt-3">12th/Diploma Course Details </h5>
-                  <Col sm={4}>
-                    <div className="mb-3">
-                      <Label className="form-label">
-                        12th/Diploma College Name
-                      </Label>
-                      <Input
-                        name="text"
-                        type="text"
-                        placeholder="College Name"
-                        onChange={e =>
-                          setEducationData({
-                            ...educationData,
-                            diploma_college_name: e.target.value,
-                          })
-                        }
-                        value={educationData?.diploma_college_name}
+                {filterArray?.map(qualifica => {
+                  return (
+                    <>
+                      <EducationForm
+                        key={qualifica.level}
+                        qualification={qualifica}
+                        educationData={educationData}
+                        updateQualification={updateQualification}
                       />
-                    </div>
-                  </Col>
-                  <Col sm={4}>
-                    <div className="mb-3">
-                      <Label className="form-label">Year of Completion</Label>
-                      <Input
-                        name="text"
-                        type="text"
-                        placeholder="Year of Completion"
-                        onChange={e =>
-                          setEducationData({
-                            ...educationData,
-                            diploma_year_of_completion: e.target.value,
-                          })
-                        }
-                        value={educationData?.diploma_year_of_completion}
-                      />
-                    </div>
-                  </Col>
-                  <Col sm={4}>
-                    <div className="mb-3">
-                      <Label className="form-label">
-                        12th/Diploma Passing Marks
-                      </Label>
-                      <Input
-                        name="text"
-                        type="text"
-                        placeholder="Passing Marks"
-                        onChange={e =>
-                          setEducationData({
-                            ...educationData,
-                            diploma_passing_marks: e.target.value,
-                          })
-                        }
-                        value={educationData?.diploma_passing_marks}
-                      />
-                    </div>
-                  </Col>
-                </Row>
+                    </>
+                  )
+                })}
 
                 {filterData?.value !== "12" && (
                   <Row>
