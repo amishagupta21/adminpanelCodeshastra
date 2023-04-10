@@ -112,7 +112,7 @@ const SidebarContent = props => {
                 <span>{props.t("Courses")}</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/curriculum" className="disabled-link">
                 <i className="bx bx-bar-chart-alt-2" />
                 <span>{props.t("Curriculum")}</span>
@@ -123,7 +123,7 @@ const SidebarContent = props => {
                 <i className="bx bx-bar-chart-alt-2" />
                 <span>{props.t("Content Bank")}</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/users">
                 <i className="bx bx-user" />
