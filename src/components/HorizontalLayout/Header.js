@@ -1,39 +1,39 @@
-import React, { useState } from "react";
-import PropTypes from 'prop-types';
+import React, { useState } from "react"
+import PropTypes from "prop-types"
 
-import { connect } from "react-redux";
+import { connect } from "react-redux"
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 // Redux Store
-import { showRightSidebarAction, toggleLeftmenu } from "../../store/actions";
+import { showRightSidebarAction, toggleLeftmenu } from "../../store/actions"
 // reactstrap
-import { Row, Col, Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
+import { Row, Col, Dropdown, DropdownToggle, DropdownMenu } from "reactstrap"
 
 // Import menuDropdown
-import LanguageDropdown from "../CommonForBoth/TopbarDropdown/LanguageDropdown";
-import NotificationDropdown from "../CommonForBoth/TopbarDropdown/NotificationDropdown";
-import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
+import LanguageDropdown from "../CommonForBoth/TopbarDropdown/LanguageDropdown"
+import NotificationDropdown from "../CommonForBoth/TopbarDropdown/NotificationDropdown"
+import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu"
 
-import megamenuImg from "../../assets/images/megamenu-img.png";
-import logo from "../../assets/images/logo-sm.png";
-import logofull from "../../assets/images/logo.svg";
+import megamenuImg from "../../assets/images/megamenu-img.png"
+import logo from "../../assets/images/logo-sm.png"
+import logofull from "../../assets/images/logo.svg"
 
 // import images
-import github from "../../assets/images/brands/github.png";
-import bitbucket from "../../assets/images/brands/bitbucket.png";
-import dribbble from "../../assets/images/brands/dribbble.png";
-import dropbox from "../../assets/images/brands/dropbox.png";
-import mail_chimp from "../../assets/images/brands/mail_chimp.png";
-import slack from "../../assets/images/brands/slack.png";
+import github from "../../assets/images/brands/github.png"
+import bitbucket from "../../assets/images/brands/bitbucket.png"
+import dribbble from "../../assets/images/brands/dribbble.png"
+import dropbox from "../../assets/images/brands/dropbox.png"
+import mail_chimp from "../../assets/images/brands/mail_chimp.png"
+import slack from "../../assets/images/brands/slack.png"
 
 //i18n
-import { withTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next"
 
 const Header = props => {
-  const [menu, setMenu] = useState(false);
-  const [isSearch, setSearch] = useState(false);
-  const [socialDrp, setsocialDrp] = useState(false);
+  const [menu, setMenu] = useState(false)
+  const [isSearch, setSearch] = useState(false)
+  const [socialDrp, setsocialDrp] = useState(false)
 
   function toggleFullscreen() {
     if (
@@ -43,21 +43,21 @@ const Header = props => {
     ) {
       // current working methods
       if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
+        document.documentElement.requestFullscreen()
       } else if (document.documentElement.mozRequestFullScreen) {
-        document.documentElement.mozRequestFullScreen();
+        document.documentElement.mozRequestFullScreen()
       } else if (document.documentElement.webkitRequestFullscreen) {
         document.documentElement.webkitRequestFullscreen(
           Element.ALLOW_KEYBOARD_INPUT
-        );
+        )
       }
     } else {
       if (document.cancelFullScreen) {
-        document.cancelFullScreen();
+        document.cancelFullScreen()
       } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
+        document.mozCancelFullScreen()
       } else if (document.webkitCancelFullScreen) {
-        document.webkitCancelFullScreen();
+        document.webkitCancelFullScreen()
       }
     }
   }
@@ -84,14 +84,14 @@ const Header = props => {
                   <img src={logofull} alt="" height="19" />
                 </span>
               </Link>
-            </div> 
+            </div>
 
             <button
               type="button"
               className="btn btn-sm px-3 font-size-16 d-lg-none header-item"
               data-toggle="collapse"
               onClick={() => {
-                props.toggleLeftmenu(!props.leftMenu);
+                props.toggleLeftmenu(!props.leftMenu)
               }}
               data-target="#topnav-menu-content"
             >
@@ -114,11 +114,7 @@ const Header = props => {
               isOpen={menu}
               toggle={() => setMenu(!menu)}
             >
-              <DropdownToggle
-                className="btn header-item "
-                caret
-                tag="button"
-              >
+              <DropdownToggle className="btn header-item " caret tag="button">
                 {props.t("Mega Menu")} <i className="mdi mdi-chevron-down" />
               </DropdownToggle>
               <DropdownMenu className="dropdown-megamenu">
@@ -301,7 +297,7 @@ const Header = props => {
               className="d-none d-lg-inline-block ms-1"
               isOpen={socialDrp}
               toggle={() => {
-                setsocialDrp(!socialDrp);
+                setsocialDrp(!socialDrp)
               }}
             >
               <DropdownToggle
@@ -362,7 +358,7 @@ const Header = props => {
                 type="button"
                 className="btn header-item noti-icon "
                 onClick={() => {
-                  toggleFullscreen();
+                  toggleFullscreen()
                 }}
                 data-toggle="fullscreen"
               >
@@ -377,7 +373,7 @@ const Header = props => {
             <div className="dropdown d-inline-block">
               <button
                 onClick={() => {
-                  props.showRightSidebarAction(!props.showRightSidebar);
+                  props.showRightSidebarAction(!props.showRightSidebar)
                 }}
                 type="button"
                 className="btn header-item noti-icon right-bar-toggle "
@@ -389,23 +385,23 @@ const Header = props => {
         </div>
       </header>
     </React.Fragment>
-  );
-};
+  )
+}
 
 Header.propTypes = {
   leftMenu: PropTypes.any,
   showRightSidebar: PropTypes.any,
   showRightSidebarAction: PropTypes.func,
   t: PropTypes.any,
-  toggleLeftmenu: PropTypes.func
-};
+  toggleLeftmenu: PropTypes.func,
+}
 
 const mapStatetoProps = state => {
-  const { layoutType, showRightSidebar, leftMenu } = state.Layout;
-  return { layoutType, showRightSidebar, leftMenu };
-};
+  const { layoutType, showRightSidebar, leftMenu } = state.Layout
+  return { layoutType, showRightSidebar, leftMenu }
+}
 
 export default connect(mapStatetoProps, {
   showRightSidebarAction,
   toggleLeftmenu,
-})(withTranslation()(Header));
+})(withTranslation()(Header))
