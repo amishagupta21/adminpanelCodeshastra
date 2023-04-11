@@ -38,6 +38,9 @@ import CourseList from "./CourseList"
 import EducationDetails from "../Learner/LearnerDetails/LearnerDetails"
 import CourseInformation from "../Course/CourseInformation"
 import CardInformation from "../Course/CardInformation"
+import Coursedetail from "../Course/Coursedetail"
+import Batch from "../Course/Batch"
+import Faq from "../Course/Faq"
 import WorkDetails from "../Learner/LearnerDetails/WorkDetails"
 import DocumentKyc from "../Learner/LearnerDetails/DocumentKyc"
 
@@ -78,8 +81,8 @@ function EditCourseList(props) {
     },
     {
       eventKey: "work-detail",
-      title: "Work Details",
-      component: <WorkDetails userProfile={userProfile} />,
+      title: "Course Detail",
+      component: <Coursedetail userProfile={userProfile} />,
     },
     // {
     //   eventKey: "courses-enrolled",
@@ -88,14 +91,19 @@ function EditCourseList(props) {
     // },
     // { eventKey: "attendance", title: "Attendance", component: <Attendance /> },
     {
-      eventKey: "document",
-      title: "Document & KYC",
+      eventKey: "Batch",
+      title: "Batch",
       component: (
-        <DocumentKyc
-          user={user}
-          userProfile={userProfile}
-          profilePictureUrl={profilePictureUrl}
-        />
+        <Batch/>       
+        
+      ),
+    },
+    {
+      eventKey: "Faq",
+      title: "Faqs",
+      component: (
+        <Faq/>       
+        
       ),
     },
     // {
@@ -192,7 +200,7 @@ function EditCourseList(props) {
 
   return (
     <>
-      <Container className="personal-detail-tab space-height" fluid>
+      <Container className="personal-detail-tab personal-detail-tab-course space-height" fluid>
      
 
 <Row>
