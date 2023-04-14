@@ -1,26 +1,6 @@
 import React, { useEffect, useState } from "react"
-import {
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Button,
-  Container,
-  CardGroup,
-  ListGroup,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Label,
-  Input,
-  Form,
-  Modal,
-  ModalFooter,
-  ModalHeader,
-  ModalBody,
-} from "reactstrap"
-import { Link } from "react-router-dom"
-import userplaceholder from "../../../assets/images/userplaceholder.png"
+import { Row, Col, Button, Label, Input, Form } from "reactstrap"
+
 import DatePicker from "react-datepicker"
 import "./personalDetailForm.css"
 import PropTypes from "prop-types"
@@ -35,23 +15,13 @@ import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
 import DeleteProfileModal from "./DeleteProfileModal"
 import ImagePreviewModal from "./ImagePreviewModal"
-import LearnerTable from "../LearnerTable"
-import Learner from "../Learner"
-import { useFormik } from "formik"
-import * as Yup from "yup"
 
 // const initialValues = {
 //   fullName: "",
 // }
 
 const PersonalDetailForm = props => {
-  const {
-    user,
-    userProfile,
-    profilePictureUrl,
-    uploadProfilePicture,
-    editLearnerDetail,
-  } = props
+  const { user, userProfile } = props
 
   const [image, setImage] = useState({ preview: "", raw: "" })
 
@@ -442,7 +412,7 @@ PersonalDetailForm.propTypes = {
   LearnerDetails: PropTypes.any,
 }
 
-const mapStateToProps = ({ LearnerDetails, state, count }) => ({
+const mapStateToProps = ({ LearnerDetails }) => ({
   user: LearnerDetails?.data?.user,
   userProfile: LearnerDetails?.data?.userProfile,
   uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
