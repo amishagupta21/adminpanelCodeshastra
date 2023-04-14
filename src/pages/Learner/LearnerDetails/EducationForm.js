@@ -1,26 +1,7 @@
 import React, { useEffect, useState } from "react"
-import {
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Button,
-  Container,
-  CardGroup,
-  ListGroup,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Label,
-  Input,
-  Form,
-} from "reactstrap"
-import Select from "react-select"
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
-import { editEducationDetail } from "store/EducationDetail/actions"
+import { Row, Col, Label, Input } from "reactstrap"
 
-function EducationForm({ qualification, educationData, updateQualification }) {
+function EducationForm({ qualification, updateQualification }) {
   const [educationDetail, setEducationDetail] = useState({})
   useEffect(() => {
     if (qualification) {

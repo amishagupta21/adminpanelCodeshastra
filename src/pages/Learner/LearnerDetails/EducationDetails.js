@@ -46,7 +46,6 @@ const EducationDetails = props => {
   const { user, userProfile } = props
   const [qualifications, setQualification] = useState([])
   const [filterArray, setFilterArray] = useState([])
-
   const data =
     userProfile?.personal_details === null
       ? {}
@@ -77,14 +76,28 @@ const EducationDetails = props => {
 
   useEffect(() => {
     if (userProfile?.education_details?.qualification.length) {
-      setQualification(userProfile?.education_details?.qualification)
-
+      setQualification(
+        userProfile?.education_details?.qualification.map(q => {
+          delete q._id
+          return q
+        })
+      )
       setFilterArray(userProfile?.education_details?.qualification)
-    } else if (userProfile?.education_details?.qualification.length === 0) {
-      setQualification(emptyObject)
-      setFilterArray(emptyObject)
     }
   }, [userProfile])
+
+  useEffect(() => {
+    const arr = [...qualifications]
+    if (qualifications.length !== 3) {
+      emptyObject.forEach(item => {
+        if (!qualifications.some(elem => elem.level === item.level)) {
+          arr.push(item)
+        }
+      })
+      setQualification(arr)
+    }
+  }, [qualifications])
+
   useEffect(() => {
     let count = 0
     for (let key in educationData) {
@@ -122,12 +135,16 @@ const EducationDetails = props => {
   }, [userProfile])
 
   useEffect(() => {
-    const hQ = qualifications?.map(item => ({
-      label: item.level,
-      value: item.level,
-    }))
-    setFilterData(hQ[hQ?.length - 1])
-  }, [qualifications])
+    if (userProfile?.education_details?.qualification?.length) {
+      const hQ = userProfile?.education_details?.qualification?.map(item => ({
+        label: item.level,
+        value: highestQualificationOption.find(
+          item => item.label === item.level && item.value
+        ),
+      }))
+      setFilterData(hQ[hQ?.length - 1])
+    }
+  }, [userProfile, qualifications])
 
   const highestQualificationOption = [
     { label: "Please Select", value: "" },
@@ -136,17 +153,13 @@ const EducationDetails = props => {
     { label: "PG", value: "PG" },
   ]
 
-  // qualifications?.map(item => ({
-  //   label: item.level,
-  //   value: item.level,
-  // }))
-  console.log("heig", highestQualificationOption)
-
   const getQualification = () => {
-    return qualifications.map(q => {
-      delete q._id
-      return q
-    })
+    return filterArray.filter(
+      item =>
+        item.college_name !== "" &&
+        item.year_of_completion !== "" &&
+        item.passing_marks !== ""
+    )
   }
   const editEducationDetail = event => {
     event.preventDefault()
@@ -170,14 +183,7 @@ const EducationDetails = props => {
       e => e.value === event.value
     )
     setFilterData(option[0])
-    // if (option[0].label === "PG") {
-    //   qualifications.map(data => {
-    //     console.log(data)
-    //     // if (data?.level === "Diploma_or_12th") {
-    //     arr.push(data)
-    //     // }
-    //   })
-    // }
+
     if (option[0].label === "Diploma_or_12th") {
       setFilterArray(
         qualifications.filter(data => data?.level === "Diploma_or_12th")
@@ -237,7 +243,7 @@ const EducationDetails = props => {
                   )
                 })}
 
-                {filterData?.value !== "12" && (
+                {filterData?.label !== "Diploma_or_12th" && (
                   <Row>
                     <h5 className="mb-3 mt-3">Additional Course Details </h5>
                     <Col sm={4}>
@@ -323,7 +329,7 @@ EducationDetails.propTypes = {
   EducationDetails: PropTypes.any,
 }
 
-const mapStateToProps = ({ LearnerDetails, state, count }) => ({
+const mapStateToProps = ({ LearnerDetails }) => ({
   user: LearnerDetails?.data?.user,
   userProfile: LearnerDetails?.data?.userProfile,
   uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
