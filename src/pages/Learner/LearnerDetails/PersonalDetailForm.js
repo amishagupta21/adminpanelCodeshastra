@@ -22,7 +22,6 @@ import LearnerTable from "../LearnerTable"
 import Learner from "../Learner"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import Compressor from "compressorjs"
 
 // const initialValues = {
 //   fullName: "",
