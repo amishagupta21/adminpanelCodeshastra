@@ -40,6 +40,8 @@ const LearnerDetails = props => {
     onGetProfilePicture({ uid: params.id, document_type: "profile_picture" })
   }, [])
 
+  const profilePic = props?.profilePictureUrl
+
   return (
     <div className="page-content">
       <Container fluid>
@@ -49,25 +51,19 @@ const LearnerDetails = props => {
             <Card>
               <div className="learner-bg-image">
                 <div className="d-flex justify-content-center">
-                  {props?.profilePictureUrl ? (
-                    <img
-                      height="50px"
-                      width="50px"
-                      src={props?.profilePictureUrl}
-                    />
+                  {profilePic ? (
+                    <img height="80px" width="80px" src={profilePic} />
                   ) : (
-                    <img height="50px" width="50px" src={userPlaceholder} />
+                    <img height="80px" width="80px" src={userPlaceholder} />
                   )}
 
                   {/* <img height="50px" src={userPlaceholder} /> */}
 
                   <div className="profile-detail">
-                    <h5 className="text-white mb-0">
+                    <h5 className=" mb-0">
                       {userProfile?.personal_details?.full_name}
                     </h5>
-                    <p className="text-white">
-                      {userProfile?.work_details[0]?.position}
-                    </p>
+                    <p>{userProfile?.work_details[0]?.position}</p>
                   </div>
                 </div>
               </div>

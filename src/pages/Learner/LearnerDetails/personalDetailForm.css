@@ -6,14 +6,14 @@
 
 .personal-detail img {
   border-radius: 50%;
-  width: 50px;
+  width: 70px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .profile-button {
   cursor: pointer;
 }
-
 
 textarea.form-control.text-height.form-control {
   height: 100px;

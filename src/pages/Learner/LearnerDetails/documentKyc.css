@@ -3,3 +3,9 @@
   display: grid !important;
   place-items: center;
 }
+
+.modalHeader {
+  width: 100%;
+  position: absolute;
+  top: 0px;
+}

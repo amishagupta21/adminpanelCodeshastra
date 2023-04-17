@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Row, Col, Button, Label, Input, Form } from "reactstrap"
+import Image from "react-bootstrap/Image"
 
+import { Link } from "react-router-dom"
+import userplaceholder from "../../../assets/images/userplaceholder.png"
 import DatePicker from "react-datepicker"
 import "./personalDetailForm.css"
 import PropTypes from "prop-types"
@@ -15,16 +18,27 @@ import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
 import DeleteProfileModal from "./DeleteProfileModal"
 import ImagePreviewModal from "./ImagePreviewModal"
+import LearnerTable from "../LearnerTable"
+import Learner from "../Learner"
+import { useFormik } from "formik"
+import * as Yup from "yup"
+import Compressor from "compressorjs"
 
 // const initialValues = {
 //   fullName: "",
 // }
 
 const PersonalDetailForm = props => {
-  const { user, userProfile } = props
+  const {
+    user,
+    userProfile,
+    profilePictureUrl,
+    uploadProfilePicture,
+    editLearnerDetail,
+  } = props
 
   const [image, setImage] = useState({ preview: "", raw: "" })
-
+  const [profilePicture, setProfilePicture] = useState(null)
   const data =
     userProfile?.personal_details === null
       ? {}
@@ -60,10 +74,17 @@ const PersonalDetailForm = props => {
         }
   const [learnerData, setLearnerData] = useState(data)
   const [isButtonDisabled, setButtonDisabled] = useState(true)
+  const [profilePictureModal, setProfilePictureModal] = useState(false)
 
   useEffect(() => {
     setLearnerData(data)
   }, [userProfile])
+
+  // useEffect(() => {
+  //   if (props?.profilePictureUrl) {
+  //     setProfilePicture(props?.profilePictureUrl)
+  //   }
+  // }, [props?.profilePictureUrl])
 
   useEffect(() => {
     let count = 0
@@ -84,13 +105,14 @@ const PersonalDetailForm = props => {
   const hiddenFileInput = React.useRef(null)
   // Modal open state
   const [modal, setModal] = React.useState(false)
-  const [profilePictureModal, setProfilePictureModal] = useState(false)
 
   // Toggle for Modal
   const openModal = () => setModal(true)
   const closeModal = () => setModal(false)
 
-  const toggle = () => setProfilePictureModal(!profilePictureModal)
+  const toggle = () => {
+    setProfilePictureModal(!profilePictureModal)
+  }
   const closeProfilePicture = () => setProfilePictureModal(false)
 
   useEffect(() => {
@@ -170,26 +192,30 @@ const PersonalDetailForm = props => {
     })
   }
 
+  const profilePic = props?.profilePictureUrl
+
   return (
     <>
       <div>
         <h4 className="text-primary">Personal Details</h4>
         <div className="d-flex align-items-center personal-detail">
-          {props?.profilePictureUrl ? (
-            <img
-              height="50px"
-              width="50px"
-              onClick={toggle}
-              src={props?.profilePictureUrl}
-            />
-          ) : (
-            <img height="50px" width="50px" src={userPlaceholder} />
-          )}
+          <div>
+            {profilePic ? (
+              <img
+                height="70px"
+                width="70px"
+                onClick={toggle}
+                src={profilePic}
+              />
+            ) : (
+              <img height="70px" width="70px" src={userPlaceholder} />
+            )}
+          </div>
           &nbsp;&nbsp;&nbsp;
           <div>
             <p>Profile Picture</p>
             <div>
-              {props?.profilePictureUrl ? (
+              {profilePic ? (
                 <div className="text-danger profile-button" onClick={openModal}>
                   Delete
                 </div>
@@ -218,7 +244,7 @@ const PersonalDetailForm = props => {
         <ImagePreviewModal
           modal={profilePictureModal}
           closeProfilePicture={closeProfilePicture}
-          imagePreview={props?.profilePictureUrl}
+          imagePreview={profilePic}
           toggle={toggle}
         />
 
@@ -412,7 +438,7 @@ PersonalDetailForm.propTypes = {
   LearnerDetails: PropTypes.any,
 }
 
-const mapStateToProps = ({ LearnerDetails }) => ({
+const mapStateToProps = ({ LearnerDetails, state, count }) => ({
   user: LearnerDetails?.data?.user,
   userProfile: LearnerDetails?.data?.userProfile,
   uploadProfilePicture: LearnerDetails?.uploadProfilePicture,

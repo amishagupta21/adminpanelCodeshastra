@@ -49,7 +49,6 @@ function* documentPictureApi({ payload: data }) {
 function* documentPreviewApi({ payload: data }) {
   try {
     const response = yield call(getUploadDocument, data)
-
     yield put(documentPreviewSuccess(response?.data?.signedUrl))
   } catch (error) {
     toasterMsg(error?.message)
