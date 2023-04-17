@@ -14,6 +14,7 @@ import {
   PaginationLink,
   Modal,
   ModalBody,
+  ModalHeader,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
 import progressbar from "../../../assets/images/progress.gif"
@@ -38,7 +39,6 @@ import "./documentKyc.css"
 
 const DocumentKyc = props => {
   const { userProfile, documentUrl, documentPicture, profilePictureUrl } = props
-
   const [documentKyc, setDocumentKyc] = useState(userProfile)
   const [image, setImage] = useState({ preview: "", raw: "" })
   const [loading, setLoading] = useState(false)
@@ -46,6 +46,7 @@ const DocumentKyc = props => {
   const history = useHistory()
   const hiddenFileInput = React.useRef([])
   const [modal, setModal] = React.useState(false)
+  const [imageName, setImageName] = useState("")
 
   // const hiddenFileInput = React.useRef(null)
   const [document, setDocument] = useState({
@@ -248,8 +249,8 @@ const DocumentKyc = props => {
                   const str2 =
                     documentName.charAt(0).toUpperCase() + documentName.slice(1)
                   const result = str2.replace("_", " ")
-
                   const fileName = item[1].split("/")
+
                   return (
                     <tr key={item}>
                       <td>{result}</td>
@@ -286,7 +287,8 @@ const DocumentKyc = props => {
                         <td>
                           <i
                             onClick={e => {
-                              imagePreview(e, item[0])
+                              imagePreview(e, item[0], fileName)
+                              setImageName(fileName[3])
                               // history.push({
                               //   pathname: `/learner-details/${documentKyc?.uid}/document-data/${item[0]}`,
                               //   state: {
@@ -313,13 +315,16 @@ const DocumentKyc = props => {
           </Table>
           <Modal
             isOpen={modal}
-            toggle={toggle}
+            // toggle={toggle}
             modalTransition={{ timeout: 500 }}
             centered={true}
             fade={false}
             contentClassName="modalContent"
             size="lg"
           >
+            <ModalHeader className="modalHeader" toggle={toggle}>
+              {imageName}
+            </ModalHeader>
             <img
               src={props.previewImageUrl}
               style={{
@@ -347,6 +352,7 @@ const mapStateToProps = ({ DocumentKyc }) => ({
   downloadImage: DocumentKyc?.downloadImage,
   previewImageUrl: DocumentKyc?.previewImageUrl,
   previewImage: DocumentKyc?.previewImage,
+  data: DocumentKyc?.data,
 })
 
 const mapDispatchToProps = dispatch => ({

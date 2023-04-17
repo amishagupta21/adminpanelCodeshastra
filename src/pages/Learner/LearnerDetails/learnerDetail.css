@@ -19,7 +19,7 @@
 }
 
 .learner-bg-image {
-  background-image: url("https://picsum.photos/300/200");
+  background-image: url("../../../assets/images/coverPicture.png");
   height: 130px;
   position: relative;
 }
@@ -35,5 +35,14 @@
 .profile-detail {
   position: absolute;
   bottom: 5px;
-  left: 80px;
+  left: 100px;
+}
+
+.profile-detail p {
+  color: #556ee6;
+}
+
+.profile-detail h5 {
+  color: #556ee6;
+  font-weight: 600;
 }

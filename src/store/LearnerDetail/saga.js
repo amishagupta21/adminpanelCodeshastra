@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from "redux-saga/effects"
+import { takeEvery, put, call, delay } from "redux-saga/effects"
 
 // Login Redux States
 import {
@@ -61,6 +61,7 @@ function* deleteProfilePicture({ payload: uid }) {
     const response = yield call(getDeleteProfilePicture, uid)
     tosterMsg(response?.message)
     // fetchDemoData()
+    yield delay(2000)
     yield put(deleteProfilePictureSuccess(response))
   } catch (error) {
     tosterMsg(error?.message)
@@ -75,6 +76,7 @@ function* uploadProfilePicture({ payload: data }) {
       url: response?.data?.signedUrl,
       data: data?.img,
     })
+    yield delay(2000)
     yield put(
       profilePicture({ uid: data?.data?.uid, document_type: "profile_picture" })
     )
