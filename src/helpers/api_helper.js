@@ -8,7 +8,7 @@ const token = accessToken || ""
 //apply base url for axios
 const API_URL = `${process.env.REACT_APP_API_URL}`
 const URL = `${process.env.REACT_APP_URL}`
-const COURSE_API_URL = "https://lms-xwsrrlwthq-uk.a.run.app/api/lms"
+const COURSE_API_URL = "https://lms.unikaksha.dev/api/lms"
 
 // const putApi = axios.create({
 //   baseURL: URL,

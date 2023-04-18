@@ -50,13 +50,12 @@ import DocumentKyc from "../Learner/LearnerDetails/DocumentKyc"
 import { getCourses } from "store/Courses/actions"
 
 function EditCourseList(props) {
-  
   document.title = "Users List"
   const [isExpanded, setIsExpanded] = useState(null)
 
   const [usersListData, setUsersListData] = useState([])
-  const [value,setValue] = useState('details')
-  const { userProfile, data, profilePictureUrl,user } = props
+  const [value, setValue] = useState("details")
+  const { userProfile, data, profilePictureUrl, user } = props
 
   const selectRow = {
     mode: "checkbox",
@@ -65,11 +64,7 @@ function EditCourseList(props) {
     {
       eventKey: "details",
       title: "Course Information",
-      component: (
-        <CourseInformation
-         
-        />
-      ),
+      component: <CourseInformation />,
     },
     {
       eventKey: "education-detail",
@@ -78,7 +73,7 @@ function EditCourseList(props) {
     },
     {
       eventKey: "work-detail",
-      title: "Work Details",
+      title: "Course Detail Page",
       component: <WorkDetails userProfile={userProfile} />,
     },
     // {
@@ -89,7 +84,7 @@ function EditCourseList(props) {
     // { eventKey: "attendance", title: "Attendance", component: <Attendance /> },
     {
       eventKey: "document",
-      title: "Document & KYC",
+      title: "Batches",
       component: (
         <DocumentKyc
           user={user}
@@ -98,16 +93,21 @@ function EditCourseList(props) {
         />
       ),
     },
-    // {
-    //   eventKey: "billing",
-    //   title: "Billing & Invoice",
-    //   component: <Billing />,
-    // },
-    // {
-    //   eventKey: "notification",
-    //   title: "Notifications",
-    //   component: <Notifications />,
-    // },
+    {
+      eventKey: "billing",
+      title: "Curriculum",
+      // component: <Billing />,
+    },
+    {
+      eventKey: "notification",
+      title: "Variant",
+      // component: <Notifications />,
+    },
+    {
+      eventKey: "notification",
+      title: "FAQs",
+      // component: <Notifications />,
+    },
   ]
   const options = [
     { label: "Full Stack Web Developer(Full Time)", value: "invited" },
@@ -121,11 +121,11 @@ function EditCourseList(props) {
     // onGetCourses(params.id)
   }, [])
   CourseList.propTypes = {
-      userRoles: PropTypes.array,
-      usersCount: PropTypes.number,
-      className: PropTypes.any,
-      Courses: PropTypes.array,
-    }
+    userRoles: PropTypes.array,
+    usersCount: PropTypes.number,
+    className: PropTypes.any,
+    Courses: PropTypes.array,
+  }
   let state = {
     columns: [
       {
@@ -193,9 +193,7 @@ function EditCourseList(props) {
   return (
     <>
       <Container className="personal-detail-tab space-height" fluid>
-     
-
-<Row>
+        <Row>
           <Col sm="6">
             <div className="app-search p-2">
               <h5> FULL STACK WEB DEVELOPER</h5>
@@ -265,7 +263,7 @@ function EditCourseList(props) {
   )
 }
 
-//  
+//
 
 const mapStateToProps = ({ Courses, state, count }) => ({
   manageUser: Courses?.manageUser,
