@@ -217,3 +217,35 @@ ul.pagination.pagination-sm .page-item a.active {
   border-radius: 30px;
   padding: 8px 15px;
 }
+
+table.table-border-custom.table tr td .assign-batch.btn {
+  width: 100px;
+  height: 29px;
+  padding: 3px 0;
+}
+
+button.assign-batch.assign-batch-border.btn.btn-success {
+  --bs-btn-bg: #ffffff;
+  --bs-btn-border-color: #34c38f;
+  --bs-btn-hover-color: #2ca67a;
+  --bs-btn-hover-bg: #2ca67a;
+  --bs-btn-active-bg: #2a9c72;
+  --bs-btn-color: #2a9c72;
+}
+button.secondary-btns-custom.btn.btn-secondary.btn-sm {
+  --bs-btn-bg: #74788D;
+  --bs-btn-border-color: #fff;
+  color: #fff !important;
+  font-size: 15px;}
+
+  table.table-full.table-full-course.table-varient tr td:nth-child(2), table.table-full.table-full-course.table-varient tr th:nth-child(2) {
+    width: 77%;
+}
+
+
+.custom-input-file {
+  background: #F5F6FD;
+  border: 0.6px dashed #556EE6;
+  border-radius: 6px;
+  margin: 20px;
+}

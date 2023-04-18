@@ -40,6 +40,7 @@ import CourseInformation from "../Course/CourseInformation"
 import CardInformation from "../Course/CardInformation"
 import Coursedetail from "../Course/Coursedetail"
 import Batch from "../Course/Batch"
+import Varient from "../Course/Varient"
 import Faq from "../Course/Faq"
 import WorkDetails from "../Learner/LearnerDetails/WorkDetails"
 import DocumentKyc from "../Learner/LearnerDetails/DocumentKyc"
@@ -95,6 +96,14 @@ function EditCourseList(props) {
       title: "Batch",
       component: (
         <Batch/>       
+        
+      ),
+    },
+    {
+      eventKey: "Varient",
+      title: "Varient",
+      component: (
+        <Varient/>       
         
       ),
     },
