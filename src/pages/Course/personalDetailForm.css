@@ -6,8 +6,9 @@
 
 .personal-detail img {
   border-radius: 50%;
-  width: 50px;
+  width: 70px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .profile-button {
@@ -23,57 +24,72 @@
 
 table.table-full tr td:last-child {
   width: 30%;
-  text-align: right;padding: 5px 20px;
+  text-align: right;
+  padding: 5px 20px;
 }
 table.table-full tr td:first-child {
-  width: 70%;padding: 5px 20px;
+  width: 70%;
+  padding: 5px 20px;
 }
 table.table-full {
   width: 100%;  table-layout: fixed;
+
 }
 
 table.table-full tr th:last-child {
   width: 30%;
-  text-align: right;padding: 5px 20px;
-
+  text-align: right;
+  padding: 5px 20px;
 }
 input.form-control.form-control-color {
-  border: 1px solid #CED4DA;
+  border: 1px solid #ced4da;
   border-radius: 4px;
-  color: #556EE6;width: 100%;
+  color: #556ee6;
+  width: 100%;
 }
 
-input.form-control.form-control-color::-webkit-input-placeholder { /* Edge */
-  color: #556EE6; opacity: 1;
+input.form-control.form-control-color::-webkit-input-placeholder {
+  /* Edge */
+  color: #556ee6;
+  opacity: 1;
 }
 
-input.form-control.form-control-color:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #556EE6; opacity: 1;
+input.form-control.form-control-color:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #556ee6;
+  opacity: 1;
 }
 
 input.form-control.form-control-color::placeholder {
-  color: #556EE6; opacity: 1;
+  color: #556ee6;
+  opacity: 1;
 }
 .table-form {
-  border-bottom: 1px solid #CED4DA;
-  padding-bottom: 20px;padding-top: 10px;
+  border-bottom: 1px solid #ced4da;
+  padding-bottom: 20px;
+  padding-top: 10px;
 }
 table.table-full tr th:first-child {
-  width: 70%;padding: 5px 20px;
-
+  width: 70%;
+  padding: 5px 20px;
 }
 
-.card-infor-space .accordion-body{ padding: 0 !important;}
-.accordian-parts .accordion-item { margin-bottom: 20px;}
-.accordian-parts  h2.accordion-header .accordion-button {
-  background: #F9F9F9;color: #495057;
+.card-infor-space .accordion-body {
+  padding: 0 !important;
+}
+.accordian-parts .accordion-item {
+  margin-bottom: 20px;
+}
+.accordian-parts h2.accordion-header .accordion-button {
+  background: #f9f9f9;
+  color: #495057;
   font-weight: 600;
 }
 table.table-full p {
   font-weight: 500;
   font-size: 13px;
   line-height: 20px;
-  color: #556EE6;
+  color: #556ee6;
 }
 table.table-full tr th {
   font-weight: 500;
@@ -84,13 +100,21 @@ table.table-full tr th {
 table.table-full-width {
   width: 100%;
 }
-table.table-full-width  tr th{padding: 5px 20px;}
-table.table-full-width  tr td{padding: 5px 20px;}
-table.table-full-width  tr td:first-child{ width:80%;}
-table.table-full-width  tr th:first-child{ width:80%;}
+table.table-full-width tr th {
+  padding: 5px 20px;
+}
+table.table-full-width tr td {
+  padding: 5px 20px;
+}
+table.table-full-width tr td:first-child {
+  width: 80%;
+}
+table.table-full-width tr th:first-child {
+  width: 80%;
+}
 .accordian-parts .accordion-header {
   margin-bottom: 0;
-  border-top: 1px solid #CED4DA;
+  border-top: 1px solid #ced4da;
 }
 input.form-control.sml.form-control {
   width: 58px;
@@ -98,11 +122,12 @@ input.form-control.sml.form-control {
 
 .create-new-appointment h2 {
   margin: 0;
-  font-size: 14px;color: #556EE6
+  font-size: 14px;
+  color: #556ee6;
 }
 .create-new-appointment {
-  background: #FFFFFF;
-  border: 1px dashed #556EE6;
+  background: #ffffff;
+  border: 1px dashed #556ee6;
   border-radius: 4px;
   margin: 20px;
   padding: 20px;
@@ -114,7 +139,6 @@ input.form-control.sml.form-control {
 }
 
 .input-file-space input {
- 
   width: 200px;
 }
 .input-file-space {
@@ -249,3 +273,22 @@ button.secondary-btns-custom.btn.btn-secondary.btn-sm {
   border-radius: 6px;
   margin: 20px;
 }
+
+.custom-input-file {
+  background: #F5F6FD;
+  border: 0.6px dashed #556EE6;
+  border-radius: 6px;
+  margin: 20px;
+  position: relative;
+  padding: 16px;
+}
+.custom-input-file span{
+display: flex;
+    align-items: center;
+    justify-content: center;}
+
+    .custom-input-file  .form-control[type="file"] {
+      position: absolute;
+      top: 0;
+      opacity: 0;
+  }

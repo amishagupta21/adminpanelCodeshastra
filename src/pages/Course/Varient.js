@@ -404,7 +404,7 @@ const Varient = props => {
             <Input
                     name="text"
                     className="form-control lg"
-                    placeholder=" www.youtube/aken_faelacc/aca.com"
+                    placeholder="100% Live Online Classes"
                     type="text"/>
             </td>
             <td>
@@ -439,7 +439,7 @@ const Varient = props => {
             <Input
                     name="text"
                     className="form-control lg"
-                    placeholder=" www.youtube/aken_faelacc/aca.com"
+                    placeholder="No Prior Coding Experience Required"
                     type="text"/>
             </td>
             <td>
@@ -473,7 +473,7 @@ const Varient = props => {
             <Input
                     name="text"
                     className="form-control lg"
-                    placeholder=" www.youtube/aken_faelacc/aca.com"
+                    placeholder="Pay After Placement of 5LPA or Above"
                     type="text"/>
             </td>
             <td>
@@ -498,6 +498,203 @@ const Varient = props => {
         <h2>Create New Highlight <a className="link">  <img height="20px" width="20px" src={plus} /></a></h2>
         </div>
 
+    </AccordionBody>
+  </AccordionItem>
+
+  <AccordionItem>
+    <AccordionHeader targetId="1">
+    Overview<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+<path d="M4.5 7.5H5.5V4.5H4.5V7.5ZM5 0C2.2375 0 0 2.2375 0 5C0 7.7625 2.2375 10 5 10C7.7625 10 10 7.7625 10 5C10 2.2375 7.7625 0 5 0ZM5 9C2.795 9 1 7.205 1 5C1 2.795 2.795 1 5 1C7.205 1 9 2.795 9 5C9 7.205 7.205 9 5 9ZM4.5 3.5H5.5V2.5H4.5V3.5Z" fill="#74788D"/>
+</svg>
+    </AccordionHeader>
+    <AccordionBody accordionId="1" className="card-infor-space">
+      <div className="table-form">
+    <table className="table-full table-full-course">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Icon</th>
+            <th>Position</th>
+            <th>Action</th>
+          </tr>
+          <tr>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="100% Live Classes"
+                    type="text"/>
+            
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="1:1 mentor support & immediate doubt solving"
+                    type="text"/>
+            
+            </td>
+            <td>
+            <div className="image-name">Class.svg<i className="mdi mdi-close"></i> </div> 
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control sml"
+                    placeholder=" 1"
+                    type="text"/>
+            </td>
+            <td>
+            <div className="actions">
+              <Input type="switch" role="switch" />
+<a href=""><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+<path d="M14.25 3H11.625L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3ZM4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25Z" fill="#F46A6A"/>
+</svg></a></div>
+            </td>
+          </tr>
+        </table>
+        </div>
+        <div className="table-form">
+    <table className="table-full table-full-course">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Icon</th>
+            <th>Position</th>
+            <th>Action</th>
+          </tr>
+          <tr>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="100% Live Classes"
+                    type="text"/>
+            
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="1:1 mentor support & immediate doubt solving"
+                    type="text"/>
+            
+            </td>
+            <td>
+            <div className="image-name">Class.svg<i className="mdi mdi-close"></i> </div> 
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control sml"
+                    placeholder=" 1"
+                    type="text"/>
+            </td>
+            <td>
+            <div className="actions">
+              <Input type="switch" role="switch" />
+<a href=""><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+<path d="M14.25 3H11.625L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3ZM4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25Z" fill="#F46A6A"/>
+</svg></a></div>
+            </td>
+          </tr>
+        </table>
+        </div>
+        <div className="table-form">
+    <table className="table-full table-full-course">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Icon</th>
+            <th>Position</th>
+            <th>Action</th>
+          </tr>
+          <tr>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="100% Live Classes"
+                    type="text"/>
+            
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="1:1 mentor support & immediate doubt solving"
+                    type="text"/>
+            
+            </td>
+            <td>
+           <div className="image-name">Class.svg<i className="mdi mdi-close"></i> </div> 
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control sml"
+                    placeholder=" 1"
+                    type="text"/>
+            </td>
+            <td>
+            <div className="actions">
+              <Input type="switch" role="switch" />
+<a href=""><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+<path d="M14.25 3H11.625L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3ZM4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25Z" fill="#F46A6A"/>
+</svg></a></div>
+            </td>
+          </tr>
+        </table>
+        </div>
+        <div className="table-form">
+    <table className="table-full table-full-course">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Icon</th>
+            <th>Position</th>
+            <th>Action</th>
+          </tr>
+          <tr>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="100% Live Classes"
+                    type="text"/>
+            
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control form-control-color"
+                    placeholder="1:1 mentor support & immediate doubt solving"
+                    type="text"/>
+            
+            </td>
+            <td>
+            <div className="image-name">Class.svg<i className="mdi mdi-close"></i> </div> 
+            </td>
+            <td>
+            <Input
+                    name="text"
+                    className="form-control sml"
+                    placeholder=" 1"
+                    type="text"/>
+            </td>
+            <td>
+            <div className="actions">
+              <Input type="switch" role="switch" />
+<a href=""><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+<path d="M14.25 3H11.625L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3ZM4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25Z" fill="#F46A6A"/>
+</svg></a></div>
+            </td>
+          </tr>
+        </table>
+        </div>
+        <div className="create-new-appointment">
+        <h2>Create New Overview <a className="link">  <img height="20px" width="20px" src={plus} /></a></h2>
+        </div>
     </AccordionBody>
   </AccordionItem>
   <AccordionItem>
@@ -856,6 +1053,7 @@ const Varient = props => {
     </AccordionHeader>
     <AccordionBody accordionId="3" className="card-infor-space">
       <div className="custom-input-file">
+      <span>Upload <img height="20px" width="20px" src={plus} /></span>
     <Input
 
           type="file"
@@ -865,8 +1063,8 @@ const Varient = props => {
          
           custom
         />
-        <span>Upload <img height="20px" width="20px" src={plus} />
-</span>
+     
+
     </div>
   
 
