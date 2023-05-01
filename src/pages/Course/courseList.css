@@ -75,3 +75,17 @@
   font-size: 18px;
   font-weight: 400;
 }
+
+/* .courseList .live-courses a {
+  background-color: #e5e9ff !important;
+} */
+
+.courseList .nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #495057 !important;
+  background-color: #e5e9ff !important;
+}
+
+.courseList .nav-pills .nav-link {
+  color: #495057 !important;
+}
