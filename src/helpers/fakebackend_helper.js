@@ -119,13 +119,15 @@ const getCoursesList = async data => {
 // }
 //  &keyword=${filter?.search || ""}
 
-const getLearnerList = data =>
-  getData(
+const getLearnerList = async data => {
+  const res = await getData(
     url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.page || 5102}&search=${
+      `?page=${data?.page || 1}&perPage=${data?.page || 39501}&search=${
         data?.search
       }`
   )
+  return res
+}
 
 const getLearnerDetailsList = async uid =>
   getData(url.GET_LEARNER_DETAIL + `/${uid}/detail`)
@@ -203,7 +205,7 @@ const getStatusFilter = data =>
 const getApplicationListing = data =>
   getData(
     url.GET_APPLICATION_LISTING +
-      `?page=${data?.page || 1}&perPage=${data?.page || 51}&search=${
+      `?page=${data?.page || 1}&perPage=${data?.page || 141}&search=${
         data?.search
       }`
   )
