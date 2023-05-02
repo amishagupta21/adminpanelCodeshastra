@@ -86,7 +86,7 @@ class LearnerPage extends Component {
           // formatter: (cellContent, user) => <>{row?._id}</>,
         },
         {
-          dataField: "userProfileData.personal_details.full_name",
+          dataField: "fullName",
           text: "Name",
           sort: true,
         },
