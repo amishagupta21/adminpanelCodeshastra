@@ -44,6 +44,7 @@ import Varient from "../Course/Varient"
 import Faq from "../Course/Faq"
 import WorkDetails from "../Learner/LearnerDetails/WorkDetails"
 import DocumentKyc from "../Learner/LearnerDetails/DocumentKyc"
+import Curriculum from "../Course/Curriculum"
 
 // import {
 //   getLearner,
@@ -114,17 +115,20 @@ function EditCourseList(props) {
       eventKey: "billing",
       title: "Curriculum",
       // component: <Billing />,
+      component:(
+        <Curriculum />
+      ),
     },
-    {
-      eventKey: "notification",
-      title: "Variant",
-      // component: <Notifications />,
-    },
-    {
-      eventKey: "notification",
-      title: "FAQs",
-      // component: <Notifications />,
-    },
+    // {
+    //   eventKey: "notification",
+    //   title: "Variant",
+    //   // component: <Notifications />,
+    // },
+    // {
+    //   eventKey: "notification",
+    //   title: "FAQs",
+    //   // component: <Notifications />,
+    // },
   ]
   const options = [
     { label: "Full Stack Web Developer(Full Time)", value: "invited" },

@@ -66,7 +66,7 @@ const LiveCourses = ({ item, usersCount, handleSearch, activeTab }) => {
             <div className="me-2">
               <i className="mdi mdi-eye font-size-16 text-primary" />
             </div>
-            <div className="me-2" onClick={() => handleUserClick(user)}>
+            <div className="me-2" >
               <Link to="/courses/edit" className="text-muted">
                 <i className="mdi mdi-pencil font-size-16 text-success" />
               </Link>
