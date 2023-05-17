@@ -14,6 +14,9 @@ import ApplicationListing from "./ApplicationListing/reducer"
 import WorkDetail from "./WorkDetail/reducer"
 import DocumentKyc from "./DocumentKyc/reducer"
 import Courses from "./Courses/reducer"
+import EditCourse from "./CourseInformation/reducer"
+import GetCourse from "./CourseInformation/reducer"
+import EditCard from "./CourseInformation/reducer"
 
 //E-commerce
 import ecommerce from "./e-commerce/reducer"
@@ -72,6 +75,9 @@ const rootReducer = combineReducers({
   WorkDetail,
   DocumentKyc,
   Courses,
+  GetCourse,
+  EditCourse,
+  EditCard,
 })
 
 export default rootReducer

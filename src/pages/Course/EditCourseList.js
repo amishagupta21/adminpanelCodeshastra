@@ -37,8 +37,8 @@ import CourseList from "./CourseList"
 
 import EducationDetails from "../Learner/LearnerDetails/LearnerDetails"
 import CourseInformation from "../Course/CourseInformation"
-import CardInformation from "../Course/CardInformation"
-import Coursedetail from "../Course/Coursedetail"
+import CardInformation from "./CardConfiguration"
+import CourseDetail from "./CourseDetail"
 import Batch from "../Course/Batch"
 import Varient from "../Course/Varient"
 import Faq from "../Course/Faq"
@@ -53,8 +53,12 @@ import Curriculum from "../Course/Curriculum"
 //   registerUser,
 // } from "store/actions"
 import { getCourses } from "store/Courses/actions"
+import { useParams } from "react-router-dom"
+import CardConfiguration from "./CardConfiguration"
 
 function EditCourseList(props) {
+  const params = useParams()
+
   document.title = "Users List"
   const [isExpanded, setIsExpanded] = useState(null)
 
@@ -74,12 +78,12 @@ function EditCourseList(props) {
     {
       eventKey: "education-detail",
       title: "Card Configuration",
-      component: <CardInformation user={user} userProfile={userProfile} />,
+      component: <CardConfiguration />,
     },
     {
       eventKey: "work-detail",
       title: "Course Detail Page",
-      component: <WorkDetails userProfile={userProfile} />,
+      component: <CourseDetail />,
     },
     // {
     //   eventKey: "courses-enrolled",
@@ -90,34 +94,23 @@ function EditCourseList(props) {
     {
       eventKey: "document",
       title: "Batches",
-      component: (
-        <Batch/>       
-        
-      ),
+      component: <Batch />,
     },
     {
       eventKey: "Varient",
       title: "Varient",
-      component: (
-        <Varient/>       
-        
-      ),
+      component: <Varient />,
     },
     {
       eventKey: "Faq",
       title: "Faqs",
-      component: (
-        <Faq/>       
-        
-      ),
+      component: <Faq />,
     },
     {
       eventKey: "billing",
       title: "Curriculum",
       // component: <Billing />,
-      component:(
-        <Curriculum />
-      ),
+      component: <Curriculum />,
     },
     // {
     //   eventKey: "notification",

@@ -12,6 +12,7 @@ import {
   putDetail,
   deleteDocumentKyc,
   getCourseData,
+  patch,
 } from "./api_helper"
 import * as url from "./url_helper"
 
@@ -113,6 +114,49 @@ const getCoursesList = async data => {
   )
   return resp
 }
+
+const getCourse = async id => {
+  const resp = await getCourseData(url.GET_COURSES + `/${id}`)
+  return resp
+}
+
+const editCourse = async data => {
+  const deleteId = { ...data }
+  delete deleteId.id
+  const resp = await patch(
+    url.EDIT_COURSE_INFORMATION + `/${data?.id}`,
+    deleteId
+  )
+  return resp
+}
+
+const editCard = async data => {
+  const deleteId = { ...data }
+  delete deleteId.id
+  const resp = await patch(
+    url.EDIT_CARD_CONFIGURATION + `/card-configuration/${data?.id}`,
+    deleteId
+  )
+  return resp
+}
+
+// const getCourseFilters = data => {
+//   if (data?.keyword) {
+//     return `&keyword=${data?.keyword || ""}`
+//   }
+// }
+
+// const getFilter = async data => {
+//   const resp = await getCourseData(
+//     url.GET_COURSELIST +
+//       `?sortOrder=${data?.sortOrder || "asc"}&sortBy=${
+//         data?.sortBy || "created_at"
+//       }&pageSize=${data?.pageSize || 5}&page=${
+//         data?.page || 1
+//       }&keyword=${getCourseFilters(data)}`
+//   )
+//   return resp
+// }
 
 // &status=${
 //   filter?.status || null
@@ -226,7 +270,6 @@ const editEducationDetail = async data => {
   )
   return resp
 }
-
 const getEditWorkDetail = async data => {
   const resp = await putDetail(url.EDIT_WORK_DETAIL + `/work-detail`, data)
   return resp
@@ -458,4 +501,8 @@ export {
   getUploadDocumentPicture,
   uploadDocumentPictureUrl,
   getCoursesList,
+  getCourse,
+  editCourse,
+  editCard,
+  // getFilter,
 }

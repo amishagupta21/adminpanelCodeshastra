@@ -4,6 +4,7 @@ import Select from "react-select"
 import { connect } from "react-redux"
 import { apiFetch } from "store/actions"
 import PropTypes from "prop-types"
+import CourseList from "pages/Course/CourseList"
 
 class Dashboard extends Component {
   constructor(props) {

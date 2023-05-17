@@ -24,6 +24,9 @@ import EducationDetails from "./EducationDetail/saga"
 import WorkDetail from "./WorkDetail/saga"
 import DocumentKyc from "./DocumentKyc/saga"
 import Courses from "./Courses/saga"
+import GetCourse from "./CourseInformation/saga"
+import EditCourse from "./CourseInformation/saga"
+import EditCard from "./CourseInformation/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -51,5 +54,8 @@ export default function* rootSaga() {
     fork(EducationDetails),
     fork(DocumentKyc),
     fork(Courses),
+    fork(GetCourse),
+    fork(EditCourse),
+    fork(EditCard),
   ])
 }

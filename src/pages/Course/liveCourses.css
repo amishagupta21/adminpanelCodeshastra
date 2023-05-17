@@ -1,0 +1,9 @@
+.courses-data {
+  height: 50vh;
+  padding: 30px;
+}
+
+.courses-data span {
+  color: #556ee6;
+  font-size: 19px;
+}

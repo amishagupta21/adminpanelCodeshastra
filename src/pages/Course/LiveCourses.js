@@ -1,16 +1,53 @@
 import React, { useState } from "react"
 
-import { Row, Col, Card, CardBody, Button } from "reactstrap"
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  Button,
+  Modal,
+  ModalHeader,
+} from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
-import Select from "react-select"
+import Select, { components } from "react-select"
 import { DeBounceSearch } from "common/DeBounceSearch"
 import { Link } from "react-router-dom"
+import "./liveCourses.css"
+import ViewCoursesModal from "./ViewCoursesModal"
+import CourseTable from "./CourseTable"
 import paginationFactory from "react-bootstrap-table2-paginator"
 
-const LiveCourses = ({ item, usersCount, handleSearch, activeTab }) => {
+const Option = props => {
+  return (
+    <div>
+      <components.Option {...props}>
+        <input
+          type="checkbox"
+          checked={props.isSelected}
+          onChange={() => null}
+        />{" "}
+        <label>{props.label}</label>
+      </components.Option>
+    </div>
+  )
+}
+
+const LiveCourses = ({
+  item,
+  usersCount,
+  handleSearch,
+  activeTab,
+  manageUser,
+}) => {
   const [isExpanded, setIsExpanded] = useState(null)
-  const [selectedDropdown, setSelectedDropdown] = useState([])
+  const [selectedDropdown, setSelectedDropdown] = useState("")
+  const [dropdown, setDropdown] = useState([])
+  const [modal, setModal] = React.useState(false)
+  const [viewData, setViewData] = useState("")
+
+  const toggle = () => setModal(!modal)
 
   // const [selectedValue, setSelectedValue] = useState([])
 
@@ -64,10 +101,13 @@ const LiveCourses = ({ item, usersCount, handleSearch, activeTab }) => {
             </DropdownToggle> */}
             {/* <DropdownMenu className="dropdown-menu-end"> */}
             <div className="me-2">
-              <i className="mdi mdi-eye font-size-16 text-primary" />
+              <i
+                onClick={e => toggle(e, setViewData(user))}
+                className="mdi mdi-eye font-size-16 text-primary"
+              />
             </div>
-            <div className="me-2" >
-              <Link to="/courses/edit" className="text-muted">
+            <div className="me-2">
+              <Link to={`/courses/edit/${user.id}`} className="text-muted">
                 <i className="mdi mdi-pencil font-size-16 text-success" />
               </Link>
             </div>
@@ -79,16 +119,25 @@ const LiveCourses = ({ item, usersCount, handleSearch, activeTab }) => {
     ],
   }
 
-  const selectRow = {
-    mode: "checkbox",
-  }
-
   const options = [
     { label: "Full Stack Web Developer(Full Time)", value: "fullStack" },
-    // { label: "Full Stack Web Developer(Full Time)", value: "onboarded" },
     { label: "Python Full Stack Web Developer", value: "pythonDeveloper" },
     { label: "Data Science Program", value: "dataScience" },
   ]
+
+  const courseName = selectedOption => {
+    // if (selectedDropdown.length === 0)
+    setDropdown(oldItems => {
+      return [...oldItems, selectedOption]
+    })
+  }
+
+  const courseNameDelete = removeItem => {
+    const deleteValue = dropdown.filter(
+      item => item?.value !== removeItem?.value && item
+    )
+    setDropdown(deleteValue)
+  }
 
   const defaultSorted = [
     {
@@ -97,16 +146,39 @@ const LiveCourses = ({ item, usersCount, handleSearch, activeTab }) => {
     },
   ]
 
-  const courseName = selectedOption => {
-    console.log(selectedOption, "//////selectedOption")
-    if (selectedDropdown.length === 0)
-      setSelectedDropdown({
-        selectedDropdown: [...selectedDropdown, selectedOption.value],
-      })
+  const handleOnSelect = (row, isSelect) => {
+    if (isSelect && row.id < 3) {
+      alert("Oops, You can not select Product ID which less than 3")
+      return false // return false to deny current select action
+    }
+    return true // return true or dont return to approve current select action
   }
+
+  const handleOnSelectAll = (isSelect, rows) => {
+    if (isSelect) {
+      return rows.filter(r => r.id >= 3).map(r => r.id)
+    }
+  }
+
+  const selectRow = {
+    mode: "checkbox",
+    clickToSelect: true,
+    onSelect: handleOnSelect,
+    onSelectAll: handleOnSelectAll,
+  }
+
+  // const applyFilter = () => {
+  //   if (selectedCourseType.length) {
+  //     params.courseType = selectedCourseType[0]
+  //   }
+  //   this.setState({ isFilterApplied: true })
+  //   this.props.onGetStatusFilter(params)
+  // }
 
   return (
     <>
+      <ViewCoursesModal modal={modal} toggle={toggle} viewData={viewData} />
+
       <Row className="align-items-center">
         <Col sm="6">
           <div className="app-search p-2">
@@ -161,19 +233,33 @@ const LiveCourses = ({ item, usersCount, handleSearch, activeTab }) => {
                             name="filter"
                             placeholder="Course Name"
                             //value={value}
+                            components={{
+                              Option,
+                            }}
                             options={options}
                             onChange={courseName}
                           />
                         </Col>
 
                         <Col className="text-end" sm="2">
-                          <Button
-                            type="button"
-                            className="btn mb-2 me-2"
-                            // onClick={this.applyFilter}
-                          >
-                            <i className="mdi mdi-filter me-1" /> Apply Filter
-                          </Button>
+                          {dropdown.length > 0 ? (
+                            <Button
+                              type="button"
+                              className="btn mb-2 me-2"
+                              // onClick={applyFilter}
+                            >
+                              <i className="mdi mdi-filter me-1" /> Apply Filter
+                            </Button>
+                          ) : (
+                            <Button
+                              type="button"
+                              className="btn mb-2 me-2"
+                              disabled
+                              // onClick={applyFilter}
+                            >
+                              <i className="mdi mdi-filter me-1" /> Apply Filter
+                            </Button>
+                          )}
 
                           <Button
                             type="button"
@@ -183,39 +269,34 @@ const LiveCourses = ({ item, usersCount, handleSearch, activeTab }) => {
                             Export
                           </Button>
                         </Col>
-                        {/* {selectedDropdown.map(item => {
-                          return (
-                            <>
-                              <div className="filter-chips me-3">{item}</div>
-                            </>
-                          )
-                        })} */}
-                        {/* <h1>{selectedDropdown}</h1> */}
-                      </Row>
-                      <Col xl="12">
-                        <div className="table-responsive">
-                          <h6 className="mt-2">
-                            Total {activeTab === "Live" ? "Live" : "Library"}{" "}
-                            Courses:{" "}
-                            {activeTab === "Live"
-                              ? usersCount?.live_course_count
-                              : usersCount?.library_course_count}{" "}
+                        {dropdown.length > 0 && (
+                          <h6 className="filter-text d-flex align-items-baseline mt-3 mb-0">
+                            Test Result:
+                            <div className="filter-status mb-3 d-flex">
+                              {dropdown.map(item => {
+                                return (
+                                  <>
+                                    <div className="filter-chips me-3">
+                                      {item.label}
+                                      <span
+                                        className="badge"
+                                        onClick={() => courseNameDelete(item)}
+                                      >
+                                        X
+                                      </span>
+                                    </div>
+                                  </>
+                                )
+                              })}
+                            </div>
                           </h6>
-                          <BootstrapTable
-                            keyField={"_id"}
-                            responsive
-                            bordered={false}
-                            striped={false}
-                            defaultSorted={defaultSorted}
-                            selectRow={selectRow}
-                            classes={"table align-middle table-nowrap"}
-                            headerWrapperClasses={"thead-light"}
-                            {...toolkitProps.baseProps}
-                            pagination={paginationFactory()}
-                            noDataIndication={"No data found"}
-                          />
-                        </div>
-                      </Col>
+                        )}
+                      </Row>
+                      <CourseTable
+                        activeTab={activeTab}
+                        toolkitProps={toolkitProps}
+                        usersCount={usersCount}
+                      />
                     </>
                   )}
                 </ToolkitProvider>
