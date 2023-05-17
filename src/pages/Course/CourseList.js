@@ -44,7 +44,6 @@ import paginationFactory from "react-bootstrap-table2-paginator"
 import "./courseList.css"
 import { Tab, Tabs } from "react-bootstrap"
 import LiveCourses from "./LiveCourses"
-import LibraryCourses from "./LibraryCourses"
 import Nav from "react-bootstrap/Nav"
 
 function CourseList(props) {
@@ -145,21 +144,13 @@ function CourseList(props) {
             </Row>
             <Col className="mt-5" sm={12}>
               <Tab.Content>
-                {/* <Tab.Pane eventKey="first"> */}
                 <LiveCourses
                   activeTab={activeTab}
                   item={item}
+                  manageUser={manageUser}
                   handleSearch={handleSearch}
                   usersCount={usersCount}
                 />
-                {/* </Tab.Pane> */}
-                {/* <Tab.Pane eventKey="second">
-                  <LiveCourses
-                    item={item}
-                    handleSearch={handleSearch}
-                    usersCount={usersCount}
-                  />
-                </Tab.Pane> */}
               </Tab.Content>
             </Col>
           </Tab.Container>

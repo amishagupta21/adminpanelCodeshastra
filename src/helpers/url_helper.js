@@ -128,6 +128,11 @@ export const GET_COURSEDETAILS = "/courses"
 export const CREATE_COURSE = "/courses"
 export const UPDATE_COURSE = "/courses"
 
+// Edit Course
+export const GET_COURSES = "/admin/course"
+export const EDIT_COURSE_INFORMATION = "/admin/course"
+export const EDIT_CARD_CONFIGURATION = "/admin/course"
+
 // Users
 export const GET_USERS = "/users"
 export const GET_USER_PROFILE = "/user"

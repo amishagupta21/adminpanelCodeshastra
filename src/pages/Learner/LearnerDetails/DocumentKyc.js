@@ -47,6 +47,7 @@ const DocumentKyc = props => {
   const hiddenFileInput = React.useRef([])
   const [modal, setModal] = React.useState(false)
   const [imageName, setImageName] = useState("")
+  console.log(imageName, "//////imageName")
 
   // const hiddenFileInput = React.useRef(null)
   const [document, setDocument] = useState({
