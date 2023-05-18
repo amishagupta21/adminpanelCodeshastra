@@ -21,6 +21,7 @@ import LearnerDetails from "pages/Learner/LearnerDetails/LearnerDetails"
 import EditCourseList from "pages/Course/EditCourseList"
 import ApplicationDetails from "pages/ApplicationListing/ApplicationDetails/ApplicationDetails"
 import Payment from "pages/Payment/Payment"
+import FaqConfiguration from "pages/FaqConfiguration/FaqConfiguration"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -33,6 +34,7 @@ const authProtectedRoutes = [
   { path: "/courses/edit/:id", component: EditCourseList },
   { path: "/application-details", component: ApplicationDetails },
   { path: "/payment", component: Payment },
+  { path: "/faq-configuration", component: FaqConfiguration },
 
   // //profile
   { path: "/profile", component: UserProfile },

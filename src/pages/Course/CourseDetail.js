@@ -42,7 +42,7 @@ import {
 import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
 import "./courseDetail.css"
-import Switch from "react-switch"
+import Switch from "@mui/material/Switch"
 
 const CourseDetail = props => {
   const {
@@ -51,7 +51,25 @@ const CourseDetail = props => {
     editCourseInformation,
   } = props
 
+  const [inputFields, setInputFields] = useState(getCourseInformation)
+
+  console.log(getCourseInformation, "///////getCourseInformation")
+
   const data = getCourseInformation?.course_detail_page
+
+  // const addOverview = () => {
+  //   const arr = [...inputFields?.course_detail_page?.overview?.value]
+  //   let result = { ...inputFields }
+  //   const initalObj = {
+  //     title: "",
+  //     position: "",
+  //     enable: false,
+  //   }
+  //   arr.push(initalObj)
+  //   result.course_detail_page.overview.value = arr
+
+  //   setInputFields(result)
+  // }
 
   return (
     <>
@@ -129,22 +147,12 @@ const CourseDetail = props => {
                             />
                           </td>
                           <td>
-                            <div className="actions d-flex justify-content-end align-items-end">
+                            <div className="actions d-flex justify-content-end align-items-center">
                               <Switch
+                                name="enable"
+                                size="small"
                                 checked={overview?.enable}
-                                onColor="#556EE6"
-                                onHandleColor="#fff"
-                                handleDiameter={11}
-                                uncheckedIcon={false}
-                                checkedIcon={false}
-                                // border="5px solid red"
-                                // boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                                // activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                                border="1px "
-                                height={15}
-                                width={29}
-                                className="react-switch"
-                                id="material-switch"
+                                onClick={e => handleChange(e, index)}
                               />
                               <a href="">
                                 <svg
@@ -168,14 +176,17 @@ const CourseDetail = props => {
                   )
                 })}
 
-                <div className="create-new-appointment">
-                  <h2>
-                    Create New Overview{" "}
-                    <a className="link">
-                      {" "}
-                      <img height="20px" width="20px" src={plus} />
-                    </a>
-                  </h2>
+                <div>
+                  <button
+                    className="px-4 ms-3 create-new-appointment"
+                    // color="primary"
+                    // outline
+                    // onClick={addOverview}
+                    // type="submit"
+                  >
+                    Create New Highlight{" "}
+                    <img height="20px" width="20px" src={plus} />
+                  </button>
                 </div>
               </AccordionBody>
             </AccordionItem>
@@ -222,13 +233,20 @@ const CourseDetail = props => {
                             />
                           </td>
                           <td>
-                            <Input
+                            <div
+                              className="form-control"
+                              contentEditable="true"
+                              dangerouslySetInnerHTML={{
+                                __html: overview?.description,
+                              }}
+                            />
+                            {/* <Input
                               name="textarea"
-                              className="form-control text-area"
+                              className="form-control form-control-color text-area"
                               placeholder="Description"
                               type="textarea"
                               value={overview?.description}
-                            />
+                            /> */}
                           </td>
                           <td>
                             <div className="image-name d-flex align-items-center">
@@ -248,26 +266,12 @@ const CourseDetail = props => {
                           <td>
                             <div className="actions d-flex align-items-center">
                               <Switch
+                                name="enable"
+                                size="small"
                                 checked={overview?.enable}
-                                onColor="#556EE6"
-                                onHandleColor="#fff"
-                                handleDiameter={11}
-                                uncheckedIcon={false}
-                                checkedIcon={false}
-                                // border="5px solid red"
-                                // boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                                // activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                                border="1px "
-                                height={15}
-                                width={29}
-                                className="react-switch"
-                                id="material-switch"
+                                onClick={e => handleChange(e, index)}
                               />
-                              {/* <Input
-                              type="switch"
-                              checked={overview?.enable}
-                              role="switch"
-                            /> */}
+
                               <a href="">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -339,12 +343,12 @@ const CourseDetail = props => {
                           />
                         </td>
                         <td>
-                          <Input
-                            name="textarea"
-                            className="form-control form-control-color text-area"
-                            placeholder="Description"
-                            type="textarea"
-                            value={overview?.description}
+                          <div
+                            className="form-control"
+                            contentEditable="true"
+                            dangerouslySetInnerHTML={{
+                              __html: overview?.description,
+                            }}
                           />
                         </td>
                         <td>
@@ -383,7 +387,12 @@ const CourseDetail = props => {
                         </td>
                         <td>
                           <div className="actions">
-                            <Input type="switch" role="switch" />
+                            <Switch
+                              name="enable"
+                              size="small"
+                              checked={overview?.enable}
+                              onClick={e => handleChange(e, index)}
+                            />
                             <a href="">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -453,12 +462,12 @@ const CourseDetail = props => {
                           />
                         </td>
                         <td>
-                          <Input
-                            name="textarea"
-                            className="form-control form-control-color text-area"
-                            placeholder="Description"
-                            type="textarea"
-                            value={overview?.description}
+                          <div
+                            className="form-control"
+                            contentEditable="true"
+                            dangerouslySetInnerHTML={{
+                              __html: overview?.description,
+                            }}
                           />
                         </td>
 
@@ -473,10 +482,11 @@ const CourseDetail = props => {
                         </td>
                         <td>
                           <div className="actions">
-                            <Input
-                              type="switch"
-                              role="switch"
-                              value={overview?.enable}
+                            <Switch
+                              name="enable"
+                              size="small"
+                              checked={overview?.enable}
+                              onClick={e => handleChange(e, index)}
                             />
                             <a href="">
                               <svg

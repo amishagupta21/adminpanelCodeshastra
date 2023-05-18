@@ -8,9 +8,13 @@
 }
 
 .learnerListing .table-responsive {
-  overflow-x: hidden !important;
+  overflow-x: auto !important;
 }
-
+.learnerListing .table > thead {
+ background: #f8f9fa;
+ border-top: 1px solid #ede8e8;
+ border-bottom: 1px solid #ede8e8;
+}
 .learnerListing .react-bootstrap-table-pagination-list {
   display: flex !important;
 }
@@ -74,4 +78,46 @@
   bottom: 10%;
   font-size: 18px;
   font-weight: 400;
+}
+
+
+
+.top-search-box
+{
+    display: flex;
+    /* flex-wrap:wrap; */
+    justify-content: space-between;
+}
+.sel-width
+{
+    width: 150px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+@media (max-width: 767px)
+{
+  .top-search-box
+  {
+      display: flex;
+      flex-direction: column;
+  }
+  .sel-width
+  {
+      width: 100%;
+  }
+}
+
+@media (max-width: 991px)
+{
+  .top-search-box
+  {
+      display: flex;
+      flex-direction: column;
+  }
+  .sel-width
+  {
+      width: 100%;
+  }
 }
