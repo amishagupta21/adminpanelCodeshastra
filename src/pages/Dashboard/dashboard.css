@@ -1,0 +1,77 @@
+.top-dash-heading
+{
+    font-size: 16px;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.dashboard-box
+{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.circle
+{
+    background: #556ee6;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #fff;
+    overflow: hidden;
+}
+.circle::after
+{
+    content: '';
+    width: 10px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.101961);
+    transform: rotate(32deg);
+    position: absolute;
+    z-index:1;
+}
+.dashboard-box-heading
+{
+    font-size: 13px;
+    font-weight: 500;
+    color: #74788D;
+    padding-bottom: 5px;
+}
+.score
+{
+    font-size: 20px;
+    font-weight: 500;
+}
+.card-shadow
+{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1) !important;
+}
+.text-green
+{
+    color:#34C38F;
+    background: rgba(52, 195, 143, 0.18);
+    border-radius: 3px;
+    padding: 4px;
+    margin-right: 8px;
+}
+.img-height
+{
+    width: 100%;
+    height: 200px;
+}
+.chart-heading
+{
+    font-size: 15px;
+    font-weight: 600;
+}
+.chart-subheading
+{
+    font-size: 13px;
+    color: #74788D;
+}
