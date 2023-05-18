@@ -412,79 +412,82 @@ class LearnerPage extends Component {
                       {toolkitProps => (
                         <React.Fragment>
                           <Row>
-                            <Col sm="2">
-                              <div className="app-search p-0">
-                                <div className="position-relative">
-                                  <DeBounceSearch
-                                    handleSearch={this.handleSearch}
-                                  />
+                            <Col md={12}>
+                                <div className="top-search-box">
+                                  <Col md={12} lg={2}>
+                                    <div className="app-search p-0 pb-2">
+                                      <div className="position-relative">
+                                        <DeBounceSearch
+                                          handleSearch={this.handleSearch}
+                                        />
+                                        <span className="bx bx-search-alt" />
+                                      </div>
+                                    </div>
+                                  </Col>
+                                  <Col md={12} lg={10} className="d-lg-flex justify-content-lg-end">
+                                    <div>
+                                      <Select
+                                        name="filter"
+                                        placeholder="Status"
+                                        value={value}
+                                        onChange={this.handleFilterStatus}
+                                        options={this.options} className="sel-width"
+                                      />
+                                    </div>
+                                    <div>
+                                      <Select className="sel-width"
+                                        name="filter"
+                                        isMulti
+                                        placeholder="Learner Type"
+                                        onChange={this.handleTestStatus}
+                                        options={this.testResult}
+                                        components={{
+                                          Option,
+                                        }}
+                                      />
+                                    </div>
+                                    <div>
+                                      <Select className="sel-width"
+                                        name="filter"
+                                        placeholder="Course Type"
+                                        onChange={this.handleCourseType}
+                                        options={this.courseType}
+                                      />
+                                    </div>
+                                    <div>
+                                      {this?.state.selectedStatus?.length > 0 ||
+                                      this.state.multiSelectTestResult?.length > 0 ||
+                                      this.state.selectedCourseType?.length > 0 ? (
+                                      <Button
+                                        type="button"
+                                        className="btn mb-2 me-2"
+                                        onClick={this.applyFilter}
+                                      >
+                                        <i className="mdi mdi-filter me-1" /> Apply
+                                        Filter
+                                      </Button>
+                                      ) : (
+                                      <Button
+                                        type="button"
+                                        className="btn mb-2 me-2"
+                                        disabled
+                                        onClick={this.applyFilter}
+                                      >
+                                        <i className="mdi mdi-filter me-1" /> Apply
+                                        Filter
+                                      </Button>
+                                    )}
 
-                                  <span className="bx bx-search-alt" />
+                                      <Button
+                                        type="button"
+                                        color="secondary"
+                                        className="btn mb-2 me-2"
+                                      >
+                                        Export
+                                      </Button>
+                                    </div>
+                                  </Col>
                                 </div>
-                              </div>
-                            </Col>
-                            <Col sm="2"></Col>
-                            <Col sm="2">
-                              <Select
-                                name="filter"
-                                placeholder="Status"
-                                value={value}
-                                onChange={this.handleFilterStatus}
-                                options={this.options}
-                              />
-                            </Col>
-                            <Col sm="2">
-                              <Select
-                                name="filter"
-                                isMulti
-                                placeholder="Learner Type"
-                                onChange={this.handleTestStatus}
-                                options={this.testResult}
-                                components={{
-                                  Option,
-                                }}
-                              />
-                            </Col>
-                            <Col sm="2">
-                              <Select
-                                name="filter"
-                                placeholder="Course Type"
-                                onChange={this.handleCourseType}
-                                options={this.courseType}
-                              />
-                            </Col>
-
-                            <Col className="text-end" sm="2">
-                              {this?.state.selectedStatus?.length > 0 ||
-                              this.state.multiSelectTestResult?.length > 0 ||
-                              this.state.selectedCourseType?.length > 0 ? (
-                                <Button
-                                  type="button"
-                                  className="btn mb-2 me-2"
-                                  onClick={this.applyFilter}
-                                >
-                                  <i className="mdi mdi-filter me-1" /> Apply
-                                  Filter
-                                </Button>
-                              ) : (
-                                <Button
-                                  type="button"
-                                  className="btn mb-2 me-2"
-                                  disabled
-                                  onClick={this.applyFilter}
-                                >
-                                  <i className="mdi mdi-filter me-1" /> Apply
-                                  Filter
-                                </Button>
-                              )}
-
-                              <Button
-                                type="button"
-                                color="secondary"
-                                className="btn mb-2 me-2"
-                              >
-                                Export
-                              </Button>
                             </Col>
                           </Row>
 

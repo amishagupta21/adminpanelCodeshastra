@@ -1,0 +1,67 @@
+
+/* dashboard Css start */
+
+.top-heading
+{
+    display: flex;
+    justify-content: space-between;
+}
+.top-date-box
+{
+    display: flex;
+    align-items: baseline;
+}
+.select-width
+{
+    width: 25%;
+}
+
+/* dashboard Css end */
+
+
+.top-box
+{
+    display: flex;
+    justify-content: space-between;
+}
+.search-box .app-search .form-control
+{
+    background-color: #fff;
+    border: 1px solid #e3dddd;
+    border-radius: 0px;
+}
+
+.faq-table table thead
+{
+    background: #eef0f3;
+}
+.action
+{
+    display: flex;
+}
+@media (max-width: 767px)
+{
+/* dashboard Css start */
+.top-heading
+{
+    display: flex;
+    flex-direction: column;
+}
+.top-date-box
+{
+    flex-direction: column;
+}
+.select-width
+{
+    width: 100%;
+}
+/* dashboard Css end */
+
+    .top-box
+    {
+        display: flex;
+        justify-content:start;
+        flex-direction: column;
+    }
+
+}

@@ -242,7 +242,6 @@ const faq = props => {
               </th>
               <th>FAQs</th>
               <th>Catagories</th>
-
               <th>Status</th>
             </tr>
           </thead>

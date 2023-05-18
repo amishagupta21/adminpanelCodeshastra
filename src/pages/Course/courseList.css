@@ -89,19 +89,76 @@
 .courseList .nav-pills .nav-link {
   color: #495057 !important;
 }
-.mt-8
+.mt-10
 {
-  margin-top: 8px;
+  margin-top: 10px;
 }
-.ul-style
+
+
+.comment-box
 {
-  margin: 20px 0px;
+  display: flex;
+  justify-content: space-between;
   padding: 0px;
+  margin-top: 20px;
+  /* align-items: center; */
 }
-.ul-style li
+.comment-box li
 {
   list-style: none;
-  margin-top: 20px;
-  border-top:1px solid #dbdcdd;
-  padding-top: 20px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.my-accordion
+{
+  margin-left: 20px;
+}
+.my-accordion .accordion-button
+{
+  background: #fff!important;
+  color: #34C38F !important;
+}
+.comment-box-border
+{
+  border: 1px solid #CED4DA;
+}
+/* .accordion-button.collapsed::before
+{  
+  content: '';
+  width: 16px;
+  height: 25px;
+  background: url('../../assets/images/line-1.png');
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  
+}
+.accordion-button .collapsed::before
+{
+  content: '';
+  display: block;
+  background: transparent;
+  width: 16px;
+  height: 25px;
+}
+
+.collapsed::before
+{
+  content: '1234';
+  display: block;
+} */
+
+
+
+
+
+
+@media (max-width: 767px)
+{
+  .comment-box
+  {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
 }

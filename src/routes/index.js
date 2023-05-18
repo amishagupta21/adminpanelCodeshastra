@@ -20,6 +20,7 @@ import ApplicationListing from "pages/ApplicationListing/ApplicationListing"
 import LearnerDetails from "pages/Learner/LearnerDetails/LearnerDetails"
 import EditCourseList from "pages/Course/EditCourseList"
 import ApplicationDetails from "pages/ApplicationListing/ApplicationDetails/ApplicationDetails"
+import FaqConfiguration from "pages/FaqConfiguration/FaqConfiguration"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -31,6 +32,7 @@ const authProtectedRoutes = [
   { path: "/learner-details/:id", component: LearnerDetails },
   { path: "/courses/edit", component: EditCourseList },
   { path: "/application-details", component: ApplicationDetails },
+  { path: "/faq-configuration", component: FaqConfiguration },
 
   // //profile
   { path: "/profile", component: UserProfile },
