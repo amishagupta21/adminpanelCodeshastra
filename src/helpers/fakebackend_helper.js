@@ -101,6 +101,27 @@ const postJwtRegister = (url, data) => {
     })
 }
 
+//BATCHES API
+
+const getBatchesList = async data => {
+  const resp = await getCourseData(
+    url.GET_BATCHES_LIST +
+      `?pageSize=${data?.pageSize || 20}&page=${data?.page || 1}&sortOrder=${
+        data?.sortOrder || "asc"
+      }&sortBy=${data?.sortBy || "created_at"}&startDate=${
+        data?.startDate || ""
+      }&endDate=${data?.endDate || ""}&keyword=${data?.search || ""}`
+  )
+  return resp
+}
+
+//VARIANT API
+
+const getVariantList = async data => {
+  const resp = await getCourseData(url.GET_VARIANT_LIST + `/${data}`)
+  return resp
+}
+
 //COURSES API
 
 const getCoursesList = async data => {
@@ -135,6 +156,16 @@ const editCard = async data => {
   delete deleteId.id
   const resp = await patch(
     url.EDIT_CARD_CONFIGURATION + `/card-configuration/${data?.id}`,
+    deleteId
+  )
+  return resp
+}
+
+const editCourseDetail = async data => {
+  const deleteId = { ...data }
+  delete deleteId.id
+  const resp = await patch(
+    url.EDIT_COURSE_DETAIL + `/course-detail-page/${data?.id}`,
     deleteId
   )
   return resp
@@ -504,5 +535,8 @@ export {
   getCourse,
   editCourse,
   editCard,
+  editCourseDetail,
+  getBatchesList,
+  getVariantList,
   // getFilter,
 }

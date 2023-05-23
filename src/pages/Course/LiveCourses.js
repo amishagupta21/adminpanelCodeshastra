@@ -162,7 +162,7 @@ const LiveCourses = ({
 
   const selectRow = {
     mode: "checkbox",
-    clickToSelect: true,
+    clickToSelect: false,
     onSelect: handleOnSelect,
     onSelectAll: handleOnSelectAll,
   }

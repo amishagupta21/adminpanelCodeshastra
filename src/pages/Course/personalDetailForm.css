@@ -185,21 +185,20 @@ textarea.form-control.form-control-color.form-control.text-area {
 }
 
 .custom-batches {
-  width: 45px;
-  height: 45px;
-  background: rgba(85, 110, 230, 0.25098);
-  border-radius: 100px;
-  display: inline-block;
-  text-align: center;
-  line-height: 50px;
-  margin: 0 4px;
-  color: #556ee6;
+  display: flex;
+  align-items: center;
 }
-.custom-batches.green {
+.green {
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(52, 195, 143, 0.25098);
   color: #34c38f;
 }
-.custom-batches.yellow {
+.yellow {
   background: rgba(241, 180, 76, 0.25098);
   color: #f1b44c;
 }

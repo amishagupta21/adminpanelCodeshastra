@@ -1,568 +1,164 @@
-import React, { useEffect, useState } from "react"
+import { React, useEffect, useState } from "react"
+
 import {
   Row,
   Col,
   Card,
   CardBody,
   Button,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   Container,
-  CardGroup,
-  ListGroup,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Label,
-  Input,
-  Form,
   Modal,
-  ModalFooter,
   ModalHeader,
   ModalBody,
-  UncontrolledAccordion,
-  Accordion,
-  AccordionItem,
-  AccordionHeader,
-  AccordionBody,
-  InputGroup,
-  InputGroupText,
-  FormGroup,
-  Table,PaginationItem , PaginationLink , Pagination
+  Form,
+  Label,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  ListGroup,
 } from "reactstrap"
-
-import plus from "../../assets/images/add-plus.svg"
-import filter from "../../assets/images/fliter.svg"
-import search from "../../assets/images/search-opt.svg"
-
-import "./personalDetailForm.css"
+import BootstrapTable from "react-bootstrap-table-next"
+import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
+import dateFormate from "common/dateFormatter"
+import Select from "react-select"
+import { DeBounceSearch } from "common/DeBounceSearch"
+import { ErrorMessage, Field, Formik } from "formik"
+import * as Yup from "yup"
+import tosterMsg from "components/Common/toster"
 import PropTypes from "prop-types"
-// import Accordion from 'react-bootstrap/Accordion'
 import { connect } from "react-redux"
-import {
-  deleteProfilePicture,
-  uploadProfilePicture,
-  editLearnerDetail,
-} from "store/LearnerDetail/actions"
+import { Link } from "react-router-dom"
+// import {
+//   getLearner,
+//   deleteLearner,
+//   getStatusFilter,
+//   registerUser,
+// } from "store/actions"
+import { getBatches } from "store/Batches/actions"
+import { useParams } from "react-router-dom"
+import paginationFactory from "react-bootstrap-table2-paginator"
+import "./courseList.css"
+import { Tab, Tabs } from "react-bootstrap"
+import LiveCourses from "./LiveCourses"
+import Nav from "react-bootstrap/Nav"
+import BatchTable from "./BatchTable"
 
-import axios from "axios"
-import "react-datepicker/dist/react-datepicker.css"
+function Batch(props) {
+  const params = useParams()
 
-const Batch = props => {
-  const {
-    user,
-    userProfile,
-    profilePictureUrl,
-    uploadProfilePicture,
-    editLearnerDetail,
-  } = props
-  const [image, setImage] = useState({ preview: "", raw: "" })
+  document.title = "Users List"
 
-  const data =
-    userProfile?.personal_details === null
-      ? {}
-      : {
-          full_name: userProfile?.personal_details?.full_name
-            ? userProfile?.personal_details?.full_name
-            : user?.fullName || "",
-          email: userProfile?.personal_details?.email
-            ? userProfile?.personal_details?.email
-            : user?.email || "",
-          mobile_number: userProfile?.personal_details?.mobile_number
-            ? userProfile?.personal_details?.mobile_number
-            : user?.mobileNumber || "",
-          guardian_details: userProfile?.personal_details?.guardian_details
-            ? userProfile?.personal_details?.guardian_details
-            : user?.guardianDetails || "",
-          birth_date: userProfile?.personal_details?.birth_date
-            ? userProfile?.personal_details?.birth_date
-            : user?.birthDate || "",
-          birth_month: userProfile?.personal_details?.birth_month
-            ? userProfile?.personal_details?.birth_month
-            : user?.birthMonth || "",
-          birth_year: userProfile?.personal_details?.birth_year
-            ? userProfile?.personal_details?.birth_year
-            : user?.birthYear || "",
-          uid: userProfile?.uid || user?.uid,
-        }
-  const [learnerData, setLearnerData] = useState(data)
+  const { manageUser, usersCount } = props
+  const [item, setItem] = useState(manageUser)
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
 
   useEffect(() => {
-    setLearnerData(data)
-  }, [userProfile])
-
-  const [startDate, setStartDate] = useState()
-  const hiddenFileInput = React.useRef(null)
-  // Modal open state
-  const [modal, setModal] = React.useState(false)
-  const [profilePictureModal, setProfilePictureModal] = useState(false)
-
-  // Toggle for Modal
-  const openModal = () => setModal(true)
-  const closeModal = () => setModal(false)
-
-  const toggle = () => setProfilePictureModal(!profilePictureModal)
-  const closeProfilePicture = () => setProfilePictureModal(false)
+    setItem(manageUser)
+  }, [manageUser])
 
   useEffect(() => {
-    if (
-      userProfile?.personal_details &&
-      userProfile?.personal_details?.birth_year &&
-      userProfile?.personal_details?.birth_month &&
-      userProfile?.personal_details?.birth_date
-    ) {
-      setStartDate(
-        new Date(
-          `${userProfile?.personal_details?.birth_year}-${userProfile?.personal_details?.birth_month}-${userProfile?.personal_details?.birth_date}`
-        )
-      )
+    const { onGetBatches } = props
+    const data = {
+      id: params.id,
+      search: "",
+      pageSize: "",
+      page: "",
+      sortOrder: "",
+      sortBy: "",
+      // startDate: "",
+      // endDate: "",
     }
-  }, [userProfile])
+    onGetBatches(data)
+  }, [])
 
-  useEffect(() => {
-    if (image.preview !== "") {
-      handleUpload(learnerData.uid)
+  const handleSearch = e => {
+    const { onGetBatches } = props
+    const data = {
+      search: e,
     }
-  }, [image])
-
-  const deleteProfilePicture = () => {
-    const { onGetDeleteProfilePicture } = props
-    onGetDeleteProfilePicture({
-      uid: learnerData?.uid,
-      document_type: "profile_picture",
-    })
-    setModal(false)
-  }
-  const handleClick = () => {
-    hiddenFileInput.current.click()
+    onGetBatches(data)
+    const { Courses } = props
+    setState({ Courses })
   }
 
-  const handleChange = e => {
-    if (e.target.files.length) {
-      setImage({
-        preview: e.target.files[0],
-        raw: e.target.files[0],
-      })
+  const addStartDate = e => {
+    setStartDate(e)
+  }
+
+  const addEndDate = e => {
+    setEndDate(e)
+  }
+
+  const applyFilter = () => {
+    const { onGetBatches } = props
+    const formatedDate = startDate
+      ? `${startDate.getFullYear()}-${
+          startDate.getMonth() + 1
+        }-${startDate.getDate()}`
+      : ""
+    const formatedEndDate = endDate
+      ? `${endDate.getFullYear()}-${
+          endDate.getMonth() + 1
+        }-${endDate.getDate()}`
+      : ""
+    const data = {
+      startDate: formatedDate,
+      endDate: formatedEndDate,
     }
-  }
-
-  const handleUpload = async uid => {
-    const formData = new FormData()
-    formData.append("image", image)
-
-    const { onGetUploadProfilePicture } = props
-    onGetUploadProfilePicture({
-      img: image,
-      data: {
-        uid: uid,
-        document_type: "profile_picture",
-        file_name: "progile_picture.png",
-        type: "image/png",
-      },
-    })
-  }
-
-  const editData = event => {
-    event.preventDefault()
-    const { onGetEditLearnerDetail } = props
-    onGetEditLearnerDetail({
-      uid: learnerData?.uid,
-      personal_details: {
-        full_name: learnerData?.full_name,
-        email: learnerData?.email,
-        mobile_number: learnerData?.mobile_number,
-        birth_date: learnerData?.birth_date,
-        birth_month: learnerData?.birth_month,
-        birth_year: learnerData?.birth_year,
-        guardian_details: learnerData?.guardian_details,
-      },
-    })
+    onGetBatches(data)
   }
 
   return (
     <>
-      <div className="accordian-parts">
-        <h4 className="text-primary">Course Detail Page</h4>
-        <Row> <Col md={4}><label className="custom-label">Batch List</label></Col></Row>
+      <Container fluid className="courseList">
         <Row>
-    <Col md={4}>
-      <FormGroup className="search-input">
-      
-      <img height="20px" width="20px" src={search} />
-        <Input
-          id="exampleCity"
-          name="city"
-        />
-      </FormGroup>
-    </Col>
-    <Col md={8}>
-    <Row className="end-row-last">
-    <Col md={2}>
-      <FormGroup>
-        
-        <Input
-        id="exampleSelect"
-        name="select"
-        type="select"
-      >
-        <option>
-        Mentor
-        </option>
-        <option>
-        Mentor
-        </option>
-        <option>
-          3
-        </option>
-        <option>
-        Mentor
-        </option>
-        <option>
-        Mentor
-        </option>
-      </Input>
-      </FormGroup>
-    </Col>
-    <Col md={3}>
-      <FormGroup>
-        
-        <Input
-        id="exampleSelect"
-        name="select"
-        type="select"
-      >
-        <option>
-          Start Date
-        </option>
-        <option>
-        Start Date
-        </option>
-        <option>
-        Start Date
-        </option>
-        <option>
-        Start Date
-        </option>
-        <option>
-        Start Date
-        </option>
-      </Input>
-      </FormGroup>
-    </Col>
-    <Col md={3}>
-      <FormGroup>
-        
-        <Input
-        id="exampleSelect"
-        name="select"
-        type="select"
-      >
-        <option>
-        End Date
-        </option>
-        <option>
-        End Date
-        </option>
-        <option>
-        End Date
-        </option>
-        <option>
-        End Date
-        </option>
-        <option>
-        End Date
-        </option>
-      </Input>
-      </FormGroup>
-    </Col> 
-    <Col md={3}>
-      <FormGroup>
-       
-      <Button
-   
-    size="sm"
-  >
-    <img height="20px" width="20px" src={filter} />
-   Apply Filter
-  </Button>
-      </FormGroup>
-    </Col> </Row> </Col>
-    </Row>
-        <Table responsive className="table-border-custom">
-          <thead>
-            <tr>
-              <th>
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </th>
-              <th>Batch</th>
-              <th>Description</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Mentors</th>
-              <th>Assign Batch</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td scope="row">
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </td>
-              <td>
-                <b>Learners Batch</b>
-              </td>
-              <td>For the learners batch</td>
-              <td>07 Oct 22</td>
-              <td>07 Jan 23</td>
-              <td>
-                <batch className="purple custom-batches">SB</batch>
-                <batch className="green custom-batches">SB</batch>
-                <batch className="yellow custom-batches">SB</batch>
-              </td>
-              <td>
-                <Button color="success" outline className="assign-batch">
-                 Assign
-                </Button>
-              </td>
-              <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </td>
-              <td>
-                <b>Learners Batch</b>
-              </td>
-              <td>For the learners batch</td>
-              <td>07 Oct 22</td>
-              <td>07 Jan 23</td>
-              <td>
-                <batch className="purple custom-batches">SB</batch>
-                <batch className="green custom-batches">SB</batch>
-                <batch className="yellow custom-batches">SB</batch>
-              </td>
-              <td>
-              <Button color="success" outline className="assign-batch">
-                 Assign
-                </Button>
-              </td>
-              <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </td>
-              <td>
-                <b>Learners Batch</b>
-              </td>
-              <td>For the learners batch</td>
-              <td>07 Oct 22</td>
-              <td>07 Jan 23</td>
-              <td>
-                <batch className="purple custom-batches">SB</batch>
-                <batch className="green custom-batches">SB</batch>
-                <batch className="yellow custom-batches">SB</batch>
-              </td>
-              <td>
-              <Button color="success" outline className="assign-batch">
-                 Assign
-                </Button>
-              </td>
-              <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </td>
-              <td>
-                <b>Learners Batch</b>
-              </td>
-              <td>For the learners batch</td>
-              <td>07 Oct 22</td>
-              <td>07 Jan 23</td>
-              <td>
-                <batch className="purple custom-batches">SB</batch>
-                <batch className="green custom-batches">SB</batch>
-                <batch className="yellow custom-batches">SB</batch>
-              </td>
-              <td>
-              <Button color="success" outline className="assign-batch">
-                 Assign
-                </Button>
-              </td>
-              <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </td>
-              <td>
-                <b>Learners Batch</b>
-              </td>
-              <td>For the learners batch</td>
-              <td>07 Oct 22</td>
-              <td>07 Jan 23</td>
-              <td>
-                <batch className="purple custom-batches">SB</batch>
-                <batch className="green custom-batches">SB</batch>
-                <batch className="yellow custom-batches">SB</batch>
-              </td>
-              <td>
-              <Button color="success" outline className="assign-batch">
-                 Assign
-                </Button>
-              </td>
-              <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </td>
-              <td>
-                <b>Learners Batch</b>
-              </td>
-              <td>For the learners batch</td>
-              <td>07 Oct 22</td>
-              <td>07 Jan 23</td>
-              <td>
-                <batch className="purple custom-batches">SB</batch>
-                <batch className="green custom-batches">SB</batch>
-                <batch className="yellow custom-batches">SB</batch>
-              </td>
-              <td>
-              <Button color="success" outline className="assign-batch">
-                 Assign
-                </Button>
-              </td>
-              <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <FormGroup check>
-                  <Input type="checkbox" />
-                </FormGroup>
-              </td>
-              <td>
-                <b>Learners Batch</b>
-              </td>
-              <td>For the learners batch</td>
-              <td>07 Oct 22</td>
-              <td>07 Jan 23</td>
-              <td>
-                <batch className="purple custom-batches">SB</batch>
-                <batch className="green custom-batches">SB</batch>
-                <batch className="yellow custom-batches">SB</batch>
-              </td>
-              <td>
-              <Button color="success" outline className="assign-batch">
-                 Assign
-                </Button>
-              </td>
-              <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-        <Pagination
-  aria-label="Page navigation example"
-  size="sm"
->
-  <PaginationItem>
-    <PaginationLink
-      first
-      href="#"
-    />
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink
-      href="#"
-      previous
-    />
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink href="#" className="active">
-      1
-    </PaginationLink>
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink href="#">
-      2
-    </PaginationLink>
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink href="#">
-      3
-    </PaginationLink>
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink href="#">
-      4
-    </PaginationLink>
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink href="#">
-      5
-    </PaginationLink>
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink href="#">
-      6
-    </PaginationLink>
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink
-      href="#"
-      next
-    />
-  </PaginationItem>
-  <PaginationItem>
-    <PaginationLink
-      href="#"
-      last
-    />
-  </PaginationItem>
-</Pagination>
-      </div>
+          <h4 className="text-primary">Batch Configuration</h4>
+          <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Col className="mt-2" sm={12}>
+              <Tab.Content>
+                <BatchTable
+                  item={item}
+                  manageUser={manageUser}
+                  applyFilter={applyFilter}
+                  handleSearch={handleSearch}
+                  usersCount={usersCount}
+                  addStartDate={addStartDate}
+                  addEndDate={addEndDate}
+                  startDate={startDate}
+                  endDate={endDate}
+                />
+              </Tab.Content>
+            </Col>
+          </Tab.Container>
+        </Row>
+      </Container>
     </>
   )
 }
 
-const mapStateToProps = ({ LearnerDetails, state, count }) => ({
-  user: LearnerDetails?.data?.user,
-  userProfile: LearnerDetails?.data?.userProfile,
-  uploadProfilePicture: LearnerDetails?.uploadProfilePicture,
-  editLearnerDetail: LearnerDetails?.editLearnerDetail,
+Batch.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  Batches: PropTypes.array,
+}
+
+const mapStateToProps = ({ Batches, state, count }) => ({
+  manageUser: Batches?.manageUser,
+  usersCount: Batches?.count,
+  userRoles: Batches?.roles,
+  // deleteData: false,
 })
 
 const mapDispatchToProps = dispatch => ({
-  onGetDeleteProfilePicture: uid => dispatch(deleteProfilePicture(uid)),
-  onGetUploadProfilePicture: data => dispatch(uploadProfilePicture(data)),
-  onGetEditLearnerDetail: data => dispatch(editLearnerDetail(data)),
+  onGetBatches: data => dispatch(getBatches(data)),
+  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
+  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Batch)

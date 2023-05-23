@@ -19,6 +19,8 @@ import {
   PaginationItem,
   PaginationLink,
   ListGroup,
+  FormGroup,
+  Input,
 } from "reactstrap"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
@@ -97,6 +99,12 @@ function EditCourseList(props) {
       component: <Batch />,
     },
     {
+      eventKey: "billing",
+      title: "Curriculum",
+      // component: <Billing />,
+      component: <Curriculum />,
+    },
+    {
       eventKey: "Varient",
       title: "Varient",
       component: <Varient />,
@@ -106,12 +114,7 @@ function EditCourseList(props) {
       title: "Faqs",
       component: <Faq />,
     },
-    {
-      eventKey: "billing",
-      title: "Curriculum",
-      // component: <Billing />,
-      component: <Curriculum />,
-    },
+
     // {
     //   eventKey: "notification",
     //   title: "Variant",
@@ -209,8 +212,21 @@ function EditCourseList(props) {
       <Container className="personal-detail-tab space-height" fluid>
         <Row>
           <Col sm="6">
-            <div className="app-search p-2">
-              <h5> FULL STACK WEB DEVELOPER</h5>
+            <div className="app-search d-flex p-2">
+              <h5 className="me-3"> FULL STACK WEB DEVELOPER</h5>
+              <p className="me-3"> Enable</p>
+              <FormGroup switch>
+                <Input
+                  type="switch"
+                  name="enable"
+                  // checked={item?.enable}
+                  // onClick={e => handleChange(e, index)}
+                  // checked={state}
+                  // onClick={() => {
+                  //   setState(!state)
+                  // }}
+                />
+              </FormGroup>
             </div>
           </Col>
 

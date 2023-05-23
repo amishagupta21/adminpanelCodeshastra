@@ -8,6 +8,9 @@ import {
   EDIT_CARD_CONFIGURATION_SUCCESS,
   EDIT_CARD_CONFIGURATION_FAIL,
   EDIT_CARD_CONFIGURATION,
+  EDIT_COURSE_DETAIL,
+  EDIT_COURSE_DETAIL_SUCCESS,
+  EDIT_COURSE_DETAIL_FAIL,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -15,6 +18,7 @@ const INIT_STATE = {
   uploadProfilePicture: "",
   editCourseInformation: "",
   editCardConfiguration: "",
+  editCourseDetail: "",
 }
 
 const WorkDetails = (state = INIT_STATE, action) => {
@@ -65,6 +69,23 @@ const WorkDetails = (state = INIT_STATE, action) => {
       }
 
     case EDIT_CARD_CONFIGURATION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case EDIT_COURSE_DETAIL:
+      return {
+        ...state,
+        editCourseDetail: action.payload,
+      }
+    case EDIT_COURSE_DETAIL_SUCCESS:
+      return {
+        ...state,
+        editCourseDetail: action.payload,
+      }
+
+    case EDIT_COURSE_DETAIL_FAIL:
       return {
         ...state,
         error: action.payload,
