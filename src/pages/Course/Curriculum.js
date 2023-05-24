@@ -23,6 +23,7 @@ function Curriculum(args) {
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+
     const [state, setState] = useState(true);
     const [check, setCheck] = useState(true);
 
@@ -48,7 +49,7 @@ function Curriculum(args) {
                                 <Button color="success" outline onClick={toggle} className='me-3 mb-3 rounded-pill'>+ Clone Chapter</Button>
                                 <Button color="success" onClick={toggle} className='rounded-pill mb-3'>+ Add New Chapter</Button>
 
-                                <Modal isOpen={modal} toggle={toggle} {...args} className='modal-dialog modal-xl'>
+                                <Modal isOpen={modal} toggle={toggle} {...args} fade={false} centered={true} className='modal-dialog modal-xl'>
                                     <ModalHeader toggle={toggle}>Edit Assessment</ModalHeader>
                                     <ModalBody>
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do

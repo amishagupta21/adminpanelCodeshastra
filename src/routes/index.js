@@ -22,6 +22,7 @@ import EditCourseList from "pages/Course/EditCourseList"
 import ApplicationDetails from "pages/ApplicationListing/ApplicationDetails/ApplicationDetails"
 import Payment from "pages/Payment/Payment"
 import FaqConfiguration from "pages/FaqConfiguration/FaqConfiguration"
+import SmsEmailTemplates from "pages/SMS-Email/SmsEmailTemplates"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -35,6 +36,7 @@ const authProtectedRoutes = [
   { path: "/application-details", component: ApplicationDetails },
   { path: "/payment", component: Payment },
   { path: "/faq-configuration", component: FaqConfiguration },
+  { path: "/sms-email-templates", component: SmsEmailTemplates },
 
   // //profile
   { path: "/profile", component: UserProfile },

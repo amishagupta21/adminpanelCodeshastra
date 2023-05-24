@@ -1,0 +1,63 @@
+
+.assigned-batches .accordion
+{
+
+    background: rgba(85, 110, 230, 0.08);
+}
+.accordian-parts .accordion-header
+{
+    border-top: 0px solid #ced4da !important;
+    border-bottom: 0px solid #ced4da !important;;
+}
+
+.assigned-batches .accordion-header .accordion-button
+{
+    background: transparent !important;
+    /* border: 10px solid rgb(242, 244, 253) !important; */
+}
+.assigned-batches .circles
+{
+    background: #556ee6;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.assigned-batches .circles::after
+{
+    content: '';
+    width: 10px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(32deg);
+    position: absolute;
+    z-index:-1;
+}
+.assigned-batches .heading 
+{
+    font-size: 15px !important;
+    font-weight:600 !important;
+    margin-bottom: 10px;
+}
+.assigned-batches .small-heading
+{
+    font-size: 13px !important;
+    font-weight:400 !important;
+    color: #74788D !important;
+}
+.assigned-batches .card
+{
+    color: #343A40;
+}
+.assigned-batches .card-footer, .card-header
+{
+    background:transparent !important
+}

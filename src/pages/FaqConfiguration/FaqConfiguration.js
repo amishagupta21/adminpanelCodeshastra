@@ -1,7 +1,6 @@
 // import React from "react";
 
 import {
-  Container,
   Row,
   Col,
   Card,
@@ -15,6 +14,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Container,
 } from "reactstrap"
 import "../FaqConfiguration/faqconfiguration.css"
 
