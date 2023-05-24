@@ -1,5 +1,15 @@
 import React, { Component } from "react"
-import { Container, Row, Col, Card, CardBody } from "reactstrap"
+import { 
+  Container, 
+  Row, 
+  Col, 
+  Card, 
+  CardBody,
+  FormGroup,
+  Label,
+  Input,
+  Table
+} from "reactstrap"
 import Select from "react-select"
 import { connect } from "react-redux"
 import { apiFetch } from "store/actions"
@@ -8,6 +18,7 @@ import CourseList from "pages/Course/CourseList"
 import "../Dashboard/dashboard.css"
 import Chart from "../../assets/images/chart.png"
 import circleChart from "../../assets/images/circle-chart.png"
+import Linechart from "./Linechart"
 
 class Dashboard extends Component {
   constructor(props) {
@@ -229,7 +240,7 @@ class Dashboard extends Component {
               </Col>
             </Row>
             <Row>
-              <Col md={7}>
+              <Col md={6} xxl={7}>
                 <Card>
                   <CardBody>
                     <div className="d-flex justify-content-between mb-4">
@@ -249,7 +260,7 @@ class Dashboard extends Component {
                           Previous Period
                         </p>
                         <p className="mb-4 chart-subheading">Last Month </p>
-                        <p className="mb-4" style={{ fontSize: "16px" }}>
+                        <p className="" style={{ fontSize: "16px" }}>
                           <strong>696</strong>
                         </p>
                       </Col>
@@ -260,25 +271,169 @@ class Dashboard extends Component {
                   </CardBody>
                 </Card>
               </Col>
-              <Col md={5}>
+              <Col md={6} xxl={5}>
                 <Card>
                   <CardBody>
-                    <div className="d-flex justify-content-between mb-4">
-                      <span className="chart-heading">
+                    <div className="d-flex justify-content-between align-items-baseline mb-4">
+                      <div className="chart-heading">
                         Course Analysis: courses applied
-                      </span>
-                      <span className="chart-subheading">Last 1 month</span>
+                      </div>
+                      <div className="chart-subheading">
+                        <FormGroup>
+                          <Input id="exampleSelect" name="select" type="select">
+                            <option selected>Last 1 month</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                          </Input>
+                        </FormGroup>
+                      </div>
                     </div>
-                    {/* <Row>
-                      <Col md={6}><img src={circleChart} alt="" className="img-fluid" /></Col>
-                      <Col md={6}>
-                        <p className="mb-4">January</p>
-                        <p className="mb-4">768</p>
-                        <p className="mb-4"><span className="text-green">+0.2%</span> From Previous Period</p>
-                        <p className="mb-4">Last Month </p>
-                        <p className="mb-4">696</p>
+                    <Row>
+                      <Col md={5}><img src={circleChart} alt="" className="img-fluid" /></Col>
+                      <Col md={7}>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-1"></span>Full Stack developer
+                          </div>
+                          <div><strong>21.4%</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-2"></span>Software developer program  
+                          </div>
+                          <div><strong>23.7%</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-3"></span>Software pro developer program
+                          </div>
+                          <div><strong>19.5%</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-4"></span>Java Full Stack developer
+                          </div>
+                          <div><strong>25%</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-5"></span>Python Full Stack developer
+                          </div>
+                          <div><strong>8.9%</strong></div>
+                        </div>
                       </Col>
-                    </Row> */}
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6} xxl={4}>
+                <Card>
+                  <CardBody>
+                    <div className="d-flex justify-content-between align-items-baseline mb-4">
+                      <div className="chart-heading">
+                        Learner Analysis: Live courses 
+                      </div>
+                      <div className="chart-subheading">
+                        <FormGroup>
+                          <Input id="exampleSelect" name="select" type="select">
+                            <option selected>Last 1 month</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                          </Input>
+                        </FormGroup>
+                      </div>
+                    </div>
+                    <Row>
+                      <Col md={5}><img src={circleChart} alt="" className="img-fluid" /></Col>
+                      <Col md={7}>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-1"></span>Full Stack developer
+                          </div>
+                          <div><strong>420</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-2"></span>Software developer program  
+                          </div>
+                          <div><strong>416</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-3"></span>Software pro developer program
+                          </div>
+                          <div><strong>350</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-4"></span>Java Full Stack developer
+                          </div>
+                          <div><strong>401</strong></div>
+                        </div>
+                        <div className="chart-right-text">
+                          <div className="d-flex align-items-center">
+                            <span className="color-circle color-5"></span>Python Full Stack developer
+                          </div>
+                          <div><strong>183</strong></div>
+                        </div>
+                      </Col>
+                      <div className="mt-3 text-center">
+                        <button className="btn btn-primary btn-blue">View All</button>
+                      </div>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md={6} xxl={4}>
+                <Card>
+                  <CardBody>
+                    <div className="d-flex justify-content-between align-items-baseline mb-4">
+                      <div className="chart-heading">Ongoing Batches </div>
+                      <div className="chart-subheading d-flex">
+                        <FormGroup>
+                          <Input id="exampleSelect" name="select" type="select">
+                            <option selected>Sort By</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                          </Input>
+                        </FormGroup>
+                        <FormGroup className="ms-3">
+                          <Input id="exampleSelect" name="select" type="select">
+                            <option selected>All Courses</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                          </Input>
+                        </FormGroup>
+                      </div>
+                    </div>
+                    <div>
+                        <Linechart />
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md={6} xxl={4}>
+                <Card>
+                  <CardBody>
+                    <div className="d-flex justify-content-between align-items-baseline mb-4">
+                      <div className="chart-heading">Classes </div>
+                      <div className="chart-subheading d-flex">
+                        <FormGroup>
+                          <Input id="exampleSelect" name="select" type="select">
+                            <option selected>Today</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                          </Input>
+                        </FormGroup>
+                      </div>
+                    </div>
                   </CardBody>
                 </Card>
               </Col>

@@ -148,6 +148,60 @@
   display: block;
 } */
 
+/* Bacth Css Start*/
+
+.bacth-accordion .accordion-item
+{
+  margin-bottom: 20px;
+}
+.bacth-accordion table th,td
+{
+  border: 0px solid #000000 !important;
+}
+.bacth-accordion .accordion-button
+{
+  background: #F9F9F9 !important;
+  color: #000 !important;
+}
+.bacth-accordion .accordion-body
+{
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+.bg-grey 
+{
+  background: #F9F9F9 !important;
+}
+.select_box
+{
+  overflow: hidden;
+  border: 1px solid #ced4da !important;
+  position: relative;
+  background: #F9F9F9 !important;
+  border-radius: 0.25rem !important;
+}
+.select_box:after
+{
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #495057 !important;
+  border-radius: 0.25rem !important;
+  position: absolute;
+  top: 40%;
+  right: 5px;
+  content: "";
+  z-index: 98;
+ }
+.select_box select
+{
+  border: 0;
+  position: relative;
+  z-index: 99;
+  background: none;
+}
+/* Bacth Css End*/
+
 
 
 

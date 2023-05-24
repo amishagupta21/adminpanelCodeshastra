@@ -45,6 +45,8 @@ import {
 
 import axios from "axios"
 import "react-datepicker/dist/react-datepicker.css"
+import BatchAccordion from "./BatchAccordion"
+import AssignedBatches from "./AssignedBatches"
 
 const Batch = props => {
   const {
@@ -101,6 +103,9 @@ const Batch = props => {
 
   const toggle = () => setProfilePictureModal(!profilePictureModal)
   const closeProfilePicture = () => setProfilePictureModal(false)
+
+  // const [modal, setModal] = React.useState(false)
+  const Modaltoggle = () => setModal(!modal);
 
   useEffect(() => {
     if (
@@ -180,7 +185,8 @@ const Batch = props => {
   return (
     <>
       <div className="accordian-parts">
-        <h4 className="text-primary">Course Detail Page</h4>
+        <h4 className="text-primary">Batch Configuration</h4>
+        <div className="py-5"><AssignedBatches /></div>
         <Row> <Col md={4}><label className="custom-label">Batch List</label></Col></Row>
         <Row>
     <Col md={4}>
@@ -327,7 +333,35 @@ const Batch = props => {
                 </Button>
               </td>
               <td>
-                <i className="mdi mdi-eye font-size-16 text-primary" />
+                <i className="mdi mdi-eye font-size-16 text-primary" onClick={Modaltoggle} />
+
+                <Modal
+                  isOpen={modal}
+                  toggle={Modaltoggle}
+                  modalTransition={{ timeout: 500 }}
+                  centered={true}
+                  fade={false}
+                  contentClassName="modal-dialog"
+                  size="lg"
+                  className='modal-dialog'
+                >
+                  <ModalHeader toggle={Modaltoggle}>Batch Information</ModalHeader>
+                  <ModalBody>
+                      {/* <div className="d-flex mb-3">
+                        <FormGroup>
+                          <Label>Batch Name</Label>
+                          <Input type="text" placeholder="Learners Batch" className="bg-grey" />
+                        </FormGroup>
+                        <FormGroup className="ms-4">
+                          <Label>Description</Label>
+                          <Input type="text" placeholder="For the learners batch" className="bg-grey" />
+                        </FormGroup>
+                      </div> */}
+                      <div>
+                        <BatchAccordion />
+                      </div>
+                  </ModalBody>
+                </Modal>
               </td>
             </tr>
             <tr>
