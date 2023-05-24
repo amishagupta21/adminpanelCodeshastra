@@ -16,7 +16,7 @@ const CourseTable = ({ activeTab, usersCount, toolkitProps }) => {
 
   const selectRow = {
     mode: "checkbox",
-    clickToSelect: true,
+    clickToSelect: false,
     // onSelect: handleOnSelect,
     // onSelectAll: handleOnSelectAll,
   }

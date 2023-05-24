@@ -24,6 +24,7 @@ import {
   AccordionHeader,
   AccordionBody,
   Media,
+  FormGroup,
 } from "reactstrap"
 
 import plus from "../../assets/images/add-plus.svg"
@@ -56,15 +57,7 @@ const CardConfiguration = props => {
 
   const [inputFields, setInputFields] = useState(getCourseInformation)
 
-  // const [cardConfiguration, setCardConfiguration] =
-  //   useState(getCourseInformation)
-  // console.log(cardConfiguration, "////////cardConfiguration")
-
   const params = useParams()
-
-  // useEffect(() => {
-  //   setCardConfiguration(getCourseInformation)
-  // }, [getCourseInformation])
 
   useEffect(() => {
     setInputFields(getCourseInformation)
@@ -431,12 +424,18 @@ const CardConfiguration = props => {
                             </td>
                             <td>
                               <div className="actions d-flex align-items-center">
-                                <Switch
-                                  name="enable"
-                                  size="small"
-                                  checked={item?.enable}
-                                  onClick={e => handleChange(e, index)}
-                                />
+                                <FormGroup switch>
+                                  <Input
+                                    type="switch"
+                                    name="enable"
+                                    checked={item?.enable}
+                                    onClick={e => handleChange(e, index)}
+                                    // checked={state}
+                                    // onClick={() => {
+                                    //   setState(!state)
+                                    // }}
+                                  />
+                                </FormGroup>
 
                                 <a href="">
                                   <i className="mdi mdi-trash-can font-size-18 text-danger" />
@@ -516,7 +515,7 @@ const mapStateToProps = ({ GetCourse }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onGetCoursesInformation: data => dispatch(getCourseInformation(data)),
+  // onGetCoursesInformation: data => dispatch(getCourseInformation(data)),
   onEditCardConfiguration: data => dispatch(editCardConfiguration(data)),
 })
 

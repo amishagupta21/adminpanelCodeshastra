@@ -128,10 +128,19 @@ export const GET_COURSEDETAILS = "/courses"
 export const CREATE_COURSE = "/courses"
 export const UPDATE_COURSE = "/courses"
 
+// Batches API's
+
+export const GET_BATCHES_LIST = "/admin/course/batch/listing"
+
+// Variatn API's
+
+export const GET_VARIANT_LIST = "/admin/course/variant"
+
 // Edit Course
 export const GET_COURSES = "/admin/course"
 export const EDIT_COURSE_INFORMATION = "/admin/course"
 export const EDIT_CARD_CONFIGURATION = "/admin/course"
+export const EDIT_COURSE_DETAIL = "/admin/course"
 
 // Users
 export const GET_USERS = "/users"

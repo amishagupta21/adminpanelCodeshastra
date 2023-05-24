@@ -1,0 +1,6 @@
+.batch-date-picker .react-datepicker__input-container input {
+  height: 38px !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 0.25rem;
+  width: 150px;
+}

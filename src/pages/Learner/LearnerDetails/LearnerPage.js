@@ -42,6 +42,7 @@ import "../learnerListing.css"
 import ModalDelete from "components/Common/ModalDelete"
 import { default as ReactSelect } from "react-select"
 import LearnerTable from "../LearnerTable"
+import blueTick from "../../../assets/fonts/blue-tick.svg"
 
 const Option = props => {
   return (
@@ -89,25 +90,45 @@ class LearnerPage extends Component {
           dataField: "fullName",
           text: "Name",
           sort: true,
+          formatter: (cellContent, user) => (
+            <div className="fw-bold">{user?.fullName}</div>
+          ),
         },
         {
           dataField: "email",
           text: "Email",
           sort: true,
-        },
-        {
-          dataField: "userProfileData.occupation",
-          text: "Occupation",
-          sort: true,
+          formatter: (cellContent, user) => (
+            <div>
+              {user?.email}&nbsp;
+              <img src={blueTick} />
+            </div>
+          ),
         },
         {
           dataField: "phone",
           text: "Mobile",
           sort: true,
+          formatter: (cellContent, user) => (
+            <div>
+              {user?.phone}&nbsp;
+              <img src={blueTick} />
+            </div>
+          ),
         },
         {
           dataField: "status",
           text: "Status",
+          sort: true,
+        },
+        {
+          dataField: "userProfileData.education_details.highest_qualification",
+          text: "Highest Education",
+          sort: true,
+        },
+        {
+          dataField: "userProfileData.occupation",
+          text: "Learner Type",
           sort: true,
         },
 
@@ -357,6 +378,8 @@ class LearnerPage extends Component {
     )
     // const paginationPage = Array.apply(null, new Array(pageCount))
 
+    console.log(manageUser, "////////////manageUser")
+
     const defaultSorted = [
       {
         dataField: "id",
@@ -404,81 +427,90 @@ class LearnerPage extends Component {
                         <React.Fragment>
                           <Row>
                             <Col md={12}>
-                                <div className="top-search-box">
-                                  <Col md={12} lg={2}>
-                                    <div className="app-search p-0 pb-2">
-                                      <div className="position-relative">
-                                        <DeBounceSearch
-                                          handleSearch={this.handleSearch}
-                                        />
-                                        <span className="bx bx-search-alt" />
-                                      </div>
-                                    </div>
-                                  </Col>
-                                  <Col md={12} lg={10} className="d-lg-flex justify-content-lg-end">
-                                    <div>
-                                      <Select
-                                        name="filter"
-                                        placeholder="Status"
-                                        value={value}
-                                        onChange={this.handleFilterStatus}
-                                        options={this.options} className="sel-width"
+                              <div className="top-search-box">
+                                <Col md={12} lg={2}>
+                                  <div className="app-search p-0 pb-2">
+                                    <div className="position-relative">
+                                      <DeBounceSearch
+                                        handleSearch={this.handleSearch}
                                       />
+                                      <span className="bx bx-search-alt" />
                                     </div>
-                                    <div>
-                                      <Select className="sel-width"
-                                        name="filter"
-                                        isMulti
-                                        placeholder="Learner Type"
-                                        onChange={this.handleTestStatus}
-                                        options={this.testResult}
-                                        components={{
-                                          Option,
-                                        }}
-                                      />
-                                    </div>
-                                    <div>
-                                      <Select className="sel-width"
-                                        name="filter"
-                                        placeholder="Course Type"
-                                        onChange={this.handleCourseType}
-                                        options={this.courseType}
-                                      />
-                                    </div>
-                                    <div>
-                                      {this?.state.selectedStatus?.length > 0 ||
-                                      this.state.multiSelectTestResult?.length > 0 ||
-                                      this.state.selectedCourseType?.length > 0 ? (
+                                  </div>
+                                </Col>
+                                <Col
+                                  md={12}
+                                  lg={10}
+                                  className="d-lg-flex justify-content-lg-end"
+                                >
+                                  <div>
+                                    <Select
+                                      name="filter"
+                                      placeholder="Status"
+                                      value={value}
+                                      onChange={this.handleFilterStatus}
+                                      options={this.options}
+                                      className="sel-width"
+                                    />
+                                  </div>
+                                  <div>
+                                    <Select
+                                      className="sel-width"
+                                      name="filter"
+                                      isMulti
+                                      placeholder="Learner Type"
+                                      onChange={this.handleTestStatus}
+                                      options={this.testResult}
+                                      components={{
+                                        Option,
+                                      }}
+                                    />
+                                  </div>
+                                  <div>
+                                    <Select
+                                      className="sel-width"
+                                      name="filter"
+                                      placeholder="Course Type"
+                                      onChange={this.handleCourseType}
+                                      options={this.courseType}
+                                    />
+                                  </div>
+                                  <div>
+                                    {this?.state.selectedStatus?.length > 0 ||
+                                    this.state.multiSelectTestResult?.length >
+                                      0 ||
+                                    this.state.selectedCourseType?.length >
+                                      0 ? (
                                       <Button
                                         type="button"
                                         className="btn mb-2 me-2"
                                         onClick={this.applyFilter}
                                       >
-                                        <i className="mdi mdi-filter me-1" /> Apply
-                                        Filter
+                                        <i className="mdi mdi-filter me-1" />{" "}
+                                        Apply Filter
                                       </Button>
-                                      ) : (
+                                    ) : (
                                       <Button
                                         type="button"
                                         className="btn mb-2 me-2"
                                         disabled
                                         onClick={this.applyFilter}
                                       >
-                                        <i className="mdi mdi-filter me-1" /> Apply
-                                        Filter
+                                        <i className="mdi mdi-filter me-1" />{" "}
+                                        Apply Filter
                                       </Button>
                                     )}
 
-                                      <Button
-                                        type="button"
-                                        color="secondary"
-                                        className="btn mb-2 me-2"
-                                      >
-                                        Export
-                                      </Button>
-                                    </div>
-                                  </Col>
-                                </div>
+                                    <Button
+                                      type="button"
+                                      color="secondary"
+                                      className="btn mb-2 me-2"
+                                    >
+                                      Export
+                                    </Button>
+                                  </div>
+                                </Col>
+                              </div>
                             </Col>
                           </Row>
 
