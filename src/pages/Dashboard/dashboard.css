@@ -25,16 +25,18 @@
     font-size: 30px;
     color: #fff;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
 .circle::after
 {
     content: '';
     width: 10px;
     height: 500px;
-    background: rgba(255, 255, 255, 0.101961);
+    background: rgba(255, 255, 255, 0.2);
     transform: rotate(32deg);
     position: absolute;
-    z-index:1;
+    z-index:-1;
 }
 .dashboard-box-heading
 {
@@ -74,4 +76,50 @@
 {
     font-size: 13px;
     color: #74788D;
+}
+.chart-right-text
+{
+    display: flex;
+    justify-content: space-between;
+    color:#74788D;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.chart-right-text span
+{
+    margin-right: 15px;
+}
+.color-circle
+{
+    /* width: 8px;
+    height: 8px; */
+    display: flex;
+    border-radius: 100px;
+    margin-right: 10px;
+    padding: 5px;
+}
+.color-1
+{
+    background:#556EE6;
+}
+.color-2
+{
+    background:#34C38F;
+}
+.color-3
+{
+    background:#F1B44C;
+}
+.color-4
+{
+    background:#F46A6A;
+}
+.color-5
+{
+    background:#74788D;
+}
+.btn-blue
+{
+    background: #556EE6 !important;
+    color: #fff;
 }

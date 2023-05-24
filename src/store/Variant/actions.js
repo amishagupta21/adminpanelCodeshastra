@@ -10,13 +10,10 @@ import {
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
 
-export const getVariant = data => (
-  console.log(data, "//////////data"),
-  {
-    type: GET_VARIANT,
-    payload: data,
-  }
-)
+export const getVariant = data => ({
+  type: GET_VARIANT,
+  payload: data,
+})
 
 export const getVariantSuccess = data => ({
   type: GET_VARIANT_SUCCESS,

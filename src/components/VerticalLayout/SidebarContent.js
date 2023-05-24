@@ -147,9 +147,17 @@ const SidebarContent = props => {
                 <i className="bx bx-user" />
                 <span>{props.t("Payment")}</span>
               </Link>
+            </li>
+            <li>
               <Link to="/faq-configuration">
                 <i className="bx bx-user" />
                 <span>{props.t("FAQ Configuration")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/sms-email-templates">
+                <i className="bx bx-bell" /> 
+                <span>{props.t("SMS/Email Templates")}</span>
               </Link>
             </li>
           </ul>

@@ -41,7 +41,7 @@ import { useParams } from "react-router-dom"
 
 const Varient = props => {
   const { onGetVariant, getVariant } = props
-  // console.log(getVariant, "//////getVariant")
+  console.log(getVariant, "//////getVariant")
 
   useEffect(() => {
     onGetVariant(params.id)
@@ -71,6 +71,7 @@ const Varient = props => {
                       className="form-control"
                       placeholder="Full Name"
                       type="text"
+                      // value={getVariant?.course_variants[0]?.variant_name}
                     />
                   </div>
                 </Col>
@@ -126,13 +127,40 @@ const Varient = props => {
                       <td>
                         <Row>
                           <Col sm={12} className="course-live">
-                            <Label check>
-                              <Input type="checkbox" /> Full Time
-                            </Label>
+                            <div>
+                              <label>
+                                <div className="d-flex align-items-center">
+                                  <input
+                                    type="radio"
+                                    name="courses"
+                                    id="live"
+                                    // value="live"
 
-                            <Label check>
-                              <Input type="checkbox" /> Part Time
-                            </Label>
+                                    checked={
+                                      getVariant?.course_variants
+                                        ?.course_type === "FullTime"
+                                    }
+                                  />
+                                  &nbsp; Full Time
+                                </div>
+                              </label>
+                              &nbsp;&nbsp;
+                              <label>
+                                <div className="d-flex align-items-center">
+                                  <input
+                                    type="radio"
+                                    name="courses"
+                                    id="library"
+                                    value="library"
+                                    checked={
+                                      getVariant?.course_variants
+                                        ?.course_type === "PartTime"
+                                    }
+                                  />
+                                  &nbsp; Part Time
+                                </div>
+                              </label>
+                            </div>
                           </Col>
                         </Row>
                       </td>
@@ -140,33 +168,44 @@ const Varient = props => {
                         <Input
                           name="text"
                           className="form-control form-control-color"
-                          placeholder="16"
+                          placeholder="Duration"
                           type="number"
+                          value={getVariant?.course_variants?.duration}
                         />
                       </td>
 
                       <td>
+                        <FormGroup switch>
+                          <Input
+                            type="switch"
+                            name="enable"
+                            checked={
+                              getVariant?.course_variants?.pay_after_placement
+                            }
+                            // checked={state}
+                            // onClick={() => {
+                            //   setState(!state)
+                            // }}
+                          />
+                          Active
+                        </FormGroup>
+                      </td>
+                      <td>
                         <Input
                           name="text"
                           className="form-control sml"
-                          placeholder=" 1"
+                          placeholder="Rating"
                           type="text"
+                          value={getVariant?.course_variants?.rating}
                         />
                       </td>
                       <td>
                         <Input
                           name="text"
                           className="form-control sml"
-                          placeholder=" 1"
+                          placeholder="Learner Count"
                           type="text"
-                        />
-                      </td>
-                      <td>
-                        <Input
-                          name="text"
-                          className="form-control sml"
-                          placeholder=" 1"
-                          type="text"
+                          value={getVariant?.course_variants?.learner_count}
                         />
                       </td>
                     </tr>

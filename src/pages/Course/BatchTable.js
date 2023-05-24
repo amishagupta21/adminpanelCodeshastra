@@ -8,6 +8,7 @@ import {
   Button,
   Modal,
   ModalHeader,
+  ModalBody,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
@@ -20,6 +21,7 @@ import CourseTable from "./CourseTable"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import DatePicker from "react-datepicker"
 import "./batchTable.css"
+import BatchAccordion from "./BatchAccordion"
 
 const Option = props => {
   return (
@@ -124,7 +126,7 @@ const BatchTable = ({
           <div className="d-flex">
             <div className="me-2">
               <i
-                // onClick={e => toggle(e, setViewData(user))}
+                onClick={toggle}
                 className="mdi mdi-eye font-size-16 text-primary"
               />
             </div>
@@ -288,6 +290,23 @@ const BatchTable = ({
                       />
                     </div>
                   </Col>
+                  <Modal
+                    isOpen={modal}
+                    toggle={toggle}
+                    modalTransition={{ timeout: 500 }}
+                    centered={true}
+                    fade={false}
+                    contentClassName="modal-dialog"
+                    size="lg"
+                    className="modal-dialog"
+                  >
+                    <ModalHeader toggle={toggle}>Batch Information</ModalHeader>
+                    <ModalBody>
+                      <div>
+                        <BatchAccordion />
+                      </div>
+                    </ModalBody>
+                  </Modal>
                 </>
               )}
             </ToolkitProvider>

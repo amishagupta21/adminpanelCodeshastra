@@ -20,6 +20,8 @@ import {
   PaginationItem,
   PaginationLink,
   ListGroup,
+  FormGroup,
+  Input,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
@@ -46,6 +48,8 @@ import { Tab, Tabs } from "react-bootstrap"
 import LiveCourses from "./LiveCourses"
 import Nav from "react-bootstrap/Nav"
 import BatchTable from "./BatchTable"
+import AssignedBatches from "./AssignedBatches"
+import BatchAccordion from "./BatchAccordion"
 
 function Batch(props) {
   const params = useParams()
@@ -116,6 +120,7 @@ function Batch(props) {
   return (
     <>
       <Container fluid className="courseList">
+        <AssignedBatches />
         <Row>
           <h4 className="text-primary">Batch Configuration</h4>
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">

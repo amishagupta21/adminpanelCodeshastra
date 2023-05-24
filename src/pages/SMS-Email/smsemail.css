@@ -1,0 +1,43 @@
+.my-btn .btn-grey
+{
+    background: #F1F1F3 !important;
+    border: 1px solid #F1F1F3 !important;
+    color: #747893 !important;
+}
+.sms-tab .nav-tabs .nav-link
+{
+    background: #fff;
+    color: #495057;
+    border: 0px solid #fff;
+}
+.sms-tab .nav-tabs .nav-link:hover
+{
+    border: 0px solid #fff;
+}
+.sms-tab .nav-tabs
+{
+    border: 0px solid #000;
+    margin: 0;
+}
+.sms-tab .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-links
+{
+    background: #556EE6;
+    color: #fff;
+    border-radius:3px;
+}
+.sms-tab .heading
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+@media (max-width: 767px)
+{
+    .sms-tab .heading
+{
+    display: flex;
+    flex-direction: column;
+}
+}
