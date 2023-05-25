@@ -22,6 +22,8 @@ import paginationFactory from "react-bootstrap-table2-paginator"
 import DatePicker from "react-datepicker"
 import "./batchTable.css"
 import BatchAccordion from "./BatchAccordion"
+import AssignedBatches from "./AssignedBatches"
+import ViewBatchesModal from "./ViewBatchesModal"
 
 const Option = props => {
   return (
@@ -55,6 +57,11 @@ const BatchTable = ({
   const [dropdown, setDropdown] = useState([])
   const [modal, setModal] = React.useState(false)
   const [viewData, setViewData] = useState("")
+  const [batchesModal, setBatchesModal] = useState(false)
+
+  const assignBatch = () => {
+    setBatchesModal(!batchesModal)
+  }
 
   const toggle = () => setModal(!modal)
 
@@ -109,16 +116,17 @@ const BatchTable = ({
         text: "Assign Batch",
         sort: true,
         formatter: (cellContent, user) => (
-          <Button color="success" outline className="assign-batch">
+          <Button
+            onClick={assignBatch}
+            color="success"
+            outline
+            className="assign-batch"
+          >
             Assign
           </Button>
         ),
       },
-      // {
-      //   dataField: "email",
-      //   text: "Learners",
-      //   sort: true,
-      // },
+
       {
         dataField: "Actions",
         text: "Actions",
@@ -126,7 +134,7 @@ const BatchTable = ({
           <div className="d-flex">
             <div className="me-2">
               <i
-                onClick={toggle}
+                onClick={e => toggle(e, setViewData(user))}
                 className="mdi mdi-eye font-size-16 text-primary"
               />
             </div>
@@ -165,7 +173,11 @@ const BatchTable = ({
     <>
       {/* <ViewCoursesModal modal={modal} toggle={toggle} viewData={viewData} /> */}
 
+      <ViewBatchesModal modal={modal} toggle={toggle} viewData={viewData} />
+
       <Row className="align-items-center">
+        {batchesModal && <AssignedBatches />}
+
         <Col sm="6">
           <div className="app-search p-2">
             <h5>Batch List</h5>
@@ -290,23 +302,6 @@ const BatchTable = ({
                       />
                     </div>
                   </Col>
-                  <Modal
-                    isOpen={modal}
-                    toggle={toggle}
-                    modalTransition={{ timeout: 500 }}
-                    centered={true}
-                    fade={false}
-                    contentClassName="modal-dialog"
-                    size="lg"
-                    className="modal-dialog"
-                  >
-                    <ModalHeader toggle={toggle}>Batch Information</ModalHeader>
-                    <ModalBody>
-                      <div>
-                        <BatchAccordion />
-                      </div>
-                    </ModalBody>
-                  </Modal>
                 </>
               )}
             </ToolkitProvider>

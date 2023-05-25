@@ -49,6 +49,7 @@ import Overview from "./Overview"
 import EligibilityCriteria from "./EligibilityCriteria"
 import PaymentStructure from "./PaymentStructure"
 import WhatYouWillLearn from "./WhatYouWillLearn"
+import CurriculumCourse from "./CurriculumCourse"
 
 const CourseDetail = props => {
   const {
@@ -59,9 +60,7 @@ const CourseDetail = props => {
 
   const [inputFields, setInputFields] = useState(getCourseInformation)
 
-  // console.log(inputFields, "///////inputFields")
-
-  const data = getCourseInformation?.course_detail_page
+  // const data = getCourseInformation?.course_detail_page
 
   useEffect(() => {
     setInputFields(getCourseInformation)
@@ -147,136 +146,6 @@ const CourseDetail = props => {
     })
   }
 
-  const addOverview = () => {
-    const arr = [...inputFields?.course_detail_page?.overview?.value]
-    let result = { ...inputFields }
-    const initalObj = {
-      title: "",
-      description: "",
-      icon: "",
-      position: "",
-      enable: false,
-    }
-    arr.push(initalObj)
-    result.course_detail_page.overview.value = arr
-
-    setInputFields(result)
-  }
-
-  const addEligibilityCriteria = () => {
-    const arr = [...inputFields?.course_detail_page?.eligibilityCriteria?.value]
-    let result = { ...inputFields }
-    const initalObj = {
-      title: "",
-      description: "",
-      icon: "",
-      position: "",
-      enable: false,
-    }
-    arr.push(initalObj)
-    result.course_detail_page.eligibilityCriteria.value = arr
-
-    setInputFields(result)
-  }
-
-  const addPaymentStructure = () => {
-    const arr = [...inputFields?.course_detail_page?.feesStructure?.value]
-    let result = { ...inputFields }
-    const initalObj = {
-      title: "",
-      description: "",
-      course_fees: "",
-      payment_template: "",
-      position: "",
-      enable: false,
-    }
-    arr.push(initalObj)
-    result.course_detail_page.feesStructure.value = arr
-
-    setInputFields(result)
-  }
-
-  const addWhatYouWillLearn = () => {
-    const arr = [...inputFields?.course_detail_page?.whatWillYouLearn?.value]
-    let result = { ...inputFields }
-    const initalObj = {
-      title: "",
-      description: "",
-      position: "",
-      enable: false,
-    }
-    arr.push(initalObj)
-    result.course_detail_page.whatWillYouLearn.value = arr
-
-    setInputFields(result)
-  }
-
-  const handleChange = (event, index) => {
-    const data = { ...inputFields }
-    const result = [...inputFields.course_detail_page.overview.value]
-    let indexValue = inputFields.course_detail_page.overview.value[index]
-    indexValue = {
-      ...indexValue,
-      [event.target.name]:
-        event.target.name === "enable"
-          ? !event.target.checked
-          : event.target.value,
-    }
-    result[index] = indexValue
-    data.course_detail_page.overview.value = result
-    setInputFields(data)
-  }
-
-  const eligibilityChange = (event, index) => {
-    const data = { ...inputFields }
-    const result = [...inputFields.course_detail_page.eligibilityCriteria.value]
-    let indexValue =
-      inputFields.course_detail_page.eligibilityCriteria.value[index]
-    indexValue = {
-      ...indexValue,
-      [event.target.name]:
-        event.target.name === "enable"
-          ? !event.target.checked
-          : event.target.value,
-    }
-    result[index] = indexValue
-    data.course_detail_page.eligibilityCriteria.value = result
-    setInputFields(data)
-  }
-
-  const paymentStructureChange = (event, index) => {
-    const data = { ...inputFields }
-    const result = [...inputFields.course_detail_page.feesStructure.value]
-    let indexValue = inputFields.course_detail_page.feesStructure.value[index]
-    indexValue = {
-      ...indexValue,
-      [event.target.name]:
-        event.target.name === "enable"
-          ? !event.target.checked
-          : event.target.value,
-    }
-    result[index] = indexValue
-    data.course_detail_page.feesStructure.value = result
-    setInputFields(data)
-  }
-
-  const whatWillLearnChange = (event, index) => {
-    const data = { ...inputFields }
-    const result = [...inputFields.course_detail_page.whatWillYouLearn.value]
-    let indexValue =
-      inputFields.course_detail_page.whatWillYouLearn.value[index]
-    indexValue = {
-      ...indexValue,
-      [event.target.name]:
-        event.target.name === "enable"
-          ? !event.target.checked
-          : event.target.value,
-    }
-    result[index] = indexValue
-    data.course_detail_page.whatWillYouLearn.value = result
-    setInputFields(data)
-  }
-
   return (
     <>
       <div className="accordian-parts">
@@ -284,27 +153,17 @@ const CourseDetail = props => {
 
         <div className="p-2">
           <UncontrolledAccordion defaultOpen={["1", "2"]} stayOpen>
-            <Overview
-              inputFields={inputFields}
-              addOverview={addOverview}
-              handleChange={handleChange}
-            />
+            <Overview overViewData={inputFields?.course_detail_page} />
             <EligibilityCriteria
-              inputFields={inputFields}
-              addEligibilityCriteria={addEligibilityCriteria}
-              eligibilityChange={eligibilityChange}
+              eligibilityData={inputFields?.course_detail_page}
             />
 
             <PaymentStructure
-              inputFields={inputFields}
-              addPaymentStructure={addPaymentStructure}
-              paymentStructureChange={paymentStructureChange}
+              paymentStructureData={inputFields?.course_detail_page}
             />
-
+            <CurriculumCourse />
             <WhatYouWillLearn
-              inputFields={inputFields}
-              addWhatYouWillLearn={addWhatYouWillLearn}
-              whatWillLearnChange={whatWillLearnChange}
+              whatYouWillLearnData={inputFields?.course_detail_page}
             />
           </UncontrolledAccordion>
         </div>

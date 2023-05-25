@@ -151,6 +151,13 @@ const editCourse = async data => {
   return resp
 }
 
+const editVariant = async data => {
+  const deleteId = { ...data }
+  delete deleteId.id
+  const resp = await patch(url.EDIT_VARIANT + `/${data?.id}`, deleteId)
+  return resp
+}
+
 const editCard = async data => {
   const deleteId = { ...data }
   delete deleteId.id
@@ -538,5 +545,6 @@ export {
   editCourseDetail,
   getBatchesList,
   getVariantList,
+  editVariant,
   // getFilter,
 }

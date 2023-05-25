@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import {
   AccordionItem,
   AccordionHeader,
@@ -12,11 +12,46 @@ import {
 import Select from "react-select"
 import plus from "../../assets/images/add-plus.svg"
 
-const PaymentStructure = ({
-  inputFields,
-  addPaymentStructure,
-  paymentStructureChange,
-}) => {
+const PaymentStructure = ({ paymentStructureData }) => {
+  const [inputFields, setInputFields] = useState(paymentStructureData)
+
+  useEffect(() => {
+    setInputFields(paymentStructureData)
+  }, [paymentStructureData])
+
+  const addPaymentStructure = () => {
+    const arr = [...inputFields?.feesStructure?.value]
+    let result = { ...inputFields }
+    const initalObj = {
+      title: "",
+      description: "",
+      course_fees: "",
+      payment_template: "",
+      position: "",
+      enable: false,
+    }
+    arr.push(initalObj)
+    result.feesStructure.value = arr
+
+    setInputFields(result)
+  }
+
+  const paymentStructureChange = (event, index) => {
+    const data = { ...inputFields }
+    const result = [...inputFields.feesStructure.value]
+    let indexValue = inputFields.feesStructure.value[index]
+    indexValue = {
+      ...indexValue,
+      [event.target.name]:
+        event.target.name === "enable"
+          ? !event.target.checked
+          : event.target.value,
+    }
+    result[index] = indexValue
+    data.feesStructure.value = result
+    setInputFields(data)
+  }
+
   const options = [
     { value: 1, label: 1 },
     { value: 2, label: 2 },
@@ -40,32 +75,34 @@ const PaymentStructure = ({
             fill="#74788D"
           />
         </svg>
+        <FormGroup className="ms-2" switch>
+          <Input type="switch" name="enable" />
+        </FormGroup>
       </AccordionHeader>
       <AccordionBody accordionId="3" className="card-infor-space">
-        {inputFields?.course_detail_page?.feesStructure?.value?.map(
-          (overview, index) => (
-            <div key={index} className="table-form">
-              <table className="table-full table-full-course">
-                <tr>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Course Fees</th>
-                  <th>Position</th>
-                  <th>Action</th>
-                </tr>
-                <tr>
-                  <td>
-                    <Input
-                      name="title"
-                      className="form-control"
-                      placeholder="Title"
-                      type="text"
-                      onChange={e => paymentStructureChange(e, index)}
-                      value={overview?.title}
-                    />
-                  </td>
-                  <td>
-                    {/* <div
+        {paymentStructureData?.feesStructure?.value?.map((overview, index) => (
+          <div key={index} className="table-form">
+            <table className="table-full table-full-course">
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Course Fees</th>
+                <th>Position</th>
+                <th>Action</th>
+              </tr>
+              <tr>
+                <td>
+                  <Input
+                    name="title"
+                    className="form-control"
+                    placeholder="Title"
+                    type="text"
+                    onChange={e => paymentStructureChange(e, index)}
+                    value={overview?.title}
+                  />
+                </td>
+                <td>
+                  {/* <div
                     name="description"
                     className="form-control"
                     contentEditable="true"
@@ -74,83 +111,82 @@ const PaymentStructure = ({
                       __html: overview?.description,
                     }}
                   /> */}
+                  <Input
+                    name="description"
+                    className="form-control form-control-color text-area"
+                    placeholder="Description"
+                    type="textarea"
+                    onChange={e => paymentStructureChange(e, index)}
+                    value={overview?.description}
+                  />
+                </td>
+                <td>
+                  <InputGroup>
+                    <InputGroupText>Rs</InputGroupText>
                     <Input
-                      name="description"
-                      className="form-control form-control-color text-area"
-                      placeholder="Description"
-                      type="textarea"
+                      name="course_fees"
+                      placeholder="Course Fees"
                       onChange={e => paymentStructureChange(e, index)}
-                      value={overview?.description}
+                      value={overview?.course_fees}
                     />
-                  </td>
-                  <td>
-                    <InputGroup>
-                      <InputGroupText>Rs</InputGroupText>
-                      <Input
-                        name="course_fees"
-                        placeholder="Course Fees"
-                        onChange={e => paymentStructureChange(e, index)}
-                        value={overview?.course_fees}
-                      />
-                    </InputGroup>
+                  </InputGroup>
 
-                    <FormGroup className="mt-3">
-                      <Label for="exampleSelect">Payment Template</Label>
-                      {/* <Input
+                  <FormGroup className="mt-3">
+                    <Label for="exampleSelect">Payment Template</Label>
+                    {/* <Input
                       id="exampleSelect"
                       name="select"
                       type="select"
                       onChange={e => paymentStructureChange(e, index)}
                       value={overview?.payment_template}
                     > */}
-                      <Select
-                        options={options}
-                        name="payment_template"
-                        onChange={e => paymentStructureChange(e, index)}
-                        value={{
-                          value: overview?.payment_template,
-                          label: overview?.payment_template,
-                        }}
-                      />
-
-                      {/* </Input> */}
-                    </FormGroup>
-                    <a>View Details</a>
-                  </td>
-                  <td>
-                    <Input
-                      name="position"
-                      className="form-control sml"
-                      placeholder="Position"
-                      type="text"
+                    <Select
+                      options={options}
+                      name="payment_template"
                       onChange={e => paymentStructureChange(e, index)}
-                      value={overview?.position}
+                      value={{
+                        value: overview?.payment_template,
+                        label: overview?.payment_template,
+                      }}
                     />
-                  </td>
-                  <td>
-                    <div className="actions d-flex align-items-center justify-content-end">
-                      <FormGroup switch>
-                        <Input
-                          type="switch"
-                          name="enable"
-                          onChange={e => paymentStructureChange(e, index)}
-                          checked={overview?.enable}
-                        />
-                      </FormGroup>
-                      {overview.url === "" ? (
-                        ""
-                      ) : (
-                        <div className="actions">
-                          <i className="mdi mdi-trash-can font-size-18 text-danger" />
-                        </div>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          )
-        )}
+
+                    {/* </Input> */}
+                  </FormGroup>
+                  <a>View Details</a>
+                </td>
+                <td>
+                  <Input
+                    name="position"
+                    className="form-control sml"
+                    placeholder="Position"
+                    type="text"
+                    onChange={e => paymentStructureChange(e, index)}
+                    value={overview?.position}
+                  />
+                </td>
+                <td>
+                  <div className="actions d-flex align-items-center justify-content-end">
+                    <FormGroup switch>
+                      <Input
+                        type="switch"
+                        name="enable"
+                        onChange={e => paymentStructureChange(e, index)}
+                        checked={overview?.enable}
+                      />
+                    </FormGroup>
+                    {overview.url === "" ? (
+                      ""
+                    ) : (
+                      <div className="actions">
+                        <i className="mdi mdi-trash-can font-size-18 text-danger" />
+                      </div>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        ))}
 
         <div>
           <button

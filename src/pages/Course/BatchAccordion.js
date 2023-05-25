@@ -11,7 +11,7 @@ import {
   Label,
 } from "reactstrap"
 
-function BatchAccordion(props) {
+function BatchAccordion({ viewData }) {
   return (
     <div className="bacth-accordion">
       <div className="d-flex mb-3">
@@ -19,8 +19,9 @@ function BatchAccordion(props) {
           <Label>Batch Name</Label>
           <Input
             type="text"
-            placeholder="Learners Batch"
+            placeholder="Batch Name"
             className="bg-grey border-0"
+            value={viewData?.name}
           />
         </FormGroup>
         <FormGroup className="ms-4">
@@ -29,6 +30,7 @@ function BatchAccordion(props) {
             type="text"
             placeholder="For the learners batch"
             className="bg-grey border-0"
+            value={viewData?.description}
           />
         </FormGroup>
       </div>
@@ -69,10 +71,10 @@ function BatchAccordion(props) {
                     </FormGroup>
                   </td>
                   <td>
-                    <Input type="date" />
+                    <Input type="date" value={viewData?.start_date} />
                   </td>
                   <td>
-                    <Input type="date" />
+                    <Input type="date" value={viewData?.end_date} />
                   </td>
                 </tr>
               </tbody>

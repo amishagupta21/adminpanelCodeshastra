@@ -4,6 +4,9 @@ import {
   GET_VARIANT_FAIL,
   GET_VARIANT_COUNT_FAIL,
   GET_VARIANT_COUNT_SUCCESS,
+  EDIT_VARIANT,
+  EDIT_VARIANT_SUCCESS,
+  EDIT_VARIANT_FAIL,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
@@ -32,6 +35,21 @@ export const getVariantCountSuccess = data => ({
 
 export const getVariantCountFail = error => ({
   type: GET_VARIANT_COUNT_FAIL,
+  payload: error,
+})
+
+export const editVariant = data => ({
+  type: EDIT_VARIANT,
+  payload: data,
+})
+
+export const editVariantSuccess = data => ({
+  type: EDIT_VARIANT_SUCCESS,
+  payload: data,
+})
+
+export const editVariantFail = error => ({
+  type: EDIT_VARIANT_FAIL,
   payload: error,
 })
 

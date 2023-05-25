@@ -135,6 +135,7 @@ export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 // Variatn API's
 
 export const GET_VARIANT_LIST = "/admin/course/variant"
+export const EDIT_VARIANT = "/admin/course-variant"
 
 // Edit Course
 export const GET_COURSES = "/admin/course"
