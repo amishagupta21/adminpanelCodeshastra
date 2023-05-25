@@ -61,7 +61,7 @@ const Linechart = () =>
                 <YAxis />
                 <Tooltip />
             </LineChart> */}
-            <Line data={data} options={options} ></Line>
+            <Line data={data} options={options} width={400} height={400}></Line>
         </div>
     )
 }

@@ -265,7 +265,7 @@ class Dashboard extends Component {
                         </p>
                       </Col>
                       <Col md={6}>
-                        <img src={Chart} alt="" className="img-height" />
+                        <Linechart />
                       </Col>
                     </Row>
                   </CardBody>
@@ -413,7 +413,7 @@ class Dashboard extends Component {
                       </div>
                     </div>
                     <div>
-                        <Linechart />
+                        {/* <Linechart /> */}
                     </div>
                   </CardBody>
                 </Card>

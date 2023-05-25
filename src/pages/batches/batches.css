@@ -1,0 +1,109 @@
+
+/* .batches-box
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap;
+} */
+.batches-box .box
+{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.batches-box .box-heading
+{
+    font-size: 13px;
+    font-weight: 500;
+    color: #495057;
+    padding-bottom: 5px;
+}
+.batches-box .score
+{
+    font-size: 20px;
+    font-weight: 500; 
+}
+.batches-box .icon-circle
+{
+    background: #556ee6;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    margin-left: 20px;
+}
+.batches-box .icon-circle::after
+{
+    content: '';
+    width: 10px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(32deg);
+    position: absolute;
+    z-index:-1;
+}
+.box-r-btn
+{
+    display: flex;
+    justify-content: end;
+}
+.box-r-btn select
+{
+    width: 150px;
+    
+}
+.batches-home table th
+{
+    min-width: 160px;
+    border-top:1px solid #EFF2F7 !important;
+    border-bottom:1px solid #EFF2F7 !important;
+}
+.batches-home table td
+{
+    border-bottom: 1px solid #eff2f7 !important;
+}
+.batches-home table thead {
+    background: #F8F9FA;
+}
+
+@media (max-width: 767px)
+{
+    .batches-box
+    {
+        flex-direction: column;
+    }
+    .box-r-btn
+    {
+        flex-direction: column;
+    }
+    .box-r-btn select
+    {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) { 
+    
+    .batches-box
+    {
+        justify-content:flex-start;
+    }
+    .batches-box .card
+    {
+        margin-right: 5px;
+    }
+    .box-r-btn
+    {
+        justify-content: start;
+    }
+}

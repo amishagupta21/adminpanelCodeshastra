@@ -160,6 +160,12 @@ const SidebarContent = props => {
                 <span>{props.t("SMS/Email Templates")}</span>
               </Link>
             </li>
+            <li>
+              <Link to="/batch">
+                <i className="bx bx-user" /> 
+                <span>{props.t("Batches")}</span>
+              </Link>
+            </li>
           </ul>
         </div>
       </SimpleBar>
