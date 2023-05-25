@@ -120,7 +120,6 @@ function Batch(props) {
   return (
     <>
       <Container fluid className="courseList">
-        <AssignedBatches />
         <Row>
           <h4 className="text-primary">Batch Configuration</h4>
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import {
   AccordionItem,
   AccordionHeader,
@@ -8,11 +8,44 @@ import {
 } from "reactstrap"
 import plus from "../../assets/images/add-plus.svg"
 
-const WhatYouWillLearn = ({
-  inputFields,
-  addWhatYouWillLearn,
-  whatWillLearnChange,
-}) => {
+const WhatYouWillLearn = ({ whatYouWillLearnData }) => {
+  const [inputFields, setInputFields] = useState(whatYouWillLearnData)
+
+  useEffect(() => {
+    setInputFields(whatYouWillLearnData)
+  }, [whatYouWillLearnData])
+
+  const addWhatYouWillLearn = () => {
+    const arr = [...inputFields?.whatWillYouLearn?.value]
+    let result = { ...inputFields }
+    const initalObj = {
+      title: "",
+      description: "",
+      position: "",
+      enable: false,
+    }
+    arr.push(initalObj)
+    result.whatWillYouLearn.value = arr
+
+    setInputFields(result)
+  }
+
+  const whatWillLearnChange = (event, index) => {
+    const data = { ...inputFields }
+    const result = [...inputFields.whatWillYouLearn.value]
+    let indexValue = inputFields.whatWillYouLearn.value[index]
+    indexValue = {
+      ...indexValue,
+      [event.target.name]:
+        event.target.name === "enable"
+          ? !event.target.checked
+          : event.target.value,
+    }
+    result[index] = indexValue
+    data.whatWillYouLearn.value = result
+    setInputFields(data)
+  }
+
   return (
     <AccordionItem>
       <AccordionHeader targetId="4">
@@ -29,9 +62,12 @@ const WhatYouWillLearn = ({
             fill="#74788D"
           />
         </svg>
+        <FormGroup className="ms-2" switch>
+          <Input type="switch" name="enable" />
+        </FormGroup>
       </AccordionHeader>
       <AccordionBody accordionId="4" className="card-infor-space">
-        {inputFields?.course_detail_page?.whatWillYouLearn?.value?.map(
+        {whatYouWillLearnData?.whatWillYouLearn?.value?.map(
           (overview, index) => (
             <div key={index} className="table-form">
               <table className="table-full table-full-course">

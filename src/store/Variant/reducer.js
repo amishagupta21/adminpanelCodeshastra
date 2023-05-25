@@ -4,6 +4,9 @@ import {
   GET_VARIANT_FAIL,
   GET_VARIANT_COUNT_SUCCESS,
   GET_VARIANT_COUNT_FAIL,
+  EDIT_VARIANT,
+  EDIT_VARIANT_SUCCESS,
+  EDIT_VARIANT_FAIL,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
   FILTER_STATUS_LEARNER,
@@ -13,6 +16,7 @@ const INIT_STATE = {
   getVariant: [],
   roles: [],
   count: 0,
+  editVariant: "",
 }
 
 const Variant = (state = INIT_STATE, action) => {
@@ -45,6 +49,24 @@ const Variant = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
+
+    case EDIT_VARIANT:
+      return {
+        ...state,
+        editVariant: action.payload,
+      }
+    case EDIT_VARIANT_SUCCESS:
+      return {
+        ...state,
+        editVariant: action.payload,
+      }
+
+    case EDIT_VARIANT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
     // case DELETE_LEARNER_SUCCESS:
     //   return {
     //     ...state,

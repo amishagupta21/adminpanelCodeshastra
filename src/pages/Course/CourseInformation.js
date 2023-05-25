@@ -139,7 +139,7 @@ const CourseInformation = props => {
                           type="radio"
                           name="courses"
                           id="live"
-                          // value="live"
+                          value="live"
                           onChange={e =>
                             setCourseData({
                               ...courseData,
