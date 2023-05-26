@@ -20,6 +20,7 @@ import EditCard from "./CourseInformation/reducer"
 import EditCourseDetail from "./CourseInformation/reducer"
 import Batches from "./Batches/reducer"
 import Variant from "./Variant/reducer"
+import Curriculum from "./Curriculum/reducer"
 
 //E-commerce
 import ecommerce from "./e-commerce/reducer"
@@ -84,6 +85,7 @@ const rootReducer = combineReducers({
   EditCourseDetail,
   Batches,
   Variant,
+  Curriculum,
 })
 
 export default rootReducer

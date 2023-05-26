@@ -14,6 +14,7 @@ export * from "./Courses/actions"
 export * from "./CourseInformation/actions"
 export * from "./Batches/actions"
 export * from "./Variant/actions"
+export * from "./Curriculum/actions"
 
 // export * from "./DocumentKyc/actions"
 

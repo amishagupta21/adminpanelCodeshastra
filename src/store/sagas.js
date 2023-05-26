@@ -27,6 +27,7 @@ import Courses from "./Courses/saga"
 import CourseInformation from "./CourseInformation/saga"
 import GetBatches from "./Batches/saga"
 import GetVariant from "./Variant/saga"
+import GetCurriculum from "./Curriculum/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -57,5 +58,6 @@ export default function* rootSaga() {
     fork(CourseInformation),
     fork(GetBatches),
     fork(GetVariant),
+    fork(GetCurriculum),
   ])
 }

@@ -122,6 +122,13 @@ const getVariantList = async data => {
   return resp
 }
 
+// CURRICULUM API
+
+const getCurriculumList = async data => {
+  const resp = await getCourseData(url.GET_CURRICULUM_LIST + `/${data}`)
+  return resp
+}
+
 //COURSES API
 
 const getCoursesList = async data => {
@@ -546,5 +553,6 @@ export {
   getBatchesList,
   getVariantList,
   editVariant,
+  getCurriculumList,
   // getFilter,
 }
