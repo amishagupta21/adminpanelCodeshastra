@@ -17,9 +17,6 @@ import Courses from "./Courses/reducer"
 import EditCourse from "./CourseInformation/reducer"
 import GetCourse from "./CourseInformation/reducer"
 import EditCard from "./CourseInformation/reducer"
-import EditCourseDetail from "./CourseInformation/reducer"
-import Batches from "./Batches/reducer"
-import Variant from "./Variant/reducer"
 
 //E-commerce
 import ecommerce from "./e-commerce/reducer"
@@ -54,8 +51,11 @@ import Dashboard from "./dashboard/reducer"
 //Dasboard saas
 import DashboardSaas from "./dashboard-saas/reducer"
 
+import GetFaqs from "./FaqConfiguration/reducer"
+
 const rootReducer = combineReducers({
   // public
+  
   Layout,
   Login,
   Account,
@@ -81,9 +81,7 @@ const rootReducer = combineReducers({
   GetCourse,
   EditCourse,
   EditCard,
-  EditCourseDetail,
-  Batches,
-  Variant,
+  GetFaqs,
 })
 
 export default rootReducer

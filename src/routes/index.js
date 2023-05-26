@@ -23,6 +23,7 @@ import ApplicationDetails from "pages/ApplicationListing/ApplicationDetails/Appl
 import Payment from "pages/Payment/Payment"
 import FaqConfiguration from "pages/FaqConfiguration/FaqConfiguration"
 import SmsEmailTemplates from "pages/SMS-Email/SmsEmailTemplates"
+import Batch from "pages/batches/Batches"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -37,6 +38,7 @@ const authProtectedRoutes = [
   { path: "/payment", component: Payment },
   { path: "/faq-configuration", component: FaqConfiguration },
   { path: "/sms-email-templates", component: SmsEmailTemplates },
+  { path: "/batch", component: Batch },
 
   // //profile
   { path: "/profile", component: UserProfile },
