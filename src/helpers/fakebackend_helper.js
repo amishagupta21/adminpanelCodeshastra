@@ -122,6 +122,10 @@ const getVariantList = async data => {
   return resp
 }
 
+// CURRICULUM API
+
+
+
 //COURSES API
 
 const getCoursesList = async data => {
@@ -135,7 +139,17 @@ const getCoursesList = async data => {
   )
   return resp
 }
-
+const getFaqList = async data => {
+  const resp = await getCourseData(
+    url.GET_FAQS +
+    `?sortOrder=${data?.sortOrder || "asc"}&sortBy=${
+      data?.sortBy || "created_at"
+    }&pageSize=${data?.pageSize || 5}&page=${data?.page || 1}&keyword=${
+      data?.search || ""
+    }`
+  )
+  return resp
+}
 const getCourse = async id => {
   const resp = await getCourseData(url.GET_COURSES + `/${id}`)
   return resp
@@ -546,5 +560,6 @@ export {
   getBatchesList,
   getVariantList,
   editVariant,
+  getFaqList
   // getFilter,
 }
