@@ -115,6 +115,19 @@ const getBatchesList = async data => {
   return resp
 }
 
+// MAIN BATCHES API
+
+const getBatches = async data => {
+  console.log(data, "////////data")
+  const resp = await getCourseData(
+    url.GET_BATCHES +
+      `?pageSize=${data?.pageSize || 20}&keyword=${data?.search || ""}&page=${
+        data?.page || 1
+      }`
+  )
+  return resp
+}
+
 //VARIANT API
 
 const getVariantList = async data => {
@@ -142,7 +155,17 @@ const getCoursesList = async data => {
   )
   return resp
 }
-
+const getFaqList = async data => {
+  const resp = await getCourseData(
+    url.GET_FAQS +
+      `?sortOrder=${data?.sortOrder || "asc"}&sortBy=${
+        data?.sortBy || "created_at"
+      }&pageSize=${data?.pageSize || 5}&page=${data?.page || 1}&keyword=${
+        data?.search || ""
+      }`
+  )
+  return resp
+}
 const getCourse = async id => {
   const resp = await getCourseData(url.GET_COURSES + `/${id}`)
   return resp
@@ -554,5 +577,7 @@ export {
   getVariantList,
   editVariant,
   getCurriculumList,
+  getFaqList,
+  getBatches,
   // getFilter,
 }

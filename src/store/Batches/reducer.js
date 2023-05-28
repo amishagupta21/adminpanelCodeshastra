@@ -4,6 +4,11 @@ import {
   GET_BATCHES_FAIL,
   GET_BATCHES_COUNT_SUCCESS,
   GET_BATCHES_COUNT_FAIL,
+  GET_BATCHES_LIST,
+  GET_BATCHES_LIST_SUCCESS,
+  GET_BATCHES_LIST_FAIL,
+  GET_BATCHES_LIST_COUNT_SUCCESS,
+  GET_BATCHES_LIST_COUNT_FAIL,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
   FILTER_STATUS_LEARNER,
@@ -41,6 +46,37 @@ const Batches = (state = INIT_STATE, action) => {
       }
 
     case GET_BATCHES_COUNT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    // MAIN BATCHES
+
+    case GET_BATCHES_LIST:
+      return {
+        ...state,
+        data: action.payload,
+      }
+    case GET_BATCHES_LIST_SUCCESS:
+      return {
+        ...state,
+        manageUser: action.payload,
+      }
+
+    case GET_BATCHES_LIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case GET_BATCHES_LIST_COUNT_SUCCESS:
+      return {
+        ...state,
+        count: action.payload,
+      }
+
+    case GET_BATCHES_LIST_COUNT_FAIL:
       return {
         ...state,
         error: action.payload,

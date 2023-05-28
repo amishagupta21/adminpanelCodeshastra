@@ -4,6 +4,11 @@ import {
   GET_BATCHES_FAIL,
   GET_BATCHES_COUNT_FAIL,
   GET_BATCHES_COUNT_SUCCESS,
+  GET_BATCHES_LIST,
+  GET_BATCHES_LIST_SUCCESS,
+  GET_BATCHES_LIST_FAIL,
+  GET_BATCHES_LIST_COUNT_FAIL,
+  GET_BATCHES_LIST_COUNT_SUCCESS,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
@@ -32,6 +37,33 @@ export const getBatchesCountSuccess = data => ({
 
 export const getBatchesCountFail = error => ({
   type: GET_BATCHES_COUNT_FAIL,
+  payload: error,
+})
+
+// MAIN BATCHES
+
+export const getBatchesList = data => ({
+  type: GET_BATCHES_LIST,
+  payload: data,
+})
+
+export const getBatchesListSuccess = data => ({
+  type: GET_BATCHES_LIST_SUCCESS,
+  payload: data,
+})
+
+export const getBatchesListFail = error => ({
+  type: GET_BATCHES_LIST_FAIL,
+  payload: error,
+})
+
+export const getBatchesListCountSuccess = data => ({
+  type: GET_BATCHES_LIST_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getBatchesListCountFail = error => ({
+  type: GET_BATCHES_LIST_COUNT_FAIL,
   payload: error,
 })
 

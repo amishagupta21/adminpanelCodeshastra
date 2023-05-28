@@ -55,8 +55,11 @@ import Dashboard from "./dashboard/reducer"
 //Dasboard saas
 import DashboardSaas from "./dashboard-saas/reducer"
 
+import GetFaqs from "./FaqConfiguration/reducer"
+
 const rootReducer = combineReducers({
   // public
+
   Layout,
   Login,
   Account,
@@ -86,6 +89,7 @@ const rootReducer = combineReducers({
   Batches,
   Variant,
   Curriculum,
+  GetFaqs,
 })
 
 export default rootReducer

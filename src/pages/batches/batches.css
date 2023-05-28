@@ -1,4 +1,3 @@
-
 /* .batches-box
 {
     display: flex;
@@ -6,104 +5,132 @@
     margin-top: 20px;
     flex-wrap: wrap;
 } */
-.batches-box .box
-{
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+.batches-home .filter-text {
+  font-weight: 600;
 }
-.batches-box .box-heading
-{
-    font-size: 13px;
-    font-weight: 500;
-    color: #495057;
-    padding-bottom: 5px;
+.batches-home .app-search .form-control {
+  border-radius: 4px !important;
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  background-color: transparent !important;
 }
-.batches-box .score
-{
-    font-size: 20px;
-    font-weight: 500; 
+
+.batches-home .table-responsive {
+  overflow-x: hidden !important;
 }
-.batches-box .icon-circle
-{
-    background: #556ee6;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    color: #fff;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    margin-left: 20px;
+
+.batches-home .react-bootstrap-table-pagination-list {
+  display: flex !important;
 }
-.batches-box .icon-circle::after
-{
-    content: '';
-    width: 10px;
-    height: 500px;
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(32deg);
-    position: absolute;
-    z-index:-1;
+
+.batches-home .page-item .page-link {
+  border-radius: 50% !important;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.box-r-btn
-{
-    display: flex;
-    justify-content: end;
+
+.batches-home .page-item {
+  margin-right: 10px;
 }
-.box-r-btn select
-{
-    width: 150px;
-    
+
+.batches-home .react-bs-table-sizePerPage-dropdown::before {
+  content: "Show";
 }
-.batches-home table th
-{
-    min-width: 160px;
-    border-top:1px solid #EFF2F7 !important;
-    border-bottom:1px solid #EFF2F7 !important;
+
+.batches-home .react-bs-table-sizePerPage-dropdown::after {
+  content: "entries";
 }
-.batches-home table td
-{
-    border-bottom: 1px solid #eff2f7 !important;
+
+.batches-home #pageDropDown {
+  margin: 0 5px;
+  height: 35px;
+  background: transparent;
+  color: #000000 !important;
+  padding: 3px 10px;
+}
+
+.batches-box .box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.batches-box .box-heading {
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+  padding-bottom: 5px;
+}
+.batches-box .score {
+  font-size: 20px;
+  font-weight: 500;
+}
+.batches-box .icon-circle {
+  background: #556ee6;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  margin-left: 20px;
+}
+.batches-box .icon-circle::after {
+  content: "";
+  width: 10px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(32deg);
+  position: absolute;
+  z-index: -1;
+}
+.box-r-btn {
+  display: flex;
+  justify-content: end;
+}
+.box-r-btn select {
+  width: 150px;
+}
+/* .batches-home table th {
+  min-width: 160px;
+  border-top: 1px solid #eff2f7 !important;
+  border-bottom: 1px solid #eff2f7 !important;
+} */
+.batches-home table td {
+  border-bottom: 1px solid #eff2f7 !important;
 }
 .batches-home table thead {
-    background: #F8F9FA;
+  background: #f8f9fa;
 }
 
-@media (max-width: 767px)
-{
-    .batches-box
-    {
-        flex-direction: column;
-    }
-    .box-r-btn
-    {
-        flex-direction: column;
-    }
-    .box-r-btn select
-    {
-        width: 100%;
-    }
+@media (max-width: 767px) {
+  .batches-box {
+    flex-direction: column;
+  }
+  .box-r-btn {
+    flex-direction: column;
+  }
+  .box-r-btn select {
+    width: 100%;
+  }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1199px) { 
-    
-    .batches-box
-    {
-        justify-content:flex-start;
-    }
-    .batches-box .card
-    {
-        margin-right: 5px;
-    }
-    .box-r-btn
-    {
-        justify-content: start;
-    }
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .batches-box {
+    justify-content: flex-start;
+  }
+  .batches-box .card {
+    margin-right: 5px;
+  }
+  .box-r-btn {
+    justify-content: start;
+  }
 }
