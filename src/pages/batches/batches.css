@@ -15,9 +15,9 @@
   background-color: transparent !important;
 }
 
-.batches-home .table-responsive {
+/* .batches-home .table-responsive {
   overflow-x: hidden !important;
-}
+} */
 
 .batches-home .react-bootstrap-table-pagination-list {
   display: flex !important;
@@ -147,11 +147,11 @@
     border: 1px solid #F1F1F3 !important;
     color: #747893 !important;
 }
-.table-style table th,td
+/* .table-style table th,td
 {
     padding-top: 6px !important;
     padding-bottom: 6px !important;
-}
+} */
 .table-style table th
 {
     border-bottom: 0px solid #000 !important;
@@ -208,6 +208,47 @@
 {
     min-width: 120px;
 }
+.assign-text
+{
+    text-align: center;
+    font-size: 13px;
+    font-weight: 400;
+}
+.assign-text span
+{
+    font-size: 16px;
+    font-weight: 500;
+}
+.my-progress-bar
+{
+    display: flex;
+    align-items: baseline;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid #EFF2F7;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.my-progress-bar:last-child
+{
+    border-bottom: 0px solid #EFF2F7;
+    margin-bottom: 0px;
+}
+.my-progress-bar .label
+{
+    color: #74788D;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+.my-progress-bar .label span
+{
+    color: #495057;
+    font-weight: 500;
+}
+
+
+
 
 
 

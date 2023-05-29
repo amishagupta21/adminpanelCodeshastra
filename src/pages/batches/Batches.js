@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import "../batches/batches.css"
+
 import {
   Row,
   Col,
@@ -15,7 +16,10 @@ import {
   ModalBody,
   ModalFooter,
   Label,
-  UncontrolledAccordion,AccordionItem,AccordionHeader,AccordionBody
+  UncontrolledAccordion,
+  AccordionItem,
+  AccordionHeader,
+  AccordionBody
 } from "reactstrap"
 import { Link, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
@@ -147,7 +151,7 @@ const Batches = props => {
             </DropdownToggle> */}
             {/* <DropdownMenu className="dropdown-menu-end"> */}
             <div className="me-2">
-              <i className="mdi mdi-eye font-size-16 text-primary" />
+              <Link to="/batch-list"><i className="mdi mdi-eye font-size-16 text-primary" /></Link>
             </div>
             <div className="me-2">
               <Link to="/" className="text-muted">
@@ -613,22 +617,17 @@ const Batches = props => {
                                       <option>Archived</option>
                                     </Input>
                                   </div>
-                                  <div className="ms-lg-3 mb-3">
-                                    <Input type="select">
-                                      <option selected>Progress</option>
-                                      <option>Completed</option>
-                                      <option>In-Progress</option>
-                                    </Input>
-                                  </div>
+                                  
                                   <div className="ms-lg-3 mb-3">
                                     <Input type="select">
                                       <option selected>Course Name </option>
-                                      <option>Status - 1</option>
-                                      <option>Status - 2</option>
+                                      <option>Full Stack Web Developer</option>
+                                      <option>Full Stack Web Developer</option>
+                                      <option>Full Stack Web Developer</option>
                                     </Input>
                                   </div>
                                   <div className="ms-lg-3 mb-3">
-                                    <Button className=" btn-grey">
+                                    <Button className="btn btn-secondary">
                                       <i className="mdi mdi-filter"></i> Apply
                                       Fillter
                                     </Button>
