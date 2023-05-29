@@ -132,10 +132,18 @@ export const UPDATE_COURSE = "/courses"
 
 export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 
-// Variatn API's
+// MAIN BATCHES
+
+export const GET_BATCHES = "/admin/batch"
+
+// Variant API's
 
 export const GET_VARIANT_LIST = "/admin/course/variant"
 export const EDIT_VARIANT = "/admin/course-variant"
+
+// Curriculum API's
+
+export const GET_CURRICULUM_LIST = "/curriculum-chapters/module"
 
 // Edit Course
 export const GET_COURSES = "/admin/course"

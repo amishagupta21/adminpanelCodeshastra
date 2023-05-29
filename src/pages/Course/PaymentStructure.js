@@ -14,6 +14,10 @@ import plus from "../../assets/images/add-plus.svg"
 
 const PaymentStructure = ({ paymentStructureData }) => {
   const [inputFields, setInputFields] = useState(paymentStructureData)
+  const [paymentTemplateValue, setPaymentTemplateValue] = useState({
+    value: 1,
+    label: 1,
+  })
 
   useEffect(() => {
     setInputFields(paymentStructureData)
@@ -50,6 +54,10 @@ const PaymentStructure = ({ paymentStructureData }) => {
     result[index] = indexValue
     data.feesStructure.value = result
     setInputFields(data)
+  }
+
+  const paymentTemplate = e => {
+    setPaymentTemplateValue(e)
   }
 
   const options = [
@@ -133,21 +141,12 @@ const PaymentStructure = ({ paymentStructureData }) => {
 
                   <FormGroup className="mt-3">
                     <Label for="exampleSelect">Payment Template</Label>
-                    {/* <Input
-                      id="exampleSelect"
-                      name="select"
-                      type="select"
-                      onChange={e => paymentStructureChange(e, index)}
-                      value={overview?.payment_template}
-                    > */}
+
                     <Select
                       options={options}
                       name="payment_template"
-                      onChange={e => paymentStructureChange(e, index)}
-                      value={{
-                        value: overview?.payment_template,
-                        label: overview?.payment_template,
-                      }}
+                      onChange={e => paymentTemplate(e, index)}
+                      value={paymentTemplateValue}
                     />
 
                     {/* </Input> */}
