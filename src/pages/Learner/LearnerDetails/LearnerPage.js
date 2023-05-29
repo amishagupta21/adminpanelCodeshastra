@@ -378,8 +378,6 @@ class LearnerPage extends Component {
     )
     // const paginationPage = Array.apply(null, new Array(pageCount))
 
-    console.log(manageUser, "////////////manageUser")
-
     const defaultSorted = [
       {
         dataField: "id",

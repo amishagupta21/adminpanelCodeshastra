@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Button,
   Modal,
@@ -15,8 +15,22 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "reactstrap"
+import { getCurriculum } from "store/Curriculum/actions"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { useParams } from "react-router-dom"
 
-function Curriculum(args) {
+function Curriculum(props, args) {
+  const params = useParams()
+
+  const { manageUser, count } = props
+  const [item, setItem] = useState(count)
+
+  useEffect(() => {
+    const { onGetCurriculum } = props
+    onGetCurriculum(params.id)
+  }, [])
+
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
 
@@ -111,103 +125,116 @@ function Curriculum(args) {
         </Col>
       </Row>
       {/* <Row>
-                <Col md={12}>
-                    <div className='mt-5'>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>Position</th>
-                                    <th> Chapter 1</th>
-                                    <th>Content</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <Input type="text" placeholder="1" style={{width:'50px'}} />
-                                    </th>
-                                    <td>
-                                        <p className='cirr-text'>
-                                            you will take your first steps into the metaverse, exploring what it is, how to interact with it, and how to....
-                                        </p>
-                                    </td>
-                                    <td>External URL</td>
-                                    <td>
-                                        <div className='action'>
-                                            <span className='me-3'>
-                                                <FormGroup switch>
-                                                    <Input type="switch" checked={state} onClick={() => {
-                                                        setState(!state);
-                                                    }}
-                                                    />
-                                                </FormGroup>
-                                            </span>
-                                            <span className='me-3' onClick={toggle}>
-                                                <i className='mdi mdi-pencil font-size-16 text-success'></i>
-                                            </span>
-                                            <span className='me-3'>
-                                                <i className='mdi mdi-trash-can font-size-16 text-danger'></i>
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </div>
-                </Col>
-            </Row> */}
-
-      <Row>
-        <Col md={12} className="pb-0">
-          <div className="">
-            <ul className="comment-box">
-              <li>
-                <div className="mb-3">
-                  <strong>Position</strong>
-                </div>
-                <Input type="text" placeholder="1" style={{ width: "50px" }} />
-              </li>
-              <li>
-                <div className="mb-3">
-                  <strong>Chapter 1</strong>
-                </div>
-                <p className="cirr-text">
-                  you will take your first steps into the metaverse...
-                </p>
-              </li>
-              <li>
-                <div className="mb-3">
-                  <strong>Content</strong>
-                </div>
-                <p>External URL</p>
-              </li>
-              <li>
-                <div className="mb-3">&nbsp;</div>
-                <div className="action">
-                  <span className="me-3">
-                    <FormGroup switch>
+        <Col md={12}>
+          <div className="mt-5">
+            <Table>
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th> Chapter 1</th>
+                  <th>Content</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                {count?.map(item => (
+                  <tr key={item.id}>
+                    <th scope="row">
                       <Input
-                        type="switch"
-                        checked={state}
-                        onClick={() => {
-                          setState(!state)
-                        }}
+                        type="text"
+                        placeholder="Position"
+                        style={{ width: "50px" }}
+                        value={item?.position}
                       />
-                    </FormGroup>
-                  </span>
-                  <span className="me-3" onClick={toggle}>
-                    <i className="mdi mdi-pencil font-size-16 text-success"></i>
-                  </span>
-                  <span className="me-3">
-                    <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                  </span>
-                </div>
-              </li>
-            </ul>
+                    </th>
+                    <td>
+                      <p className="cirr-text">{item?.description}</p>
+                    </td>
+                    <td>{item?.link}</td>
+                    <td>
+                      <div className="action">
+                        <span className="me-3">
+                          <FormGroup switch>
+                            <Input
+                              type="switch"
+                              checked={item?.enable}
+                              onClick={() => {
+                                setState(!state)
+                              }}
+                            />
+                          </FormGroup>
+                        </span>
+                        <span className="me-3" onClick={toggle}>
+                          <i className="mdi mdi-pencil font-size-16 text-success"></i>
+                        </span>
+                        <span className="me-3">
+                          <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           </div>
         </Col>
-      </Row>
+      </Row> */}
+
+      {/* <Row>
+        <Col md={12} className="pb-0">
+          <div className="">
+            {count?.map(item => (
+              <ul key={item?.id} className="comment-box">
+                <li className="w-25">
+                  <div className="mb-3">
+                    <strong>Position</strong>
+                  </div>
+                  <Input
+                    type="text"
+                    placeholder="Position"
+                    value={item?.position}
+                    style={{ width: "50px" }}
+                  />
+                </li>
+                <li className="w-25">
+                  <div className="mb-3">
+                    <strong>Chapter 1</strong>
+                  </div>
+                  <p className="cirr-text">{item?.description}</p>
+                </li>
+                <li className="w-25">
+                  <div className="mb-3">
+                    <strong>Content</strong>
+                  </div>
+                  <p>{item?.content}</p>
+                </li>
+                <li className="w-25">
+                  <div className="mb-3">&nbsp;</div>
+                  <div className="action">
+                    <span className="me-3">
+                      <FormGroup switch>
+                        <Input
+                          type="switch"
+                          checked={state}
+                          onClick={() => {
+                            setState(!state)
+                          }}
+                        />
+                      </FormGroup>
+                    </span>
+                    <span className="me-3" onClick={toggle}>
+                      <i className="mdi mdi-pencil font-size-16 text-success"></i>
+                    </span>
+                    <span className="me-3">
+                      <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            ))}
+          </div>
+        </Col>
+      </Row> */}
 
       <Row>
         <Col md={12}>
@@ -320,4 +347,25 @@ function Curriculum(args) {
     </div>
   )
 }
-export default Curriculum
+
+Curriculum.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  Curriculum: PropTypes.array,
+}
+
+const mapStateToProps = ({ Curriculum, state, count }) => ({
+  manageUser: Curriculum?.manageUser,
+  count: Curriculum?.count,
+  userRoles: Curriculum?.roles,
+  // deleteData: false,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onGetCurriculum: data => dispatch(getCurriculum(data)),
+  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
+  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Curriculum)

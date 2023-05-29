@@ -220,11 +220,13 @@ const faq = props => {
                   </Button>
                 </FormGroup>
               </Col>{" "}
-
               <Col md={3}>
                 <FormGroup>
-                  <Button size="sm" color="secondary" className="secondary-btns-custom">
-                   
+                  <Button
+                    size="sm"
+                    color="secondary"
+                    className="secondary-btns-custom"
+                  >
                     Export
                   </Button>
                 </FormGroup>
@@ -294,7 +296,10 @@ const faq = props => {
               <td>Placement Question</td>
 
               <td>
-                <Button color="success" className="assign-batch assign-batch-border">
+                <Button
+                  color="success"
+                  className="assign-batch assign-batch-border"
+                >
                   Apply
                 </Button>
               </td>
@@ -413,7 +418,10 @@ const faq = props => {
               <td>Placement Question</td>
 
               <td>
-              <Button color="success" className="assign-batch assign-batch-border">
+                <Button
+                  color="success"
+                  className="assign-batch assign-batch-border"
+                >
                   Apply
                 </Button>
               </td>
