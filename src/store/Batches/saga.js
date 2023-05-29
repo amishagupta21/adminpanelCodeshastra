@@ -4,6 +4,7 @@ import { takeEvery, put, call } from "redux-saga/effects"
 import {
   GET_BATCHES,
   GET_BATCHES_LIST,
+  GET_BATCHES_LEARNER,
   DELETE_LEARNER,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
