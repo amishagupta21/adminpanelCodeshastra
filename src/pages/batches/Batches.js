@@ -142,18 +142,15 @@ const Batches = props => {
             </DropdownToggle> */}
             {/* <DropdownMenu className="dropdown-menu-end"> */}
             <div className="me-2">
-              <i
-                onClick={e => toggle(e, setViewData(user))}
-                className="mdi mdi-eye font-size-16 text-primary"
-              />
+              <i className="mdi mdi-eye font-size-16 text-primary" />
             </div>
             <div className="me-2">
-              <Link to={`/courses/edit/${user.id}`} className="text-muted">
+              <Link to="/" className="text-muted">
                 <i className="mdi mdi-pencil font-size-16 text-success" />
               </Link>
             </div>
             <div className="me-2">
-              <Link to={`/courses/edit/${user.id}`} className="text-muted">
+              <Link to="/" className="text-muted">
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
               </Link>
             </div>

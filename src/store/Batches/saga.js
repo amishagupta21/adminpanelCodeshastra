@@ -19,6 +19,9 @@ import {
   getBatchesListCountSuccess,
   deleteLearnerSuccess,
   deleteLearnerFail,
+  getBatchesLearnerSuccess,
+  getBatchesLearnerCountSuccess,
+  getBatchesLearnerCountFail,
 } from "./actions"
 import {
   getBatchesList,
@@ -56,6 +59,21 @@ function* fetchBatches({ payload: data }) {
   }
 }
 
+// MAIN LEARNER
+
+function* fetchBatchesLearner({ payload: data }) {
+  try {
+    const response = yield call(getBatches, data)
+    tosterMsg(response?.message)
+    yield put(getBatchesLearnerSuccess(response?.data?.result))
+    yield put(getBatchesLearnerCountSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getBatchesLearnerCountFail(error))
+    yield put(getBatchesLearnerCountFail(error))
+  }
+}
+
 // function* onDeleteLearner({ payload: event }) {
 //   try {
 //     const response = yield call(getDeleteData, event)
@@ -83,6 +101,7 @@ function* fetchBatches({ payload: data }) {
 function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
+  yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
 
   // yield takeEvery(DELETE_LEARNER, onDeleteLearner)
   // yield takeEvery(FILTER_STATUS_LEARNER, onFilterLearner)

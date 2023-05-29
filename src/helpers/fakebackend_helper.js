@@ -118,7 +118,16 @@ const getBatchesList = async data => {
 // MAIN BATCHES API
 
 const getBatches = async data => {
-  console.log(data, "////////data")
+  const resp = await getCourseData(
+    url.GET_BATCHES +
+      `?pageSize=${data?.pageSize || 20}&keyword=${data?.search || ""}&page=${
+        data?.page || 1
+      }`
+  )
+  return resp
+}
+
+const getBatchesLearner = async data => {
   const resp = await getCourseData(
     url.GET_BATCHES +
       `?pageSize=${data?.pageSize || 20}&keyword=${data?.search || ""}&page=${
@@ -579,5 +588,6 @@ export {
   getCurriculumList,
   getFaqList,
   getBatches,
+  getBatchesLearner,
   // getFilter,
 }
