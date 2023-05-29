@@ -35,7 +35,7 @@ function BatchAccordion({ viewData }) {
         </FormGroup>
       </div>
       <UncontrolledAccordion defaultOpen={["1", "2"]} stayOpen>
-        <AccordionItem>
+        <AccordionItem >
           <AccordionHeader targetId="1">
             Batch Configuration{" "}
             <i className="mdi mdi-information-outline font-size-16 ms-2"></i>

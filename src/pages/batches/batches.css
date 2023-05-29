@@ -6,6 +6,10 @@
     margin-top: 20px;
     flex-wrap: wrap;
 } */
+a 
+{
+    color: #495057 !important;
+}
 .batches-box .box
 {
     
@@ -75,6 +79,111 @@
 .batches-home table thead {
     background: #F8F9FA;
 }
+.accordionItem-table
+{
+    display: flex;
+}
+.batch-accord table th, td
+{
+    border: 0px solid #000000 !important;
+}
+/* .batch-accord
+{
+    border-top: 1px solid #ced4da !important;
+} */
+.batch-accord .accordion-header
+{
+    border-top: 0px solid #ced4da !important;
+    border-bottom: 0px solid #ced4da !important;;
+}
+.batch-accord .accordion-header .accordion-button
+{
+    /* background: transparent !important; */
+    /* border: 10px solid rgb(242, 244, 253) !important; */
+    background: #F9F9F9 !important;
+    color: #495057 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+.batch-accord .accordion-body
+{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.btn-grey
+{
+    background: #F1F1F3 !important;
+    border: 1px solid #F1F1F3 !important;
+    color: #747893 !important;
+}
+.table-style table th,td
+{
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+.table-style table th
+{
+    border-bottom: 0px solid #000 !important;
+    color: #495057;
+    font-weight: 600;
+}
+.table-style table td
+{
+    color: #74788D;
+    font-size: 13px;
+    font-weight:400;
+}
+.batches-list .nav-tabs .nav-link
+{
+    background: #fff;
+    color: #495057;
+    border: 0px solid #fff;
+}
+.batches-list .nav-tabs .nav-link:hover
+{
+    border: 0px solid #000;
+}
+.batches-list .nav-tabs
+{
+    border: 0px solid #000;
+    margin: 0;
+    border-bottom: 1px solid #EFF2F7;
+    height: 38px;
+}
+
+.batches-list .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-links
+{
+    /* background: #556EE6; */
+    background: transparent;
+    color: #556EE6;
+    border-radius:3px;
+}
+.batches-list .nav-tabs .nav-link.active
+{
+    border-radius: 0px !important;
+    border-bottom: 1px solid #556EE6;
+}
+.batches-list .nav-tabs .nav-link:hover
+{
+    /* background: #000000; */
+    border-bottom: 1px solid #556EE6;
+}
+.batches-list .tab-content
+{
+    padding-top: 50px;
+}
+
+.batches-list .table-list th
+{
+    min-width: 120px;
+}
+
+
+
+
+
+
+
 
 @media (max-width: 767px)
 {
@@ -105,5 +214,10 @@
     .box-r-btn
     {
         justify-content: start;
+    }
+    .accordionItem-table
+    {
+        display: flex;
+        flex-direction: column;
     }
 }
