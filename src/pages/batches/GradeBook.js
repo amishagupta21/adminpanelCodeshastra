@@ -27,10 +27,10 @@ import { getGradeBook } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 
 const GradeBook = props => {
-  console.log(props, "/////////props")
   const [isExpanded, setIsExpanded] = useState(null)
   const params = useParams()
   const { manageUser, usersCount } = props
+
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
 
@@ -131,7 +131,6 @@ const GradeBook = props => {
         key={isExpanded}
         keyField="_id"
         columns={state?.columns}
-        // data={state?.state1}
         data={item}
       >
         {toolkitProps => (
@@ -170,15 +169,12 @@ GradeBook.propTypes = {
   Batches: PropTypes.array,
 }
 
-const mapStateToProps = ({ Batches, state, count }) => (
-  console.log(Batches, "////////Batches"),
-  {
-    manageUser: Batches?.manageUser,
-    usersCount: Batches?.count,
-    userRoles: Batches?.roles,
-    // deleteData: false,
-  }
-)
+const mapStateToProps = ({ Batches, state, count }) => ({
+  manageUser: Batches?.manageUser,
+  usersCount: Batches?.count,
+  userRoles: Batches?.roles,
+  // deleteData: false,
+})
 
 const mapDispatchToProps = dispatch => ({
   onGetGradeBook: data => dispatch(getGradeBook(data)),

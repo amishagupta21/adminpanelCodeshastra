@@ -84,13 +84,11 @@ function* fetchBatchesLearner({ payload: data }) {
 // GRADE BOOK
 
 function* fetchGradeBook({ payload: data }) {
-  console.log(data, "/////////data")
   try {
     const response = yield call(getBatchesGrade, data)
-    console.log(response, "/////////response")
     tosterMsg(response?.message)
-    yield put(getGradeBookSuccess(response?.data))
-    // yield put(getGradeBookCountSuccess(response?.data))
+    yield put(getGradeBookSuccess(response?.data[0]))
+    yield put(getGradeBookCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getGradeBookCountFail(error))
