@@ -83,12 +83,7 @@ function FaqConfiguration(props) {
                         <th>Action</th>
                       </tr>
                     </thead>
-                    {/* <CourseTable
-                                            activeTab={activeTab}
-                                            toolkitProps={toolkitProps}
-                                            usersCount={usersCount}
-                                            
-                                        /> */}
+                  
                     <tbody>
                       {props?.manageUser.map((el, index) => {
                         return (

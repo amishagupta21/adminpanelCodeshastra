@@ -23,7 +23,7 @@ import { DeBounceSearch } from "common/DeBounceSearch"
 import { Link, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { getBatchesList } from "store/Batches/actions"
+import { getBatchesLearner } from "store/Batches/actions"
 
 const BatchListTable = props => {
   const [isExpanded, setIsExpanded] = useState(null)
@@ -131,6 +131,7 @@ const BatchListTable = props => {
 
     onGetBatchesList(params.id)
   }, [])
+  // console.log("batch",props.manageUser)
 
   return (
     <>
@@ -234,7 +235,7 @@ BatchListTable.propTypes = {
 }
 
 const mapStateToProps = ({ Batches, state, count }) => (
-  console.log(Batches, "////////Batches"),
+  // console.log(Batches, "////////Batches"),
   {
     manageUser: Batches?.manageUser,
     usersCount: Batches?.count,
@@ -244,7 +245,7 @@ const mapStateToProps = ({ Batches, state, count }) => (
 )
 
 const mapDispatchToProps = dispatch => ({
-  onGetBatchesList: data => dispatch(getBatchesList(data)),
+  onGetBatchesList: data => dispatch(getBatchesLearner(data)),
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })

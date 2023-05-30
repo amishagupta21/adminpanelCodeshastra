@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useState,useEffect} from "react"
+import { Link, useParams } from "react-router-dom"
 import {
   Button,
   UncontrolledDropdown,
@@ -21,10 +21,29 @@ import {
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import BatchListTable from "./BatchListTable"
+import { getBatchesLearner } from "store/Batches/actions"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+// import { useParams } from "react-router-dom"
 
-const BatchList = () => {
+const BatchList = (props) => {
   const [state, setState] = useState(true)
   const [key, setKey] = useState("tab")
+  const params = useParams()
+  const { manageUser, usersCount } = props
+  const [item, setItem] = useState(manageUser)
+
+  useEffect(() => {
+    setItem(manageUser)
+  }, [manageUser])
+
+  useEffect(() => {
+    const { onGetBatchesLearner } = props
+
+    onGetBatchesLearner(params.id)
+  }, [])
+  console.log("bateches",props)
+
 
   return (
     <div className="page-content batches-list">
@@ -311,5 +330,28 @@ const BatchList = () => {
     </div>
   )
 }
+BatchList.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  Batches: PropTypes.array,
+}
 
-export default BatchList
+const mapStateToProps = ({ Batches, state, count }) => (
+  console.log(Batches, "////////Batches"),
+  {
+    manageUser: Batches?.manageUser,
+    usersCount: Batches?.count,
+    userRoles: Batches?.roles,
+    // deleteData: false,
+  }
+)
+
+const mapDispatchToProps = dispatch => ({
+  onGetBatchesLearner: data => dispatch(getBatchesLearner(data)),
+  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
+  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BatchList)
+// export default BatchList

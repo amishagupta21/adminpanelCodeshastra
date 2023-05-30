@@ -136,6 +136,8 @@ export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 
 export const GET_BATCHES = "/admin/batch"
 
+export const GET_BATCHES_LEARNER_LIST="/admin/batch/learners/listing"
+
 // Variant API's
 
 export const GET_VARIANT_LIST = "/admin/course/variant"

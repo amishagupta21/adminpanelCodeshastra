@@ -26,6 +26,7 @@ const INIT_STATE = {
 }
 
 const Batches = (state = INIT_STATE, action) => {
+  // console.log(action.type)
   switch (action.type) {
     case GET_BATCHES:
       return {
