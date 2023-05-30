@@ -137,6 +137,16 @@ const getBatchesLearner = async data => {
   return resp
 }
 
+const getBatchesGrade = async data => {
+  const resp = await getCourseData(
+    url.GET_GRADE_BOOK +
+      `/${data}/lectures?pageSize=${data?.pageSize || 11}&page=${
+        data?.page || 1
+      }`
+  )
+  return resp
+}
+
 //VARIANT API
 
 const getVariantList = async data => {
@@ -181,6 +191,7 @@ const getCourse = async id => {
 }
 
 const editCourse = async data => {
+  // Deleting id from data
   const deleteId = { ...data }
   delete deleteId.id
   const resp = await patch(
@@ -589,5 +600,6 @@ export {
   getFaqList,
   getBatches,
   getBatchesLearner,
+  getBatchesGrade,
   // getFilter,
 }

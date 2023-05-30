@@ -39,8 +39,6 @@ const Batches = props => {
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
 
-  console.log(props, "//////props")
-
   useEffect(() => {
     setItem(manageUser)
   }, [manageUser])
@@ -151,12 +149,12 @@ const Batches = props => {
             </DropdownToggle> */}
             {/* <DropdownMenu className="dropdown-menu-end"> */}
             <div className="me-2">
-              <Link to="/batch-list">
+              <Link to="/">
                 <i className="mdi mdi-eye font-size-16 text-primary" />
               </Link>
             </div>
             <div className="me-2">
-              <Link to="/batch-list" className="text-muted">
+              <Link to={`/batch-list/edit/${user?.id}`} className="text-muted">
                 <i className="mdi mdi-pencil font-size-16 text-success" />
               </Link>
             </div>
@@ -719,15 +717,12 @@ Batches.propTypes = {
   Batches: PropTypes.array,
 }
 
-const mapStateToProps = ({ Batches, state, count }) => (
-  console.log(Batches, "////////Batches"),
-  {
-    manageUser: Batches?.manageUser,
-    usersCount: Batches?.count,
-    userRoles: Batches?.roles,
-    // deleteData: false,
-  }
-)
+const mapStateToProps = ({ Batches, state, count }) => ({
+  manageUser: Batches?.manageUser,
+  usersCount: Batches?.count,
+  userRoles: Batches?.roles,
+  // deleteData: false,
+})
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesList: data => dispatch(getBatchesList(data)),

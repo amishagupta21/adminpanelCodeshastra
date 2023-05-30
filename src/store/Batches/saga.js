@@ -5,6 +5,7 @@ import {
   GET_BATCHES,
   GET_BATCHES_LIST,
   GET_BATCHES_LEARNER,
+  GET_GRADE_BOOK,
   DELETE_LEARNER,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
@@ -23,10 +24,15 @@ import {
   getBatchesLearnerSuccess,
   getBatchesLearnerCountSuccess,
   getBatchesLearnerCountFail,
+  getGradeBookSuccess,
+  getGradeBookCountSuccess,
+  getGradeBookCountFail,
 } from "./actions"
 import {
   getBatchesList,
   getBatches,
+  getBatchesLearner,
+  getBatchesGrade,
   getDeleteData,
   getStatusFilter,
 } from "helpers/fakebackend_helper"
@@ -64,7 +70,7 @@ function* fetchBatches({ payload: data }) {
 
 function* fetchBatchesLearner({ payload: data }) {
   try {
-    const response = yield call(getBatches, data)
+    const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
     yield put(getBatchesLearnerSuccess(response?.data?.result))
     yield put(getBatchesLearnerCountSuccess(response?.data))
@@ -72,6 +78,23 @@ function* fetchBatchesLearner({ payload: data }) {
     tosterMsg(error?.message)
     yield put(getBatchesLearnerCountFail(error))
     yield put(getBatchesLearnerCountFail(error))
+  }
+}
+
+// GRADE BOOK
+
+function* fetchGradeBook({ payload: data }) {
+  console.log(data, "/////////data")
+  try {
+    const response = yield call(getBatchesGrade, data)
+    console.log(response, "/////////response")
+    tosterMsg(response?.message)
+    yield put(getGradeBookSuccess(response?.data))
+    // yield put(getGradeBookCountSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getGradeBookCountFail(error))
+    // yield put(getGradeBookCountFail(error))
   }
 }
 
@@ -103,6 +126,7 @@ function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
+  yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
 
   // yield takeEvery(DELETE_LEARNER, onDeleteLearner)
   // yield takeEvery(FILTER_STATUS_LEARNER, onFilterLearner)

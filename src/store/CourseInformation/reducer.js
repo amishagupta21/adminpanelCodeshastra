@@ -23,11 +23,11 @@ const INIT_STATE = {
 
 const WorkDetails = (state = INIT_STATE, action) => {
   switch (action.type) {
-    // case GET_COURSE_INFORMATION:
-    //   return {
-    //     ...state,
-    //     getCourseInformation: action.payload,
-    //   }
+    case GET_COURSE_INFORMATION:
+      return {
+        ...state,
+        getCourseInformation: action.payload,
+      }
     case GET_COURSE_INFORMATION_SUCCESS:
       return {
         ...state,

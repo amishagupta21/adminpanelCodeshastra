@@ -136,6 +136,10 @@ export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 
 export const GET_BATCHES = "/admin/batch"
 
+// GRADE_BOOK
+
+export const GET_GRADE_BOOK = "/admin/batch"
+
 // Variant API's
 
 export const GET_VARIANT_LIST = "/admin/course/variant"
