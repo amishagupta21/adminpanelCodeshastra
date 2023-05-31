@@ -1,5 +1,6 @@
 import React, { useState,useEffect} from "react"
 import { Link, useParams } from "react-router-dom"
+import PropTypes from "prop-types"
 import {
   Button,
   UncontrolledDropdown,
@@ -21,28 +22,31 @@ import {
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import BatchListTable from "./BatchListTable"
-import { getBatchesLearner } from "store/Batches/actions"
-import PropTypes from "prop-types"
+import GradeBook from "./GradeBook"
+import Status from "./Status"
+import BatchProgress from "./BatchProgress"
+import CompletionStatus from "./CompletionStatus"
+import BatchLearner from "./BatchLearner"
 import { connect } from "react-redux"
-// import { useParams } from "react-router-dom"
+import {getBatchesLearner} from "store/Batches/actions"
 
 const BatchList = (props) => {
-  const [state, setState] = useState(true)
   const [key, setKey] = useState("tab")
   const params = useParams()
   const { manageUser, usersCount } = props
   const [item, setItem] = useState(manageUser)
+  console.log("shit////////",manageUser)
 
   useEffect(() => {
     setItem(manageUser)
   }, [manageUser])
 
   useEffect(() => {
+    
     const { onGetBatchesLearner } = props
 
     onGetBatchesLearner(params.id)
   }, [])
-  console.log("bateches",props)
 
 
   return (
@@ -94,166 +98,9 @@ const BatchList = (props) => {
       </Row>
       <Row>
         <Col md={5}>
-          <div>
-            <Card>
-              <CardBody>
-                <div className="d-flex">
-                  <div>Learners Batch</div>
-                  <div className="ms-2">
-                    <FormGroup switch>
-                      <Label check>Enable</Label>
-                      <Input
-                        type="switch"
-                        checked={state}
-                        onClick={() => {
-                          setState(!state)
-                        }}
-                      />
-                    </FormGroup>
-                  </div>
-                </div>
-                <div className="mt-4 table-style">
-                  <Table>
-                    <tbody>
-                      <tr>
-                        <td>Course Name:</td>
-                        <th>Full Stack Web Developer Program</th>
-                      </tr>
-                      <tr>
-                        <td>Description:</td>
-                        <th>For Freshers Only</th>
-                      </tr>
-                      <tr>
-                        <td>Variant Type:</td>
-                        <th>Full Time</th>
-                      </tr>
-                      <tr>
-                        <td>Start Date:</td>
-                        <th>07 Oct 22</th>
-                      </tr>
-                      <tr>
-                        <td>End Date:</td>
-                        <th>12 Oct 22</th>
-                      </tr>
-                      <tr>
-                        <td>Lectures:</td>
-                        <th>9</th>
-                      </tr>
-                      <tr>
-                        <td>Learners:</td>
-                        <th>40</th>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
-              </CardBody>
-            </Card>
-          </div>
-          <div>
-            <Card>
-              <CardBody>
-                <div className="d-flex justify-content-between mb-3">
-                  <span className="chart-heading">Batch Progress</span>
-                </div>
-                <Row>
-                  <Col md={6}>
-                    <p className="mb-3 chart-subheading">Total Lectures</p>
-                    <p className="mb-3">
-                      <strong style={{ fontSize: "15px" }}>4</strong> /9
-                      Completed
-                    </p>
-                    <p className="mb-3 chart-subheading">Avg. Present </p>
-                    <p className="mb-3" style={{ fontSize: "16px" }}>
-                      <strong>60%</strong>
-                    </p>
-                    <p className="mb-3 chart-subheading">
-                      <span
-                        className="text-green"
-                        style={{ background: "none" }}
-                      >
-                        12% <i className="mdi mdi-arrow-up"></i>
-                      </span>
-                      Last Month
-                    </p>
-                    <p className="mb-3 chart-subheading">Avg. Time Spent </p>
-                    <p className="mb-3" style={{ fontSize: "16px" }}>
-                      <strong>23 Min</strong>
-                    </p>
-                    <p className="mb-3 chart-subheading">Avg. Present </p>
-                    <p className="mb-4 chart-subheading">
-                      <span
-                        className="text-green"
-                        style={{ background: "none", color: "#F46A6A" }}
-                      >
-                        12%
-                        <i className="mdi mdi-arrow-down"></i>
-                      </span>
-                      Last Month
-                    </p>
-                    <p className="mb-3 chart-subheading">
-                      Next Lecture On: <strong>08 Oct 22</strong>
-                    </p>
-                  </Col>
-                  <Col md={6} className="d-flex align-items-center">
-                    Circle Progress
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </div>
-          <div>
-            <Card>
-              <CardBody>
-                <div className="d-flex justify-content-between px-2">
-                  <div className="assign-text">
-                    Assignments
-                    <br />
-                    <span>200</span>
-                  </div>
-                  <div className="assign-text">
-                    Assessments <br />
-                    <span>200</span>
-                  </div>
-                  <div className="assign-text">
-                    Projects
-                    <br />
-                    <span>20</span>
-                  </div>
-                </div>
-                <hr></hr>
-                <h5>Completion Status By Learners</h5>
-                <div className="mt-4">
-                  <div className="my-progress-bar">
-                    <Label className="me-3">Assignments</Label>
-                    <div className="w-100 text-center">
-                      <Progress value="25" color="primary"></Progress>
-                      <Label className="me-2 label">
-                        <span>32</span>/40 Learners
-                      </Label>
-                    </div>
-                  </div>
-                  <div className="my-progress-bar">
-                    <Label className="me-3">Assignments</Label>
-                    <div className="w-100 text-center">
-                      <Progress value="25" color="warning"></Progress>
-                      <Label className="me-2 label">
-                        <span>32</span>/40 Learners
-                      </Label>
-                    </div>
-                  </div>
-                  <div className="my-progress-bar">
-                    <Label className="me-3">Assignments</Label>
-                    <div className="w-100 text-center">
-                      <Progress value="25" color="danger"></Progress>
-                      <Label className="me-2 label">
-                        <span>32</span>/40 Learners
-                      </Label>
-                    </div>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
-          </div>
+          <BatchLearner />
+          <BatchProgress />
+          <CompletionStatus />
         </Col>
         <Col md={7}>
           <Card>
@@ -296,22 +143,22 @@ const BatchList = (props) => {
                     <Row>
                       <Col md={12}>
                         <div className="table-responsive">
-                          <BatchListTable />
+                        <BatchListTable manageUser={manageUser} usersCount={usersCount}/>
                         </div>
                       </Col>
                     </Row>
                   </Tab>
                   <Tab eventKey="lectures" title="Lectures">
-                    <BatchListTable />
+                    {/* <BatchListTable /> */}
                   </Tab>
                   <Tab eventKey="mentors" title="Mentors">
-                    <BatchListTable />
+                    {/* <BatchListTable /> */}
                   </Tab>
                   <Tab eventKey="Grade Book" title="Grade Book">
-                    <BatchListTable />
+                    <GradeBook />
                   </Tab>
                   <Tab eventKey="status" title="Status">
-                    <BatchListTable />
+                    <Status />
                   </Tab>
                 </Tabs>
               </div>
@@ -341,7 +188,7 @@ const mapStateToProps = ({ Batches, state, count }) => (
   console.log(Batches, "////////Batches"),
   {
     manageUser: Batches?.manageUser,
-    usersCount: Batches?.count,
+    usersCount: Batches?.count.count,
     userRoles: Batches?.roles,
     // deleteData: false,
   }
@@ -354,4 +201,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BatchList)
-// export default BatchList

@@ -14,6 +14,11 @@ import {
   GET_BATCHES_LEARNER_FAIL,
   GET_BATCHES_LEARNER_COUNT_SUCCESS,
   GET_BATCHES_LEARNER_COUNT_FAIL,
+  GET_GRADE_BOOK,
+  GET_GRADE_BOOK_SUCCESS,
+  GET_GRADE_BOOK_FAIL,
+  GET_GRADE_BOOK_COUNT_SUCCESS,
+  GET_GRADE_BOOK_COUNT_FAIL,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
@@ -96,6 +101,33 @@ export const getBatchesLearnerCountSuccess = data => ({
 
 export const getBatchesLearnerCountFail = error => ({
   type: GET_BATCHES_LEARNER_COUNT_FAIL,
+  payload: error,
+})
+
+// GRADE BOOK
+
+export const getGradeBook = data => ({
+  type: GET_GRADE_BOOK,
+  payload: data,
+})
+
+export const getGradeBookSuccess = data => ({
+  type: GET_GRADE_BOOK_SUCCESS,
+  payload: data,
+})
+
+export const getGradeBookFail = error => ({
+  type: GET_GRADE_BOOK_FAIL,
+  payload: error,
+})
+
+export const getGradeBookCountSuccess = data => ({
+  type: GET_GRADE_BOOK_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getGradeBookCountFail = error => ({
+  type: GET_GRADE_BOOK_COUNT_FAIL,
   payload: error,
 })
 

@@ -5,6 +5,7 @@ import {
   GET_BATCHES,
   GET_BATCHES_LIST,
   GET_BATCHES_LEARNER,
+  GET_GRADE_BOOK,
   DELETE_LEARNER,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
@@ -23,13 +24,17 @@ import {
   getBatchesLearnerSuccess,
   getBatchesLearnerCountSuccess,
   getBatchesLearnerCountFail,
+  getGradeBookSuccess,
+  getGradeBookCountSuccess,
+  getGradeBookCountFail,
 } from "./actions"
 import {
   getBatchesList,
   getBatches,
+  getBatchesLearner,
+  getBatchesGrade,
   getDeleteData,
   getStatusFilter,
-  getBatchesLearner,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
 
@@ -68,12 +73,27 @@ function* fetchBatchesLearner({ payload: data }) {
   try {
     const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
-    yield put(getBatchesLearnerSuccess(response?.data))
+    yield put(getBatchesLearnerSuccess(response?.data[0]))
     yield put(getBatchesLearnerCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getBatchesLearnerCountFail(error))
     yield put(getBatchesLearnerCountFail(error))
+  }
+}
+
+// GRADE BOOK
+
+function* fetchGradeBook({ payload: data }) {
+  try {
+    const response = yield call(getBatchesGrade, data)
+    tosterMsg(response?.message)
+    yield put(getGradeBookSuccess(response?.data[0]))
+    yield put(getGradeBookCountSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getGradeBookCountFail(error))
+    // yield put(getGradeBookCountFail(error))
   }
 }
 
@@ -105,6 +125,7 @@ function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
+  yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
 
   // yield takeEvery(DELETE_LEARNER, onDeleteLearner)
   // yield takeEvery(FILTER_STATUS_LEARNER, onFilterLearner)

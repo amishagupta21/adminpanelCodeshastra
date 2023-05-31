@@ -32,6 +32,7 @@ import GetCourse from "./CourseInformation/saga"
 import EditCourse from "./CourseInformation/saga"
 import EditCard from "./CourseInformation/saga"
 import GetFaqs from "./FaqConfiguration/saga"
+import GetGradeBook from "./Batches/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -67,5 +68,6 @@ export default function* rootSaga() {
     fork(EditCourse),
     fork(EditCard),
     fork(GetFaqs),
+    fork(GetGradeBook),
   ])
 }

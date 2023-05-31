@@ -40,7 +40,7 @@ const authProtectedRoutes = [
   { path: "/faq-configuration", component: FaqConfiguration },
   { path: "/sms-email-templates", component: SmsEmailTemplates },
   { path: "/batch", component: Batch },
-  { path: "/batch-list", component: BatchList },
+  { path: "/batch-list/edit/:id", component: BatchList },
 
   // //profile
   { path: "/profile", component: UserProfile },

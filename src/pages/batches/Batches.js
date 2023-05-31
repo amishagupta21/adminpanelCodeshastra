@@ -39,8 +39,6 @@ const Batches = props => {
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
 
-  console.log(props, "//////props")
-
   useEffect(() => {
     setItem(manageUser)
   }, [manageUser])
@@ -151,12 +149,12 @@ const Batches = props => {
             </DropdownToggle> */}
             {/* <DropdownMenu className="dropdown-menu-end"> */}
             <div className="me-2">
-              <Link to="/batch-list">
+              <Link to="/">
                 <i className="mdi mdi-eye font-size-16 text-primary" />
               </Link>
             </div>
             <div className="me-2">
-              <Link to="/batch-list" className="text-muted">
+              <Link to={`/batch-list/edit/${user?.id}`} className="text-muted">
                 <i className="mdi mdi-pencil font-size-16 text-success" />
               </Link>
             </div>
@@ -297,7 +295,7 @@ const Batches = props => {
                         <FormGroup>
                           <Label>Course</Label>
                           <Input type="select">
-                            <option selected>Full Stack Web Developer</option>
+                            <option value ="Full Stack Web Developer" >Full Stack Web Developer</option>
                           </Input>
                         </FormGroup>
                       </Col>
@@ -305,7 +303,7 @@ const Batches = props => {
                         <FormGroup>
                           <Label>Variant Type</Label>
                           <Input type="select">
-                            <option selected>Full Time</option>
+                            <option value ="Full Time" >Full Time</option>
                           </Input>
                         </FormGroup>
                       </Col>
@@ -351,9 +349,9 @@ const Batches = props => {
                                           type="select"
                                           className="border-0"
                                         >
-                                          <option selected>2 select</option>
-                                          <option>1</option>
-                                          <option>2</option>
+                                          <option value="2 select" >2 select</option>
+                                          <option value="1">1</option>
+                                          <option value="2">2</option>
                                         </Input>
                                       </FormGroup>
                                     </td>
@@ -411,8 +409,8 @@ const Batches = props => {
                                             style={{ width: "64px" }}
                                             className="border-0"
                                           >
-                                            <option selected>AM</option>
-                                            <option>PM</option>
+                                            <option value="AM" >AM</option>
+                                            <option  value="PM">PM</option>
                                           </Input>
                                         </FormGroup>
                                       </div>
@@ -433,8 +431,8 @@ const Batches = props => {
                                             type="select"
                                             style={{ width: "64px" }}
                                           >
-                                            <option>AM</option>
-                                            <option selected>PM</option>
+                                            <option value="AM">AM</option>
+                                            <option value="PM" >PM</option>
                                           </Input>
                                         </FormGroup>
                                       </div>
@@ -515,8 +513,8 @@ const Batches = props => {
                                             style={{ width: "64px" }}
                                             className="border-0"
                                           >
-                                            <option selected>AM</option>
-                                            <option>PM</option>
+                                            <option value="AM" >AM</option>
+                                            <option value="PM">PM</option>
                                           </Input>
                                         </FormGroup>
                                       </div>
@@ -538,8 +536,8 @@ const Batches = props => {
                                             style={{ width: "64px" }}
                                             className="border-0"
                                           >
-                                            <option>AM</option>
-                                            <option selected>PM</option>
+                                            <option value="AM">AM</option>
+                                            <option value="PM" >PM</option>
                                           </Input>
                                         </FormGroup>
                                       </div>
@@ -645,20 +643,20 @@ const Batches = props => {
                                 <div className="box-r-btn">
                                   <div className="ms-lg-3 mb-3">
                                     <Input type="select">
-                                      <option selected>Status</option>
-                                      <option>Not Started</option>
-                                      <option>In-Progress</option>
-                                      <option>Completed</option>
-                                      <option>Archived</option>
+                                      <option value="Status" >Status</option>
+                                      <option value="Not Started">Not Started</option>
+                                      <option value="In-Progress">In-Progress</option>
+                                      <option value="Completed">Completed</option>
+                                      <option value="Archived">Archived</option>
                                     </Input>
                                   </div>
 
                                   <div className="ms-lg-3 mb-3">
                                     <Input type="select">
-                                      <option selected>Course Name </option>
-                                      <option>Full Stack Web Developer</option>
-                                      <option>Full Stack Web Developer</option>
-                                      <option>Full Stack Web Developer</option>
+                                      <option value="Course Name" >Course Name </option>
+                                      <option value="Full Stack Web Developer">Full Stack Web Developer</option>
+                                      <option value="Full Stack Web Developer">Full Stack Web Developer</option>
+                                      <option value="Full Stack Web Developer">Full Stack Web Developer</option>
                                     </Input>
                                   </div>
                                   <div className="ms-lg-3 mb-3">
@@ -669,9 +667,9 @@ const Batches = props => {
                                   </div>
                                   <div className="ms-lg-3 mb-3">
                                     <Input type="select">
-                                      <option selected>Export </option>
-                                      <option>Export as pdf</option>
-                                      <option>Export as excel</option>
+                                      <option value="Export" >Export </option>
+                                      <option value="Export as pdf">Export as pdf</option>
+                                      <option value="Export as excel">Export as excel</option>
                                     </Input>
                                   </div>
                                 </div>
@@ -683,7 +681,7 @@ const Batches = props => {
                                   Total Batches: &nbsp;{manageUser?.length}
                                 </h6>
                                 <BootstrapTable
-                                  keyField={"_id"}
+                                  keyField={"id"}
                                   responsive
                                   bordered={false}
                                   striped={false}
@@ -719,15 +717,13 @@ Batches.propTypes = {
   Batches: PropTypes.array,
 }
 
-const mapStateToProps = ({ Batches, state, count }) => (
-  console.log(Batches, "////////Batches"),
-  {
-    manageUser: Batches?.manageUser,
-    usersCount: Batches?.count,
-    userRoles: Batches?.roles,
-    // deleteData: false,
-  }
-)
+const mapStateToProps = ({ Batches, state, count }) => {
+  return {
+  manageUser: Batches?.manageUser,
+  usersCount: Batches?.count.count,
+  userRoles: Batches?.roles,
+  // deleteData: false,
+}}
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesList: data => dispatch(getBatchesList(data)),

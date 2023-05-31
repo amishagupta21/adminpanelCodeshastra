@@ -23,11 +23,10 @@ import { DeBounceSearch } from "common/DeBounceSearch"
 import { Link, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { getBatchesLearner } from "store/Batches/actions"
+import { getBatchesList } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
-import "./batches.css"
 
-const BatchListTable = props => {
+const Status = props => {
   const [isExpanded, setIsExpanded] = useState(null)
   const params = useParams()
   const { manageUser, usersCount } = props
@@ -48,9 +47,7 @@ const BatchListTable = props => {
         text: "Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.learner_id
-            ?.fullName
-          }</div>
+          <div className="fw-bold">{user?.name}</div>
         ),
       },
 
@@ -58,75 +55,44 @@ const BatchListTable = props => {
         dataField: "description",
         text: "Assignments",
         sort: true,
-        // formatter: (cellContent, user) => (
-        //   <div className="fw-bold">{user?.assingment
-
-
-
-        //   }</div>
-        // ),
-
       },
+
       {
-        dataField: "start_date",
-        text: "Assessments",
-        sort: true,
-        // formatter: (cellContent, user) => (
-        //   <div className="fw-bold">{user?.assessments
-
-
-
-        //   }</div>
-        // ),
-
-      },
-      {
-        dataField: "end_date",
-        text: "Projects",
-        sort: true,
+        dataField: "Actions",
+        text: "Actions",
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.projects_total
-
-          }</div>
-        ),
-
-
-      },
-      {
-        dataField: "course",
-        text: "Attendance",
-        sort: true,
-        formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.attendance
-
-
-          }</div>
+          <div className="d-flex">
+            <Button color="success" outline className="assign-batch">
+              Assign
+            </Button>
+          </div>
         ),
       },
-       {
-        dataField: "Status",
-        text: "Status",
+    ],
+  }
+
+  let state1 = {
+    data: [
+      {
+        dataField: "id",
+        sort: true,
+        hidden: true,
+        formatter: (cellContent, user) => <>{row?.id}</>,
+      },
+      {
+        dataField: "name",
+        text: "Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.status
-          }</div>
+          <div className="fw-bold">{user?.name}</div>
         ),
       },
-      // {
-      //   dataField: "lectures",
-      //   text: "Week Test 1",
-      //   sort: true,
-      // },
-      // {
-      //   dataField: "lectures",
-      //   text: "Week Test 2",
-      //   sort: true,
-      // },
-      // {
-      //   dataField: "lectures",
-      //   text: "Week Test 3",
-      //   sort: true,
-      // },
+
+      {
+        dataField: "description",
+        text: "Assignments",
+        sort: true,
+      },
 
       {
         dataField: "Actions",
@@ -150,51 +116,6 @@ const BatchListTable = props => {
     ],
   }
 
-  // let state1 = {
-  //   data: [
-  //     {
-  //       dataField: "id",
-  //       sort: true,
-  //       hidden: true,
-  //       formatter: (cellContent, user) => <>{row?.id}</>,
-  //     },
-  //     {
-  //       dataField: "name",
-  //       text: "Name",
-  //       sort: true,
-  //       formatter: (cellContent, user) => (
-  //         <div className="fw-bold">{user?.name}</div>
-  //       ),
-  //     },
-
-  //     {
-  //       dataField: "description",
-  //       text: "Assignments",
-  //       sort: true,
-  //     },
-
-  //     {
-  //       dataField: "Actions",
-  //       text: "Actions",
-  //       formatter: (cellContent, user) => (
-  //         <div className="d-flex">
-  //           <div className="me-2">
-  //             <Link to="/batch-list" className="text-muted">
-  //               <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
-  //             </Link>
-  //             <Link className="text-muted ms-2">
-  //               <i
-  //                 onClick={toggle}
-  //                 className="mdi mdi-clipboard-account mdi-18px text-danger"
-  //               />
-  //             </Link>
-  //           </div>
-  //         </div>
-  //       ),
-  //     },
-  //   ],
-  // }
-
   const defaultSorted = [
     {
       dataField: "id",
@@ -213,11 +134,11 @@ const BatchListTable = props => {
     setItem(manageUser)
   }, [manageUser])
 
-  useEffect(() => {
-    const { onGetBatchesList } = props
+  //   useEffect(() => {
+  //     const { onGetBatchesList } = props
 
-    onGetBatchesList(params.id)
-  }, [])
+  //     onGetBatchesList(params.id)
+  //   }, [])
 
   return (
     <>
@@ -233,6 +154,9 @@ const BatchListTable = props => {
           <>
             <Col xl="12">
               <div className="table-responsive">
+                {/* <h6 className="mt-2">
+                  Total Batches: &nbsp;{manageUser?.length}
+                </h6> */}
                 <BootstrapTable
                   keyField={"_id"}
                   responsive
@@ -255,7 +179,7 @@ const BatchListTable = props => {
   )
 }
 
-BatchListTable.propTypes = {
+Status.propTypes = {
   userRoles: PropTypes.array,
   usersCount: PropTypes.number,
   className: PropTypes.any,
@@ -264,16 +188,15 @@ BatchListTable.propTypes = {
 
 const mapStateToProps = ({ Batches, state, count }) => ({
   manageUser: Batches?.manageUser,
-  usersCount: Batches?.count.count,
+  usersCount: Batches?.count,
   userRoles: Batches?.roles,
   // deleteData: false,
 })
 
 const mapDispatchToProps = dispatch => ({
-  onGetBatchesList: data => dispatch(getBatchesLearner(data)),
+  //   onGetBatchesList: data => dispatch(getBatchesList(data)),
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(BatchListTable)
-// export default BatchListTable
+export default connect(mapStateToProps, mapDispatchToProps)(Status)

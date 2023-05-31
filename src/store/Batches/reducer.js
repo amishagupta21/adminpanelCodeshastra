@@ -14,6 +14,11 @@ import {
   GET_BATCHES_LEARNER_FAIL,
   GET_BATCHES_LEARNER_COUNT_SUCCESS,
   GET_BATCHES_LEARNER_COUNT_FAIL,
+  GET_GRADE_BOOK,
+  GET_GRADE_BOOK_SUCCESS,
+  GET_GRADE_BOOK_COUNT_SUCCESS,
+  GET_GRADE_BOOK_FAIL,
+  GET_GRADE_BOOK_COUNT_FAIL,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
   FILTER_STATUS_LEARNER,
@@ -114,6 +119,37 @@ const Batches = (state = INIT_STATE, action) => {
       }
 
     case GET_BATCHES_LEARNER_COUNT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    // GRADE BOOK
+
+    case GET_GRADE_BOOK:
+      return {
+        ...state,
+        data: action.payload,
+      }
+    case GET_GRADE_BOOK_SUCCESS:
+      return {
+        ...state,
+        manageUser: action.payload,
+      }
+
+    case GET_GRADE_BOOK_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case GET_GRADE_BOOK_COUNT_SUCCESS:
+      return {
+        ...state,
+        count: action.payload,
+      }
+
+    case GET_GRADE_BOOK_COUNT_FAIL:
       return {
         ...state,
         error: action.payload,
