@@ -128,17 +128,18 @@ const Batches = props => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <FormGroup switch>
-            <Input
-              type="switch"
-              name="enable"
-              checked={user?.enable}
-              // checked={state}
-              // onClick={() => {
-              //   setState(!state)
-              // }}
-            />
-          </FormGroup>
+          <div><span className="bg-success px-2 py-1 text-white" style={{borderRadius:'5px'}}>Completed</span></div>
+          // <FormGroup switch>
+          //   <Input
+          //     type="switch"
+          //     name="enable"
+          //     checked={user?.enable}
+          //     // checked={state}
+          //     // onClick={() => {
+          //     //   setState(!state)
+          //     // }}
+          //   />
+          // </FormGroup>
         ),
       },
       {

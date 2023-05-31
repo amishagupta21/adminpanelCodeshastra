@@ -29,12 +29,12 @@ const BatchList = () =>{
     return(
         <div className="page-content batches-list">
             <div className='d-flex justify-content-between'>
-                <div><Link to="/batch"><i className='mdi mdi-chevron-left'></i> Batch List</Link></div>
+                <div><Link to="/batch"><i className='mdi mdi-chevron-left'></i> Batch Detail</Link></div>
                 {/* <div>Batch List / Batch Information</div> */}
                 <div>
                     <Breadcrumb>
-                        <BreadcrumbItem><Link to="/batch">Batch List</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>Batch Information</BreadcrumbItem>
+                        <BreadcrumbItem><Link to="/batch">Batch</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>Batch Detail</BreadcrumbItem>
                     </Breadcrumb>
                 </div>
             </div>
@@ -60,10 +60,11 @@ const BatchList = () =>{
                         <Card>
                             <CardBody>
                                 <div className='d-flex'>
-                                    <div>Learners Batch</div>
-                                    <div className='ms-2'>
+                                    <h4>Learners Batch</h4>
+                                    <div className='ms-3 d-flex'>
+                                        <Label check className='me-2'>Enable</Label>
                                         <FormGroup switch>
-                                            <Label check>Enable</Label>
+                                            
                                             <Input type="switch" checked={state} onClick={() => {setState(!state);}} />
                                         </FormGroup>
                                     </div>
@@ -277,7 +278,7 @@ const BatchList = () =>{
                 <Col md={12}>
                     <div className='py-3' style={{background:'#fff'}}>
                         <Button color="primary" outline className='px-5 ms-4'>Cancel</Button>
-                        <Button color="primary" className='px-5 ms-4'>Save</Button>
+                        <Button color="danger" className='px-5 ms-4'>Delete</Button>
                     </div>
                 </Col>
             </Row> */}
