@@ -8,7 +8,9 @@ import {
   FormGroup,
   Label,
   Input,
-  Table
+  Table,
+  Progress,
+  Button
 } from "reactstrap"
 import Select from "react-select"
 import { connect } from "react-redux"
@@ -19,6 +21,7 @@ import "../Dashboard/dashboard.css"
 import Chart from "../../assets/images/chart.png"
 import circleChart from "../../assets/images/circle-chart.png"
 import Linechart from "./Linechart"
+import DoughnutChart from "./DoughnutChart"
 
 class Dashboard extends Component {
   constructor(props) {
@@ -241,7 +244,7 @@ class Dashboard extends Component {
             </Row>
             <Row>
               <Col md={6} xxl={7}>
-                <Card>
+                <Card className="card-height">
                   <CardBody>
                     <div className="d-flex justify-content-between mb-4">
                       <span className="chart-heading">Registrations</span>
@@ -250,7 +253,7 @@ class Dashboard extends Component {
                       </span>
                     </div>
                     <Row>
-                      <Col md={6}>
+                      <Col md={4}>
                         <p className="mb-4 chart-subheading">January</p>
                         <p className="mb-4" style={{ fontSize: "22px" }}>
                           <strong>768</strong>
@@ -264,7 +267,7 @@ class Dashboard extends Component {
                           <strong>696</strong>
                         </p>
                       </Col>
-                      <Col md={6}>
+                      <Col md={8}>
                         <Linechart />
                       </Col>
                     </Row>
@@ -272,7 +275,7 @@ class Dashboard extends Component {
                 </Card>
               </Col>
               <Col md={6} xxl={5}>
-                <Card>
+                <Card className="card-height">
                   <CardBody>
                     <div className="d-flex justify-content-between align-items-baseline mb-4">
                       <div className="chart-heading">
@@ -290,8 +293,11 @@ class Dashboard extends Component {
                       </div>
                     </div>
                     <Row>
-                      <Col md={5}><img src={circleChart} alt="" className="img-fluid" /></Col>
-                      <Col md={7}>
+                      <Col md={12}>
+                        {/* <img src={circleChart} alt="" className="img-fluid" /> */}
+                        <DoughnutChart />
+                      </Col>
+                      {/* <Col md={7}>
                         <div className="chart-right-text">
                           <div className="d-flex align-items-center">
                             <span className="color-circle color-1"></span>Full Stack developer
@@ -322,7 +328,7 @@ class Dashboard extends Component {
                           </div>
                           <div><strong>8.9%</strong></div>
                         </div>
-                      </Col>
+                      </Col> */}
                     </Row>
                   </CardBody>
                 </Card>
@@ -330,7 +336,7 @@ class Dashboard extends Component {
             </Row>
             <Row>
               <Col md={6} xxl={4}>
-                <Card>
+                <Card className="card-height">
                   <CardBody>
                     <div className="d-flex justify-content-between align-items-baseline mb-4">
                       <div className="chart-heading">
@@ -348,38 +354,8 @@ class Dashboard extends Component {
                       </div>
                     </div>
                     <Row>
-                      <Col md={5}><img src={circleChart} alt="" className="img-fluid" /></Col>
-                      <Col md={7}>
-                        <div className="chart-right-text">
-                          <div className="d-flex align-items-center">
-                            <span className="color-circle color-1"></span>Full Stack developer
-                          </div>
-                          <div><strong>420</strong></div>
-                        </div>
-                        <div className="chart-right-text">
-                          <div className="d-flex align-items-center">
-                            <span className="color-circle color-2"></span>Software developer program  
-                          </div>
-                          <div><strong>416</strong></div>
-                        </div>
-                        <div className="chart-right-text">
-                          <div className="d-flex align-items-center">
-                            <span className="color-circle color-3"></span>Software pro developer program
-                          </div>
-                          <div><strong>350</strong></div>
-                        </div>
-                        <div className="chart-right-text">
-                          <div className="d-flex align-items-center">
-                            <span className="color-circle color-4"></span>Java Full Stack developer
-                          </div>
-                          <div><strong>401</strong></div>
-                        </div>
-                        <div className="chart-right-text">
-                          <div className="d-flex align-items-center">
-                            <span className="color-circle color-5"></span>Python Full Stack developer
-                          </div>
-                          <div><strong>183</strong></div>
-                        </div>
+                      <Col md={12}>
+                        <DoughnutChart />
                       </Col>
                       <div className="mt-3 text-center">
                         <button className="btn btn-primary btn-blue">View All</button>
@@ -389,7 +365,7 @@ class Dashboard extends Component {
                 </Card>
               </Col>
               <Col md={6} xxl={4}>
-                <Card>
+                <Card className="card-height">
                   <CardBody>
                     <div className="d-flex justify-content-between align-items-baseline mb-4">
                       <div className="chart-heading">Ongoing Batches </div>
@@ -412,14 +388,66 @@ class Dashboard extends Component {
                         </FormGroup>
                       </div>
                     </div>
-                    <div>
-                        {/* <Linechart /> */}
+                    <div className="table-responsive">
+                      <Table className="ongoing-table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Batch_32</div>
+                              <div className="ongoing-light">Full Stack web development</div>
+                            </td>
+                            <td>
+                              <div className="circle-progress-bar">
+                                <progress value="30" min="0" max="100" style={{visibility:'hidden',height:'0',width:'0'}}>20%</progress>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">Completed</div>
+                              <div className="ongoing-bold">37%</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Batch_32</div>
+                              <div className="ongoing-light">Full Stack web development</div>
+                            </td>
+                            <td>
+                              <div className="circle-progress-bar gradient-1">
+                                <progress value="30" min="0" max="100" style={{visibility:'hidden',height:'0',width:'0'}}>20%</progress>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">Completed</div>
+                              <div className="ongoing-bold">37%</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Batch_19</div>
+                              <div className="ongoing-light">Full Stack web development</div>
+                            </td>
+                            <td>
+                              <div className="circle-progress-bar gradient-2">
+                                <progress value="30" min="0" max="100" style={{visibility:'hidden',height:'0',width:'0'}}>20%</progress>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">Completed</div>
+                              <div className="ongoing-bold">72%</div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    </div>
+                    <div className="text-end">
+                      <Button color="primary">View All </Button>
+                      <Button color="primary" outline className="ms-2">Export </Button>
                     </div>
                   </CardBody>
                 </Card>
               </Col>
               <Col md={6} xxl={4}>
-                <Card>
+                <Card className="card-height">
                   <CardBody>
                     <div className="d-flex justify-content-between align-items-baseline mb-4">
                       <div className="chart-heading">Classes </div>
@@ -434,6 +462,75 @@ class Dashboard extends Component {
                         </FormGroup>
                       </div>
                     </div>
+                    {/* <div className="table-responsive">
+                      <Table className="ongoing-table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Class_23</div>
+                              <div className="ongoing-light">#Batch_12 - Full Stack Web Developer</div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light red">Live now</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Class_12</div>
+                              <div className="ongoing-light">#Batch_5 - Java Full Stack Web Developer</div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light red">Live now</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Class_28</div>
+                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">10:00 AM - 05:00 PM</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Class_28</div>
+                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">10:00 AM - 05:00 PM</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Class_28</div>
+                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">10:00 AM - 05:00 PM</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Class_28</div>
+                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">10:00 AM - 05:00 PM </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="ongoing-bold">Class_28</div>
+                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
+                            </td>
+                            <td>
+                              <div className="ongoing-light">10:00 AM - 05:00 PM</div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    </div> */}
                   </CardBody>
                 </Card>
               </Col>
