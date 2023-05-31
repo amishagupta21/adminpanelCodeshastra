@@ -24,11 +24,12 @@ import {
 import { Link, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { getBatchesList } from "store/Batches/actions"
+import { getBatchesList, getNewBatches } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { DeBounceSearch } from "common/DeBounceSearch"
+import BatchNewModal from "./BatchNewModal"
 
 const Batches = props => {
   const params = useParams()
@@ -44,9 +45,10 @@ const Batches = props => {
   }, [manageUser])
 
   useEffect(() => {
-    const { onGetBatchesList } = props
+    const { onGetBatchesList, onGetNewBatches } = props
 
-    onGetBatchesList(params.id)
+    onGetBatchesList()
+    onGetNewBatches(params.id)
   }, [])
 
   const defaultSorted = [
@@ -171,14 +173,59 @@ const Batches = props => {
     ],
   }
 
+  console.log(manageUser, "////////manageUser")
+
   const handleSearch = e => {
     const { onGetBatchesList } = props
     const data = {
       search: e,
     }
     onGetBatchesList(data)
-    const { Batches } = props
-    setState({ Batches })
+    // const { Batches } = props
+    // setState({ Batches })
+  }
+
+  const createBatches = event => {
+    event.preventDefault()
+    const { onCreateNewBatch } = props
+    // onCreateNewBatch({
+    //     name: item?.name,
+    //     description: item?.description,
+    //     course: item?.course,
+    //     variant_type: full time,
+    //     class_link: www.google.meet/saq-faw-brs,
+    //     mentors: [
+    //         28a6216b-4ac6-4398-8766-f0d274e56afc
+    //     ],
+    //     learner_limit: 23,
+    //     start_date: 2023-06-20,
+    //     end_date: 2023-06-21,
+    //     batch_schedule: {
+    //         name: Batch Schedule,
+    //         value: [
+    //             {
+    //                 day: 4,
+    //                 start_time: 2023-03-21T06:58:58.648Z,
+    //                 end_time: 2023-03-21T07:58:58.648Z
+    //             },
+    //             {
+    //                 day: 5,
+    //                 start_time: 2023-03-21T06:58:58.648Z,
+    //                 end_time: 2023-03-21T07:58:58.648Z
+    //             },
+    //             {
+    //                 day: 2,
+    //                 start_time: 2023-03-21T06:58:58.648Z,
+    //                 end_time: 2023-03-22T13:58:58.648Z
+    //             },
+    //             {
+    //                 day: 3,
+    //                 start_time: 2023-03-21T11:58:58.648Z,
+    //                 end_time: 2023-03-21T13:58:58.648Z
+    //             }
+    //         ]
+    //     }
+    // })
   }
 
   return (
@@ -268,351 +315,11 @@ const Batches = props => {
                 >
                   + Create New Batch
                 </Button>
-
-                <Modal
-                  isOpen={modal}
+                <BatchNewModal
+                  modal={modal}
                   toggle={toggle}
-                  fade={false}
-                  centered
-                  size="lg"
-                >
-                  <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
-                  <ModalBody>
-                    <Row>
-                      <Col md={3}>
-                        <FormGroup>
-                          <Label>Batch Name</Label>
-                          <Input type="text" placeholder="Batch_10" />
-                        </FormGroup>
-                      </Col>
-                      <Col md={3}>
-                        <FormGroup>
-                          <Label>Description</Label>
-                          <Input type="text" placeholder="Freshers Only" />
-                        </FormGroup>
-                      </Col>
-                      <Col md={3}>
-                        <FormGroup>
-                          <Label>Course</Label>
-                          <Input type="select">
-                            <option selected>Full Stack Web Developer</option>
-                          </Input>
-                        </FormGroup>
-                      </Col>
-                      <Col md={3}>
-                        <FormGroup>
-                          <Label>Variant Type</Label>
-                          <Input type="select">
-                            <option selected>Full Time</option>
-                          </Input>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={6}>
-                        <FormGroup>
-                          <Label>Class Link</Label>
-                          <Input
-                            type="text"
-                            placeholder="www.google.meet/saq-faw-brs"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12} className="batch-accord">
-                        <UncontrolledAccordion
-                          defaultOpen={["1", "2"]}
-                          stayOpen
-                        >
-                          <AccordionItem className="mb-3">
-                            <AccordionHeader targetId="1">
-                              Batch Configuration
-                              <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                            </AccordionHeader>
-                            <AccordionBody accordionId="1">
-                              <Table responsive>
-                                <thead>
-                                  <tr>
-                                    <th>Mentor</th>
-                                    <th>Learners Limit</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <FormGroup className="select_box border-0">
-                                        <Input
-                                          name="select"
-                                          type="select"
-                                          className="border-0"
-                                        >
-                                          <option selected>2 select</option>
-                                          <option>1</option>
-                                          <option>2</option>
-                                        </Input>
-                                      </FormGroup>
-                                    </td>
-                                    <td>
-                                      <FormGroup>
-                                        <Input
-                                          placeholder="75"
-                                          type="text"
-                                          className="bg-grey border-0"
-                                        />
-                                      </FormGroup>
-                                    </td>
-                                    <td>
-                                      <Input type="date" />
-                                    </td>
-                                    <td>
-                                      <Input type="date" />
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </Table>
-                            </AccordionBody>
-                          </AccordionItem>
-                          <AccordionItem>
-                            <AccordionHeader targetId="2">
-                              Batch Schedule
-                              <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                            </AccordionHeader>
-                            <AccordionBody accordionId="2">
-                              <Table responsive>
-                                <thead>
-                                  <tr>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Days</th>
-                                    <th>Action</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <div className="accordionItem-table">
-                                        <FormGroup>
-                                          <Input
-                                            type="text"
-                                            className="me-2 bg-grey border-0"
-                                            style={{ width: "64px" }}
-                                            placeholder="09:00"
-                                          />
-                                        </FormGroup>
-                                        <FormGroup className="select_box border-0">
-                                          <Input
-                                            name="select"
-                                            type="select"
-                                            style={{ width: "64px" }}
-                                            className="border-0"
-                                          >
-                                            <option selected>AM</option>
-                                            <option>PM</option>
-                                          </Input>
-                                        </FormGroup>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div className="d-flex">
-                                        <FormGroup>
-                                          <Input
-                                            type="text"
-                                            className="me-2 bg-grey border-0"
-                                            style={{ width: "64px" }}
-                                            placeholder="05:00"
-                                          />
-                                        </FormGroup>
-                                        <FormGroup className="select_box border-0">
-                                          <Input
-                                            name="select"
-                                            type="select"
-                                            style={{ width: "64px" }}
-                                          >
-                                            <option>AM</option>
-                                            <option selected>PM</option>
-                                          </Input>
-                                        </FormGroup>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" checked />
-                                          <Label check>Sun</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" checked />
-                                          <Label check>Mon</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" checked />
-                                          <Label check>Tue</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Wed</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Thurs</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Fri</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Sat</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Sun</Label>
-                                        </FormGroup>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <span className="me-3">
-                                        <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                                      </span>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td
-                                      colSpan={4}
-                                      style={{
-                                        paddingLeft: "0px",
-                                        paddingRight: "0px",
-                                      }}
-                                    >
-                                      <div
-                                        style={{
-                                          height: "1px",
-                                          background: "#CED4DA",
-                                        }}
-                                      ></div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <div className="d-flex">
-                                        <FormGroup>
-                                          <Input
-                                            type="text"
-                                            className="me-2 bg-grey border-0"
-                                            style={{ width: "64px" }}
-                                            placeholder="09:00"
-                                          />
-                                        </FormGroup>
-                                        <FormGroup className="select_box border-0">
-                                          <Input
-                                            name="select"
-                                            type="select"
-                                            style={{ width: "64px" }}
-                                            className="border-0"
-                                          >
-                                            <option selected>AM</option>
-                                            <option>PM</option>
-                                          </Input>
-                                        </FormGroup>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div className="d-flex">
-                                        <FormGroup>
-                                          <Input
-                                            type="text"
-                                            className="me-2 bg-grey border-0"
-                                            style={{ width: "64px" }}
-                                            placeholder="05:00"
-                                          />
-                                        </FormGroup>
-                                        <FormGroup className="select_box border-0">
-                                          <Input
-                                            name="select"
-                                            type="select"
-                                            style={{ width: "64px" }}
-                                            className="border-0"
-                                          >
-                                            <option>AM</option>
-                                            <option selected>PM</option>
-                                          </Input>
-                                        </FormGroup>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" checked />
-                                          <Label check>Sun</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" checked />
-                                          <Label check>Mon</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" checked />
-                                          <Label check>Tue</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Wed</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Thurs</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Fri</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Sat</Label>
-                                        </FormGroup>
-                                        <FormGroup check inline>
-                                          <Input type="checkbox" />
-                                          <Label check>Sun</Label>
-                                        </FormGroup>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <span className="me-3">
-                                        <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                                      </span>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </Table>
-                              <Row>
-                                <Col md={12}>
-                                  <button className="px-4 ms-3 create-new-appointment">
-                                    Add A Schedule +
-                                  </button>
-                                </Col>
-                              </Row>
-                            </AccordionBody>
-                          </AccordionItem>
-                        </UncontrolledAccordion>
-                      </Col>
-                    </Row>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button
-                      color="primary"
-                      outline
-                      onClick={toggle}
-                      className="px-5"
-                    >
-                      Cancel
-                    </Button>
-                    <Button color="primary" onClick={toggle} className="px-5">
-                      Create
-                    </Button>
-                  </ModalFooter>
-                </Modal>
+                  createBatches={createBatches}
+                />
               </div>
               <div className="mt-2 batches-home">
                 <Row>
@@ -725,7 +432,11 @@ const mapStateToProps = ({ Batches, state, count }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  onGetNewBatches: data => dispatch(getNewBatches(data)),
   onGetBatchesList: data => dispatch(getBatchesList(data)),
+
+  onCreateNewBatch: data => dispatch(createNewBatch(data)),
+
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })

@@ -147,6 +147,19 @@ const getBatchesGrade = async data => {
   return resp
 }
 
+// NEW BATCHES
+const getNewBatches = async data => {
+  const resp = await getCourseData(url.GET_NEW_BATCHES + `/${data}`)
+  return resp
+}
+
+// CREATE NEW BATCHES
+
+const createNewBatchesData = async data => {
+  const resp = await post(url.NEW_BATCHES, data)
+  return resp
+}
+
 //VARIANT API
 
 const getVariantList = async data => {
@@ -601,5 +614,7 @@ export {
   getBatches,
   getBatchesLearner,
   getBatchesGrade,
+  createNewBatchesData,
+  getNewBatches,
   // getFilter,
 }

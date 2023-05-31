@@ -6,6 +6,7 @@ import {
   GET_BATCHES_LIST,
   GET_BATCHES_LEARNER,
   GET_GRADE_BOOK,
+  CREATE_NEW_BATCH,
   DELETE_LEARNER,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
@@ -27,12 +28,19 @@ import {
   getGradeBookSuccess,
   getGradeBookCountSuccess,
   getGradeBookCountFail,
+  getNewBatchesSuccess,
+  getNewBatchesCountSuccess,
+  getNewBatchesCountFail,
+  createNewBatchSuccess,
+  createNewBatchFail,
 } from "./actions"
 import {
   getBatchesList,
   getBatches,
   getBatchesLearner,
   getBatchesGrade,
+  createNewBatchesData,
+  getNewBatches,
   getDeleteData,
   getStatusFilter,
 } from "helpers/fakebackend_helper"
@@ -96,6 +104,34 @@ function* fetchGradeBook({ payload: data }) {
   }
 }
 
+// NEW BATCHES
+
+function* fetchNewBatches({ payload: data }) {
+  try {
+    const response = yield call(getNewBatches, data)
+    tosterMsg(response?.message)
+    yield put(getNewBatchesSuccess(response?.data))
+    yield put(getNewBatchesCountSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getNewBatchesCountFail(error))
+    // yield put(getGradeBookCountFail(error))
+  }
+}
+
+// CREATE NEW BATCH
+
+function* createBatch({ payload: data }) {
+  try {
+    const response = yield call(createNewBatchesData, data)
+    tosterMsg(response?.message)
+    yield put(createNewBatchSuccess(response))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(createNewBatchFail(error))
+  }
+}
+
 // function* onDeleteLearner({ payload: event }) {
 //   try {
 //     const response = yield call(getDeleteData, event)
@@ -125,6 +161,8 @@ function* usersManageSaga() {
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
   yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
+  yield takeEvery(GET_BATCHES_LIST, fetchNewBatches)
+  yield takeEvery(CREATE_NEW_BATCH, createBatch)
 
   // yield takeEvery(DELETE_LEARNER, onDeleteLearner)
   // yield takeEvery(FILTER_STATUS_LEARNER, onFilterLearner)

@@ -26,9 +26,12 @@ import Status from "./Status"
 import BatchProgress from "./BatchProgress"
 import CompletionStatus from "./CompletionStatus"
 import BatchLearner from "./BatchLearner"
+import BatchNewModal from "./BatchNewModal"
 
 const BatchList = () => {
   const [key, setKey] = useState("tab")
+  const [modal, setModal] = useState(false)
+  const toggle = () => setModal(!modal)
 
   return (
     <div className="page-content batches-list">
@@ -54,9 +57,10 @@ const BatchList = () => {
         </Col>
         <Col md={6}>
           <div className="d-flex justify-content-end">
-            <Button color="success" className="mb-3 ms-2">
+            <Button color="success" onClick={toggle} className="mb-3 ms-2">
               Duplicate Batch
             </Button>
+            <BatchNewModal modal={modal} toggle={toggle} />
             <Button color="success" className="mb-3 ms-2">
               Edit Batch
             </Button>
@@ -159,4 +163,28 @@ const BatchList = () => {
   )
 }
 
-export default BatchList
+BatchList.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  Batches: PropTypes.array,
+}
+
+const mapStateToProps = ({ Batches, state, count }) => ({
+  manageUser: Batches?.manageUser,
+  usersCount: Batches?.count,
+  userRoles: Batches?.roles,
+  // deleteData: false,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onGetNewBatches: data => dispatch(getNewBatches(data)),
+  onGetBatchesList: data => dispatch(getBatchesList(data)),
+
+  onCreateNewBatch: data => dispatch(createNewBatch(data)),
+
+  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
+  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BatchList)
