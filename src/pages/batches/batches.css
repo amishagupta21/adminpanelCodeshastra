@@ -226,6 +226,15 @@ td {
   color: #495057;
   font-weight: 500;
 }
+.report table thead {
+  background: #f8f9fa;
+}
+.report table td {
+  border-bottom: 1px solid #eff2f7 !important;
+}
+.red {
+  color: #e44d4d;
+}
 
 @media (max-width: 767px) {
   .batches-box {

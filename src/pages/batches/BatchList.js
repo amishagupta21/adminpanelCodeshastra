@@ -26,6 +26,8 @@ import Status from "./Status"
 import BatchProgress from "./BatchProgress"
 import CompletionStatus from "./CompletionStatus"
 import BatchLearner from "./BatchLearner"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 import BatchNewModal from "./BatchNewModal"
 
 const BatchList = () => {
@@ -155,7 +157,7 @@ const BatchList = () => {
                 <Col md={12}>
                     <div className='py-3' style={{background:'#fff'}}>
                         <Button color="primary" outline className='px-5 ms-4'>Cancel</Button>
-                        <Button color="primary" className='px-5 ms-4'>Save</Button>
+                        <Button color="danger" className='px-5 ms-4'>Delete</Button>
                     </div>
                 </Col>
             </Row> */}
