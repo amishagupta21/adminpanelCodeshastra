@@ -14,9 +14,22 @@ import {
   GET_BATCHES_LEARNER_FAIL,
   GET_BATCHES_LEARNER_COUNT_SUCCESS,
   GET_BATCHES_LEARNER_COUNT_FAIL,
+  GET_GRADE_BOOK,
+  GET_GRADE_BOOK_SUCCESS,
+  GET_GRADE_BOOK_FAIL,
+  GET_GRADE_BOOK_COUNT_SUCCESS,
+  GET_GRADE_BOOK_COUNT_FAIL,
+  GET_NEW_BATCHES,
+  GET_NEW_BATCHES_SUCCESS,
+  GET_NEW_BATCHES_FAIL,
+  GET_NEW_BATCHES_COUNT_SUCCESS,
+  GET_NEW_BATCHES_COUNT_FAIL,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
+  CREATE_NEW_BATCH,
+  CREATE_NEW_BATCH_SUCCESS,
+  CREATE_NEW_BATCH_FAIL,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
 
@@ -96,6 +109,77 @@ export const getBatchesLearnerCountSuccess = data => ({
 
 export const getBatchesLearnerCountFail = error => ({
   type: GET_BATCHES_LEARNER_COUNT_FAIL,
+  payload: error,
+})
+
+// GRADE BOOK
+
+export const getGradeBook = data => ({
+  type: GET_GRADE_BOOK,
+  payload: data,
+})
+
+export const getGradeBookSuccess = data => ({
+  type: GET_GRADE_BOOK_SUCCESS,
+  payload: data,
+})
+
+export const getGradeBookFail = error => ({
+  type: GET_GRADE_BOOK_FAIL,
+  payload: error,
+})
+
+export const getGradeBookCountSuccess = data => ({
+  type: GET_GRADE_BOOK_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getGradeBookCountFail = error => ({
+  type: GET_GRADE_BOOK_COUNT_FAIL,
+  payload: error,
+})
+
+// CREATE NEW BATCHES
+
+// GRADE BOOK
+
+export const getNewBatches = data => ({
+  type: GET_NEW_BATCHES,
+  payload: data,
+})
+
+export const getNewBatchesSuccess = data => ({
+  type: GET_NEW_BATCHES_SUCCESS,
+  payload: data,
+})
+
+export const getNewBatchesFail = error => ({
+  type: GET_NEW_BATCHES_FAIL,
+  payload: error,
+})
+
+export const getNewBatchesCountSuccess = data => ({
+  type: GET_NEW_BATCHES_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getNewBatchesCountFail = error => ({
+  type: GET_NEW_BATCHES_COUNT_FAIL,
+  payload: error,
+})
+
+export const createNewBatch = data => ({
+  type: CREATE_NEW_BATCH,
+  payload: data,
+})
+
+export const createNewBatchSuccess = data => ({
+  type: CREATE_NEW_BATCH_SUCCESS,
+  payload: data,
+})
+
+export const createNewBatchFail = error => ({
+  type: CREATE_NEW_BATCH_FAIL,
   payload: error,
 })
 

@@ -32,7 +32,6 @@ function EducationForm({ qualification, updateQualification }) {
     const updateDetail = { ...educationDetail, [name]: value }
     setEducationDetail(updateDetail)
     updateQualification(updateDetail)
-    // debugger
   }
 
   return (
