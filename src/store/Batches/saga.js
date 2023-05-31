@@ -77,10 +77,11 @@ function* fetchBatches({ payload: data }) {
 // MAIN LEARNER
 
 function* fetchBatchesLearner({ payload: data }) {
+  console.log(data,"working")
   try {
     const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
-    yield put(getBatchesLearnerSuccess(response?.data?.result))
+    yield put(getBatchesLearnerSuccess(response?.data[0]))
     yield put(getBatchesLearnerCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)

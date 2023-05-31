@@ -128,9 +128,10 @@ const getBatches = async data => {
 }
 
 const getBatchesLearner = async data => {
+  console.log(data,"learner")
   const resp = await getCourseData(
-    url.GET_BATCHES +
-      `?pageSize=${data?.pageSize || 20}&keyword=${data?.search || ""}&page=${
+    url.GET_BATCHES_LEARNER_LIST + 
+      `/${data}?pageSize=${data?.pageSize || 11}&page=${
         data?.page || 1
       }`
   )
@@ -187,6 +188,7 @@ const getCoursesList = async data => {
   )
   return resp
 }
+
 const getFaqList = async data => {
   const resp = await getCourseData(
     url.GET_FAQS +

@@ -48,7 +48,7 @@ const Batches = props => {
     const { onGetBatchesList, onGetNewBatches } = props
 
     onGetBatchesList()
-    onGetNewBatches(params.id)
+    // onGetNewBatches(params.id)
   }, [])
 
   const defaultSorted = [
@@ -128,7 +128,14 @@ const Batches = props => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div><span className="bg-success px-2 py-1 text-white" style={{borderRadius:'5px'}}>Completed</span></div>
+          <div>
+            <span
+              className="bg-success px-2 py-1 text-white"
+              style={{ borderRadius: "5px" }}
+            >
+              Completed
+            </span>
+          </div>
           // <FormGroup switch>
           //   <Input
           //     type="switch"
@@ -351,20 +358,34 @@ const Batches = props => {
                                 <div className="box-r-btn">
                                   <div className="ms-lg-3 mb-3">
                                     <Input type="select">
-                                      <option selected>Status</option>
-                                      <option>Not Started</option>
-                                      <option>In-Progress</option>
-                                      <option>Completed</option>
-                                      <option>Archived</option>
+                                      <option value="Status">Status</option>
+                                      <option value="Not Started">
+                                        Not Started
+                                      </option>
+                                      <option value="In-Progress">
+                                        In-Progress
+                                      </option>
+                                      <option value="Completed">
+                                        Completed
+                                      </option>
+                                      <option value="Archived">Archived</option>
                                     </Input>
                                   </div>
 
                                   <div className="ms-lg-3 mb-3">
                                     <Input type="select">
-                                      <option selected>Course Name </option>
-                                      <option>Full Stack Web Developer</option>
-                                      <option>Full Stack Web Developer</option>
-                                      <option>Full Stack Web Developer</option>
+                                      <option value="Course Name">
+                                        Course Name{" "}
+                                      </option>
+                                      <option value="Full Stack Web Developer">
+                                        Full Stack Web Developer
+                                      </option>
+                                      <option value="Full Stack Web Developer">
+                                        Full Stack Web Developer
+                                      </option>
+                                      <option value="Full Stack Web Developer">
+                                        Full Stack Web Developer
+                                      </option>
                                     </Input>
                                   </div>
                                   <div className="ms-lg-3 mb-3">
@@ -375,9 +396,13 @@ const Batches = props => {
                                   </div>
                                   <div className="ms-lg-3 mb-3">
                                     <Input type="select">
-                                      <option selected>Export </option>
-                                      <option>Export as pdf</option>
-                                      <option>Export as excel</option>
+                                      <option value="Export">Export </option>
+                                      <option value="Export as pdf">
+                                        Export as pdf
+                                      </option>
+                                      <option value="Export as excel">
+                                        Export as excel
+                                      </option>
                                     </Input>
                                   </div>
                                 </div>
@@ -389,7 +414,7 @@ const Batches = props => {
                                   Total Batches: &nbsp;{manageUser?.length}
                                 </h6>
                                 <BootstrapTable
-                                  keyField={"_id"}
+                                  keyField={"id"}
                                   responsive
                                   bordered={false}
                                   striped={false}
@@ -425,12 +450,14 @@ Batches.propTypes = {
   Batches: PropTypes.array,
 }
 
-const mapStateToProps = ({ Batches, state, count }) => ({
-  manageUser: Batches?.manageUser,
-  usersCount: Batches?.count,
-  userRoles: Batches?.roles,
-  // deleteData: false,
-})
+const mapStateToProps = ({ Batches, state, count }) => {
+  return {
+    manageUser: Batches?.manageUser,
+    usersCount: Batches?.count.count,
+    userRoles: Batches?.roles,
+    // deleteData: false,
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   onGetNewBatches: data => dispatch(getNewBatches(data)),

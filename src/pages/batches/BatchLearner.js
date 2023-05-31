@@ -26,7 +26,7 @@ const BatchLearner = () => {
                 <Input
                   type="switch"
                   checked={state}
-                  onClick={() => {
+                  onChange={() => {
                     setState(!state)
                   }}
                 />

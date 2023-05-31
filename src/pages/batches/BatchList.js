@@ -1,5 +1,6 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import { Link, useParams } from "react-router-dom"
+import PropTypes from "prop-types"
 import {
   Button,
   UncontrolledDropdown,
@@ -26,14 +27,28 @@ import Status from "./Status"
 import BatchProgress from "./BatchProgress"
 import CompletionStatus from "./CompletionStatus"
 import BatchLearner from "./BatchLearner"
-import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import BatchNewModal from "./BatchNewModal"
+import { getBatchesLearner } from "store/Batches/actions"
 
-const BatchList = () => {
+const BatchList = props => {
   const [key, setKey] = useState("tab")
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
+  const params = useParams()
+  const { manageUser, usersCount } = props
+  const [item, setItem] = useState(manageUser)
+  console.log("shit////////", manageUser)
+
+  useEffect(() => {
+    setItem(manageUser)
+  }, [manageUser])
+
+  useEffect(() => {
+    const { onGetBatchesLearner } = props
+
+    onGetBatchesLearner(params.id)
+  }, [])
 
   return (
     <div className="page-content batches-list">
@@ -130,7 +145,10 @@ const BatchList = () => {
                     <Row>
                       <Col md={12}>
                         <div className="table-responsive">
-                          {/* <BatchListTable /> */}
+                          <BatchListTable
+                            manageUser={manageUser}
+                            usersCount={usersCount}
+                          />
                         </div>
                       </Col>
                     </Row>
@@ -164,6 +182,12 @@ const BatchList = () => {
     </div>
   )
 }
+BatchList.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  Batches: PropTypes.array,
+}
 
 BatchList.propTypes = {
   userRoles: PropTypes.array,
@@ -174,17 +198,16 @@ BatchList.propTypes = {
 
 const mapStateToProps = ({ Batches, state, count }) => ({
   manageUser: Batches?.manageUser,
-  usersCount: Batches?.count,
+  usersCount: Batches?.count?.count,
   userRoles: Batches?.roles,
   // deleteData: false,
 })
 
 const mapDispatchToProps = dispatch => ({
   onGetNewBatches: data => dispatch(getNewBatches(data)),
+  onGetBatchesLearner: data => dispatch(getBatchesLearner(data)),
   onGetBatchesList: data => dispatch(getBatchesList(data)),
-
   onCreateNewBatch: data => dispatch(createNewBatch(data)),
-
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })
