@@ -77,7 +77,7 @@ function* fetchBatches({ payload: data }) {
 // MAIN LEARNER
 
 function* fetchBatchesLearner({ payload: data }) {
-  console.log(data,"working")
+  console.log(data, "working")
   try {
     const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
@@ -133,30 +133,6 @@ function* createBatch({ payload: data }) {
   }
 }
 
-// function* onDeleteLearner({ payload: event }) {
-//   try {
-//     const response = yield call(getDeleteData, event)
-//     yield put({ type: GET_LEARNER, payload: { search: "" } })
-//     yield put(deleteLearnerSuccess(response))
-//   } catch (error) {
-//     toasterMsg(error?.message)
-//     yield put(deleteLearnerFail(error))
-//   }
-// }
-
-// function* onFilterLearner({ payload: data }) {
-//   try {
-//     const response = yield call(getStatusFilter, data)
-//     tosterMsg(response?.message)
-//     yield put(getLearnerSuccess(response?.data?.docs))
-//     yield put(getLearnerCountSuccess(response?.data?.totalDocs))
-//   } catch (error) {
-//     tosterMsg(error?.message)
-//     yield put(getLearnerFail(error))
-//     yield put(getLearnerCountFail(error))
-//   }
-// }
-
 function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
@@ -164,9 +140,6 @@ function* usersManageSaga() {
   yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
   yield takeEvery(GET_BATCHES_LIST, fetchNewBatches)
   yield takeEvery(CREATE_NEW_BATCH, createBatch)
-
-  // yield takeEvery(DELETE_LEARNER, onDeleteLearner)
-  // yield takeEvery(FILTER_STATUS_LEARNER, onFilterLearner)
 }
 
 export default usersManageSaga
