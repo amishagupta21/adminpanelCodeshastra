@@ -27,7 +27,7 @@ import { getBatchesLearner } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 import "./batches.css"
 
-const BatchListTable = ({ item, manageUser }) => {
+const BatchListTable = ({ item, manageUser, batchesLearner }) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const params = useParams()
   const [modal, setModal] = useState(false)
@@ -138,7 +138,7 @@ const BatchListTable = ({ item, manageUser }) => {
         key={isExpanded}
         keyField="_id"
         columns={state?.columns}
-        data={item}
+        data={batchesLearner}
       >
         {toolkitProps => (
           <>

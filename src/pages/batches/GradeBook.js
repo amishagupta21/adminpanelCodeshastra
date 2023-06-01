@@ -26,19 +26,12 @@ import { connect } from "react-redux"
 import { getGradeBook } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 
-const GradeBook = props => {
+const GradeBook = ({ gradeBook }) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const params = useParams()
-  const { manageUser, usersCount } = props
 
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
-
-  useEffect(() => {
-    setItem(manageUser)
-  }, [manageUser])
-
-  const [item, setItem] = useState(manageUser)
 
   // useEffect(() => {
   //   const { onGetGradeBook } = props
@@ -63,32 +56,37 @@ const GradeBook = props => {
       },
 
       {
-        dataField: "end_date",
+        dataField: "id_number",
         text: "Id Number",
         sort: true,
       },
       {
-        dataField: "course",
+        dataField: "final_assessment.phase_1",
+        text: "Assessment",
+        sort: true,
+      },
+      {
+        dataField: "attendance",
         text: "Attendance",
         sort: true,
       },
       {
-        dataField: "course",
+        dataField: "virtual_programming",
         text: "Virtual Programming",
         sort: true,
       },
       {
-        dataField: "lectures",
+        dataField: "virtual_grade",
         text: "Virtual Programming Grade",
         sort: true,
       },
       {
-        dataField: "lectures",
+        dataField: "mockup.DSA",
         text: "DSA MCT",
         sort: true,
       },
       {
-        dataField: "lectures",
+        dataField: "mockup.FE",
         text: "FE MCT1",
         sort: true,
       },
@@ -115,7 +113,7 @@ const GradeBook = props => {
           <div className="d-flex">
             <div className="me-2">
               <Link to="/batch-list" className="text-muted">
-                <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
+                <i className="mdi mdi-information-outline mdi-18px text-success" />
               </Link>
               <Link className="text-muted ms-2">
                 <i
@@ -196,6 +194,93 @@ const GradeBook = props => {
         phase_3: 87,
       },
     },
+    {
+      name: "learner_10",
+      id_number: 4877,
+      attendance: "95%",
+      assessmemt: "150 / 200",
+      virtual_programming: 15,
+      virtual_grade: "B+",
+      mockup: {
+        DSA: 75,
+        FE: 55,
+      },
+      total_number: 100,
+      learner_limit: 10,
+      total_percentage: "65%",
+      weekly_assignment: {
+        week_1: 65,
+        week_2: 45,
+        week_3: 48,
+      },
+      test: {
+        week_1: 45,
+        week_2: 22,
+      },
+      final_assessment: {
+        phase_1: 10,
+        phase_2: 45,
+        phase_3: 65,
+      },
+    },
+    {
+      name: "Full Stack",
+      id_number: 100,
+      attendance: "50%",
+      assessmemt: "160 / 200",
+      virtual_programming: 10,
+      virtual_grade: "C+",
+      mockup: {
+        DSA: 75,
+        FE: 10,
+      },
+      total_number: 25,
+      learner_limit: 10,
+      total_percentage: "65%",
+      weekly_assignment: {
+        week_1: 34,
+        week_2: 45,
+        week_3: 78,
+      },
+      test: {
+        week_1: 45,
+        week_2: 22,
+      },
+      final_assessment: {
+        phase_1: 20,
+        phase_2: 25,
+        phase_3: 87,
+      },
+    },
+    {
+      name: "learner_39",
+      id_number: 2554,
+      attendance: "50%",
+      assessmemt: "180 / 200",
+      virtual_programming: 10,
+      virtual_grade: "C+",
+      mockup: {
+        DSA: 10,
+        FE: 5,
+      },
+      total_number: 25,
+      learner_limit: 10,
+      total_percentage: "30%",
+      weekly_assignment: {
+        week_1: 34,
+        week_2: 65,
+        week_3: 78,
+      },
+      test: {
+        week_1: 45,
+        week_2: 22,
+      },
+      final_assessment: {
+        phase_1: 20,
+        phase_2: 87,
+        phase_3: 90,
+      },
+    },
   ]
 
   // console.log(gradeArray, "/////////gradeArray")
@@ -214,7 +299,7 @@ const GradeBook = props => {
         key={isExpanded}
         keyField="_id"
         columns={state?.columns}
-        data={item}
+        data={gradeBook}
       >
         {toolkitProps => (
           <>
@@ -245,23 +330,4 @@ const GradeBook = props => {
   )
 }
 
-GradeBook.propTypes = {
-  userRoles: PropTypes.array,
-  usersCount: PropTypes.number,
-  className: PropTypes.any,
-  Batches: PropTypes.array,
-}
-
-const mapStateToProps = ({ Batches, state, count }) => ({
-  manageUser: Batches?.manageUser,
-  usersCount: Batches?.count,
-  userRoles: Batches?.roles,
-  // deleteData: false,
-})
-
-const mapDispatchToProps = dispatch => ({
-  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
-  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(GradeBook)
+export default GradeBook

@@ -30,6 +30,11 @@ import {
   CREATE_NEW_BATCH,
   CREATE_NEW_BATCH_SUCCESS,
   CREATE_NEW_BATCH_FAIL,
+  GET_DASHBOARD,
+  GET_DASHBOARD_SUCCESS,
+  GET_DASHBOARD_FAIL,
+  GET_DASHBOARD_COUNT_SUCCESS,
+  GET_DASHBOARD_COUNT_FAIL,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -37,6 +42,8 @@ const INIT_STATE = {
   roles: [],
   count: 0,
   createNewBatch: "",
+  dashboard: [],
+  batchesLearner: [],
 }
 
 const Batches = (state = INIT_STATE, action) => {
@@ -112,7 +119,7 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_BATCHES_LEARNER_SUCCESS:
       return {
         ...state,
-        manageUser: action.payload,
+        batchesLearner: action.payload,
       }
 
     case GET_BATCHES_LEARNER_FAIL:
@@ -143,7 +150,7 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_GRADE_BOOK_SUCCESS:
       return {
         ...state,
-        manageUser: action.payload,
+        gradeBook: action.payload,
       }
 
     case GET_GRADE_BOOK_FAIL:
@@ -169,12 +176,12 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_NEW_BATCHES:
       return {
         ...state,
-        data: action.payload,
+        newBatch: action.payload,
       }
     case GET_NEW_BATCHES_SUCCESS:
       return {
         ...state,
-        manageUser: action.payload,
+        newBatch: action.payload,
       }
 
     case GET_NEW_BATCHES_FAIL:
@@ -207,6 +214,37 @@ const Batches = (state = INIT_STATE, action) => {
       }
 
     case CREATE_NEW_BATCH_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    // DASHBOARD
+
+    case GET_DASHBOARD:
+      return {
+        ...state,
+        dashboard: action.payload,
+      }
+    case GET_DASHBOARD_SUCCESS:
+      return {
+        ...state,
+        dashboard: action.payload,
+      }
+
+    case GET_DASHBOARD_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case GET_DASHBOARD_COUNT_SUCCESS:
+      return {
+        ...state,
+        count: action.payload,
+      }
+
+    case GET_DASHBOARD_COUNT_FAIL:
       return {
         ...state,
         error: action.payload,

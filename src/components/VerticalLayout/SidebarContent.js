@@ -166,6 +166,12 @@ const SidebarContent = props => {
                 <span>{props.t("Batches")}</span>
               </Link>
             </li>
+            <li>
+              <Link to="/add-mentors">
+                <i className="mdi mdi-account-plus" /> 
+                <span>{props.t("Add Mentors")}</span>
+              </Link>
+            </li>
           </ul>
         </div>
       </SimpleBar>

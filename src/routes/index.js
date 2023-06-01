@@ -26,6 +26,8 @@ import SmsEmailTemplates from "pages/SMS-Email/SmsEmailTemplates"
 import Batch from "pages/batches/Batches"
 import BatchList from "pages/batches/BatchList"
 import Report from "pages/batches/Report"
+import AddMentors from "pages/Mentors/AddMentors"
+
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -42,7 +44,9 @@ const authProtectedRoutes = [
   { path: "/sms-email-templates", component: SmsEmailTemplates },
   { path: "/batch", component: Batch },
   { path: "/batch-list/edit/:id", component: BatchList },
-  { path: "/report", component: Report },
+  { path: "/report", component: Report },  
+  { path: "/add-mentors", component: AddMentors },
+
 
   // //profile
   { path: "/profile", component: UserProfile },

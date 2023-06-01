@@ -24,6 +24,11 @@ import {
   GET_NEW_BATCHES_FAIL,
   GET_NEW_BATCHES_COUNT_SUCCESS,
   GET_NEW_BATCHES_COUNT_FAIL,
+  GET_DASHBOARD,
+  GET_DASHBOARD_SUCCESS,
+  GET_DASHBOARD_FAIL,
+  GET_DASHBOARD_COUNT_SUCCESS,
+  GET_DASHBOARD_COUNT_FAIL,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
@@ -180,6 +185,33 @@ export const createNewBatchSuccess = data => ({
 
 export const createNewBatchFail = error => ({
   type: CREATE_NEW_BATCH_FAIL,
+  payload: error,
+})
+
+// DASHBOARD API
+
+export const getDashboard = data => ({
+  type: GET_DASHBOARD,
+  payload: data,
+})
+
+export const getDashboardSuccess = data => ({
+  type: GET_DASHBOARD_SUCCESS,
+  payload: data,
+})
+
+export const getDashboardFail = error => ({
+  type: GET_DASHBOARD_FAIL,
+  payload: error,
+})
+
+export const getDashboardCountSuccess = data => ({
+  type: GET_DASHBOARD_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getDashboardCountFail = error => ({
+  type: GET_DASHBOARD_COUNT_FAIL,
   payload: error,
 })
 

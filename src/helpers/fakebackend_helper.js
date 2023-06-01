@@ -128,12 +128,9 @@ const getBatches = async data => {
 }
 
 const getBatchesLearner = async data => {
-  console.log(data,"learner")
   const resp = await getCourseData(
-    url.GET_BATCHES_LEARNER_LIST + 
-      `/${data}?pageSize=${data?.pageSize || 11}&page=${
-        data?.page || 1
-      }`
+    url.GET_BATCHES_LEARNER_LIST +
+      `/${data}?pageSize=${data?.pageSize || 11}&page=${data?.page || 1}`
   )
   return resp
 }
@@ -158,6 +155,12 @@ const getNewBatches = async data => {
 
 const createNewBatchesData = async data => {
   const resp = await post(url.NEW_BATCHES, data)
+  return resp
+}
+
+// DASHBOARD
+const getDashboardApi = async data => {
+  const resp = await getCourseData(url.GET_DASHBOARD + "/dashboard")
   return resp
 }
 
@@ -618,5 +621,6 @@ export {
   getBatchesGrade,
   createNewBatchesData,
   getNewBatches,
+  getDashboardApi,
   // getFilter,
 }

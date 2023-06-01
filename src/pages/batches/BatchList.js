@@ -29,23 +29,30 @@ import CompletionStatus from "./CompletionStatus"
 import BatchLearner from "./BatchLearner"
 import { connect } from "react-redux"
 import BatchNewModal from "./BatchNewModal"
-import { getBatchesLearner, getGradeBook } from "store/Batches/actions"
+import {
+  getBatchesLearner,
+  getGradeBook,
+  getNewBatches,
+} from "store/Batches/actions"
+import MentorListTable from "./MentorListTable"
 
 const BatchList = props => {
   const [key, setKey] = useState("tab")
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
   const params = useParams()
-  const { manageUser, usersCount } = props
+  const { manageUser, usersCount, newBatch, batchesLearner, gradeBook } = props
   const [item, setItem] = useState(manageUser)
+
   useEffect(() => {
     setItem(manageUser)
   }, [manageUser])
 
   useEffect(() => {
-    const { onGetBatchesLearner } = props
+    const { onGetBatchesLearner, onGetNewBatches } = props
 
     onGetBatchesLearner(params.id)
+    onGetNewBatches(params.id)
   }, [])
 
   const gradeBookApi = () => {
@@ -111,7 +118,7 @@ const BatchList = props => {
       </Row>
       <Row>
         <Col md={5}>
-          <BatchLearner />
+          <BatchLearner newBatch={newBatch} />
           <BatchProgress />
           <CompletionStatus />
         </Col>
@@ -161,23 +168,27 @@ const BatchList = props => {
                     <Row>
                       <Col md={12}>
                         <div className="table-responsive">
-                          <BatchListTable item={item} manageUser={manageUser} />
+                          <BatchListTable
+                            batchesLearner={batchesLearner || []}
+                          />
                         </div>
                       </Col>
                     </Row>
+                  </Tab>
+                  <Tab eventKey="Grade Book" title="Grade Book">
+                    <GradeBook gradeBook={gradeBook || []} />
                   </Tab>
                   <Tab eventKey="lectures" title="Lectures">
                     {/* <BatchListTable /> */}
                   </Tab>
                   <Tab eventKey="mentors" title="Mentors">
                     {/* <BatchListTable /> */}
+                    <MentorListTable />
                   </Tab>
-                  <Tab eventKey="Grade Book" title="Grade Book">
-                    <GradeBook />
-                  </Tab>
-                  <Tab eventKey="status" title="Status">
+
+                  {/* <Tab eventKey="status" title="Status">
                     <Status />
-                  </Tab>
+                  </Tab> */}
                 </Tabs>
               </div>
             </CardBody>
@@ -209,18 +220,20 @@ BatchList.propTypes = {
   Batches: PropTypes.array,
 }
 
-const mapStateToProps = ({ Batches, state, count }) => (
-  console.log(Batches, "////////Batches"),
-  {
-    manageUser: Batches?.manageUser,
-    usersCount: Batches?.count?.count,
-    userRoles: Batches?.roles,
-    // deleteData: false,
-  }
-)
+const mapStateToProps = ({ Batches, state, count }) => ({
+  manageUser: Batches?.manageUser,
+  usersCount: Batches?.count?.count,
+  userRoles: Batches?.roles,
+  newBatch: Batches?.newBatch,
+  batchesLearner: Batches?.batchesLearner,
+  gradeBook: Batches?.gradeBook,
+  // deleteData: false,
+})
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesLearner: data => dispatch(getBatchesLearner(data)),
+  onGetNewBatches: data => dispatch(getNewBatches(data)),
+
   onGetGradeBook: data => dispatch(getGradeBook(data)),
 })
 
