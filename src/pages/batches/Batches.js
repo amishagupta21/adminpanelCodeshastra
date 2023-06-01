@@ -24,7 +24,7 @@ import {
 import { Link, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { getBatchesList } from "store/Batches/actions"
+import { getBatchesList, getDashboard } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
@@ -33,7 +33,7 @@ import BatchNewModal from "./BatchNewModal"
 
 const Batches = props => {
   const params = useParams()
-  const { manageUser, usersCount } = props
+  const { manageUser, usersCount, dashboard } = props
   const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
 
@@ -45,10 +45,10 @@ const Batches = props => {
   }, [manageUser])
 
   useEffect(() => {
-    const { onGetBatchesList } = props
+    const { onGetBatchesList, onGetDashboard } = props
 
     onGetBatchesList()
-    // onGetNewBatches(params.id)
+    onGetDashboard()
   }, [])
 
   const defaultSorted = [
@@ -136,17 +136,6 @@ const Batches = props => {
               Completed
             </span>
           </div>
-          // <FormGroup switch>
-          //   <Input
-          //     type="switch"
-          //     name="enable"
-          //     checked={user?.enable}
-          //     // checked={state}
-          //     // onClick={() => {
-          //     //   setState(!state)
-          //     // }}
-          //   />
-          // </FormGroup>
         ),
       },
       {
@@ -154,10 +143,6 @@ const Batches = props => {
         text: "Actions",
         formatter: (cellContent, user) => (
           <div className="d-flex">
-            {/* <DropdownToggle className="card-drop" tag="a">
-              <i className="mdi mdi-dots-horizontal font-size-18" />
-            </DropdownToggle> */}
-            {/* <DropdownMenu className="dropdown-menu-end"> */}
             <div className="me-2">
               <Link to="/">
                 <i className="mdi mdi-eye font-size-16 text-primary" />
@@ -173,8 +158,6 @@ const Batches = props => {
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
               </Link>
             </div>
-
-            {/* </DropdownMenu> */}
           </div>
         ),
       },
@@ -243,14 +226,14 @@ const Batches = props => {
           <h4>BATCHES</h4>
 
           <Row>
-            <Col sm={6} md={3}>
+            <Col>
               <div className="batches-box">
                 <Card>
                   <CardBody>
                     <div className="box">
                       <div>
                         <p className="box-heading">All Batches</p>
-                        <p className="score">60</p>
+                        <p className="score">{dashboard?.totalBatch}</p>
                       </div>
                       <div className="icon-circle">
                         <span className="mdi mdi-account-circle" />
@@ -260,14 +243,14 @@ const Batches = props => {
                 </Card>
               </div>
             </Col>
-            <Col sm={6} md={3}>
+            <Col>
               <div className="batches-box">
                 <Card>
                   <CardBody>
                     <div className="box">
                       <div>
                         <p className="box-heading">Active Batches</p>
-                        <p className="score">30</p>
+                        <p className="score">{dashboard?.activeBatch}</p>
                       </div>
                       <div className="icon-circle">
                         <span className="mdi mdi-account-circle" />
@@ -277,14 +260,14 @@ const Batches = props => {
                 </Card>
               </div>
             </Col>
-            <Col sm={6} md={3}>
+            <Col>
               <div className="batches-box">
                 <Card>
                   <CardBody>
                     <div className="box">
                       <div>
-                        <p className="box-heading">Completed Batches</p>
-                        <p className="score">24</p>
+                        <p className="box-heading">Inactive Batches</p>
+                        <p className="score">{dashboard?.disableBatch}</p>
                       </div>
                       <div className="icon-circle">
                         <span className="mdi mdi-account-circle" />
@@ -294,14 +277,31 @@ const Batches = props => {
                 </Card>
               </div>
             </Col>
-            <Col sm={6} md={3}>
+            <Col>
               <div className="batches-box">
                 <Card>
                   <CardBody>
                     <div className="box">
                       <div>
-                        <p className="box-heading">Up Coming Batches</p>
-                        <p className="score">39</p>
+                        <p className="box-heading">Past Batches</p>
+                        <p className="score">{dashboard?.postBatch}</p>
+                      </div>
+                      <div className="icon-circle">
+                        <span className="mdi mdi-account-circle" />
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </div>
+            </Col>
+            <Col>
+              <div className="batches-box">
+                <Card>
+                  <CardBody>
+                    <div className="box">
+                      <div>
+                        <p className="box-heading">Ending This Week</p>
+                        <p className="score">{dashboard?.endThisWeek}</p>
                       </div>
                       <div className="icon-circle">
                         <span className="mdi mdi-account-circle" />
@@ -454,6 +454,7 @@ const mapStateToProps = ({ Batches, state, count }) => {
   return {
     manageUser: Batches?.manageUser,
     usersCount: Batches?.count.count,
+    dashboard: Batches?.dashboard,
     userRoles: Batches?.roles,
     // deleteData: false,
   }
@@ -461,8 +462,7 @@ const mapStateToProps = ({ Batches, state, count }) => {
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesList: data => dispatch(getBatchesList(data)),
-  // onGetNewBatches: data => dispatch(getNewBatches(data)),
-
+  onGetDashboard: data => dispatch(getDashboard(data)),
   onCreateNewBatch: data => dispatch(createNewBatch(data)),
 
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),

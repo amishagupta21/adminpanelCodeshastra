@@ -27,7 +27,7 @@ import { getBatchesLearner } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 import "./batches.css"
 
-const BatchListTable = ({ item, manageUser }) => {
+const BatchListTable = ({ item, manageUser, batchesLearner }) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const params = useParams()
   const [modal, setModal] = useState(false)
@@ -71,16 +71,6 @@ const BatchListTable = ({ item, manageUser }) => {
         // ),
       },
       {
-        dataField: "summary",
-        text: "Summary",
-        sort: true,
-        // formatter: (cellContent, user) => (
-        //   <div className="fw-bold">{user?.assessments
-
-        //   }</div>
-        // ),
-      },
-      {
         dataField: "projects_total",
         text: "Projects",
         sort: true,
@@ -101,7 +91,7 @@ const BatchListTable = ({ item, manageUser }) => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="btn-status-active">{user?.status}</div>
+          <div className="fw-bold">{user?.status}</div>
         ),
       },
 
@@ -112,7 +102,7 @@ const BatchListTable = ({ item, manageUser }) => {
           <div className="d-flex">
             <div className="me-2">
               <Link to="/batch-list" className="text-muted">
-                <i className="mdi mdi-information-outline mdi-18px text-success" />
+                <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
               </Link>
               <Link className="text-muted ms-2">
                 <i
@@ -148,7 +138,7 @@ const BatchListTable = ({ item, manageUser }) => {
         key={isExpanded}
         keyField="_id"
         columns={state?.columns}
-        data={item}
+        data={batchesLearner}
       >
         {toolkitProps => (
           <>

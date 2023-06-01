@@ -11,17 +11,21 @@ import {
   Table,
 } from "reactstrap"
 
-const BatchLearner = () => {
+const BatchLearner = ({ newBatch }) => {
   const [state, setState] = useState(true)
 
   return (
     <div>
       <Card>
         <CardBody>
-        <div className="d-flex">
-            <div><h5>Learners Batch</h5></div>
+          <div className="d-flex">
+            <div>
+              <h5>Learners Batch</h5>
+            </div>
             <div className="ms-3 d-flex">
-              <Label check className='me-2'>Enable</Label>
+              <Label check className="me-2">
+                Enable
+              </Label>
               <FormGroup switch>
                 <Input
                   type="switch"
@@ -32,41 +36,37 @@ const BatchLearner = () => {
                 />
               </FormGroup>
             </div>
-
-                  
-
-
           </div>
           <div className="mt-4 table-style">
             <Table>
               <tbody>
                 <tr>
                   <td>Course Name:</td>
-                  <th>Full Stack Web Developer Program</th>
+                  <th>{newBatch?.course}</th>
                 </tr>
                 <tr>
                   <td>Description:</td>
-                  <th>For Freshers Only</th>
+                  <th>{newBatch?.description}</th>
                 </tr>
                 <tr>
                   <td>Variant Type:</td>
-                  <th>Full Time</th>
+                  <th>{newBatch?.variant_type}</th>
                 </tr>
                 <tr>
                   <td>Start Date:</td>
-                  <th>07 Oct 22</th>
+                  <th>{newBatch?.start_date}</th>
                 </tr>
                 <tr>
                   <td>End Date:</td>
-                  <th>12 Oct 22</th>
+                  <th>{newBatch?.end_date}</th>
                 </tr>
                 <tr>
                   <td>Lectures:</td>
-                  <th>9</th>
+                  <th>{newBatch?.lectures}</th>
                 </tr>
                 <tr>
                   <td>Learners:</td>
-                  <th>40</th>
+                  <th>{newBatch?.learner_limit}</th>
                 </tr>
               </tbody>
             </Table>

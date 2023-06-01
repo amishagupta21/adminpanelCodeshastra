@@ -6,7 +6,9 @@ import {
   GET_BATCHES_LIST,
   GET_BATCHES_LEARNER,
   GET_GRADE_BOOK,
+  GET_NEW_BATCHES,
   CREATE_NEW_BATCH,
+  GET_DASHBOARD,
   DELETE_LEARNER,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
@@ -33,6 +35,9 @@ import {
   getNewBatchesCountFail,
   createNewBatchSuccess,
   createNewBatchFail,
+  getDashboardSuccess,
+  getDashboardCountSuccess,
+  getDashboardCountFail,
 } from "./actions"
 import {
   getBatchesList,
@@ -40,6 +45,7 @@ import {
   getBatchesLearner,
   getBatchesGrade,
   createNewBatchesData,
+  getDashboardApi,
   getNewBatches,
   getDeleteData,
   getStatusFilter,
@@ -77,7 +83,6 @@ function* fetchBatches({ payload: data }) {
 // MAIN LEARNER
 
 function* fetchBatchesLearner({ payload: data }) {
-  console.log(data, "working")
   try {
     const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
@@ -133,12 +138,28 @@ function* createBatch({ payload: data }) {
   }
 }
 
+// DASHBOARD
+
+function* fetchNewDashboard({ payload: data }) {
+  try {
+    const response = yield call(getDashboardApi, data)
+    tosterMsg(response?.message)
+    yield put(getDashboardSuccess(response?.data))
+    yield put(getDashboardCountSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getDashboardCountFail(error))
+    // yield put(getGradeBookCountFail(error))
+  }
+}
+
 function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
   yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
-  yield takeEvery(GET_BATCHES_LIST, fetchNewBatches)
+  yield takeEvery(GET_NEW_BATCHES, fetchNewBatches)
+  yield takeEvery(GET_DASHBOARD, fetchNewDashboard)
   yield takeEvery(CREATE_NEW_BATCH, createBatch)
 }
 
