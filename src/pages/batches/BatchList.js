@@ -29,7 +29,7 @@ import CompletionStatus from "./CompletionStatus"
 import BatchLearner from "./BatchLearner"
 import { connect } from "react-redux"
 import BatchNewModal from "./BatchNewModal"
-import { getBatchesLearner } from "store/Batches/actions"
+import { getBatchesLearner, getGradeBook } from "store/Batches/actions"
 
 const BatchList = props => {
   const [key, setKey] = useState("tab")
@@ -38,8 +38,6 @@ const BatchList = props => {
   const params = useParams()
   const { manageUser, usersCount } = props
   const [item, setItem] = useState(manageUser)
-  console.log("shit////////", manageUser)
-
   useEffect(() => {
     setItem(manageUser)
   }, [manageUser])
@@ -49,6 +47,19 @@ const BatchList = props => {
 
     onGetBatchesLearner(params.id)
   }, [])
+
+  const gradeBookApi = () => {
+    const { onGetGradeBook } = props
+
+    onGetGradeBook(params.id)
+  }
+
+  const handleSelect = k => {
+    setKey(k)
+    if (k === "Grade Book") {
+      gradeBookApi()
+    }
+  }
 
   return (
     <div className="page-content batches-list">
@@ -108,7 +119,12 @@ const BatchList = props => {
           <Card>
             <CardBody>
               <div>
-                <Tabs activeKey={key} onSelect={k => setKey(k)}>
+                <Tabs
+                  activeKey={key}
+                  onSelect={k => {
+                    handleSelect(k)
+                  }}
+                >
                   <Tab eventKey="tab" title="Learners">
                     <Row>
                       <Col md={12} className="text-end">
@@ -145,10 +161,7 @@ const BatchList = props => {
                     <Row>
                       <Col md={12}>
                         <div className="table-responsive">
-                          <BatchListTable
-                            manageUser={manageUser}
-                            usersCount={usersCount}
-                          />
+                          <BatchListTable item={item} manageUser={manageUser} />
                         </div>
                       </Col>
                     </Row>
@@ -196,20 +209,19 @@ BatchList.propTypes = {
   Batches: PropTypes.array,
 }
 
-const mapStateToProps = ({ Batches, state, count }) => ({
-  manageUser: Batches?.manageUser,
-  usersCount: Batches?.count?.count,
-  userRoles: Batches?.roles,
-  // deleteData: false,
-})
+const mapStateToProps = ({ Batches, state, count }) => (
+  console.log(Batches, "////////Batches"),
+  {
+    manageUser: Batches?.manageUser,
+    usersCount: Batches?.count?.count,
+    userRoles: Batches?.roles,
+    // deleteData: false,
+  }
+)
 
 const mapDispatchToProps = dispatch => ({
-  onGetNewBatches: data => dispatch(getNewBatches(data)),
   onGetBatchesLearner: data => dispatch(getBatchesLearner(data)),
-  onGetBatchesList: data => dispatch(getBatchesList(data)),
-  onCreateNewBatch: data => dispatch(createNewBatch(data)),
-  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
-  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
+  onGetGradeBook: data => dispatch(getGradeBook(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BatchList)

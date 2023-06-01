@@ -40,10 +40,10 @@ const GradeBook = props => {
 
   const [item, setItem] = useState(manageUser)
 
-  useEffect(() => {
-    const { onGetGradeBook } = props
-    onGetGradeBook(params.id)
-  }, [])
+  // useEffect(() => {
+  //   const { onGetGradeBook } = props
+  //   onGetGradeBook(params.id)
+  // }, [])
 
   let state = {
     columns: [
@@ -64,7 +64,7 @@ const GradeBook = props => {
 
       {
         dataField: "end_date",
-        text: "Projects",
+        text: "Id Number",
         sort: true,
       },
       {
@@ -73,20 +73,40 @@ const GradeBook = props => {
         sort: true,
       },
       {
-        dataField: "lectures",
-        text: "Week Test 1",
+        dataField: "course",
+        text: "Virtual Programming",
         sort: true,
       },
       {
         dataField: "lectures",
-        text: "Week Test 2",
+        text: "Virtual Programming Grade",
         sort: true,
       },
       {
         dataField: "lectures",
-        text: "Week Test 3",
+        text: "DSA MCT",
         sort: true,
       },
+      {
+        dataField: "lectures",
+        text: "FE MCT1",
+        sort: true,
+      },
+      // {
+      //   dataField: "lectures",
+      //   text: "Week Test 1",
+      //   sort: true,
+      // },
+      // {
+      //   dataField: "lectures",
+      //   text: "Week Test 2",
+      //   sort: true,
+      // },
+      // {
+      //   dataField: "lectures",
+      //   text: "Week Test 3",
+      //   sort: true,
+      // },
 
       {
         dataField: "Actions",
@@ -116,6 +136,69 @@ const GradeBook = props => {
       order: "desc",
     },
   ]
+
+  const gradeArray = [
+    {
+      name: "kishor",
+      id_number: 2445,
+      attendance: "52%",
+      assessmemt: "120 / 200",
+      virtual_programming: 90,
+      virtual_grade: "A+",
+      mockup: {
+        DSA: 75,
+        FE: 55,
+      },
+      total_number: 75,
+      learner_limit: 23,
+      total_percentage: "87%",
+      weekly_assignment: {
+        week_1: 34,
+        week_2: 45,
+        week_3: 78,
+      },
+      test: {
+        week_1: 45,
+        week_2: 22,
+      },
+      final_assessment: {
+        phase_1: 10,
+        phase_2: 25,
+        phase_3: 87,
+      },
+    },
+    {
+      name: "raman",
+      id_number: 455,
+      attendance: "87%",
+      assessmemt: "50 / 200",
+      virtual_programming: 10,
+      virtual_grade: "B+",
+      mockup: {
+        DSA: 75,
+        FE: 55,
+      },
+      total_number: 25,
+      learner_limit: 10,
+      total_percentage: "25%",
+      weekly_assignment: {
+        week_1: 34,
+        week_2: 45,
+        week_3: 78,
+      },
+      test: {
+        week_1: 45,
+        week_2: 22,
+      },
+      final_assessment: {
+        phase_1: 10,
+        phase_2: 25,
+        phase_3: 87,
+      },
+    },
+  ]
+
+  // console.log(gradeArray, "/////////gradeArray")
 
   const selectRow = {
     mode: "checkbox",
@@ -177,7 +260,6 @@ const mapStateToProps = ({ Batches, state, count }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onGetGradeBook: data => dispatch(getGradeBook(data)),
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })

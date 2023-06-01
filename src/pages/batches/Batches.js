@@ -24,7 +24,7 @@ import {
 import { Link, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { getBatchesList, getNewBatches } from "store/Batches/actions"
+import { getBatchesList } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
@@ -45,7 +45,7 @@ const Batches = props => {
   }, [manageUser])
 
   useEffect(() => {
-    const { onGetBatchesList, onGetNewBatches } = props
+    const { onGetBatchesList } = props
 
     onGetBatchesList()
     // onGetNewBatches(params.id)
@@ -460,8 +460,8 @@ const mapStateToProps = ({ Batches, state, count }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onGetNewBatches: data => dispatch(getNewBatches(data)),
   onGetBatchesList: data => dispatch(getBatchesList(data)),
+  // onGetNewBatches: data => dispatch(getNewBatches(data)),
 
   onCreateNewBatch: data => dispatch(createNewBatch(data)),
 
