@@ -71,6 +71,16 @@ const BatchListTable = ({ item, manageUser }) => {
         // ),
       },
       {
+        dataField: "summary",
+        text: "Summary",
+        sort: true,
+        // formatter: (cellContent, user) => (
+        //   <div className="fw-bold">{user?.assessments
+
+        //   }</div>
+        // ),
+      },
+      {
         dataField: "projects_total",
         text: "Projects",
         sort: true,
@@ -91,7 +101,7 @@ const BatchListTable = ({ item, manageUser }) => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.status}</div>
+          <div className="btn-status-active">{user?.status}</div>
         ),
       },
 
@@ -102,7 +112,7 @@ const BatchListTable = ({ item, manageUser }) => {
           <div className="d-flex">
             <div className="me-2">
               <Link to="/batch-list" className="text-muted">
-                <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
+                <i className="mdi mdi-information-outline mdi-18px text-success" />
               </Link>
               <Link className="text-muted ms-2">
                 <i

@@ -337,6 +337,11 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                 </AccordionBody>
               </AccordionItem>
             </UncontrolledAccordion>
+            <div>
+              <button className="  create-new-appointment">
+                Add Synchronized
+              </button>
+            </div>
           </Col>
         </Row>
       </ModalBody>

@@ -110,11 +110,15 @@
 .batches-home table thead {
   background: #f8f9fa;
 }
+table thead
+{
+  background: #f8f9fa;
+}
 .accordionItem-table {
   display: flex;
 }
-.batch-accord table th,
-td {
+.batch-accord table th, .batch-accord table td
+ {
   border: 0px solid #000000 !important;
 }
 /* .batch-accord
@@ -235,6 +239,32 @@ td {
 .red {
   color: #e44d4d;
 }
+.report .report-table table tbody td, .report .report-table table thead th
+{
+  border: 1px solid #b7bdc7 !important;
+}
+.btn-status-inactive
+{
+    border-radius: 3px;
+    text-align: center;
+    padding: 4px;
+    font-size: 12px;
+    font-weight: 500 !important;
+    background: #f46a6a;
+    color: #fff;
+}
+.btn-status-active
+{
+    border-radius: 3px;
+    text-align: center;
+    padding: 4px;
+    font-size: 12px;
+    font-weight: 500 !important;
+    background: #6fc38f;
+    color: #fff;
+}
+
+
 
 @media (max-width: 767px) {
   .batches-box {

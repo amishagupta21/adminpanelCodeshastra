@@ -115,7 +115,7 @@ const GradeBook = props => {
           <div className="d-flex">
             <div className="me-2">
               <Link to="/batch-list" className="text-muted">
-                <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
+                <i className="mdi mdi-information-outline mdi-18px text-success" />
               </Link>
               <Link className="text-muted ms-2">
                 <i

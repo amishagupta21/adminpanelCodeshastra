@@ -18,11 +18,11 @@ const BatchLearner = () => {
     <div>
       <Card>
         <CardBody>
-          <div className="d-flex">
-            <div>Learners Batch</div>
-            <div className="ms-2">
+        <div className="d-flex">
+            <div><h5>Learners Batch</h5></div>
+            <div className="ms-3 d-flex">
+              <Label check className='me-2'>Enable</Label>
               <FormGroup switch>
-                <Label check>Enable</Label>
                 <Input
                   type="switch"
                   checked={state}
@@ -32,6 +32,10 @@ const BatchLearner = () => {
                 />
               </FormGroup>
             </div>
+
+                  
+
+
           </div>
           <div className="mt-4 table-style">
             <Table>

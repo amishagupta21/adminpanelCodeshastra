@@ -30,6 +30,7 @@ import BatchLearner from "./BatchLearner"
 import { connect } from "react-redux"
 import BatchNewModal from "./BatchNewModal"
 import { getBatchesLearner, getGradeBook } from "store/Batches/actions"
+import MentorListTable from "./MentorListTable"
 
 const BatchList = props => {
   const [key, setKey] = useState("tab")
@@ -166,18 +167,20 @@ const BatchList = props => {
                       </Col>
                     </Row>
                   </Tab>
+                  <Tab eventKey="Grade Book" title="Grade Book">
+                    <GradeBook />
+                  </Tab>
                   <Tab eventKey="lectures" title="Lectures">
                     {/* <BatchListTable /> */}
                   </Tab>
                   <Tab eventKey="mentors" title="Mentors">
                     {/* <BatchListTable /> */}
+                    <MentorListTable />
                   </Tab>
-                  <Tab eventKey="Grade Book" title="Grade Book">
-                    <GradeBook />
-                  </Tab>
-                  <Tab eventKey="status" title="Status">
+                  
+                  {/* <Tab eventKey="status" title="Status">
                     <Status />
-                  </Tab>
+                  </Tab> */}
                 </Tabs>
               </div>
             </CardBody>
