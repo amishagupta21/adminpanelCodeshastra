@@ -9,7 +9,8 @@ import SidebarContent from "./SidebarContent";
 
 import { Link } from "react-router-dom";
 
-import logofull from "../../assets/images/logo.svg";
+// import logofull from "../../assets/images/logo.svg";
+import logofull from "../../assets/images/logo.png";
 import logo from "../../assets/images/logo-sm.png";
 
 const Sidebar = props => {

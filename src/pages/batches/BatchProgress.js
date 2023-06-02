@@ -1,5 +1,6 @@
 import React from "react"
-import { Row, Col, Card, CardBody } from "reactstrap"
+import { Row, Col, Card, CardBody } from "reactstrap";
+import ChartCircle from "../../assets/images/Chart-circle.png";
 
 const BatchProgress = () => {
   return (
@@ -45,7 +46,7 @@ const BatchProgress = () => {
               </p>
             </Col>
             <Col md={6} className="d-flex align-items-center">
-              Circle Progress
+              <img src={ChartCircle} />
             </Col>
           </Row>
         </CardBody>

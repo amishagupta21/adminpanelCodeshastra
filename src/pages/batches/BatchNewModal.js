@@ -338,14 +338,14 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
               </AccordionItem>
               <AccordionItem className="mb-3">
                 <AccordionHeader targetId="3">
-                  Batch Id
+                  Moodle Course ID
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
                 </AccordionHeader>
                 <AccordionBody accordionId="3">
                   <Row>
                     <Col md={4} style={{paddingLeft:'33px'}}>
                       <FormGroup>
-                        <Label>Batch ID</Label>
+                        <Label>Course ID</Label>
                         <Input type="text" />
                       </FormGroup>
                     </Col>

@@ -11,6 +11,16 @@
   color: #747893 !important;
   border: 1px solid #F1F1F3 !important;
 }
+.btn-synch-now
+{
+  background: #a020f0 !important;
+  border: 1px solid #a020f0 !important;
+}
+.btn-synch-now:hover
+{
+  background: #700ead !important;
+  border: 1px solid #700ead !important;
+}
 .btn-light-grey:hover
 {
   background: #a5a5ab !important;

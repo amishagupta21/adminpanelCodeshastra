@@ -128,6 +128,8 @@ const Batches = props => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
+          // Active css className="btn-status-active"
+          // Inactive css className="btn-status-inactive"
           <div>
             <span
               className="btn-status-active"
@@ -316,8 +318,8 @@ const Batches = props => {
                 <span>
                 <Button
                   color="success"
-                  className="rounded-pill mb-3 me-3">
-                  + Add Synchronized
+                  className="rounded-pill mb-3 me-3 px-4 btn-synch-now">
+                    Synch Now
                 </Button>
                 <Button
                   color="success"
