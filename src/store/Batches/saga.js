@@ -9,6 +9,7 @@ import {
   GET_NEW_BATCHES,
   CREATE_NEW_BATCH,
   GET_DASHBOARD,
+  GET_MENTOR,
   DELETE_LEARNER,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
@@ -38,6 +39,9 @@ import {
   getDashboardSuccess,
   getDashboardCountSuccess,
   getDashboardCountFail,
+  getMentorSuccess,
+  getMentorCountSuccess,
+  getMentorCountFail,
 } from "./actions"
 import {
   getBatchesList,
@@ -47,6 +51,7 @@ import {
   createNewBatchesData,
   getDashboardApi,
   getNewBatches,
+  getMentorApi,
   getDeleteData,
   getStatusFilter,
 } from "helpers/fakebackend_helper"
@@ -153,6 +158,21 @@ function* fetchNewDashboard({ payload: data }) {
   }
 }
 
+// MENTOR
+
+function* fetchNewMentor({ payload: data }) {
+  try {
+    const response = yield call(getMentorApi, data)
+    tosterMsg(response?.message)
+    yield put(getMentorSuccess(response?.data))
+    yield put(getMentorCountSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getMentorCountFail(error))
+    // yield put(getGradeBookCountFail(error))
+  }
+}
+
 function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
@@ -160,6 +180,7 @@ function* usersManageSaga() {
   yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
   yield takeEvery(GET_NEW_BATCHES, fetchNewBatches)
   yield takeEvery(GET_DASHBOARD, fetchNewDashboard)
+  yield takeEvery(GET_MENTOR, fetchNewMentor)
   yield takeEvery(CREATE_NEW_BATCH, createBatch)
 }
 

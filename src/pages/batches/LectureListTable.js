@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 
-const MentorListTable = ({ mentor }) => {
+const LectureListTable = ({ mentor }) => {
   const [isExpanded, setIsExpanded] = useState(null)
 
   const defaultSorted = [
@@ -150,4 +150,4 @@ const MentorListTable = ({ mentor }) => {
   )
 }
 
-export default MentorListTable
+export default LectureListTable

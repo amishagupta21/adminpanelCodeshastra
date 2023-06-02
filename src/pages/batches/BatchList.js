@@ -33,15 +33,24 @@ import {
   getBatchesLearner,
   getGradeBook,
   getNewBatches,
+  getMentor,
 } from "store/Batches/actions"
 import MentorListTable from "./MentorListTable"
+import LectureListTable from "./LectureListTable"
 
 const BatchList = props => {
   const [key, setKey] = useState("tab")
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
   const params = useParams()
-  const { manageUser, usersCount, newBatch, batchesLearner, gradeBook } = props
+  const {
+    manageUser,
+    usersCount,
+    newBatch,
+    batchesLearner,
+    gradeBook,
+    mentor,
+  } = props
   const [item, setItem] = useState(manageUser)
 
   useEffect(() => {
@@ -61,10 +70,18 @@ const BatchList = props => {
     onGetGradeBook(params.id)
   }
 
+  const mentorsApi = () => {
+    const { onGetNewMentor } = props
+
+    onGetNewMentor(params.id)
+  }
+
   const handleSelect = k => {
     setKey(k)
     if (k === "Grade Book") {
       gradeBookApi()
+    } else if (k === "mentors") {
+      mentorsApi()
     }
   }
 
@@ -179,16 +196,12 @@ const BatchList = props => {
                     <GradeBook gradeBook={gradeBook || []} />
                   </Tab>
                   <Tab eventKey="lectures" title="Lectures">
-                    {/* <BatchListTable /> */}
+                    <LectureListTable />
                   </Tab>
                   <Tab eventKey="mentors" title="Mentors">
                     {/* <BatchListTable /> */}
-                    <MentorListTable />
+                    <MentorListTable mentor={mentor || []} />
                   </Tab>
-
-                  {/* <Tab eventKey="status" title="Status">
-                    <Status />
-                  </Tab> */}
                 </Tabs>
               </div>
             </CardBody>
@@ -227,12 +240,14 @@ const mapStateToProps = ({ Batches, state, count }) => ({
   newBatch: Batches?.newBatch,
   batchesLearner: Batches?.batchesLearner,
   gradeBook: Batches?.gradeBook,
+  mentor: Batches?.mentor,
   // deleteData: false,
 })
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesLearner: data => dispatch(getBatchesLearner(data)),
   onGetNewBatches: data => dispatch(getNewBatches(data)),
+  onGetNewMentor: data => dispatch(getMentor(data)),
 
   onGetGradeBook: data => dispatch(getGradeBook(data)),
 })

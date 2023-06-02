@@ -164,8 +164,6 @@ const Batches = props => {
     ],
   }
 
-  console.log(manageUser, "////////manageUser")
-
   const handleSearch = e => {
     const { onGetBatchesList } = props
     const data = {

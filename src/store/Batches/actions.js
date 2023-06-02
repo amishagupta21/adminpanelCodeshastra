@@ -29,6 +29,11 @@ import {
   GET_DASHBOARD_FAIL,
   GET_DASHBOARD_COUNT_SUCCESS,
   GET_DASHBOARD_COUNT_FAIL,
+  GET_MENTOR,
+  GET_MENTOR_SUCCESS,
+  GET_MENTOR_FAIL,
+  GET_MENTOR_COUNT_SUCCESS,
+  GET_MENTOR_COUNT_FAIL,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
@@ -212,6 +217,33 @@ export const getDashboardCountSuccess = data => ({
 
 export const getDashboardCountFail = error => ({
   type: GET_DASHBOARD_COUNT_FAIL,
+  payload: error,
+})
+
+// MENTOR API
+
+export const getMentor = data => ({
+  type: GET_MENTOR,
+  payload: data,
+})
+
+export const getMentorSuccess = data => ({
+  type: GET_MENTOR_SUCCESS,
+  payload: data,
+})
+
+export const getMentorFail = error => ({
+  type: GET_MENTOR_FAIL,
+  payload: error,
+})
+
+export const getMentorCountSuccess = data => ({
+  type: GET_MENTOR_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getMentorCountFail = error => ({
+  type: GET_MENTOR_COUNT_FAIL,
   payload: error,
 })
 

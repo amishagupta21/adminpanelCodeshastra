@@ -283,8 +283,6 @@ const GradeBook = ({ gradeBook }) => {
     },
   ]
 
-  // console.log(gradeArray, "/////////gradeArray")
-
   const selectRow = {
     mode: "checkbox",
     clickToSelect: false,
@@ -295,6 +293,37 @@ const GradeBook = ({ gradeBook }) => {
   return (
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} />
+      <Row>
+        <Col md={12} className="text-end">
+          <Button color="success" className="rounded-pill mb-3">
+            + Add New Learner
+          </Button>
+          <div className="text-start">
+            <h4>Grade Book</h4>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <div className="search-box">
+            <div className="app-search p-0">
+              <div className="position-relative mb-2">
+                <input
+                  className="form-control mb-3"
+                  type="text"
+                  placeholder="Search by Batch name"
+                />
+                <span className="bx bx-search-alt" />
+              </div>
+            </div>
+          </div>
+        </Col>
+        <Col md={6}>
+          <div className="text-end">
+            <Button color="secondary">Export</Button>
+          </div>
+        </Col>
+      </Row>
       <ToolkitProvider
         key={isExpanded}
         keyField="_id"
