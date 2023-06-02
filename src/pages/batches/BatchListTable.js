@@ -91,7 +91,9 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.status}</div>
+          <div><span className="btn-status-active">{user?.status}</span></div>
+          // Active css className="btn-status-active"
+          // Inactive css className="btn-status-inactive"
         ),
       },
 
@@ -101,9 +103,9 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         formatter: (cellContent, user) => (
           <div className="d-flex">
             <div className="me-2">
-              <Link to="/batch-list" className="text-muted">
+              {/* <Link to="/batch-list" className="text-muted">
                 <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
-              </Link>
+              </Link> */}
               <Link className="text-muted ms-2">
                 <i
                   onClick={toggle}
@@ -132,7 +134,7 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
   }
 
   return (
-    <>
+    <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} />
       <ToolkitProvider
         key={isExpanded}
@@ -162,7 +164,7 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
           </>
         )}
       </ToolkitProvider>
-    </>
+    </div>
   )
 }
 

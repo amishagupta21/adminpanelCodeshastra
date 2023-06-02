@@ -35,20 +35,20 @@ const CompletionStatus = () => {
               </div>
             </div>
             <div className="my-progress-bar">
-              <Label className="me-3">Assignments</Label>
+              <Label className="me-3">Assessments</Label>
               <div className="w-100 text-center">
                 <Progress value="25" color="warning"></Progress>
                 <Label className="me-2 label">
-                  <span>32</span>/40 Learners
+                  <span>20</span>/40 Learners
                 </Label>
               </div>
             </div>
             <div className="my-progress-bar">
-              <Label className="me-3">Assignments</Label>
+              <Label className="me-3">Projects</Label>
               <div className="w-100 text-center">
                 <Progress value="25" color="danger"></Progress>
                 <Label className="me-2 label">
-                  <span>32</span>/40 Learners
+                  <span>10</span>/40 Learners
                 </Label>
               </div>
             </div>

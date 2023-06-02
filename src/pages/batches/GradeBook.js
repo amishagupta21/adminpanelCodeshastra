@@ -112,9 +112,9 @@ const GradeBook = ({ gradeBook }) => {
         formatter: (cellContent, user) => (
           <div className="d-flex">
             <div className="me-2">
-              <Link to="/batch-list" className="text-muted">
+              {/* <Link to="/batch-list" className="text-muted">
                 <i className="mdi mdi-information-outline mdi-18px text-success" />
-              </Link>
+              </Link> */}
               <Link className="text-muted ms-2">
                 <i
                   onClick={toggle}
@@ -293,7 +293,7 @@ const GradeBook = ({ gradeBook }) => {
   }
 
   return (
-    <>
+    <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} />
       <ToolkitProvider
         key={isExpanded}
@@ -326,7 +326,7 @@ const GradeBook = ({ gradeBook }) => {
           </>
         )}
       </ToolkitProvider>
-    </>
+    </div>
   )
 }
 

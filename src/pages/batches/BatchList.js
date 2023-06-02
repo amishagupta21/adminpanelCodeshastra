@@ -73,14 +73,14 @@ const BatchList = props => {
       <div className="d-flex justify-content-between">
         <div>
           <Link to="/batch">
-            <i className="mdi mdi-chevron-left"></i> Batch List
+            <i className="mdi mdi-chevron-left"></i> Batch Detail
           </Link>
         </div>
         {/* <div>Batch List / Batch Information</div> */}
         <div>
           <Breadcrumb>
             <BreadcrumbItem>
-              <Link to="/batch">Batch List</Link>
+              <Link to="/batch">Batch Detail</Link>
             </BreadcrumbItem>
             <BreadcrumbItem active>Batch Information</BreadcrumbItem>
           </Breadcrumb>
