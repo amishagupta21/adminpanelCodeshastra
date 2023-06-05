@@ -28,7 +28,6 @@ import BatchList from "pages/batches/BatchList"
 import Report from "pages/batches/Report"
 import AddMentors from "pages/Mentors/AddMentors"
 
-
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/users", component: Users },
@@ -43,10 +42,9 @@ const authProtectedRoutes = [
   { path: "/faq-configuration", component: FaqConfiguration },
   { path: "/sms-email-templates", component: SmsEmailTemplates },
   { path: "/batch", component: Batch },
-  { path: "/batch-list/edit/:id", component: BatchList },
-  { path: "/report", component: Report },  
+  { path: "/batch-detail/edit/:id", component: BatchList },
+  { path: "/report/:id", component: Report },
   { path: "/add-mentors", component: AddMentors },
-
 
   // //profile
   { path: "/profile", component: UserProfile },

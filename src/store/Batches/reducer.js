@@ -35,6 +35,11 @@ import {
   GET_DASHBOARD_FAIL,
   GET_DASHBOARD_COUNT_SUCCESS,
   GET_DASHBOARD_COUNT_FAIL,
+  GET_MENTOR,
+  GET_MENTOR_SUCCESS,
+  GET_MENTOR_FAIL,
+  GET_MENTOR_COUNT_SUCCESS,
+  GET_MENTOR_COUNT_FAIL,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -245,6 +250,37 @@ const Batches = (state = INIT_STATE, action) => {
       }
 
     case GET_DASHBOARD_COUNT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    // MENTOR
+
+    case GET_MENTOR:
+      return {
+        ...state,
+        mentor: action.payload,
+      }
+    case GET_MENTOR_SUCCESS:
+      return {
+        ...state,
+        mentor: action.payload,
+      }
+
+    case GET_MENTOR_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case GET_MENTOR_COUNT_SUCCESS:
+      return {
+        ...state,
+        count: action.payload,
+      }
+
+    case GET_MENTOR_COUNT_FAIL:
       return {
         ...state,
         error: action.payload,

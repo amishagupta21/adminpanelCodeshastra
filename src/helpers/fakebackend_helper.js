@@ -118,30 +118,17 @@ const getBatchesList = async data => {
 // MAIN BATCHES API
 
 const getBatches = async data => {
-  const resp = await getCourseData(
-    url.GET_BATCHES +
-      `?pageSize=${data?.pageSize || 20}&keyword=${data?.search || ""}&page=${
-        data?.page || 1
-      }`
-  )
+  const resp = await getCourseData(url.GET_BATCHES + "/getAllTheCourses/0")
   return resp
 }
 
 const getBatchesLearner = async data => {
-  const resp = await getCourseData(
-    url.GET_BATCHES_LEARNER_LIST +
-      `/${data}?pageSize=${data?.pageSize || 11}&page=${data?.page || 1}`
-  )
+  const resp = await getCourseData(url.GET_BATCHES_LEARNER_LIST + "/145/5023")
   return resp
 }
 
 const getBatchesGrade = async data => {
-  const resp = await getCourseData(
-    url.GET_GRADE_BOOK +
-      `/${data}/lectures?pageSize=${data?.pageSize || 11}&page=${
-        data?.page || 1
-      }`
-  )
+  const resp = await getCourseData(url.GET_GRADE_BOOK + "/145/0")
   return resp
 }
 
@@ -161,6 +148,12 @@ const createNewBatchesData = async data => {
 // DASHBOARD
 const getDashboardApi = async data => {
   const resp = await getCourseData(url.GET_DASHBOARD + "/dashboard")
+  return resp
+}
+
+// MENTOR
+const getMentorApi = async data => {
+  const resp = await getCourseData(url.GET_MENTOR + "/mentors")
   return resp
 }
 
@@ -622,5 +615,6 @@ export {
   createNewBatchesData,
   getNewBatches,
   getDashboardApi,
+  getMentorApi,
   // getFilter,
 }

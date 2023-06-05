@@ -134,13 +134,13 @@ export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 
 // MAIN BATCHES
 
-export const GET_BATCHES = "/admin/batch"
+export const GET_BATCHES = "/moodle"
 export const NEW_BATCHES = "/admin/batch"
 
-export const GET_BATCHES_LEARNER_LIST = "/admin/batch/learners/listing"
+export const GET_BATCHES_LEARNER_LIST = "/moodle/getStudentbyCourse"
 // GRADE_BOOK
 
-export const GET_GRADE_BOOK = "/admin/batch"
+export const GET_GRADE_BOOK = "/moodle/getStudentsReport"
 
 // NEW BATCHES
 
@@ -149,6 +149,10 @@ export const GET_NEW_BATCHES = "/admin/batch"
 // DASHBOARD
 
 export const GET_DASHBOARD = "/admin/batch"
+
+// MENTOR
+
+export const GET_MENTOR = "/admin/batch"
 
 // Variant API's
 

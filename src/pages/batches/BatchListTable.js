@@ -46,12 +46,12 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         text: "Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.learner_id?.fullName}</div>
+          <div className="fw-bold">{user?.name}</div>
         ),
       },
 
       {
-        dataField: "assingment",
+        dataField: "assignments",
         text: "Assignments",
         sort: true,
         // formatter: (cellContent, user) => (
@@ -79,11 +79,11 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         ),
       },
       {
-        dataField: "attendance",
+        dataField: "attendence",
         text: "Attendance",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.attendance}</div>
+          <span>{user?.attendence.toFixed(2)} %</span>
         ),
       },
       {
@@ -91,7 +91,17 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.status}</div>
+          <div>
+            <span
+              className={
+                user?.status === 0 ? "btn-status-inactive" : "btn-status-active"
+              }
+            >
+              {user?.status === "true" ? "Active" : "Inactive"}
+            </span>
+          </div>
+          // Active css className="btn-status-active"
+          // Inactive css className="btn-status-inactive"
         ),
       },
 
@@ -101,14 +111,15 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         formatter: (cellContent, user) => (
           <div className="d-flex">
             <div className="me-2">
-              <Link to="/batch-list" className="text-muted">
+              {/* <Link to="/batch-list" className="text-muted">
                 <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
-              </Link>
-              <Link className="text-muted ms-2">
-                <i
-                  onClick={toggle}
-                  className="mdi mdi-clipboard-account mdi-18px text-danger"
-                />
+              </Link> */}
+              <Link
+                to={`/report/${user?.id}`}
+                // onClick={toggle}
+                className="text-muted ms-2"
+              >
+                <i className="mdi mdi-clipboard-account mdi-18px text-success" />
               </Link>
             </div>
           </div>
@@ -132,7 +143,7 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
   }
 
   return (
-    <>
+    <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} />
       <ToolkitProvider
         key={isExpanded}
@@ -144,6 +155,10 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
           <>
             <Col xl="12">
               <div className="table-responsive">
+                <h6 className="mt-3">
+                  Total Learners: {batchesLearner?.length}
+                </h6>
+
                 <BootstrapTable
                   keyField={"_id"}
                   responsive
@@ -162,7 +177,7 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
           </>
         )}
       </ToolkitProvider>
-    </>
+    </div>
   )
 }
 

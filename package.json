@@ -51,6 +51,7 @@
     "react-auth-code-input": "^1.2.1",
     "react-bootstrap": "^2.6.0",
     "react-bootstrap-editable": "^0.8.2",
+    "react-bootstrap-table": "^4.3.1",
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-editor": "^1.4.0",
     "react-bootstrap-table2-paginator": "^2.1.2",
