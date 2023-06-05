@@ -114,7 +114,7 @@ const axios = require('axios');
         </Row>
         <Row>
           <Col md={12} className="batch-accord">
-            <UncontrolledAccordion defaultOpen={["1", "2"]} stayOpen>
+            <UncontrolledAccordion defaultOpen={["1", "2","3"]} stayOpen>
               <AccordionItem className="mb-3">
                 <AccordionHeader targetId="1">
                   Batch Configuration
@@ -180,7 +180,7 @@ const axios = require('axios');
                   </Table>
                 </AccordionBody>
               </AccordionItem>
-              <AccordionItem>
+              <AccordionItem className="mb-2">
                 <AccordionHeader targetId="2">
                   Batch Schedule
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
@@ -379,12 +379,23 @@ const axios = require('axios');
                   </Row>
                 </AccordionBody>
               </AccordionItem>
+              <AccordionItem className="mb-3">
+                <AccordionHeader targetId="3">
+                  Moodle Course ID
+                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
+                </AccordionHeader>
+                <AccordionBody accordionId="3">
+                  <Row>
+                    <Col md={4} style={{paddingLeft:'33px'}}>
+                      <FormGroup>
+                        <Label>Course ID</Label>
+                        <Input type="text" />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </AccordionBody>
+              </AccordionItem>
             </UncontrolledAccordion>
-            <div>
-              <button className="  create-new-appointment">
-                Add Synchronized
-              </button>
-            </div>
           </Col>
         </Row>
       </ModalBody>

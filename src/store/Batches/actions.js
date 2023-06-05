@@ -32,6 +32,14 @@ import {
   DELETE_BATCHES,
   DELETE_BATCHES_SUCCESS,
   DELETE_BATCHES_FAIL,
+  GET_MENTOR,
+  GET_MENTOR_SUCCESS,
+  GET_MENTOR_FAIL,
+  GET_MENTOR_COUNT_SUCCESS,
+  GET_MENTOR_COUNT_FAIL,
+  DELETE_LEARNER,
+  DELETE_LEARNER_SUCCESS,
+  DELETE_LEARNER_FAIL,
   CREATE_NEW_BATCH,
   CREATE_NEW_BATCH_SUCCESS,
   CREATE_NEW_BATCH_FAIL,
@@ -219,6 +227,37 @@ export const deleteBatches = id => ({
   type: DELETE_BATCHES,
   payload: id,
 })
+// MENTOR API
+
+export const getMentor = data => ({
+  type: GET_MENTOR,
+  payload: data,
+})
+
+export const getMentorSuccess = data => ({
+  type: GET_MENTOR_SUCCESS,
+  payload: data,
+})
+
+export const getMentorFail = error => ({
+  type: GET_MENTOR_FAIL,
+  payload: error,
+})
+
+export const getMentorCountSuccess = data => ({
+  type: GET_MENTOR_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getMentorCountFail = error => ({
+  type: GET_MENTOR_COUNT_FAIL,
+  payload: error,
+})
+
+// export const deleteLearner = id => ({
+//   type: DELETE_LEARNER,
+//   payload: id,
+// })
 
 export const deleteBatchesSuccess = event => ({
   type: DELETE_BATCHES_SUCCESS,

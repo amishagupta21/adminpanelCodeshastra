@@ -164,6 +164,12 @@ const getDashboardApi = async data => {
   return resp
 }
 
+// MENTOR
+const getMentorApi = async data => {
+  const resp = await getCourseData(url.GET_MENTOR + "/mentors")
+  return resp
+}
+
 //VARIANT API
 
 const getVariantList = async data => {
@@ -625,5 +631,6 @@ export {
   createNewBatchesData,
   getNewBatches,
   getDashboardApi,
+  getMentorApi,
   // getFilter,
 }

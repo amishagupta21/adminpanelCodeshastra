@@ -177,12 +177,14 @@ const Batches = props => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
+          // Active css className="btn-status-active"
+          // Inactive css className="btn-status-inactive"
           <div>
             <span
-              className="bg-success px-2 py-1 text-white"
-              style={{ borderRadius: "5px" }}
+              className="btn-status-active"
+             
             >
-              Completed
+              Active
             </span>
           </div>
         ),
@@ -192,11 +194,11 @@ const Batches = props => {
         text: "Actions",
         formatter: (cellContent, user) => (
           <div className="d-flex">
-            <div className="me-2">
+            {/* <div className="me-2">
               <Link to="/">
                 <i className="mdi mdi-eye font-size-16 text-primary" />
               </Link>
-            </div>
+            </div> */}
             <div className="me-2">
               <Link to={`/batch-list/edit/${user?.id}`} className="text-muted">
                 <i className="mdi mdi-pencil font-size-16 text-success" />
@@ -324,12 +326,11 @@ const Batches = props => {
         onCloseClick={() => setDeleteModalIsOpen(false)} />
       <Row>
         <Col md={12}>
-          <h4>BATCHES</h4>
-
+          <h4 className="mb-3">BATCHES</h4>
           <Row>
             <Col>
-              <div className="batches-box">
-                <Card>
+              <div className="batches-box" >
+                <Card style={{background:'#E5E9FF'}}>
                   <CardBody>
                     <div className="box">
                       <div>
@@ -413,10 +414,16 @@ const Batches = props => {
               </div>
             </Col>
           </Row>
-          <Card>
-            <CardBody>
-              <div className="d-flex justify-content-between my-4">
+          <Row>
+            <Col>
+            <div className="d-flex justify-content-between my-2">
                 <h4>ALL BATCHES</h4>
+                <span>
+                <Button
+                  color="success"
+                  className="rounded-pill mb-3 me-3 px-4 btn-synch-now">
+                    Synch Now
+                </Button>
                 <Button
                   color="success"
                   className="rounded-pill mb-3"
@@ -424,12 +431,41 @@ const Batches = props => {
                 >
                   + Create New Batch
                 </Button>
+                </span>
+                
                 <BatchNewModal
                   modal={modal}
                   toggle={toggle}
                   createBatches={createBatches}
                 />
               </div>
+            </Col>
+          </Row>
+          <Card>
+            <CardBody>
+              {/* <div className="d-flex justify-content-between my-4">
+                <h4>ALL BATCHES</h4>
+                <span>
+                <Button
+                  color="success"
+                  className="rounded-pill mb-3 me-3">
+                  + Add Synchronized
+                </Button>
+                <Button
+                  color="success"
+                  className="rounded-pill mb-3"
+                  onClick={toggle}
+                >
+                  + Create New Batch
+                </Button>
+                </span>
+                
+                <BatchNewModal
+                  modal={modal}
+                  toggle={toggle}
+                  createBatches={createBatches}
+                />
+              </div> */}
               <div className="mt-2 batches-home">
                 <Row>
                   <Col className="col-12">
@@ -490,7 +526,7 @@ const Batches = props => {
                                     </Input>
                                   </div>
                                   <div className="ms-lg-3 mb-3">
-                                    <Button className="btn btn-secondary">
+                                    <Button color="primary" className="btn-light-grey">
                                       <i className="mdi mdi-filter"></i> Apply
                                       Fillter
                                     </Button>

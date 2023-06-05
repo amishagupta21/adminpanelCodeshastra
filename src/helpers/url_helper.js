@@ -152,6 +152,10 @@ export const GET_NEW_BATCHES = "/admin/batch"
 
 export const GET_DASHBOARD = "/admin/batch"
 
+// MENTOR
+
+export const GET_MENTOR = "/admin/batch"
+
 // Variant API's
 
 export const GET_VARIANT_LIST = "/admin/course/variant"
