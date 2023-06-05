@@ -38,7 +38,11 @@ const Batches = props => {
   const [isExpanded, setIsExpanded] = useState(null)
 
   const [modal, setModal] = useState(false)
-  const toggle = () => setModal(!modal)
+  const toggle = e => {
+    setModal(!modal)
+    e.stopPropagation()
+    e.preventDefault()
+  }
   const history = useHistory()
 
   useEffect(() => {
@@ -72,14 +76,14 @@ const Batches = props => {
         dataField: "id",
         sort: true,
         hidden: true,
-        formatter: (cellContent, user) => <>{row?.id}</>,
+        formatter: (cellContent, user) => <>{user?.id}</>,
       },
       {
-        dataField: "fullname",
+        dataField: "displayname",
         text: "Batch Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.fullname}</div>
+          <div className="fw-bold">{user?.displayname}</div>
         ),
       },
 
@@ -89,41 +93,49 @@ const Batches = props => {
         sort: true,
       },
       {
-        dataField: "startdate",
+        dataField: "response",
         text: "Start Date",
         sort: true,
+        formatter: (cellContent, user) => {
+          var newDate = new Date(user?.startdate * 1000)
+          var startDate = newDate.toLocaleDateString()
+          return (
+            <div>
+              <span>{startDate}</span>
+            </div>
+          )
+        },
       },
       {
         dataField: "enddate",
         text: "End Date",
         sort: true,
+        formatter: (cellContent, user) => {
+          var date = new Date(user?.enddate * 1000)
+          var endDate = date.toLocaleDateString()
+          return (
+            <div>
+              <span>{endDate}</span>
+            </div>
+          )
+        },
       },
       {
-        dataField: "coursename",
+        dataField: "shortname",
         text: "Course Name",
         sort: true,
       },
+      // {
+      //   dataField: "lectures",
+      //   text: "Lectures",
+      //   sort: true,
+      // },
       {
-        dataField: "lectures",
-        text: "Lectures",
-        sort: true,
-      },
-      {
-        dataField: "learners",
+        dataField: "numsections",
         text: "Learners",
         sort: true,
       },
-      {
-        dataField: "progress",
-        text: "Progress",
-        sort: true,
-        formatter: (cellContent, user) => (
-          <div className="pe-4">
-            <span>{user?.progress}</span>
-            <Progress value={user?.progress} animated></Progress>
-          </div>
-        ),
-      },
+
       {
         dataField: "status",
         text: "Status",
@@ -132,7 +144,13 @@ const Batches = props => {
           // Active css className="btn-status-active"
           // Inactive css className="btn-status-inactive"
           <div>
-            <span className="btn-status-active">{user?.status}</span>
+            <span
+              className={
+                user?.status === 0 ? "btn-status-inactive" : "btn-status-active"
+              }
+            >
+              {user?.status === 0 ? "Inactive" : "Active"}
+            </span>
           </div>
         ),
       },
@@ -147,8 +165,11 @@ const Batches = props => {
               </Link>
             </div> */}
             <div className="me-2">
-              <Link to={`/batch-list/edit/${user?.id}`} className="text-muted">
-                <i className="mdi mdi-pencil font-size-16 text-success" />
+              <Link className="text-muted">
+                <i
+                  onClick={toggle}
+                  className="mdi mdi-pencil font-size-16 text-success"
+                />
               </Link>
             </div>
             <div className="me-2">
@@ -160,6 +181,14 @@ const Batches = props => {
         ),
       },
     ],
+  }
+
+  const rowEvents = {
+    onClick: (e, row, rowIndex) => {
+      e.stopPropagation()
+
+      history.push(`/batch-detail/edit/${row?.id}`)
+    },
   }
 
   const handleSearch = e => {
@@ -317,8 +346,8 @@ const Batches = props => {
                 <h4>ALL BATCHES</h4>
                 <span>
                   <Button
-                    color="success"
-                    className="rounded-pill mb-3 me-3 px-4 btn-synch-now"
+                    color="primary"
+                    className="rounded-pill mb-3 me-3 px-4"
                   >
                     Synch Now
                   </Button>
@@ -455,6 +484,7 @@ const Batches = props => {
                                   keyField={"id"}
                                   // trClassName="clickable-row"
                                   // onRowClick={onRowClick}
+                                  rowEvents={rowEvents}
                                   responsive
                                   bordered={false}
                                   striped={false}
