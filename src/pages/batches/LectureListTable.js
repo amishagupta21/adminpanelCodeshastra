@@ -92,7 +92,7 @@ const LectureListTable = ({ mentor }) => {
               + Add New Learner
             </Button>
             <div className="text-start">
-              <h4>Grade Book</h4>
+              <h4>Lectures</h4>
             </div>
           </Col>
         </Row>
