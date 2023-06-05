@@ -46,12 +46,12 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         text: "Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.learner_id?.fullName}</div>
+          <div className="fw-bold">{user?.name}</div>
         ),
       },
 
       {
-        dataField: "assingment",
+        dataField: "assignments",
         text: "Assignments",
         sort: true,
         // formatter: (cellContent, user) => (
@@ -79,19 +79,18 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         ),
       },
       {
-        dataField: "attendance",
+        dataField: "attendence",
         text: "Attendance",
         sort: true,
-        formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.attendance}</div>
-        ),
       },
       {
         dataField: "status",
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div><span className="btn-status-active">{user?.status}</span></div>
+          <div>
+            <span className="btn-status-active">{user?.status}</span>
+          </div>
           // Active css className="btn-status-active"
           // Inactive css className="btn-status-inactive"
         ),

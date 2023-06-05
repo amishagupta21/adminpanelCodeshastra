@@ -89,10 +89,10 @@ const LectureListTable = ({ mentor }) => {
         <Row>
           <Col md={12} className="text-end">
             <Button color="success" className="rounded-pill mb-3">
-              + Add New Learner
+              + Add New Lectures
             </Button>
             <div className="text-start">
-              <h4>Grade Book</h4>
+              <h4>Lectures</h4>
             </div>
           </Col>
         </Row>

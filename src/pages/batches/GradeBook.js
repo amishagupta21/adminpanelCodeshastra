@@ -38,6 +38,8 @@ const GradeBook = ({ gradeBook }) => {
   //   onGetGradeBook(params.id)
   // }, [])
 
+  console.log(gradeBook, "////////gradeBook")
+
   let state = {
     columns: [
       {
@@ -56,8 +58,13 @@ const GradeBook = ({ gradeBook }) => {
       },
 
       {
-        dataField: "id_number",
+        dataField: "id",
         text: "Id Number",
+        sort: true,
+      },
+      {
+        dataField: "Assignment - 11",
+        text: "Assignment",
         sort: true,
       },
       {
@@ -66,12 +73,12 @@ const GradeBook = ({ gradeBook }) => {
         sort: true,
       },
       {
-        dataField: "attendance",
+        dataField: "Attendance",
         text: "Attendance",
         sort: true,
       },
       {
-        dataField: "virtual_programming",
+        dataField: "Question - 1",
         text: "Virtual Programming",
         sort: true,
       },
@@ -81,12 +88,12 @@ const GradeBook = ({ gradeBook }) => {
         sort: true,
       },
       {
-        dataField: "mockup.DSA",
+        dataField: "Assignment - 1",
         text: "DSA MCT",
         sort: true,
       },
       {
-        dataField: "mockup.FE",
+        dataField: "Assignment - 2",
         text: "FE MCT1",
         sort: true,
       },
@@ -296,7 +303,7 @@ const GradeBook = ({ gradeBook }) => {
       <Row>
         <Col md={12} className="text-end">
           <Button color="success" className="rounded-pill mb-3">
-            + Add New Learner
+            + Add New Grade Book
           </Button>
           <div className="text-start">
             <h4>Grade Book</h4>
