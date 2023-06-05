@@ -23,19 +23,43 @@ import {
 } from "reactstrap"
 import { Link, useParams } from "react-router-dom"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
-import { getBatchesList, getDashboard } from "store/Batches/actions"
+import { connect, useDispatch } from "react-redux"
+import { getBatchesList, getDashboard, createNewBatch } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { DeBounceSearch } from "common/DeBounceSearch"
 import BatchNewModal from "./BatchNewModal"
+import DeleteModel from "components/DeleteModal"
+import ModalDelete from "components/Common/ModalDelete"
+import DeleteModal from "components/Common/DeleteModal"
+
 
 const Batches = props => {
   const params = useParams()
   const { manageUser, usersCount, dashboard } = props
   const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
+  const [user, setUser] = useState({})
+  const [users, setUsers] = useState([]);
+  // const dispatch = useDispatch();
+  
+  // const handleDeleteUser = async () => {
+  //   if (user !== undefined) {
+  //     const res = await deleteAnUser(user.uId)
+  //     if (res.data.deleted) setDeleteModalIsOpen(false)
+  //     getUsersList()
+  //   }
+  // } 
+  const handleDeleteUser = () => {
+    if (user !== undefined) {
+      const updatedUsers = users.filter((e) => e.id !== user.id);
+      setUsers(updatedUsers);
+  
+      setDeleteModalIsOpen(false);
+    }
+  };
 
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
@@ -58,12 +82,37 @@ const Batches = props => {
     },
   ]
 
+  const onClickDelete = user => {
+    setUser(user)
+    setDeleteModalIsOpen(true)
+  }
+
   const selectRow = {
     mode: "checkbox",
     clickToSelect: false,
     // onSelect: handleOnSelect,
     // onSelectAll: handleOnSelectAll,
   }
+  // const [deletePop, setDeletePop] = React.useState(true);
+  // const [loading, setLoading] = React.useState(false);
+  // const deletepopup = () => {
+  //   setDeletePop(!deletePop)
+  //   // alert("working")
+  // }
+  // const cancelHandler = () => {
+  //   setDeletePop(!deletePop)
+  // }
+
+  // const cancelIconHandler = () => {
+  //   setDeletePop(!deletePop)
+  // }
+  // const handleClose = () => toggle(false);
+
+
+ 
+
+
+
 
   let state = {
     columns: [
@@ -71,7 +120,7 @@ const Batches = props => {
         dataField: "id",
         sort: true,
         hidden: true,
-        formatter: (cellContent, user) => <>{row?.id}</>,
+        formatter: (cellContent, user) => <>{user?.id}</>,
       },
       {
         dataField: "name",
@@ -124,7 +173,7 @@ const Batches = props => {
         ),
       },
       {
-        dataField: "course_duration",
+        dataField: "Status",
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
@@ -154,17 +203,21 @@ const Batches = props => {
               </Link>
             </div>
             <div className="me-2">
-              <Link to="/" className="text-muted">
+              <Link to={"/batch"} onClick={() => onClickDelete(user)} className="text-muted">
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
               </Link>
+
             </div>
+
           </div>
         ),
       },
     ],
   }
 
-  console.log(manageUser, "////////manageUser")
+
+  // console.log(manageUser, "////////manageUser")
+
 
   const handleSearch = e => {
     const { onGetBatchesList } = props
@@ -176,51 +229,99 @@ const Batches = props => {
     // setState({ Batches })
   }
 
+  // const createBatches = event => {
+  //   event.preventDefault()
+  //   const { onCreateNewBatch } = props
+  //   onCreateNewBatch({
+  //       name: item?.name,
+  //       description: item?.description,
+  //       course: item?.course,
+  //       variant_type: full time,
+  //       class_link: www.google.meet/saq-faw-brs,
+  //       mentors: [
+  //           28a6216b-4ac6-4398-8766-f0d274e56afc
+  //       ],
+  //       learner_limit: 23,
+  //       start_date: 2023-06-20,
+  //       end_date: 2023-06-21,
+  //       batch_schedule: {
+  //           name: Batch Schedule,
+  //           value: [
+  //               {
+  //                   day: 4,
+  //                   start_time: 2023-03-21T06:58:58.648Z,
+  //                   end_time: 2023-03-21T07:58:58.648Z
+  //               },
+  //               {
+  //                   day: 5,
+  //                   start_time: 2023-03-21T06:58:58.648Z,
+  //                   end_time: 2023-03-21T07:58:58.648Z
+  //               },
+  //               {
+  //                   day: 2,
+  //                   start_time: 2023-03-21T06:58:58.648Z,
+  //                   end_time: 2023-03-22T13:58:58.648Z
+  //               },
+  //               {
+  //                   day: 3,
+  //                   start_time: 2023-03-21T11:58:58.648Z,
+  //                   end_time: 2023-03-21T13:58:58.648Z
+  //               }
+  //           ]
+  //       }
+  //   })
+  // }
+
+
+
   const createBatches = event => {
-    event.preventDefault()
-    const { onCreateNewBatch } = props
-    // onCreateNewBatch({
-    //     name: item?.name,
-    //     description: item?.description,
-    //     course: item?.course,
-    //     variant_type: full time,
-    //     class_link: www.google.meet/saq-faw-brs,
-    //     mentors: [
-    //         28a6216b-4ac6-4398-8766-f0d274e56afc
-    //     ],
-    //     learner_limit: 23,
-    //     start_date: 2023-06-20,
-    //     end_date: 2023-06-21,
-    //     batch_schedule: {
-    //         name: Batch Schedule,
-    //         value: [
-    //             {
-    //                 day: 4,
-    //                 start_time: 2023-03-21T06:58:58.648Z,
-    //                 end_time: 2023-03-21T07:58:58.648Z
-    //             },
-    //             {
-    //                 day: 5,
-    //                 start_time: 2023-03-21T06:58:58.648Z,
-    //                 end_time: 2023-03-21T07:58:58.648Z
-    //             },
-    //             {
-    //                 day: 2,
-    //                 start_time: 2023-03-21T06:58:58.648Z,
-    //                 end_time: 2023-03-22T13:58:58.648Z
-    //             },
-    //             {
-    //                 day: 3,
-    //                 start_time: 2023-03-21T11:58:58.648Z,
-    //                 end_time: 2023-03-21T13:58:58.648Z
-    //             }
-    //         ]
-    //     }
-    // })
+    event.preventDefault();
+    const { onCreateNewBatch } = props;
+    onCreateNewBatch({
+      name: item?.name,
+      description: item?.description,
+      course: item?.course,
+      variant_type: "full time",
+      class_link: "www.google.meet/saq-faw-brs",
+      mentors: [
+        "28a6216b-4ac6-4398-8766-f0d274e56afc"
+      ],
+      learner_limit: 23,
+      start_date: "2023-06-20",
+      end_date: "2023-06-21",
+      batch_schedule: {
+        name: "Batch Schedule",
+        value: [
+          {
+            day: 4,
+            start_time: "2023-03-21T06:58:58.648Z",
+            end_time: "2023-03-21T07:58:58.648Z"
+          },
+          {
+            day: 5,
+            start_time: "2023-03-21T06:58:58.648Z",
+            end_time: "2023-03-21T07:58:58.648Z"
+          },
+          {
+            day: 2,
+            start_time: "2023-03-21T06:58:58.648Z",
+            end_time: "2023-03-22T13:58:58.648Z"
+          },
+          {
+            day: 3,
+            start_time: "2023-03-21T11:58:58.648Z",
+            end_time: "2023-03-21T13:58:58.648Z"
+          }
+        ]
+      }
+    });
   }
 
   return (
     <div className="page-content batches-home">
+      <DeleteModal show={deleteModalIsOpen}
+        onDeleteClick={handleDeleteUser}
+        onCloseClick={() => setDeleteModalIsOpen(false)} />
       <Row>
         <Col md={12}>
           <h4>BATCHES</h4>
@@ -335,7 +436,7 @@ const Batches = props => {
                     <>
                       <ToolkitProvider
                         key={isExpanded}
-                        keyField="_id"
+                        keyField="id"
                         columns={state?.columns}
                         data={item}
                       >
@@ -451,6 +552,7 @@ Batches.propTypes = {
 }
 
 const mapStateToProps = ({ Batches, state, count }) => {
+  // console.log("shit",Batches)
   return {
     manageUser: Batches?.manageUser,
     usersCount: Batches?.count.count,

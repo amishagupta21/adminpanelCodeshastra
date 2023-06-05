@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Row,
   Col,
@@ -21,6 +21,39 @@ import {
 } from "reactstrap"
 
 const BatchNewModal = ({ modal, toggle, createBatches }) => {
+const axios = require('axios');
+
+  const [batchName, setBatchName] = useState("")
+  const [description, setDescription] = useState("")
+  const [course, setCourse] = useState("")
+  const [variantType, setVariantType] = useState("")
+  const [classLink, setClassLink] = useState("")
+  const [learnersLimit, setLearnersLimit] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+  const [startTime, setStartTime] = useState("")
+  const [endTime, setendTime] = useState("")
+
+  const test = () => {
+    // const apiUrl = '{{lms}}/admin/batch';
+    // const data = {
+    //   batchName: batchName,
+    //   description: description,
+    //   course: course,
+    //   variantType: variantType,
+    //   classLink: classLink
+    // };
+    // axios.post(apiUrl, data)
+    // .then(response => {
+    //   console.log(response.data);
+    // })
+    // .catch(error => {
+    //   console.error('Error:', error);
+    // });  
+  }
+  const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  const SelectTime = ["AM", "PM"]
+  const selectMentors=[1,2]
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
@@ -29,27 +62,40 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
           <Col md={3}>
             <FormGroup>
               <Label>Batch Name</Label>
-              <Input type="text" placeholder="Batch_10" />
+              <Input value={batchName} onChange={(e) => {
+                setBatchName(e.target.value)
+              }} type="text" placeholder="Batch_10" />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
               <Label>Description</Label>
-              <Input type="text" placeholder="Freshers Only" />
+              <Input value={description} onChange={(e) => {
+                setDescription(e.target.value
+                )
+              }} type="text" placeholder="Freshers Only" />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
               <Label>Course</Label>
-              <Input type="select">
-                <option selected>Full Stack Web Developer</option>
+              <Input
+                name="select"
+                onChange={(e) => {
+                  setCourse(e.target.value)
+                }} type="select">
+                <option>Select</option>
+                <option>Full Stack Web Developer</option>
               </Input>
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
               <Label>Variant Type</Label>
-              <Input type="select">
+              <Input name="select" onChange={(e) => {
+                setVariantType(e.target.value)
+              }} type="select">
+                <option>Select</option>
                 <option selected>Full Time</option>
               </Input>
             </FormGroup>
@@ -59,7 +105,10 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
           <Col md={6}>
             <FormGroup>
               <Label>Class Link</Label>
-              <Input type="text" placeholder="www.google.meet/saq-faw-brs" />
+              <Input value={classLink} onChange={(e) => {
+
+                setClassLink(e.target.value)
+              }} type="text" placeholder="www.google.meet/saq-faw-brs" />
             </FormGroup>
           </Col>
         </Row>
@@ -89,10 +138,18 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                               name="select"
                               type="select"
                               className="border-0"
+                              // value={mentor} onchange={(e) => {
+                              //   setMentor(e.target.value)
+                              // }}
                             >
-                              <option selected>2 select</option>
+                          {selectMentors.map((mentor,index)=>{
+                            return(
+                              <option key={index}>{mentor}</option>
+                            )
+                          })}
+                              {/* <option selected> 2 select </option>
                               <option>1</option>
-                              <option>2</option>
+                              <option>2</option> */}
                             </Input>
                           </FormGroup>
                         </td>
@@ -102,14 +159,21 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                               placeholder="75"
                               type="text"
                               className="bg-grey border-0"
+                              value={learnersLimit} onchange={(e) => {
+                                setLearnersLimit(e.target.value)
+                              }}
                             />
                           </FormGroup>
                         </td>
                         <td>
-                          <Input type="date" />
+                          <Input type="date" value={startDate} onchange={(e) => {
+                            setStartDate(e.target.value)
+                          }} />
                         </td>
                         <td>
-                          <Input type="date" />
+                          <Input type="date" value={endDate} onchange={(e) => {
+                            setEndDate(e.target.value)
+                          }} />
                         </td>
                       </tr>
                     </tbody>
@@ -141,6 +205,9 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                                 className="me-2 bg-grey border-0"
                                 style={{ width: "64px" }}
                                 placeholder="09:00"
+                                value={startTime} onchange={(e) => {
+                                  setStartTime(e.target.value)
+                                }}
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -149,9 +216,15 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                                 type="select"
                                 style={{ width: "64px" }}
                                 className="border-0"
+
                               >
-                                <option selected>AM</option>
-                                <option>PM</option>
+                                {SelectTime.map((time, index) => {
+                                  return (
+                                    <option key={index}>{time}</option>
+                                  )
+                                })}
+                                {/* <option selected>AM</option>
+                                <option>PM</option> */}
                               </Input>
                             </FormGroup>
                           </div>
@@ -164,6 +237,9 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                                 className="me-2 bg-grey border-0"
                                 style={{ width: "64px" }}
                                 placeholder="05:00"
+                                value={endTime} onchange={(e) => {
+                                  setendTime(e.target.value)
+                                }}
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -172,47 +248,33 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                                 type="select"
                                 style={{ width: "64px" }}
                               >
-                                <option>AM</option>
-                                <option selected>PM</option>
+                                {SelectTime.map((time, index) => {
+                                  return (
+                                    <option key={index}>{time}</option>
+                                  )
+                                })}
+
+                                {/* <option selected>PM</option> */}
                               </Input>
                             </FormGroup>
                           </div>
                         </td>
                         <td>
+
+
                           <div>
-                            <FormGroup check inline>
-                              <Input type="checkbox" checked />
-                              <Label check>Sun</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" checked />
-                              <Label check>Mon</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" checked />
-                              <Label check>Tue</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Wed</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Thurs</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Fri</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Sat</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Sun</Label>
-                            </FormGroup>
+                            {days.map((day, index) => {
+                              return (
+                                <FormGroup key={index} check inline>
+                                  <Input type="checkbox" />
+                                  <Label check>{day}</Label>
+                                </FormGroup>
+                              )
+                            })}
+
                           </div>
+
+
                         </td>
                         <td>
                           <span className="me-3">
@@ -277,46 +339,27 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
                                 style={{ width: "64px" }}
                                 className="border-0"
                               >
-                                <option>AM</option>
-                                <option selected>PM</option>
+                                {SelectTime.map((time, index) => {
+                                  return (
+                                    <option key={index}>{time}</option>
+                                  )
+                                })}
                               </Input>
                             </FormGroup>
                           </div>
                         </td>
                         <td>
+
                           <div>
-                            <FormGroup check inline>
-                              <Input type="checkbox" checked />
-                              <Label check>Sun</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" checked />
-                              <Label check>Mon</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" checked />
-                              <Label check>Tue</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Wed</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Thurs</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Fri</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Sat</Label>
-                            </FormGroup>
-                            <FormGroup check inline>
-                              <Input type="checkbox" />
-                              <Label check>Sun</Label>
-                            </FormGroup>
+                            {days.map((day, index) => {
+                              return (
+                                <FormGroup key={index} check inline>
+                                  <Input type="checkbox" />
+                                  <Label check>{day}</Label>
+                                </FormGroup>
+                              )
+                            })}
+
                           </div>
                         </td>
                         <td>
@@ -349,7 +392,7 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
         <Button color="primary" outline onClick={toggle} className="px-5">
           Cancel
         </Button>
-        <Button color="primary" onClick={createBatches} className="px-5">
+        <Button color="primary" onClick={test} className="px-5">
           Create
         </Button>
       </ModalFooter>
@@ -358,3 +401,41 @@ const BatchNewModal = ({ modal, toggle, createBatches }) => {
 }
 
 export default BatchNewModal
+
+
+
+
+{/* <div>
+<FormGroup check inline>
+    <Input type="checkbox" checked />
+    <Label check>Sun</Label>
+  </FormGroup>
+  <FormGroup check inline>
+    <Input type="checkbox" checked />
+    <Label check>Mon</Label>
+  </FormGroup>
+  <FormGroup check inline>
+    <Input type="checkbox" checked />
+    <Label check>Tue</Label>
+  </FormGroup>
+  <FormGroup check inline>
+    <Input type="checkbox" />
+    <Label check>Wed</Label>
+  </FormGroup>
+  <FormGroup check inline>
+    <Input type="checkbox" />
+    <Label check>Thurs</Label>
+  </FormGroup>
+  <FormGroup check inline>
+    <Input type="checkbox" />
+    <Label check>Fri</Label>
+  </FormGroup>
+  <FormGroup check inline>
+    <Input type="checkbox" />
+    <Label check>Sat</Label>
+  </FormGroup>
+  <FormGroup check inline>
+    <Input type="checkbox" />
+    <Label check>Sun</Label>
+  </FormGroup>
+</div> */}

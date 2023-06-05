@@ -10,6 +10,7 @@ import {
   CREATE_NEW_BATCH,
   GET_DASHBOARD,
   DELETE_LEARNER,
+  DELETE_BATCHES,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
 
@@ -38,6 +39,8 @@ import {
   getDashboardSuccess,
   getDashboardCountSuccess,
   getDashboardCountFail,
+  deleteBatchesSuccess,
+  deleteBatchesFail,
 } from "./actions"
 import {
   getBatchesList,
@@ -48,6 +51,7 @@ import {
   getDashboardApi,
   getNewBatches,
   getDeleteData,
+  getDeleteBatches,
   getStatusFilter,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
@@ -128,6 +132,7 @@ function* fetchNewBatches({ payload: data }) {
 // CREATE NEW BATCH
 
 function* createBatch({ payload: data }) {
+  console.log("chlra", data)
   try {
     const response = yield call(createNewBatchesData, data)
     tosterMsg(response?.message)
@@ -153,6 +158,17 @@ function* fetchNewDashboard({ payload: data }) {
   }
 }
 
+function* onDeleteBatches({ payload: event }) {
+  try {
+    const response = yield call(getDeleteBatches, event)
+    yield put({ type: GET_BATCHES, payload: { search: "" } })
+    yield put(deleteBatchesSuccess(response))
+  } catch (error) {
+    toasterMsg(error?.message)
+    yield put(deleteBatchesFail(error))
+  }
+}
+
 function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
@@ -161,6 +177,7 @@ function* usersManageSaga() {
   yield takeEvery(GET_NEW_BATCHES, fetchNewBatches)
   yield takeEvery(GET_DASHBOARD, fetchNewDashboard)
   yield takeEvery(CREATE_NEW_BATCH, createBatch)
+  yield takeEvery(DELETE_BATCHES, onDeleteBatches)
 }
 
 export default usersManageSaga

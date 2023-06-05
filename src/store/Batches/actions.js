@@ -29,9 +29,9 @@ import {
   GET_DASHBOARD_FAIL,
   GET_DASHBOARD_COUNT_SUCCESS,
   GET_DASHBOARD_COUNT_FAIL,
-  DELETE_LEARNER,
-  DELETE_LEARNER_SUCCESS,
-  DELETE_LEARNER_FAIL,
+  DELETE_BATCHES,
+  DELETE_BATCHES_SUCCESS,
+  DELETE_BATCHES_FAIL,
   CREATE_NEW_BATCH,
   CREATE_NEW_BATCH_SUCCESS,
   CREATE_NEW_BATCH_FAIL,
@@ -215,20 +215,20 @@ export const getDashboardCountFail = error => ({
   payload: error,
 })
 
-// export const deleteLearner = id => ({
-//   type: DELETE_LEARNER,
-//   payload: id,
-// })
+export const deleteBatches = id => ({
+  type: DELETE_BATCHES,
+  payload: id,
+})
 
-// export const deleteLearnerSuccess = event => ({
-//   type: DELETE_LEARNER_SUCCESS,
-//   payload: event,
-// })
+export const deleteBatchesSuccess = event => ({
+  type: DELETE_BATCHES_SUCCESS,
+  payload: event,
+})
 
-// export const deleteLearnerFail = error => ({
-//   type: DELETE_LEARNER_FAIL,
-//   payload: error,
-// })
+export const deleteBatchesFail = error => ({
+  type: DELETE_BATCHES_FAIL,
+  payload: error,
+})
 
 // export const getStatusFilter = data => ({
 //   type: FILTER_STATUS_LEARNER,

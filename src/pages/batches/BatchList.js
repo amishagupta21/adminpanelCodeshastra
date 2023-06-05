@@ -35,6 +35,7 @@ import {
   getNewBatches,
 } from "store/Batches/actions"
 import MentorListTable from "./MentorListTable"
+import { DeBounceSearch } from "common/DeBounceSearch"
 
 const BatchList = props => {
   const [key, setKey] = useState("tab")
@@ -43,6 +44,18 @@ const BatchList = props => {
   const params = useParams()
   const { manageUser, usersCount, newBatch, batchesLearner, gradeBook } = props
   const [item, setItem] = useState(manageUser)
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleSearch = e => {
+    // console.log(e.target.value)
+    setSearchTerm(e.target.value);
+  };
+  useEffect(() => {
+    const { onGetBatchesLearner } = props;
+    const data = {
+      search: searchTerm,
+    };
+    onGetBatchesLearner(data);
+  }, [searchTerm]);
 
   useEffect(() => {
     setItem(manageUser)
@@ -67,6 +80,24 @@ const BatchList = props => {
       gradeBookApi()
     }
   }
+  // const handleSearch = e => {
+  //   const { onGetBatchesLearner } = props
+  //   const data = {
+  //     search: e,
+  //   }
+  //   onGetBatchesLearner(data)
+  //   // const { Batches } = props
+  //   // setState({ Batches })
+
+  // }
+  // const handleSearch = (e) => {
+  //   const { onGetBatchesLearner } = props;
+  //   const searchTerm = e.target.value; // Assuming the search term is obtained from an input field
+  //   const data = {
+  //     search: searchTerm,
+  //   };
+  //   onGetBatchesLearner(data);
+  // };
 
   return (
     <div className="page-content batches-list">
@@ -148,10 +179,20 @@ const BatchList = props => {
                         <div className="search-box">
                           <div className="app-search p-0">
                             <div className="position-relative mb-2">
+                              {/* <input
+                                className="form-control mb-3"
+                                type="text"
+                                placeholder="Search by Batch name"
+                              /> */}
+                              {/* <DeBounceSearch
+                                        handleSearch={handleSearch}
+                                      /> */}
                               <input
                                 className="form-control mb-3"
                                 type="text"
                                 placeholder="Search by Batch name"
+                                value={searchTerm}
+                                onChange={handleSearch}
                               />
                               <span className="bx bx-search-alt" />
                             </div>
