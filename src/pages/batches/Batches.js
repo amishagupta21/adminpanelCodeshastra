@@ -99,7 +99,7 @@ const Batches = props => {
       url:'https://lms.unikaksha.dev/api/lms/admin/batch/defd408b-9221-48ca-9b16-4e59ce5145fa',
       data:user
     }).then((res)=>{
-      window.location.reload()
+      // window.location.reload()
       console.log(JSON.stringify(res.data))
     }).catch((err)=>{
       console.log(err)
