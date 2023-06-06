@@ -140,7 +140,7 @@ const BatchNewModal = ({ modal, toggle }) => {
       data:temp
     }).then((res)=>{
       // window.location.reload
-      window.location.reload()
+      // window.location.reload()
       console.log(JSON.stringify(res.data))
     }).catch((err)=>{
       console.log(err)

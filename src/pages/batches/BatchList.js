@@ -222,7 +222,6 @@ const BatchList = props => {
                         </div>
                       </Col>
                     </Row>
-                    <h6 className="mt-3">Total Learners: 40</h6>
                     <Row>
                       <Col md={12}>
                         <div className="table-responsive">

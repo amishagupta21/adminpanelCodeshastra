@@ -37,6 +37,11 @@ import {
   GET_MENTOR_FAIL,
   GET_MENTOR_COUNT_SUCCESS,
   GET_MENTOR_COUNT_FAIL,
+  GET_LECTURE,
+  GET_LECTURE_SUCCESS,
+  GET_LECTURE_FAIL,
+  GET_LECTURE_COUNT_SUCCESS,
+  GET_LECTURE_COUNT_FAIL,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
@@ -251,6 +256,33 @@ export const getMentorCountSuccess = data => ({
 
 export const getMentorCountFail = error => ({
   type: GET_MENTOR_COUNT_FAIL,
+  payload: error,
+})
+
+// LECTURE API
+
+export const getLecture = data => ({
+  type: GET_LECTURE,
+  payload: data,
+})
+
+export const getLectureSuccess = data => ({
+  type: GET_LECTURE_SUCCESS,
+  payload: data,
+})
+
+export const getLectureFail = error => ({
+  type: GET_LECTURE_FAIL,
+  payload: error,
+})
+
+export const getLectureCountSuccess = data => ({
+  type: GET_LECTURE_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getLectureCountFail = error => ({
+  type: GET_LECTURE_COUNT_FAIL,
   payload: error,
 })
 

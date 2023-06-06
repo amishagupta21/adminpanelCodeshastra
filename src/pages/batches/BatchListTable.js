@@ -82,6 +82,9 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         dataField: "attendence",
         text: "Attendance",
         sort: true,
+        formatter: (cellContent, user) => (
+          <span>{user?.attendence.toFixed(2)} %</span>
+        ),
       },
       {
         dataField: "status",
@@ -89,7 +92,13 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         sort: true,
         formatter: (cellContent, user) => (
           <div>
-            <span className="btn-status-active">{user?.status}</span>
+            <span
+              className={
+                user?.status === 0 ? "btn-status-inactive" : "btn-status-active"
+              }
+            >
+              {user?.status === "true" ? "Active" : "Inactive"}
+            </span>
           </div>
           // Active css className="btn-status-active"
           // Inactive css className="btn-status-inactive"
@@ -105,11 +114,12 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
               {/* <Link to="/batch-list" className="text-muted">
                 <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
               </Link> */}
-              <Link className="text-muted ms-2">
-                <i
-                  onClick={toggle}
-                  className="mdi mdi-clipboard-account mdi-18px text-danger"
-                />
+              <Link
+                to={`/report/${user?.id}`}
+                // onClick={toggle}
+                className="text-muted ms-2"
+              >
+                <i className="mdi mdi-clipboard-account mdi-18px text-success" />
               </Link>
             </div>
           </div>
@@ -145,6 +155,10 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
           <>
             <Col xl="12">
               <div className="table-responsive">
+                <h6 className="mt-3">
+                  Total Learners: {batchesLearner?.length}
+                </h6>
+
                 <BootstrapTable
                   keyField={"_id"}
                   responsive
