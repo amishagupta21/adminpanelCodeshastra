@@ -156,9 +156,11 @@ class LearnerPage extends Component {
                 onClick={() => {
                   this.toggle()
                   this.setState({ uid: user.uid })
-                }}
                 // onClick={() => this.deleteRow(user.uid)}
+
+                }}
               >
+
                 <i className="mdi mdi-trash-can font-size-16 text-danger" />
               </Link>
             </div>
@@ -394,9 +396,9 @@ class LearnerPage extends Component {
     const selectRow = {
       mode: "checkbox",
       clickToSelect: false,
-      selected: this.state.selected,
-      onSelect: this.handleOnSelect,
-      onSelectAll: this.handleOnSelectAll,
+      // selected: this.state.selected,
+      // onSelect: this.handleOnSelect,
+      // onSelectAll: this.handleOnSelectAll,
     }
 
     return (

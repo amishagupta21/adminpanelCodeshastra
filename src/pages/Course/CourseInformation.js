@@ -138,9 +138,9 @@ const CourseInformation = props => {
                         <input
                           type="radio"
                           name="courses"
-                          id="live"
-                          value="live"
-                          onChange={e =>
+                          id="Live"
+                          value="Live"
+                          onClick={e =>
                             setCourseData({
                               ...courseData,
                               course_type: e.target.value,
@@ -157,9 +157,9 @@ const CourseInformation = props => {
                         <input
                           type="radio"
                           name="courses"
-                          id="library"
-                          value="library"
-                          onChange={e =>
+                          id="Library"
+                          value="Library"
+                          onClick={e =>
                             setCourseData({
                               ...courseData,
                               course_type: e.target.value,

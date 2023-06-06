@@ -189,7 +189,7 @@ const BatchTable = ({
           <>
             <ToolkitProvider
               key={isExpanded}
-              keyField="_id"
+              keyField="id"
               columns={state?.columns}
               data={item}
             >
@@ -288,7 +288,7 @@ const BatchTable = ({
                         {usersCount?.count}{" "}
                       </h6>
                       <BootstrapTable
-                        keyField={"_id"}
+                        keyField={"id"}
                         responsive
                         bordered={false}
                         striped={false}

@@ -33,90 +33,6 @@ const Report = () => {
     newData()
   }, [])
 
-  // const columns = [
-  //   {
-  //     dataField: "id",
-  //     text: "ID",
-  //     sort: true,
-  //   },
-  //   {
-  //     dataField: "name",
-  //     text: "Student Names",
-  //     sort: true,
-  //   },
-  //   {
-  //     dataField: "projects",
-  //     text: "Projects",
-  //     sort: true,
-  //   },
-  //   {
-  //     dataField: "weektest1",
-  //     text: "Week Test 1",
-  //     sort: true,
-  //   },
-  //   {
-  //     dataField: "weektest2",
-  //     text: "Week Test 2",
-  //     sort: true,
-  //   },
-  //   {
-  //     dataField: "weektest3",
-  //     text: "Week Test 3",
-  //     sort: true,
-  //   },
-  //   {
-  //     dataField: "action",
-  //     text: "Action",
-  //   },
-  // ]
-
-  //   const columns = [
-  //       {
-  //           dataField: 'id',
-  //           text: 'Attendance',
-  //           sort: false
-  //       },
-  //       {
-  //           dataField: 'name',
-  //           text: 'Virtual programming',
-  //       },
-  //       {
-  //           dataField: 'projects',
-  //           text: 'Virtual Grid',
-  //       },
-  //       {
-  //           dataField: 'weektest1',
-  //           text: 'DSA MCT',
-  //       },
-  //       {
-  //           dataField: 'weektest2',
-  //           text: 'Weekly Assessments',
-  //       },
-  //       {
-  //           dataField: 'weektest3',
-  //           text: 'Core BE FInal Assessment',
-  //       },
-  //   ];
-
-  //     const products = [
-  //       {
-  //           'id': null,
-  //           'name': null,
-  //           'projects': null,
-  //           'weektest1': null,
-  //           'weektest2': null,
-  //           'weektest3': null,
-  //       },
-  //       {
-  //           'id': null,
-  //           'name': null,
-  //           'projects': null,
-  //           'weektest1': null,
-  //           'weektest2': null,
-  //           'weektest3': null,
-  //       },
-  //      ];
-
   return (
     <div className="page-content report">
       <Row>
@@ -207,18 +123,6 @@ const Report = () => {
               </tbody>
             </Table>
           </div>
-          {/* <div>
-                                <BootstrapTable
-                                    keyField='id' 
-                                    data={ products } 
-                                    columns={ columns } 
-                                    responsive
-                                    bordered={false}
-                                    striped={false}
-                                    classes={"table align-middle table-nowrap"}
-                                    headerWrapperClasses={"thead-light"}
-                                    />
-                            </div> */}
         </Col>
       </Row>
     </div>

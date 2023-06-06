@@ -36,6 +36,7 @@ import {
   getMentor,
 } from "store/Batches/actions"
 import MentorListTable from "./MentorListTable"
+import { DeBounceSearch } from "common/DeBounceSearch"
 import LectureListTable from "./LectureListTable"
 
 const BatchList = props => {
@@ -52,6 +53,18 @@ const BatchList = props => {
     mentor,
   } = props
   const [item, setItem] = useState(manageUser)
+  const [searchTerm, setSearchTerm] = useState("")
+  const handleSearch = e => {
+    // console.log(e.target.value)
+    setSearchTerm(e.target.value)
+  }
+  useEffect(() => {
+    const { onGetBatchesLearner } = props
+    const data = {
+      search: searchTerm,
+    }
+    onGetBatchesLearner(data)
+  }, [searchTerm])
 
   useEffect(() => {
     setItem(manageUser)
@@ -84,6 +97,24 @@ const BatchList = props => {
       mentorsApi()
     }
   }
+  // const handleSearch = e => {
+  //   const { onGetBatchesLearner } = props
+  //   const data = {
+  //     search: e,
+  //   }
+  //   onGetBatchesLearner(data)
+  //   // const { Batches } = props
+  //   // setState({ Batches })
+
+  // }
+  // const handleSearch = (e) => {
+  //   const { onGetBatchesLearner } = props;
+  //   const searchTerm = e.target.value; // Assuming the search term is obtained from an input field
+  //   const data = {
+  //     search: searchTerm,
+  //   };
+  //   onGetBatchesLearner(data);
+  // };
 
   return (
     <div className="page-content batches-list">
@@ -161,34 +192,9 @@ const BatchList = props => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md={6}>
-                        <div className="search-box">
-                          <div className="app-search p-0">
-                            <div className="position-relative mb-2">
-                              <input
-                                className="form-control mb-3"
-                                type="text"
-                                placeholder="Search by Batch name"
-                              />
-                              <span className="bx bx-search-alt" />
-                            </div>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col md={6}>
-                        <div className="text-end">
-                          <Button color="secondary">Export</Button>
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12}>
-                        <div className="table-responsive">
-                          <BatchListTable
-                            batchesLearner={batchesLearner || []}
-                          />
-                        </div>
-                      </Col>
+                      <div className="table-responsive">
+                        <BatchListTable batchesLearner={batchesLearner || []} />
+                      </div>
                     </Row>
                   </Tab>
                   <Tab eventKey="Grade Book" title="Grade Book">

@@ -26,177 +26,51 @@ import { connect } from "react-redux"
 import { getBatchesList } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 
-const Status = props => {
-  const [isExpanded, setIsExpanded] = useState(null)
-  const params = useParams()
-  const { manageUser, usersCount } = props
-  const [item, setItem] = useState(manageUser)
-  const [modal, setModal] = useState(false)
-  const toggle = () => setModal(!modal)
-
-  let state = {
-    columns: [
-      {
-        dataField: "id",
-        sort: true,
-        hidden: true,
-        formatter: (cellContent, user) => <>{row?.id}</>,
-      },
-      {
-        dataField: "name",
-        text: "Name",
-        sort: true,
-        formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.name}</div>
-        ),
-      },
-
-      {
-        dataField: "description",
-        text: "Assignments",
-        sort: true,
-      },
-
-      {
-        dataField: "Actions",
-        text: "Actions",
-        formatter: (cellContent, user) => (
-          <div className="d-flex">
-            <Button color="success" outline className="assign-batch">
-              Assign
-            </Button>
-          </div>
-        ),
-      },
-    ],
-  }
-
-  let state1 = {
-    data: [
-      {
-        dataField: "id",
-        sort: true,
-        hidden: true,
-        formatter: (cellContent, user) => <>{row?.id}</>,
-      },
-      {
-        dataField: "name",
-        text: "Name",
-        sort: true,
-        formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.name}</div>
-        ),
-      },
-
-      {
-        dataField: "description",
-        text: "Assignments",
-        sort: true,
-      },
-
-      {
-        dataField: "Actions",
-        text: "Actions",
-        formatter: (cellContent, user) => (
-          <div className="d-flex">
-            <div className="me-2">
-              <Link to="/batch-list" className="text-muted">
-                <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
-              </Link>
-              <Link className="text-muted ms-2">
-                <i
-                  onClick={toggle}
-                  className="mdi mdi-clipboard-account mdi-18px text-danger"
-                />
-              </Link>
-            </div>
-          </div>
-        ),
-      },
-    ],
-  }
-
-  const defaultSorted = [
-    {
-      dataField: "id",
-      order: "desc",
-    },
-  ]
-
-  const selectRow = {
-    mode: "checkbox",
-    clickToSelect: false,
-    // onSelect: handleOnSelect,
-    // onSelectAll: handleOnSelectAll,
-  }
-
-  useEffect(() => {
-    setItem(manageUser)
-  }, [manageUser])
-
-  //   useEffect(() => {
-  //     const { onGetBatchesList } = props
-
-  //     onGetBatchesList(params.id)
-  //   }, [])
-
+const Status = ({ active, confirmStatus, closeModal }) => {
   return (
-    <>
-      <ReportCard modal={modal} toggle={toggle} />
-      <ToolkitProvider
-        key={isExpanded}
-        keyField="_id"
-        columns={state?.columns}
-        // data={state?.state1}
-        data={item}
-      >
-        {toolkitProps => (
-          <>
-            <Col xl="12">
-              <div className="table-responsive">
-                {/* <h6 className="mt-2">
-                  Total Batches: &nbsp;{manageUser?.length}
-                </h6> */}
-                <BootstrapTable
-                  keyField={"_id"}
-                  responsive
-                  bordered={false}
-                  striped={false}
-                  defaultSorted={defaultSorted}
-                  selectRow={selectRow}
-                  classes={"table align-middle table-nowrap"}
-                  headerWrapperClasses={"thead-light"}
-                  {...toolkitProps.baseProps}
-                  pagination={paginationFactory()}
-                  noDataIndication={"No data found"}
-                />
-              </div>
-            </Col>
-          </>
-        )}
-      </ToolkitProvider>
-    </>
+    <Modal
+      isOpen={active}
+      confirmStatus={confirmStatus}
+      modalTransition={{ timeout: 500 }}
+      centered={true}
+      fade={false}
+    >
+      <ModalHeader
+        className="modalHeader"
+        confirmStatus={confirmStatus}
+      ></ModalHeader>
+      <ModalBody className="py-3 px-5">
+        <Row>
+          <Col lg={12}>
+            <div className="text-center">
+              <i
+                className="mdi mdi-alert-circle-outline"
+                style={{ fontSize: "9em", color: "orange" }}
+              />
+              <h2>Are you sure you want to inactive?</h2>
+              {/* <h4>{"You won't be able to revert this!"}</h4> */}
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className="text-center mt-3">
+              <button type="button" className="btn btn-success btn-lg ms-2">
+                Yes, delete it!
+              </button>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="btn btn-danger btn-lg ms-2"
+              >
+                Cancel
+              </button>
+            </div>
+          </Col>
+        </Row>
+      </ModalBody>
+    </Modal>
   )
 }
 
-Status.propTypes = {
-  userRoles: PropTypes.array,
-  usersCount: PropTypes.number,
-  className: PropTypes.any,
-  Batches: PropTypes.array,
-}
-
-const mapStateToProps = ({ Batches, state, count }) => ({
-  manageUser: Batches?.manageUser,
-  usersCount: Batches?.count,
-  userRoles: Batches?.roles,
-  // deleteData: false,
-})
-
-const mapDispatchToProps = dispatch => ({
-  //   onGetBatchesList: data => dispatch(getBatchesList(data)),
-  // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
-  // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Status)
+export default Status
