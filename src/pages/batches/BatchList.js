@@ -161,34 +161,9 @@ const BatchList = props => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md={6}>
-                        <div className="search-box">
-                          <div className="app-search p-0">
-                            <div className="position-relative mb-2">
-                              <input
-                                className="form-control mb-3"
-                                type="text"
-                                placeholder="Search by Batch name"
-                              />
-                              <span className="bx bx-search-alt" />
-                            </div>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col md={6}>
-                        <div className="text-end">
-                          <Button color="secondary">Export</Button>
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12}>
-                        <div className="table-responsive">
-                          <BatchListTable
-                            batchesLearner={batchesLearner || []}
-                          />
-                        </div>
-                      </Col>
+                      <div className="table-responsive">
+                        <BatchListTable batchesLearner={batchesLearner || []} />
+                      </div>
                     </Row>
                   </Tab>
                   <Tab eventKey="Grade Book" title="Grade Book">

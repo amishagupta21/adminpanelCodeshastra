@@ -49,6 +49,7 @@ const INIT_STATE = {
   createNewBatch: "",
   dashboard: [],
   batchesLearner: [],
+  lecture: [],
 }
 
 const Batches = (state = INIT_STATE, action) => {

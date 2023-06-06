@@ -394,9 +394,9 @@ class LearnerPage extends Component {
     const selectRow = {
       mode: "checkbox",
       clickToSelect: false,
-      selected: this.state.selected,
-      onSelect: this.handleOnSelect,
-      onSelectAll: this.handleOnSelectAll,
+      // selected: this.state.selected,
+      // onSelect: this.handleOnSelect,
+      // onSelectAll: this.handleOnSelectAll,
     }
 
     return (

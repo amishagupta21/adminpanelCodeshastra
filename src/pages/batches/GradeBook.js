@@ -591,7 +591,7 @@ const GradeBook = ({ gradeBook }) => {
 
   const selectRow = {
     mode: "checkbox",
-    clickToSelect: false,
+    clickToSelect: true,
     // onSelect: handleOnSelect,
     // onSelectAll: handleOnSelectAll,
   }
@@ -632,7 +632,7 @@ const GradeBook = ({ gradeBook }) => {
       </Row>
       <ToolkitProvider
         key={isExpanded}
-        keyField="_id"
+        keyField="id"
         columns={
           column.length
             ? column
@@ -654,7 +654,7 @@ const GradeBook = ({ gradeBook }) => {
                   Total Batches: &nbsp;{gradeBook?.length}
                 </h6>
                 <BootstrapTable
-                  keyField={"_id"}
+                  keyField={"id"}
                   responsive
                   bordered={false}
                   striped={false}
