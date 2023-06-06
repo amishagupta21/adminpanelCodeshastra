@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import axios from "axios"
 import {
   Row,
   Col,
@@ -20,40 +21,133 @@ import {
   AccordionBody,
 } from "reactstrap"
 
-const BatchNewModal = ({ modal, toggle, createBatches }) => {
-const axios = require('axios');
+
+const CheckBox = ({ isSelected, name, selectDays }) => {
+  const [isChecked, setIsChecked] = useState(isSelected)
+
+  return <>
+    <input
+      type="checkbox"
+      id={name}
+      value={isChecked}
+      // checked={isChecked}
+      onChange={() => {
+        setIsChecked(!isChecked)
+        // console.log(name)
+        selectDays({ isSelected, name });
+      }}
+    />
+    <label htmlFor={name}>{name}</label></>
+
+  // return <>
+  //   <Input
+  //     type="checkbox"
+  //     id={name}
+  //     name={name}
+  //     value={isChecked}
+  //     onChange={() => {
+  //       setIsChecked(!isChecked)
+  //       // console.log(name)
+  //       // alert("data")
+  //        selectDays({isSelected,name});
+  //     }}
+  //   />
+  //   <Label check={isChecked}>{name}</Label>
+  // </>
+}
+const BatchNewModal = ({ modal, toggle }) => {
+  const axios = require('axios');
 
   const [batchName, setBatchName] = useState("")
   const [description, setDescription] = useState("")
   const [course, setCourse] = useState("")
   const [variantType, setVariantType] = useState("")
   const [classLink, setClassLink] = useState("")
-  const [learnersLimit, setLearnersLimit] = useState("")
+  const [learnersLimit, setLearnersLimit] = useState()
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [startTime, setStartTime] = useState("")
   const [endTime, setendTime] = useState("")
-
-  const test = () => {
-    // const apiUrl = '{{lms}}/admin/batch';
-    // const data = {
-    //   batchName: batchName,
-    //   description: description,
-    //   course: course,
-    //   variantType: variantType,
-    //   classLink: classLink
-    // };
-    // axios.post(apiUrl, data)
-    // .then(response => {
-    //   console.log(response.data);
-    // })
-    // .catch(error => {
-    //   console.error('Error:', error);
-    // });  
-  }
-  const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
   const SelectTime = ["AM", "PM"]
-  const selectMentors=[1,2]
+
+
+  const mentors = ["select", 1, 2]
+  const [mentor, setMentor] = useState("")
+ 
+  const [days, setDays] = useState([
+    { day: 1, name: "Mon", isSelected: false },
+    { day: 2, name: "Tue", isSelected: false },
+    { day: 3, name: "Wed", isSelected: false },
+    { day: 4, name: "Thu", isSelected: false },
+    { day: 5, name: "Fri", isSelected: false },
+    { day: 6, name: "Sat", isSelected: false },
+    { day: 7, name: "Sun", isSelected: false }
+  ]);
+
+
+
+
+  const selectDays = (day) => {
+
+    // console.log(day)
+    const updateDays = days.map((_day) => {
+      if (day.name === _day.name) {
+        const temp = {
+          name: _day.name,
+          isSelected: !_day.isSelected,
+          day: _day.day
+        };
+        return temp;
+      }
+      return _day;
+    });
+    console.log("updateday", updateDays)
+    setDays(updateDays);
+  };
+
+  const createBatch = () => {
+
+    const filterDay = days.filter((day) => day.isSelected)
+
+    const updateDays = filterDay.map((day) => {
+      return {
+        day: day.day,
+        "start_time": "2023-03-21T06:58:58.648Z",
+        "end_time": "2023-03-21T07:58:58.648Z"
+      }
+    })
+
+    const temp = {
+      "name": batchName,
+      "description": description,
+      "course": course,
+      "variant_type": variantType,
+      "class_link": classLink,
+      "mentors": [
+        "28a6216b-4ac6-4398-8766-f0d274e56afc"
+      ],
+      "learner_limit": learnersLimit,
+      "start_date": startDate,
+      "end_date": endDate,
+      "batch_schedule": {
+        "name": batchName,
+        "value": updateDays,
+      }
+    }
+    axios({
+      method:"POST",
+      url:'https://lms.unikaksha.dev/api/lms/admin/batch',
+      data:temp
+    }).then((res)=>{
+      // window.location.reload
+      window.location.reload()
+      console.log(JSON.stringify(res.data))
+    }).catch((err)=>{
+      console.log(err)
+    }) 
+    console.log(JSON.stringify(temp))
+  }
+
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
@@ -92,11 +186,16 @@ const axios = require('axios');
           <Col md={3}>
             <FormGroup>
               <Label>Variant Type</Label>
-              <Input name="select" onChange={(e) => {
-                setVariantType(e.target.value)
-              }} type="select">
+              <Input
+                name="select"
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  setVariantType(e.target.value)
+                }}
+                type="select"
+              >
                 <option>Select</option>
-                <option selected>Full Time</option>
+                <option>Full Time</option>
               </Input>
             </FormGroup>
           </Col>
@@ -114,7 +213,7 @@ const axios = require('axios');
         </Row>
         <Row>
           <Col md={12} className="batch-accord">
-            <UncontrolledAccordion defaultOpen={["1", "2","3"]} stayOpen>
+            <UncontrolledAccordion defaultOpen={["1", "2", "3"]} stayOpen>
               <AccordionItem className="mb-3">
                 <AccordionHeader targetId="1">
                   Batch Configuration
@@ -138,15 +237,17 @@ const axios = require('axios');
                               name="select"
                               type="select"
                               className="border-0"
-                              // value={mentor} onchange={(e) => {
-                              //   setMentor(e.target.value)
-                              // }}
+                              value={mentor}
+                              onChange={(e) => {
+                                console.log(e.target.value)
+                                setMentor(e.target.value)
+                              }}
                             >
-                          {selectMentors.map((mentor,index)=>{
-                            return(
-                              <option key={index}>{mentor}</option>
-                            )
-                          })}
+                              {mentors.map((mentor, index) => {
+                                return (
+                                  <option key={index}>{mentor}</option>
+                                )
+                              })}
                               {/* <option selected> 2 select </option>
                               <option>1</option>
                               <option>2</option> */}
@@ -159,19 +260,22 @@ const axios = require('axios');
                               placeholder="75"
                               type="text"
                               className="bg-grey border-0"
-                              value={learnersLimit} onchange={(e) => {
+                              value={learnersLimit} onChange={(e) => {
+                                console.log(e.target.value)
                                 setLearnersLimit(e.target.value)
                               }}
                             />
                           </FormGroup>
                         </td>
                         <td>
-                          <Input type="date" value={startDate} onchange={(e) => {
+                          <Input type="date" value={startDate} onChange={(e) => {
+                            console.log(e.target.value)
                             setStartDate(e.target.value)
                           }} />
                         </td>
                         <td>
-                          <Input type="date" value={endDate} onchange={(e) => {
+                          <Input type="date" value={endDate} onChange={(e) => {
+                            console.log(e.target.value)
                             setEndDate(e.target.value)
                           }} />
                         </td>
@@ -205,7 +309,9 @@ const axios = require('axios');
                                 className="me-2 bg-grey border-0"
                                 style={{ width: "64px" }}
                                 placeholder="09:00"
-                                value={startTime} onchange={(e) => {
+                                value={startTime}
+                                onChange={(e) => {
+                                  console.log(e.target.value)
                                   setStartTime(e.target.value)
                                 }}
                               />
@@ -237,7 +343,10 @@ const axios = require('axios');
                                 className="me-2 bg-grey border-0"
                                 style={{ width: "64px" }}
                                 placeholder="05:00"
-                                value={endTime} onchange={(e) => {
+                                value={endTime}
+                                onChange={(e) => {
+                                  console.log(e.target.value)
+
                                   setendTime(e.target.value)
                                 }}
                               />
@@ -263,13 +372,26 @@ const axios = require('axios');
 
 
                           <div>
-                            {days.map((day, index) => {
+
+                            {/* {days.map((day, index) => {
                               return (
                                 <FormGroup key={index} check inline>
                                   <Input type="checkbox" />
                                   <Label check>{day}</Label>
                                 </FormGroup>
                               )
+                            })} */}
+
+                          </div>
+                          <div>
+                            {days.map((day, index) => {
+                              return (
+                                <FormGroup key={index} check inline>
+                                  <CheckBox {...day} selectDays={selectDays} />
+                                </FormGroup>
+                              )
+
+
                             })}
 
                           </div>
@@ -354,10 +476,28 @@ const axios = require('axios');
                             {days.map((day, index) => {
                               return (
                                 <FormGroup key={index} check inline>
-                                  <Input type="checkbox" />
-                                  <Label check>{day}</Label>
+                                  <CheckBox {...day} selectDays={selectDays} />
                                 </FormGroup>
                               )
+
+                              // return <h1 key={index} onClick={()=>{
+                              //   console.log("working")
+                              // }}>days</h1>
+                              return (
+                                <div className="day" key={index}>
+                                  <input
+                                    type="checkbox"
+                                    id={day.name}
+                                    name={day.name}
+                                    // checked={day.isSelected}
+                                    onChange={() => {
+                                      console.log(day)
+                                      selectDays(day);
+                                    }}
+                                  />
+                                  <label htmlFor={day.name}>{day.name}</label>
+                                </div>
+                              );
                             })}
 
                           </div>
@@ -386,7 +526,7 @@ const axios = require('axios');
                 </AccordionHeader>
                 <AccordionBody accordionId="3">
                   <Row>
-                    <Col md={4} style={{paddingLeft:'33px'}}>
+                    <Col md={4} style={{ paddingLeft: '33px' }}>
                       <FormGroup>
                         <Label>Course ID</Label>
                         <Input type="text" />
@@ -403,7 +543,7 @@ const axios = require('axios');
         <Button color="primary" outline onClick={toggle} className="px-5">
           Cancel
         </Button>
-        <Button color="primary" onClick={test} className="px-5">
+        <Button color="primary" onClick={createBatch} className="px-5">
           Create
         </Button>
       </ModalFooter>
@@ -450,3 +590,4 @@ export default BatchNewModal
     <Label check>Sun</Label>
   </FormGroup>
 </div> */}
+

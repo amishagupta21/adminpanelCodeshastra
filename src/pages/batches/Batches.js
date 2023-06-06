@@ -21,7 +21,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "reactstrap"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useHistory } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect, useDispatch } from "react-redux"
 import { getBatchesList, getDashboard, createNewBatch } from "store/Batches/actions"
@@ -63,6 +63,7 @@ const Batches = props => {
 
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
+  const history = useHistory()
 
   useEffect(() => {
     setItem(manageUser)
@@ -123,31 +124,31 @@ const Batches = props => {
         formatter: (cellContent, user) => <>{user?.id}</>,
       },
       {
-        dataField: "name",
+        dataField: "fullname",
         text: "Batch Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.name}</div>
+          <div className="fw-bold">{user?.fullname}</div>
         ),
       },
 
       {
-        dataField: "description",
+        dataField: "summary",
         text: "Description",
         sort: true,
       },
       {
-        dataField: "start_date",
+        dataField: "startdate",
         text: "Start Date",
         sort: true,
       },
       {
-        dataField: "end_date",
+        dataField: "enddate",
         text: "End Date",
         sort: true,
       },
       {
-        dataField: "course",
+        dataField: "coursename",
         text: "Course Name",
         sort: true,
       },
@@ -157,12 +158,12 @@ const Batches = props => {
         sort: true,
       },
       {
-        dataField: "learner_limit",
+        dataField: "learners",
         text: "Learners",
         sort: true,
       },
       {
-        dataField: "course_duration",
+        dataField: "progress",
         text: "Progress",
         sort: true,
         formatter: (cellContent, user) => (
@@ -173,19 +174,14 @@ const Batches = props => {
         ),
       },
       {
-        dataField: "Status",
+        dataField: "status",
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
           // Active css className="btn-status-active"
           // Inactive css className="btn-status-inactive"
           <div>
-            <span
-              className="btn-status-active"
-             
-            >
-              Active
-            </span>
+            <span className="btn-status-active">{user?.status}</span>
           </div>
         ),
       },
@@ -274,50 +270,9 @@ const Batches = props => {
   //   })
   // }
 
-
-
-  const createBatches = event => {
-    event.preventDefault();
-    const { onCreateNewBatch } = props;
-    onCreateNewBatch({
-      name: item?.name,
-      description: item?.description,
-      course: item?.course,
-      variant_type: "full time",
-      class_link: "www.google.meet/saq-faw-brs",
-      mentors: [
-        "28a6216b-4ac6-4398-8766-f0d274e56afc"
-      ],
-      learner_limit: 23,
-      start_date: "2023-06-20",
-      end_date: "2023-06-21",
-      batch_schedule: {
-        name: "Batch Schedule",
-        value: [
-          {
-            day: 4,
-            start_time: "2023-03-21T06:58:58.648Z",
-            end_time: "2023-03-21T07:58:58.648Z"
-          },
-          {
-            day: 5,
-            start_time: "2023-03-21T06:58:58.648Z",
-            end_time: "2023-03-21T07:58:58.648Z"
-          },
-          {
-            day: 2,
-            start_time: "2023-03-21T06:58:58.648Z",
-            end_time: "2023-03-22T13:58:58.648Z"
-          },
-          {
-            day: 3,
-            start_time: "2023-03-21T11:58:58.648Z",
-            end_time: "2023-03-21T13:58:58.648Z"
-          }
-        ]
-      }
-    });
-  }
+  // const onRowClick = (e, row, rowIndex) => {
+  //   history.push(`/batch-list/edit/${user?.id}`)
+  // }
 
   return (
     <div className="page-content batches-home">
@@ -329,8 +284,8 @@ const Batches = props => {
           <h4 className="mb-3">BATCHES</h4>
           <Row>
             <Col>
-              <div className="batches-box" >
-                <Card style={{background:'#E5E9FF'}}>
+              <div className="batches-box">
+                <Card style={{ background: "#E5E9FF" }}>
                   <CardBody>
                     <div className="box">
                       <div>
@@ -416,27 +371,28 @@ const Batches = props => {
           </Row>
           <Row>
             <Col>
-            <div className="d-flex justify-content-between my-2">
+              <div className="d-flex justify-content-between my-2">
                 <h4>ALL BATCHES</h4>
                 <span>
-                <Button
-                  color="success"
-                  className="rounded-pill mb-3 me-3 px-4 btn-synch-now">
+                  <Button
+                    color="success"
+                    className="rounded-pill mb-3 me-3 px-4 btn-synch-now"
+                  >
                     Synch Now
-                </Button>
-                <Button
-                  color="success"
-                  className="rounded-pill mb-3"
-                  onClick={toggle}
-                >
-                  + Create New Batch
-                </Button>
+                  </Button>
+                  <Button
+                    color="success"
+                    className="rounded-pill mb-3"
+                    onClick={toggle}
+                  >
+                    + Create New Batch
+                  </Button>
                 </span>
-                
+
                 <BatchNewModal
                   modal={modal}
                   toggle={toggle}
-                  createBatches={createBatches}
+                  // createBatches={createBatches}
                 />
               </div>
             </Col>
@@ -474,7 +430,7 @@ const Batches = props => {
                         key={isExpanded}
                         keyField="id"
                         columns={state?.columns}
-                        data={item}
+                        data={item || []}
                       >
                         {toolkitProps => (
                           <>
@@ -526,7 +482,10 @@ const Batches = props => {
                                     </Input>
                                   </div>
                                   <div className="ms-lg-3 mb-3">
-                                    <Button color="primary" className="btn-light-grey">
+                                    <Button
+                                      color="primary"
+                                      className="btn-light-grey"
+                                    >
                                       <i className="mdi mdi-filter"></i> Apply
                                       Fillter
                                     </Button>
@@ -552,6 +511,8 @@ const Batches = props => {
                                 </h6>
                                 <BootstrapTable
                                   keyField={"id"}
+                                  // trClassName="clickable-row"
+                                  // onRowClick={onRowClick}
                                   responsive
                                   bordered={false}
                                   striped={false}
