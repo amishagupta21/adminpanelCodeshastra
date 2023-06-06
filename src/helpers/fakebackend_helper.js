@@ -376,6 +376,8 @@ const getEditWorkDetail = async data => {
 
 const getDeleteData = uid => deleteData(url?.GET_DELETE_LEARNER + `${uid}`)
 
+const getDeleteBatches = id => deleteData(url?.GET_DELETE_BATCHES + `${id}`)
+
 // get dashboard charts data
 export const getDashboardData = data =>
   getData(
@@ -586,6 +588,7 @@ export {
   getLearnerList,
   getApplicationListing,
   getDeleteData,
+  getDeleteBatches,
   getStatusFilter,
   getLearnerDetailsList,
   getProfilePicture,

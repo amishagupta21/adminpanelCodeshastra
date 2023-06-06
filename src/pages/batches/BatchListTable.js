@@ -28,6 +28,7 @@ import { connect } from "react-redux"
 import { getBatchesLearner } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 import "./batches.css"
+import Status from "./Status"
 
 const BatchListTable = ({ item, manageUser, batchesLearner }) => {
   const { ExportCSVButton } = CSVExport
@@ -37,6 +38,11 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
   const [modal, setModal] = useState(false)
   const [selected, setSelected] = useState([])
   const toggle = () => setModal(!modal)
+  const [viewData, setViewData] = useState("")
+
+  const [active, setActive] = useState(false)
+  const confirmStatus = () => setActive(!active)
+  const closeModal = () => setActive(false)
 
   let state = {
     columns: [
@@ -92,18 +98,28 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         ),
       },
       {
+        dataField: "total",
+        text: "Total",
+        sort: true,
+        // formatter: (cellContent, user) => (
+        //   <div className="fw-bold">{user?.assessments
+
+        //   }</div>
+        // ),
+      },
+      {
         dataField: "status",
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div>
-            <span
+          <div onClick={confirmStatus}>
+            <div
               className={
                 user?.status === 0 ? "btn-status-inactive" : "btn-status-active"
               }
             >
               {user?.status === "true" ? "Active" : "Inactive"}
-            </span>
+            </div>
           </div>
           // Active css className="btn-status-active"
           // Inactive css className="btn-status-inactive"
@@ -119,13 +135,16 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
               {/* <Link to="/batch-list" className="text-muted">
                 <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
               </Link> */}
-              <Link
-                to={`/report/${user?.id}`}
-                // onClick={toggle}
+              <div
+                // to={`/report/${user?.id}`}
+                onClick={() => {
+                  setViewData(user)
+                  toggle()
+                }}
                 className="text-muted ms-2"
               >
                 <i className="mdi mdi-clipboard-account mdi-18px text-success" />
-              </Link>
+              </div>
             </div>
           </div>
         ),
@@ -149,13 +168,20 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
 
   return (
     <div className="batches-home">
-      <ReportCard modal={modal} toggle={toggle} />
+      <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
+
+      <Status
+        active={active}
+        confirmStatus={confirmStatus}
+        closeModal={closeModal}
+      />
+
       <ToolkitProvider
         key={isExpanded}
         keyField="id"
         columns={state?.columns}
         data={batchesLearner}
-        exportCSV={{ onlyExportSelection: true, exportAll: true }}
+        exportCSV={{ onlyExportSelection: false, exportAll: true }}
       >
         {toolkitProps => (
           <>

@@ -29,6 +29,9 @@ import {
   GET_DASHBOARD_FAIL,
   GET_DASHBOARD_COUNT_SUCCESS,
   GET_DASHBOARD_COUNT_FAIL,
+  DELETE_BATCHES,
+  DELETE_BATCHES_SUCCESS,
+  DELETE_BATCHES_FAIL,
   GET_MENTOR,
   GET_MENTOR_SUCCESS,
   GET_MENTOR_FAIL,
@@ -225,6 +228,10 @@ export const getDashboardCountFail = error => ({
   payload: error,
 })
 
+export const deleteBatches = id => ({
+  type: DELETE_BATCHES,
+  payload: id,
+})
 // MENTOR API
 
 export const getMentor = data => ({
@@ -284,15 +291,15 @@ export const getLectureCountFail = error => ({
 //   payload: id,
 // })
 
-// export const deleteLearnerSuccess = event => ({
-//   type: DELETE_LEARNER_SUCCESS,
-//   payload: event,
-// })
+export const deleteBatchesSuccess = event => ({
+  type: DELETE_BATCHES_SUCCESS,
+  payload: event,
+})
 
-// export const deleteLearnerFail = error => ({
-//   type: DELETE_LEARNER_FAIL,
-//   payload: error,
-// })
+export const deleteBatchesFail = error => ({
+  type: DELETE_BATCHES_FAIL,
+  payload: error,
+})
 
 // export const getStatusFilter = data => ({
 //   type: FILTER_STATUS_LEARNER,

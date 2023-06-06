@@ -34,6 +34,7 @@ const GradeBook = ({ gradeBook }) => {
 
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
+  const [viewData, setViewData] = useState("")
 
   useEffect(() => {
     const finalColumn = []
@@ -43,7 +44,7 @@ const GradeBook = ({ gradeBook }) => {
         startingKey === "Assignment" ||
         startingKey === "name" ||
         startingKey === "Exercise" ||
-        startingKey === "id" ||
+        // startingKey === "id" ||
         startingKey === "Attendance"
       ) {
         finalColumn.push({
@@ -53,6 +54,26 @@ const GradeBook = ({ gradeBook }) => {
         })
       }
     }
+    finalColumn.push({
+      dataField: "Actions",
+      text: "Actions",
+      formatter: (cellContent, user) => (
+        <div className="d-flex">
+          <div className="me-2">
+            <div
+              onClick={() => {
+                setViewData(user)
+                toggle()
+              }}
+              // to={`/report/${user?.id}`}
+              className="text-muted ms-2"
+            >
+              <i className="mdi mdi-clipboard-account mdi-18px text-success" />
+            </div>
+          </div>
+        </div>
+      ),
+    })
     setColumn(finalColumn)
   }, [gradeBook])
 
@@ -598,7 +619,7 @@ const GradeBook = ({ gradeBook }) => {
 
   return (
     <div className="batches-home">
-      {/* <ReportCard modal={modal} toggle={toggle} /> */}
+      <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
       <Row>
         <Col md={12} className="text-end">
           <Button color="success" className="rounded-pill mb-3">

@@ -156,9 +156,11 @@ class LearnerPage extends Component {
                 onClick={() => {
                   this.toggle()
                   this.setState({ uid: user.uid })
-                }}
                 // onClick={() => this.deleteRow(user.uid)}
+
+                }}
               >
+
                 <i className="mdi mdi-trash-can font-size-16 text-danger" />
               </Link>
             </div>

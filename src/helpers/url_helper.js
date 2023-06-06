@@ -138,6 +138,7 @@ export const GET_BATCHES = "/moodle"
 export const NEW_BATCHES = "/admin/batch"
 
 export const GET_BATCHES_LEARNER_LIST = "/moodle/getStudentbyCourse"
+export const GET_DELETE_BATCHES = "/users/delete/"
 // GRADE_BOOK
 
 export const GET_GRADE_BOOK = "/moodle/getStudentsReport"
