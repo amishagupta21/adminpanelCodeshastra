@@ -25,7 +25,11 @@ import {
 import { Link, useParams, useHistory } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect, useDispatch } from "react-redux"
-import { getBatchesList, getDashboard, createNewBatch } from "store/Batches/actions"
+import {
+  getBatchesList,
+  getDashboard,
+  createNewBatch,
+} from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
@@ -35,33 +39,32 @@ import DeleteModel from "components/DeleteModal"
 import ModalDelete from "components/Common/ModalDelete"
 import DeleteModal from "components/Common/DeleteModal"
 
-
 const Batches = props => {
-  const axios = require('axios');
+  const axios = require("axios")
   const params = useParams()
   const { manageUser, usersCount, dashboard } = props
   const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
   const [user, setUser] = useState({})
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([])
   // const dispatch = useDispatch();
-  
+
   // const handleDeleteUser = async () => {
   //   if (user !== undefined) {
   //     const res = await deleteAnUser(user.uId)
   //     if (res.data.deleted) setDeleteModalIsOpen(false)
   //     getUsersList()
   //   }
-  // } 
+  // }
   const handleDeleteUser = () => {
     if (user !== undefined) {
-      const updatedUsers = users.filter((e) => e.id !== user.id);
-      setUsers(updatedUsers);
-  
-      setDeleteModalIsOpen(false);
+      const updatedUsers = users.filter(e => e.id !== user.id)
+      setUsers(updatedUsers)
+
+      setDeleteModalIsOpen(false)
     }
-  };
+  }
 
   const [modal, setModal] = useState(false)
   const toggle = e => {
@@ -89,21 +92,23 @@ const Batches = props => {
     },
   ]
 
-  const onClickDelete = (e,user) => {
+  const onClickDelete = (e, user) => {
     setUser(user)
     setDeleteModalIsOpen(true)
     e.stopPropagation()
     e.preventDefault()
     axios({
-      method:"DELETE",
-      url:'https://lms.unikaksha.dev/api/lms/admin/batch/defd408b-9221-48ca-9b16-4e59ce5145fa',
-      data:user
-    }).then((res)=>{
-      // window.location.reload()
-      console.log(JSON.stringify(res.data))
-    }).catch((err)=>{
-      console.log(err)
-    }) 
+      method: "DELETE",
+      url: "https://lms.unikaksha.dev/api/lms/admin/batch/defd408b-9221-48ca-9b16-4e59ce5145fa",
+      data: user,
+    })
+      .then(res => {
+        // window.location.reload()
+        console.log(JSON.stringify(res.data))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   const selectRow = {
@@ -126,12 +131,6 @@ const Batches = props => {
   //   setDeletePop(!deletePop)
   // }
   // const handleClose = () => toggle(false);
-
-
- 
-
-
-
 
   let state = {
     columns: [
@@ -243,18 +242,19 @@ const Batches = props => {
               </Link>
             </div>
             <div className="me-2">
-              <div to={"/batch"} onClick={(e) => onClickDelete(e,user)} className="text-muted">
+              <div
+                to={"/batch"}
+                onClick={e => onClickDelete(e, user)}
+                className="text-muted"
+              >
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
               </div>
-
             </div>
-
           </div>
         ),
       },
     ],
   }
-
 
   // console.log(manageUser, "////////manageUser")
 
@@ -325,9 +325,11 @@ const Batches = props => {
 
   return (
     <div className="page-content batches-home">
-      <DeleteModal show={deleteModalIsOpen}
+      <DeleteModal
+        show={deleteModalIsOpen}
         onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModalIsOpen(false)} />
+        onCloseClick={() => setDeleteModalIsOpen(false)}
+      />
       <Row>
         <Col md={12}>
           <h4 className="mb-3">BATCHES</h4>
@@ -427,7 +429,7 @@ const Batches = props => {
                     color="primary"
                     className="rounded-pill mb-3 me-3 px-4"
                   >
-                    Synch Now
+                    Sync Now
                   </Button>
                   <Button
                     color="success"
