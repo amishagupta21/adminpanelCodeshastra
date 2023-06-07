@@ -46,7 +46,7 @@ const BatchProgress = () => {
               </p>
             </Col>
             <Col md={6} className="d-flex align-items-center">
-              <img src={ChartCircle} />
+              <img src={ChartCircle} style={{width:'90%'}} />
             </Col>
           </Row>
         </CardBody>

@@ -165,12 +165,12 @@ const BatchList = props => {
         </Col>
       </Row>
       <Row>
-        <Col md={5}>
-          <BatchLearner newBatch={newBatch} />
-          <BatchProgress />
-          <CompletionStatus />
-        </Col>
-        <Col md={7}>
+        <Col md={4}><BatchLearner newBatch={newBatch} /></Col>
+        <Col md={4}><BatchProgress /></Col>
+        <Col md={4}><CompletionStatus /></Col>
+      </Row>
+      <Row>
+        <Col md={12}>
           <Card>
             <CardBody>
               <div>

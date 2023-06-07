@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts';
 
 const  DoughnutChart = () =>{
     return(
-        <div>
+        <div className="donut-chart">
             <Chart
                 type="donut"
                 height='auto'
@@ -11,7 +11,7 @@ const  DoughnutChart = () =>{
                 options={{
                     labels:[
                         'Full Stack developer',
-                        'Software developer program',
+                        'Software developer program ',
                         'Software pro developer program',
                         'Java Full Stack developer',
                         'Python Full Stack developer',
