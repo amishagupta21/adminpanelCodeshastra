@@ -145,57 +145,57 @@ const Batches = props => {
         text: "Batch Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.displayname}</div>
+          <div className="fw-bold">{user?.name}</div>
         ),
       },
 
       {
-        dataField: "summary",
+        dataField: "description",
         text: "Description",
         sort: true,
-        formatter: (cellContent, user) => (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: user?.summary,
-            }}
-          />
-        ),
+        // formatter: (cellContent, user) => (
+        //   <div
+        //     dangerouslySetInnerHTML={{
+        //       __html: user?.summary,
+        //     }}
+        //   />
+        // ),
       },
       {
-        dataField: "response",
+        dataField: "start_date",
         text: "Start Date",
         sort: true,
-        formatter: (cellContent, user) => {
-          var newDate = new Date(user?.startdate * 1000)
-          var startDate = newDate.toLocaleDateString()
-          return (
-            <div>
-              <span>{startDate}</span>
-            </div>
-          )
-        },
+        // formatter: (cellContent, user) => {
+        //   var newDate = new Date(user?.startdate * 1000)
+        //   var startDate = newDate.toLocaleDateString()
+        //   return (
+        //     <div>
+        //       <span>{startDate}</span>
+        //     </div>
+        //   )
+        // },
       },
       {
-        dataField: "enddate",
+        dataField: "end_date",
         text: "End Date",
         sort: true,
-        formatter: (cellContent, user) => {
-          var date = new Date(user?.enddate * 1000)
-          var endDate = date.toLocaleDateString()
-          return (
-            <div>
-              <span>{endDate}</span>
-            </div>
-          )
-        },
+        // formatter: (cellContent, user) => {
+        //   var date = new Date(user?.enddate * 1000)
+        //   var endDate = date.toLocaleDateString()
+        //   return (
+        //     <div>
+        //       <span>{endDate}</span>
+        //     </div>
+        //   )
+        // },
       },
       {
-        dataField: "shortname",
+        dataField: "course",
         text: "Course Name",
         sort: true,
       },
       {
-        dataField: "numsections",
+        dataField: "lectures",
         text: "Lectures",
         sort: true,
       },
@@ -206,7 +206,7 @@ const Batches = props => {
       },
 
       {
-        dataField: "status",
+        dataField: "enable",
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
