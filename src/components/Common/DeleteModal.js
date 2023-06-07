@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Col, Modal, ModalBody, Row } from "reactstrap"
 
-const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
+const DeleteModal = ({ show, onDeleteClick, onCloseClick, onClickDelete }) => {
   return (
     <Modal isOpen={show} toggle={onCloseClick} centered={true}>
       <ModalBody className="py-3 px-5">
@@ -24,7 +24,7 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
               <button
                 type="button"
                 className="btn btn-success btn-lg ms-2"
-                onClick={onDeleteClick}
+                onClick={onClickDelete}
               >
                 Yes, delete it!
               </button>

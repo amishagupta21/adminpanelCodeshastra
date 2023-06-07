@@ -92,19 +92,16 @@ const Batches = props => {
     },
   ]
 
-  const onClickDelete = (e, user) => {
-    setUser(user)
-    setDeleteModalIsOpen(true)
-    e.stopPropagation()
-    e.preventDefault()
+  const onClickDelete = () => {
     axios({
       method: "DELETE",
-      url: "https://lms.unikaksha.dev/api/lms/admin/batch/defd408b-9221-48ca-9b16-4e59ce5145fa",
+      url: `https://lms.unikaksha.dev/api/lms/admin/batch/${user?.id}`,
       data: user,
     })
       .then(res => {
-        // window.location.reload()
-        console.log(JSON.stringify(res.data))
+        const finalItem = item.filter(item => item.id !== user?.id)
+        setItem(finalItem)
+        setDeleteModalIsOpen(false)
       })
       .catch(err => {
         console.log(err)
@@ -145,68 +142,68 @@ const Batches = props => {
         text: "Batch Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.displayname}</div>
+          <div className="fw-bold">{user?.name}</div>
         ),
       },
 
       {
-        dataField: "summary",
+        dataField: "description",
         text: "Description",
         sort: true,
-        formatter: (cellContent, user) => (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: user?.summary,
-            }}
-          />
-        ),
+        // formatter: (cellContent, user) => (
+        //   <div
+        //     dangerouslySetInnerHTML={{
+        //       __html: user?.summary,
+        //     }}
+        //   />
+        // ),
       },
       {
-        dataField: "response",
+        dataField: "start_date",
         text: "Start Date",
         sort: true,
-        formatter: (cellContent, user) => {
-          var newDate = new Date(user?.startdate * 1000)
-          var startDate = newDate.toLocaleDateString()
-          return (
-            <div>
-              <span>{startDate}</span>
-            </div>
-          )
-        },
+        // formatter: (cellContent, user) => {
+        //   var newDate = new Date(user?.startdate * 1000)
+        //   var startDate = newDate.toLocaleDateString()
+        //   return (
+        //     <div>
+        //       <span>{startDate}</span>
+        //     </div>
+        //   )
+        // },
       },
       {
-        dataField: "enddate",
+        dataField: "end_date",
         text: "End Date",
         sort: true,
-        formatter: (cellContent, user) => {
-          var date = new Date(user?.enddate * 1000)
-          var endDate = date.toLocaleDateString()
-          return (
-            <div>
-              <span>{endDate}</span>
-            </div>
-          )
-        },
+        // formatter: (cellContent, user) => {
+        //   var date = new Date(user?.enddate * 1000)
+        //   var endDate = date.toLocaleDateString()
+        //   return (
+        //     <div>
+        //       <span>{endDate}</span>
+        //     </div>
+        //   )
+        // },
       },
       {
-        dataField: "shortname",
+        dataField: "course",
         text: "Course Name",
         sort: true,
       },
       {
-        dataField: "numsections",
+        dataField: "lectures",
         text: "Lectures",
         sort: true,
       },
       {
-        dataField: "learners",
+        dataField: "learner_limit",
         text: "Learners",
         sort: true,
       },
 
       {
-        dataField: "status",
+        dataField: "enable",
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
@@ -226,7 +223,7 @@ const Batches = props => {
       {
         dataField: "Actions",
         text: "Actions",
-        formatter: (cellContent, user) => (
+        formatter: (cellContent, userData) => (
           <div className="d-flex">
             {/* <div className="me-2">
               <Link to="/">
@@ -243,8 +240,12 @@ const Batches = props => {
             </div>
             <div className="me-2">
               <div
-                to={"/batch"}
-                onClick={e => onClickDelete(e, user)}
+                onClick={e => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  setUser(userData)
+                  setDeleteModalIsOpen(true)
+                }}
                 className="text-muted"
               >
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
@@ -328,6 +329,7 @@ const Batches = props => {
       <DeleteModal
         show={deleteModalIsOpen}
         onDeleteClick={handleDeleteUser}
+        onClickDelete={onClickDelete}
         onCloseClick={() => setDeleteModalIsOpen(false)}
       />
       <Row>

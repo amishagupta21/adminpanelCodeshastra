@@ -80,7 +80,7 @@ function* fetchBatches({ payload: data }) {
   try {
     const response = yield call(getBatches, data)
     tosterMsg(response?.message)
-    yield put(getBatchesListSuccess(response?.data))
+    yield put(getBatchesListSuccess(response?.data?.result))
     yield put(getBatchesListCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
@@ -170,7 +170,9 @@ function* onDeleteBatches({ payload: event }) {
     yield put(deleteBatchesSuccess(response))
   } catch (error) {
     toasterMsg(error?.message)
-    yield put(deleteBatchesFail(error))}}
+    yield put(deleteBatchesFail(error))
+  }
+}
 // MENTOR
 
 function* fetchNewMentor({ payload: data }) {
@@ -186,7 +188,7 @@ function* fetchNewMentor({ payload: data }) {
   }
 }
 
- function* usersManageSaga() {
+function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import axios from "axios"
 import {
   Row,
@@ -21,23 +21,25 @@ import {
   AccordionBody,
 } from "reactstrap"
 
-
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
 
-  return <>
-    <input
-      type="checkbox"
-      id={name}
-      value={isChecked}
-      // checked={isChecked}
-      onChange={() => {
-        setIsChecked(!isChecked)
-        // console.log(name)
-        selectDays({ isSelected, name });
-      }}
-    />
-    <label htmlFor={name}>{name}</label></>
+  return (
+    <>
+      <input
+        type="checkbox"
+        id={name}
+        value={isChecked}
+        // checked={isChecked}
+        onChange={() => {
+          setIsChecked(!isChecked)
+          // console.log(name)
+          selectDays({ isSelected, name })
+        }}
+      />
+      <label htmlFor={name}>{name}</label>
+    </>
+  )
 
   // return <>
   //   <Input
@@ -56,7 +58,7 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
   // </>
 }
 const BatchNewModal = ({ modal, toggle }) => {
-  const axios = require('axios');
+  const axios = require("axios")
 
   const [batchName, setBatchName] = useState("")
   const [description, setDescription] = useState("")
@@ -68,12 +70,13 @@ const BatchNewModal = ({ modal, toggle }) => {
   const [endDate, setEndDate] = useState("")
   const [startTime, setStartTime] = useState("")
   const [endTime, setendTime] = useState("")
+  const [courseIdData, setCourseIdData] = useState([])
+  const [selectedCourseId, setSelectedCourseId] = useState(null)
   const SelectTime = ["AM", "PM"]
-
 
   const mentors = ["select", 1, 2]
   const [mentor, setMentor] = useState("")
- 
+
   const [days, setDays] = useState([
     { day: 1, name: "Mon", isSelected: false },
     { day: 2, name: "Tue", isSelected: false },
@@ -81,72 +84,79 @@ const BatchNewModal = ({ modal, toggle }) => {
     { day: 4, name: "Thu", isSelected: false },
     { day: 5, name: "Fri", isSelected: false },
     { day: 6, name: "Sat", isSelected: false },
-    { day: 7, name: "Sun", isSelected: false }
-  ]);
+    { day: 7, name: "Sun", isSelected: false },
+  ])
 
-
-
-
-  const selectDays = (day) => {
-
+  const selectDays = day => {
     // console.log(day)
-    const updateDays = days.map((_day) => {
+    const updateDays = days.map(_day => {
       if (day.name === _day.name) {
         const temp = {
           name: _day.name,
           isSelected: !_day.isSelected,
-          day: _day.day
-        };
-        return temp;
+          day: _day.day,
+        }
+        return temp
       }
-      return _day;
-    });
+      return _day
+    })
     console.log("updateday", updateDays)
-    setDays(updateDays);
-  };
+    setDays(updateDays)
+  }
 
   const createBatch = () => {
+    const filterDay = days.filter(day => day.isSelected)
 
-    const filterDay = days.filter((day) => day.isSelected)
-
-    const updateDays = filterDay.map((day) => {
+    const updateDays = filterDay.map(day => {
       return {
         day: day.day,
-        "start_time": "2023-03-21T06:58:58.648Z",
-        "end_time": "2023-03-21T07:58:58.648Z"
+        start_time: "2023-03-21T06:58:58.648Z",
+        end_time: "2023-03-21T07:58:58.648Z",
       }
     })
 
     const temp = {
-      "name": batchName,
-      "description": description,
-      "course": course,
-      "variant_type": variantType,
-      "class_link": classLink,
-      "mentors": [
-        "28a6216b-4ac6-4398-8766-f0d274e56afc"
-      ],
-      "learner_limit": learnersLimit,
-      "start_date": startDate,
-      "end_date": endDate,
-      "batch_schedule": {
-        "name": batchName,
-        "value": updateDays,
-      }
+      name: batchName,
+      description: description,
+      course: course,
+      variant_type: variantType,
+      class_link: classLink,
+      mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
+      learner_limit: learnersLimit,
+      start_date: startDate,
+      end_date: endDate,
+      batch_schedule: {
+        name: batchName,
+        value: updateDays,
+      },
+      moodle_course:
+        selectedCourseId === "Select Course ID" ? null : selectedCourseId,
     }
     axios({
-      method:"POST",
-      url:'https://lms.unikaksha.dev/api/lms/admin/batch',
-      data:temp
-    }).then((res)=>{
-      // window.location.reload
-      // window.location.reload()
-      console.log(JSON.stringify(res.data))
-    }).catch((err)=>{
-      console.log(err)
-    }) 
+      method: "POST",
+      url: "https://lms.unikaksha.dev/api/lms/admin/batch",
+      data: temp,
+    })
+      .then(res => {
+        // window.location.reload
+        // window.location.reload()
+        console.log(JSON.stringify(res.data))
+      })
+      .catch(err => {
+        console.log(err)
+      })
     console.log(JSON.stringify(temp))
   }
+
+  useEffect(() => {
+    if (modal) {
+      axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
+        .then(res => setCourseIdData(res.data.data))
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }, [modal])
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
@@ -156,18 +166,27 @@ const BatchNewModal = ({ modal, toggle }) => {
           <Col md={3}>
             <FormGroup>
               <Label>Batch Name</Label>
-              <Input value={batchName} onChange={(e) => {
-                setBatchName(e.target.value)
-              }} type="text" placeholder="Batch_10" />
+              <Input
+                value={batchName}
+                onChange={e => {
+                  setBatchName(e.target.value)
+                }}
+                type="text"
+                placeholder="Batch_10"
+              />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
               <Label>Description</Label>
-              <Input value={description} onChange={(e) => {
-                setDescription(e.target.value
-                )
-              }} type="text" placeholder="Freshers Only" />
+              <Input
+                value={description}
+                onChange={e => {
+                  setDescription(e.target.value)
+                }}
+                type="text"
+                placeholder="Freshers Only"
+              />
             </FormGroup>
           </Col>
           <Col md={3}>
@@ -175,9 +194,11 @@ const BatchNewModal = ({ modal, toggle }) => {
               <Label>Course</Label>
               <Input
                 name="select"
-                onChange={(e) => {
+                onChange={e => {
                   setCourse(e.target.value)
-                }} type="select">
+                }}
+                type="select"
+              >
                 <option>Select</option>
                 <option>Full Stack Web Developer</option>
               </Input>
@@ -188,7 +209,7 @@ const BatchNewModal = ({ modal, toggle }) => {
               <Label>Variant Type</Label>
               <Input
                 name="select"
-                onChange={(e) => {
+                onChange={e => {
                   console.log(e.target.value)
                   setVariantType(e.target.value)
                 }}
@@ -204,10 +225,14 @@ const BatchNewModal = ({ modal, toggle }) => {
           <Col md={6}>
             <FormGroup>
               <Label>Class Link</Label>
-              <Input value={classLink} onChange={(e) => {
-
-                setClassLink(e.target.value)
-              }} type="text" placeholder="www.google.meet/saq-faw-brs" />
+              <Input
+                value={classLink}
+                onChange={e => {
+                  setClassLink(e.target.value)
+                }}
+                type="text"
+                placeholder="www.google.meet/saq-faw-brs"
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -238,15 +263,13 @@ const BatchNewModal = ({ modal, toggle }) => {
                               type="select"
                               className="border-0"
                               value={mentor}
-                              onChange={(e) => {
+                              onChange={e => {
                                 console.log(e.target.value)
                                 setMentor(e.target.value)
                               }}
                             >
                               {mentors.map((mentor, index) => {
-                                return (
-                                  <option key={index}>{mentor}</option>
-                                )
+                                return <option key={index}>{mentor}</option>
                               })}
                               {/* <option selected> 2 select </option>
                               <option>1</option>
@@ -260,7 +283,8 @@ const BatchNewModal = ({ modal, toggle }) => {
                               placeholder="75"
                               type="text"
                               className="bg-grey border-0"
-                              value={learnersLimit} onChange={(e) => {
+                              value={learnersLimit}
+                              onChange={e => {
                                 console.log(e.target.value)
                                 setLearnersLimit(e.target.value)
                               }}
@@ -268,16 +292,24 @@ const BatchNewModal = ({ modal, toggle }) => {
                           </FormGroup>
                         </td>
                         <td>
-                          <Input type="date" value={startDate} onChange={(e) => {
-                            console.log(e.target.value)
-                            setStartDate(e.target.value)
-                          }} />
+                          <Input
+                            type="date"
+                            value={startDate}
+                            onChange={e => {
+                              console.log(e.target.value)
+                              setStartDate(e.target.value)
+                            }}
+                          />
                         </td>
                         <td>
-                          <Input type="date" value={endDate} onChange={(e) => {
-                            console.log(e.target.value)
-                            setEndDate(e.target.value)
-                          }} />
+                          <Input
+                            type="date"
+                            value={endDate}
+                            onChange={e => {
+                              console.log(e.target.value)
+                              setEndDate(e.target.value)
+                            }}
+                          />
                         </td>
                       </tr>
                     </tbody>
@@ -310,7 +342,7 @@ const BatchNewModal = ({ modal, toggle }) => {
                                 style={{ width: "64px" }}
                                 placeholder="09:00"
                                 value={startTime}
-                                onChange={(e) => {
+                                onChange={e => {
                                   console.log(e.target.value)
                                   setStartTime(e.target.value)
                                 }}
@@ -322,12 +354,9 @@ const BatchNewModal = ({ modal, toggle }) => {
                                 type="select"
                                 style={{ width: "64px" }}
                                 className="border-0"
-
                               >
                                 {SelectTime.map((time, index) => {
-                                  return (
-                                    <option key={index}>{time}</option>
-                                  )
+                                  return <option key={index}>{time}</option>
                                 })}
                                 {/* <option selected>AM</option>
                                 <option>PM</option> */}
@@ -344,7 +373,7 @@ const BatchNewModal = ({ modal, toggle }) => {
                                 style={{ width: "64px" }}
                                 placeholder="05:00"
                                 value={endTime}
-                                onChange={(e) => {
+                                onChange={e => {
                                   console.log(e.target.value)
 
                                   setendTime(e.target.value)
@@ -358,9 +387,7 @@ const BatchNewModal = ({ modal, toggle }) => {
                                 style={{ width: "64px" }}
                               >
                                 {SelectTime.map((time, index) => {
-                                  return (
-                                    <option key={index}>{time}</option>
-                                  )
+                                  return <option key={index}>{time}</option>
                                 })}
 
                                 {/* <option selected>PM</option> */}
@@ -369,10 +396,7 @@ const BatchNewModal = ({ modal, toggle }) => {
                           </div>
                         </td>
                         <td>
-
-
                           <div>
-
                             {/* {days.map((day, index) => {
                               return (
                                 <FormGroup key={index} check inline>
@@ -381,7 +405,6 @@ const BatchNewModal = ({ modal, toggle }) => {
                                 </FormGroup>
                               )
                             })} */}
-
                           </div>
                           <div>
                             {days.map((day, index) => {
@@ -390,13 +413,8 @@ const BatchNewModal = ({ modal, toggle }) => {
                                   <CheckBox {...day} selectDays={selectDays} />
                                 </FormGroup>
                               )
-
-
                             })}
-
                           </div>
-
-
                         </td>
                         <td>
                           <span className="me-3">
@@ -462,16 +480,13 @@ const BatchNewModal = ({ modal, toggle }) => {
                                 className="border-0"
                               >
                                 {SelectTime.map((time, index) => {
-                                  return (
-                                    <option key={index}>{time}</option>
-                                  )
+                                  return <option key={index}>{time}</option>
                                 })}
                               </Input>
                             </FormGroup>
                           </div>
                         </td>
                         <td>
-
                           <div>
                             {days.map((day, index) => {
                               return (
@@ -492,14 +507,13 @@ const BatchNewModal = ({ modal, toggle }) => {
                                     // checked={day.isSelected}
                                     onChange={() => {
                                       console.log(day)
-                                      selectDays(day);
+                                      selectDays(day)
                                     }}
                                   />
                                   <label htmlFor={day.name}>{day.name}</label>
                                 </div>
-                              );
+                              )
                             })}
-
                           </div>
                         </td>
                         <td>
@@ -526,10 +540,25 @@ const BatchNewModal = ({ modal, toggle }) => {
                 </AccordionHeader>
                 <AccordionBody accordionId="3">
                   <Row>
-                    <Col md={4} style={{ paddingLeft: '33px' }}>
+                    <Col md={4} style={{ paddingLeft: "33px" }}>
                       <FormGroup>
                         <Label>Course ID</Label>
-                        <Input type="text" />
+                        <Input
+                          type="select"
+                          name="course_id"
+                          onChange={e => {
+                            setSelectedCourseId(e.target.value)
+                          }}
+                        >
+                          <option value={null}>Select Course ID</option>
+                          {courseIdData.map((item, index) => {
+                            return (
+                              <option key={index} value={item?.courseid}>
+                                {item?.coursename}
+                              </option>
+                            )
+                          })}
+                        </Input>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -552,42 +581,3 @@ const BatchNewModal = ({ modal, toggle }) => {
 }
 
 export default BatchNewModal
-
-
-
-
-{/* <div>
-<FormGroup check inline>
-    <Input type="checkbox" checked />
-    <Label check>Sun</Label>
-  </FormGroup>
-  <FormGroup check inline>
-    <Input type="checkbox" checked />
-    <Label check>Mon</Label>
-  </FormGroup>
-  <FormGroup check inline>
-    <Input type="checkbox" checked />
-    <Label check>Tue</Label>
-  </FormGroup>
-  <FormGroup check inline>
-    <Input type="checkbox" />
-    <Label check>Wed</Label>
-  </FormGroup>
-  <FormGroup check inline>
-    <Input type="checkbox" />
-    <Label check>Thurs</Label>
-  </FormGroup>
-  <FormGroup check inline>
-    <Input type="checkbox" />
-    <Label check>Fri</Label>
-  </FormGroup>
-  <FormGroup check inline>
-    <Input type="checkbox" />
-    <Label check>Sat</Label>
-  </FormGroup>
-  <FormGroup check inline>
-    <Input type="checkbox" />
-    <Label check>Sun</Label>
-  </FormGroup>
-</div> */}
-
