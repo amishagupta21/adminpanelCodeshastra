@@ -17,7 +17,9 @@ import {
   Table,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
-import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
+import ToolkitProvider, {
+  CSVExport,
+} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { DeBounceSearch } from "common/DeBounceSearch"
 import { Link, useParams, useHistory } from "react-router-dom"
@@ -28,6 +30,8 @@ import ReportCard from "./ReportCard"
 
 const GradeBook = ({ gradeBook }) => {
   const [isExpanded, setIsExpanded] = useState(null)
+  const { ExportCSVButton } = CSVExport
+
   const params = useParams()
   const history = useHistory()
   const [column, setColumn] = useState([])
@@ -630,27 +634,7 @@ const GradeBook = ({ gradeBook }) => {
           </div>
         </Col>
       </Row>
-      <Row>
-        <Col md={6}>
-          <div className="search-box">
-            <div className="app-search p-0">
-              <div className="position-relative mb-2">
-                <input
-                  className="form-control mb-3"
-                  type="text"
-                  placeholder="Search by Batch name"
-                />
-                <span className="bx bx-search-alt" />
-              </div>
-            </div>
-          </div>
-        </Col>
-        <Col md={6}>
-          <div className="text-end">
-            <Button color="secondary">Export</Button>
-          </div>
-        </Col>
-      </Row>
+
       <ToolkitProvider
         key={isExpanded}
         keyField="id"
@@ -666,9 +650,34 @@ const GradeBook = ({ gradeBook }) => {
               ]
         }
         data={gradeBook}
+        exportCSV={{ onlyExportSelection: false, exportAll: true }}
       >
         {toolkitProps => (
           <>
+            <Row>
+              <Col md={6}>
+                <div className="search-box">
+                  <div className="app-search p-0">
+                    <div className="position-relative mb-2">
+                      <input
+                        className="form-control mb-3"
+                        type="text"
+                        placeholder="Search by Batch name"
+                      />
+                      <span className="bx bx-search-alt" />
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col md={6}>
+                <div className="text-end">
+                  <ExportCSVButton {...toolkitProps.csvProps}>
+                    <Button color="secondary">Export</Button>
+                  </ExportCSVButton>
+                </div>
+              </Col>
+            </Row>
+
             <Col xl="12">
               <div className="table-responsive">
                 <h6 className="mt-2">

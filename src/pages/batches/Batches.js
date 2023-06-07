@@ -92,19 +92,16 @@ const Batches = props => {
     },
   ]
 
-  const onClickDelete = (e, user) => {
-    setUser(user)
-    setDeleteModalIsOpen(true)
-    e.stopPropagation()
-    e.preventDefault()
+  const onClickDelete = () => {
     axios({
       method: "DELETE",
-      url: "https://lms.unikaksha.dev/api/lms/admin/batch/defd408b-9221-48ca-9b16-4e59ce5145fa",
+      url: `https://lms.unikaksha.dev/api/lms/admin/batch/${user?.id}`,
       data: user,
     })
       .then(res => {
-        // window.location.reload()
-        console.log(JSON.stringify(res.data))
+        const finalItem = item.filter(item => item.id !== user?.id)
+        setItem(finalItem)
+        setDeleteModalIsOpen(false)
       })
       .catch(err => {
         console.log(err)
@@ -200,7 +197,7 @@ const Batches = props => {
         sort: true,
       },
       {
-        dataField: "learners",
+        dataField: "learner_limit",
         text: "Learners",
         sort: true,
       },
@@ -226,7 +223,7 @@ const Batches = props => {
       {
         dataField: "Actions",
         text: "Actions",
-        formatter: (cellContent, user) => (
+        formatter: (cellContent, userData) => (
           <div className="d-flex">
             {/* <div className="me-2">
               <Link to="/">
@@ -243,8 +240,12 @@ const Batches = props => {
             </div>
             <div className="me-2">
               <div
-                to={"/batch"}
-                onClick={e => onClickDelete(e, user)}
+                onClick={e => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  setUser(userData)
+                  setDeleteModalIsOpen(true)
+                }}
                 className="text-muted"
               >
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
@@ -328,6 +329,7 @@ const Batches = props => {
       <DeleteModal
         show={deleteModalIsOpen}
         onDeleteClick={handleDeleteUser}
+        onClickDelete={onClickDelete}
         onCloseClick={() => setDeleteModalIsOpen(false)}
       />
       <Row>

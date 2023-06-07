@@ -158,8 +158,6 @@ const BatchNewModal = ({ modal, toggle }) => {
     }
   }, [modal])
 
-  console.log(selectedCourseId, "selectedCourseId")
-
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
@@ -495,6 +493,25 @@ const BatchNewModal = ({ modal, toggle }) => {
                                 <FormGroup key={index} check inline>
                                   <CheckBox {...day} selectDays={selectDays} />
                                 </FormGroup>
+                              )
+
+                              // return <h1 key={index} onClick={()=>{
+                              //   console.log("working")
+                              // }}>days</h1>
+                              return (
+                                <div className="day" key={index}>
+                                  <input
+                                    type="checkbox"
+                                    id={day.name}
+                                    name={day.name}
+                                    // checked={day.isSelected}
+                                    onChange={() => {
+                                      console.log(day)
+                                      selectDays(day)
+                                    }}
+                                  />
+                                  <label htmlFor={day.name}>{day.name}</label>
+                                </div>
                               )
                             })}
                           </div>
