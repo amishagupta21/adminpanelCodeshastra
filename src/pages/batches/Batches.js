@@ -9,6 +9,10 @@ import {
   CardBody,
   Button,
   Input,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   Table,
   Progress,
   FormGroup,
@@ -544,15 +548,15 @@ const Batches = props => {
                                     </Button>
                                   </div>
                                   <div className="ms-lg-3 mb-3">
-                                    <Input type="select">
-                                      <option value="Export">Export </option>
-                                      <option value="Export as pdf">
-                                        Export as pdf
-                                      </option>
-                                      <option value="Export as excel">
-                                        Export as excel
-                                      </option>
-                                    </Input>
+                                    <UncontrolledDropdown className="me-2" direction="down">
+                                      <DropdownToggle caret color="primary">
+                                        Export <i className="mdi mdi-menu-down"></i>
+                                      </DropdownToggle>
+                                      <DropdownMenu>
+                                        <DropdownItem >Export as pdf</DropdownItem>
+                                        <DropdownItem >Export as excel</DropdownItem>
+                                      </DropdownMenu>
+                                    </UncontrolledDropdown>
                                   </div>
                                 </div>
                               </Col>

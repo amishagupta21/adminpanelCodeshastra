@@ -568,13 +568,20 @@ const BatchNewModal = ({ modal, toggle }) => {
           </Col>
         </Row>
       </ModalBody>
-      <ModalFooter>
-        <Button color="primary" outline onClick={toggle} className="px-5">
-          Cancel
-        </Button>
-        <Button color="primary" onClick={createBatch} className="px-5">
-          Create
-        </Button>
+      <ModalFooter className="justify-content-between">
+        <div>
+          <Button color="success" className="px-5">
+            Clone
+          </Button>
+        </div>
+        <div>
+          <Button color="primary" outline onClick={toggle} className="px-5">
+            Cancel
+          </Button>
+          <Button color="primary" onClick={createBatch} className="px-5 ms-4">
+            Create
+          </Button>
+        </div>
       </ModalFooter>
     </Modal>
   )

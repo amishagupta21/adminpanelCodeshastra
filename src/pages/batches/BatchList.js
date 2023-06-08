@@ -135,10 +135,10 @@ const BatchList = props => {
         </div>
       </div>
       <Row>
-        <Col md={6}>
+        <Col md={6} className="mb-4">
           <h4>BATCH INFORMATION</h4>
         </Col>
-        <Col md={6}>
+        {/* <Col md={6}>
           <div className="d-flex justify-content-end">
             <Button color="success" onClick={toggle} className="mb-3 ms-2">
               Duplicate Batch
@@ -162,7 +162,7 @@ const BatchList = props => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </div>
-        </Col>
+        </Col> */}
       </Row>
       <Row>
         <Col md={4}><BatchLearner newBatch={newBatch} /></Col>
