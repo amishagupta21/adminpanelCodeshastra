@@ -6,7 +6,7 @@ const BatchProgress = () => {
   return (
     <div>
       <Card>
-        <CardBody className="card-height">
+        <CardBody className="card-height-470">
           <div className="d-flex justify-content-between mb-3">
             <span className="chart-heading">Batch Progress</span>
           </div>

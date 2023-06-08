@@ -17,7 +17,7 @@ const BatchLearner = ({ newBatch }) => {
   return (
     <div>
       <Card>
-        <CardBody className="card-height">
+        <CardBody className="card-height-470">
           <div className="d-flex">
             <div>
               <h5>Learners Batch</h5>
