@@ -42,12 +42,17 @@ import {
   GET_LECTURE_FAIL,
   GET_LECTURE_COUNT_SUCCESS,
   GET_LECTURE_COUNT_FAIL,
+  GET_BATCH_API,
+  GET_BATCH_API_SUCCESS,
+  GET_BATCH_API_FAIL,
+  GET_BATCH_API_COUNT_SUCCESS,
+  GET_BATCH_API_COUNT_FAIL,
   DELETE_LEARNER,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
-  CREATE_NEW_BATCH,
-  CREATE_NEW_BATCH_SUCCESS,
-  CREATE_NEW_BATCH_FAIL,
+  EDIT_NEW_BATCH,
+  EDIT_NEW_BATCH_SUCCESS,
+  EDIT_NEW_BATCH_FAIL,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
 
@@ -159,8 +164,6 @@ export const getGradeBookCountFail = error => ({
 
 // CREATE NEW BATCHES
 
-// GRADE BOOK
-
 export const getNewBatches = data => ({
   type: GET_NEW_BATCHES,
   payload: data,
@@ -186,18 +189,22 @@ export const getNewBatchesCountFail = error => ({
   payload: error,
 })
 
-export const createNewBatch = data => ({
-  type: CREATE_NEW_BATCH,
+// Edit New Batches
+
+export const editNewBatch = data => {
+  return {
+    type: EDIT_NEW_BATCH,
+    payload: data,
+  }
+}
+
+export const editNewBatchSuccess = data => ({
+  type: EDIT_NEW_BATCH_SUCCESS,
   payload: data,
 })
 
-export const createNewBatchSuccess = data => ({
-  type: CREATE_NEW_BATCH_SUCCESS,
-  payload: data,
-})
-
-export const createNewBatchFail = error => ({
-  type: CREATE_NEW_BATCH_FAIL,
+export const editNewBatchFail = error => ({
+  type: EDIT_NEW_BATCH_FAIL,
   payload: error,
 })
 
@@ -283,6 +290,33 @@ export const getLectureCountSuccess = data => ({
 
 export const getLectureCountFail = error => ({
   type: GET_LECTURE_COUNT_FAIL,
+  payload: error,
+})
+
+// EDIT API
+
+export const getBatchApi = data => ({
+  type: GET_BATCH_API,
+  payload: data,
+})
+
+export const getBatchApiSuccess = data => ({
+  type: GET_BATCH_API_SUCCESS,
+  payload: data,
+})
+
+export const getBatchApiFail = error => ({
+  type: GET_BATCH_API_FAIL,
+  payload: error,
+})
+
+export const getBatchApiCountSuccess = data => ({
+  type: GET_BATCH_API_COUNT_SUCCESS,
+  payload: data,
+})
+
+export const getBatchApiCountFail = error => ({
+  type: GET_BATCH_API_COUNT_FAIL,
   payload: error,
 })
 
