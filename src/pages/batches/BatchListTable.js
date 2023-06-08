@@ -30,7 +30,12 @@ import ReportCard from "./ReportCard"
 import "./batches.css"
 import Status from "./Status"
 
-const BatchListTable = ({ item, manageUser, batchesLearner }) => {
+const BatchListTable = ({
+  item,
+  manageUser,
+  batchesLearner,
+  onGetBatchesLearner,
+}) => {
   const { ExportCSVButton } = CSVExport
 
   const [isExpanded, setIsExpanded] = useState(null)
@@ -66,9 +71,9 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         text: "Assignments",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.assignments
-          }/{user?.assignmentsMax
-          }</div>
+          <div>
+            {user?.assignments}/{user?.assignmentsMax}
+          </div>
         ),
       },
       {
@@ -76,9 +81,9 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         text: "Assessments",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.assessments
-
-          }/{user?.assessmentsMax}</div>
+          <div>
+            {user?.assessments}/{user?.assessmentsMax}
+          </div>
         ),
       },
       {
@@ -166,6 +171,16 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
     // onSelectAll: handleOnSelectAll,
   }
 
+  const handleSearch = e => {
+    const { onGetBatchesLearner } = props
+    const data = {
+      search: e,
+    }
+    onGetBatchesLearner(data)
+    // const { Batches } = props
+    // setState({ Batches })
+  }
+
   return (
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
@@ -190,11 +205,7 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
                 <div className="search-box">
                   <div className="app-search p-0">
                     <div className="position-relative mb-2">
-                      <input
-                        className="form-control mb-3"
-                        type="text"
-                        placeholder="Search by Batch name"
-                      />
+                      <DeBounceSearch handleSearch={handleSearch} />
                       <span className="bx bx-search-alt" />
                     </div>
                   </div>

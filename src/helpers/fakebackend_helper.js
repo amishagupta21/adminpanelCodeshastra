@@ -137,6 +137,11 @@ const getBatchesGrade = async data => {
   return resp
 }
 
+const getBatchesApi = async data => {
+  const resp = await getCourseData(url.GET_BATCHES_API + `/${data}`)
+  return resp
+}
+
 // NEW BATCHES
 const getNewBatches = async data => {
   const resp = await getCourseData(url.GET_NEW_BATCHES + `/${data}`)
@@ -145,8 +150,8 @@ const getNewBatches = async data => {
 
 // CREATE NEW BATCHES
 
-const createNewBatchesData = async data => {
-  const resp = await post(url.NEW_BATCHES, data)
+const editNewBatchesData = async (data, id) => {
+  const resp = await patch(url.EDIT_NEW_BATCHES + `/${id}`, data)
   return resp
 }
 
@@ -620,9 +625,10 @@ export {
   getBatches,
   getBatchesLearner,
   getBatchesGrade,
-  createNewBatchesData,
+  editNewBatchesData,
   getNewBatches,
   getDashboardApi,
   getMentorApi,
+  getBatchesApi,
   // getFilter,
 }

@@ -193,12 +193,18 @@ const BatchList = props => {
                     </Row>
                     <Row>
                       <div className="table-responsive">
-                        <BatchListTable batchesLearner={batchesLearner || []} />
+                        <BatchListTable
+                          batchesLearner={batchesLearner || []}
+                          onGetBatchesLearner={props.onGetBatchesLearner}
+                        />
                       </div>
                     </Row>
                   </Tab>
                   <Tab eventKey="Grade Book" title="Grade Book">
-                    <GradeBook gradeBook={gradeBook || []} />
+                    <GradeBook
+                      gradeBook={gradeBook || []}
+                      onGetGradeBook={props.onGetGradeBook}
+                    />
                   </Tab>
                   <Tab eventKey="lectures" title="Lectures">
                     <LectureListTable />
