@@ -114,20 +114,7 @@ const Batches = props => {
     // onSelect: handleOnSelect,
     // onSelectAll: handleOnSelectAll,
   }
-  // const [deletePop, setDeletePop] = React.useState(true);
-  // const [loading, setLoading] = React.useState(false);
-  // const deletepopup = () => {
-  //   setDeletePop(!deletePop)
-  //   // alert("working")
-  // }
-  // const cancelHandler = () => {
-  //   setDeletePop(!deletePop)
-  // }
 
-  // const cancelIconHandler = () => {
-  //   setDeletePop(!deletePop)
-  // }
-  // const handleClose = () => toggle(false);
 
   let state = {
     columns: [
@@ -225,19 +212,12 @@ const Batches = props => {
         text: "Actions",
         formatter: (cellContent, userData) => (
           <div className="d-flex">
-            {/* <div className="me-2">
+            <div className="me-2">
               <Link to="/">
                 <i className="mdi mdi-eye font-size-16 text-primary" />
               </Link>
-            </div> */}
-            <div className="me-2">
-              <Link className="text-muted">
-                <i
-                  onClick={toggle}
-                  className="mdi mdi-pencil font-size-16 text-success"
-                />
-              </Link>
             </div>
+          
             <div className="me-2">
               <div
                 onClick={e => {
@@ -284,7 +264,7 @@ const Batches = props => {
   //       name: item?.name,
   //       description: item?.description,
   //       course: item?.course,
-  //       variant_type: full time,
+  //       variant_type: "full time",
   //       class_link: www.google.meet/saq-faw-brs,
   //       mentors: [
   //           28a6216b-4ac6-4398-8766-f0d274e56afc
@@ -320,9 +300,9 @@ const Batches = props => {
   //   })
   // }
 
-  // const onRowClick = (e, row, rowIndex) => {
-  //   history.push(`/batch-list/edit/${user?.id}`)
-  // }
+  const onRowClick = (e, row, rowIndex) => {
+    history.push(`/batch-list/edit/${user?.id}`)
+  }
 
   return (
     <div className="page-content batches-home">
@@ -623,3 +603,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Batches)
+
+
+// Hey Abhay, I tried my best but unfortunately, our code base is not scalable enough to ship the features faster.  Scalability simply means code should be modular. Ideally, a component should contain 100-150 lines of code which is manageable but here we have 1000's of lines of code in a single component. Which is why it is getting difficult to implement features. We should make this a priority and should refactor this code base or else we will end up taking a very long to deliver this product.
+// And if you think we don't have the bandwidth to refactor this code then It'll take 3-4 days for me to implement this feature.

@@ -65,21 +65,21 @@ const BatchListTable = ({ item, manageUser, batchesLearner }) => {
         dataField: "assignments",
         text: "Assignments",
         sort: true,
-        // formatter: (cellContent, user) => (
-        //   <div className="fw-bold">{user?.assingment
-
-        //   }</div>
-        // ),
+        formatter: (cellContent, user) => (
+          <div className="fw-bold">{user?.assignments
+          }/{user?.assignmentsMax
+          }</div>
+        ),
       },
       {
         dataField: "assessments",
         text: "Assessments",
         sort: true,
-        // formatter: (cellContent, user) => (
-        //   <div className="fw-bold">{user?.assessments
+        formatter: (cellContent, user) => (
+          <div className="fw-bold">{user?.assessments
 
-        //   }</div>
-        // ),
+          }/{user?.assessmentsMax}</div>
+        ),
       },
       {
         dataField: "projects_total",
