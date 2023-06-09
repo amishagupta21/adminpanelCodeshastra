@@ -135,13 +135,15 @@ export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 // MAIN BATCHES
 
 export const GET_BATCHES = "/admin/batch"
-export const NEW_BATCHES = "/admin/batch"
+export const EDIT_NEW_BATCHES = "/admin/batch"
 
 export const GET_BATCHES_LEARNER_LIST = "/moodle/getStudentbyCourse"
 export const GET_DELETE_BATCHES = "/users/delete/"
 // GRADE_BOOK
 
 export const GET_GRADE_BOOK = "/moodle/getStudentsReport"
+
+export const GET_BATCHES_API = "/admin/batch"
 
 // NEW BATCHES
 

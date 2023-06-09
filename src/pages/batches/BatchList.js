@@ -140,13 +140,13 @@ const BatchList = props => {
         </Col>
         {/* <Col md={6}>
           <div className="d-flex justify-content-end">
-            <Button color="success" onClick={toggle} className="mb-3 ms-2">
+            {/* <Button color="success" onClick={toggle} className="mb-3 ms-2">
               Duplicate Batch
-            </Button>
+            </Button> */}
             <BatchNewModal modal={modal} toggle={toggle} />
-            <Button color="success" className="mb-3 ms-2">
+            {/* <Button color="success" className="mb-3 ms-2">
               Edit Batch
-            </Button>
+            </Button> */}
             <UncontrolledDropdown className="mb-3 ms-2">
               <DropdownToggle caret color="primary">
                 More <i className="mdi mdi-dots-vertical"></i>
@@ -193,12 +193,18 @@ const BatchList = props => {
                     </Row>
                     <Row>
                       <div className="table-responsive">
-                        <BatchListTable batchesLearner={batchesLearner || []} />
+                        <BatchListTable
+                          batchesLearner={batchesLearner || []}
+                          onGetBatchesLearner={props.onGetBatchesLearner}
+                        />
                       </div>
                     </Row>
                   </Tab>
                   <Tab eventKey="Grade Book" title="Grade Book">
-                    <GradeBook gradeBook={gradeBook || []} />
+                    <GradeBook
+                      gradeBook={gradeBook || []}
+                      onGetGradeBook={props.onGetGradeBook}
+                    />
                   </Tab>
                   <Tab eventKey="lectures" title="Lectures">
                     <LectureListTable />

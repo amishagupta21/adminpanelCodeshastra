@@ -27,9 +27,13 @@ import {
   GET_NEW_BATCHES_FAIL,
   GET_NEW_BATCHES_COUNT_SUCCESS,
   GET_NEW_BATCHES_COUNT_FAIL,
-  CREATE_NEW_BATCH,
-  CREATE_NEW_BATCH_SUCCESS,
-  CREATE_NEW_BATCH_FAIL,
+  GET_BATCH_API,
+  GET_BATCH_API_SUCCESS,
+  GET_BATCH_API_FAIL,
+  GET_BATCH_API_COUNT_SUCCESS,
+  GET_BATCH_API_COUNT_FAIL,
+  EDIT_NEW_BATCH_SUCCESS,
+  EDIT_NEW_BATCH_FAIL,
   GET_DASHBOARD,
   GET_DASHBOARD_SUCCESS,
   GET_DASHBOARD_FAIL,
@@ -177,6 +181,37 @@ const Batches = (state = INIT_STATE, action) => {
         error: action.payload,
       }
 
+    // GET EDIT BATCH API
+
+    case GET_BATCH_API:
+      return {
+        ...state,
+        data: action.payload,
+      }
+    case GET_BATCH_API_SUCCESS:
+      return {
+        ...state,
+        batchApi: action.payload,
+      }
+
+    case GET_BATCH_API_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
+    case GET_BATCH_API_COUNT_SUCCESS:
+      return {
+        ...state,
+        count: action.payload,
+      }
+
+    case GET_BATCH_API_COUNT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
     // CREATE NEW BATCH
 
     case GET_NEW_BATCHES:
@@ -208,18 +243,15 @@ const Batches = (state = INIT_STATE, action) => {
         error: action.payload,
       }
 
-    case CREATE_NEW_BATCH:
-      return {
-        ...state,
-        createNewBatch: action.payload,
-      }
-    case CREATE_NEW_BATCH_SUCCESS:
+    // EDIT NEW BATCHES
+
+    case EDIT_NEW_BATCH_SUCCESS:
       return {
         ...state,
         createNewBatch: action.payload,
       }
 
-    case CREATE_NEW_BATCH_FAIL:
+    case EDIT_NEW_BATCH_FAIL:
       return {
         ...state,
         error: action.payload,
