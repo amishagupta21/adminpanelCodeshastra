@@ -109,7 +109,7 @@ const BatchList = props => {
         <Col md={6} className="mb-4">
           <h4>BATCH INFORMATION</h4>
         </Col>
-        {/* <Col md={6}>
+        <Col md={6}>
           <div className="d-flex justify-content-end">
             {/* <Button color="success" onClick={toggle} className="mb-3 ms-2">
               Duplicate Batch
@@ -118,7 +118,7 @@ const BatchList = props => {
             {/* <Button color="success" className="mb-3 ms-2">
               Edit Batch
             </Button> */}
-            <UncontrolledDropdown className="mb-3 ms-2">
+            {/* <UncontrolledDropdown className="mb-3 ms-2">
               <DropdownToggle caret color="primary">
                 More <i className="mdi mdi-dots-vertical"></i>
               </DropdownToggle>
@@ -131,9 +131,9 @@ const BatchList = props => {
                   <i className="mdi mdi-delete text-danger"></i> Delete Batch
                 </DropdownItem>
               </DropdownMenu>
-            </UncontrolledDropdown>
+            </UncontrolledDropdown> */}
           </div>
-        </Col> */}
+        </Col> 
       </Row>
       <Row>
         <Col md={4}><BatchLearner newBatch={newBatch} /></Col>
