@@ -100,7 +100,7 @@ function* fetchBatchesLearner({ payload: data }) {
   try {
     const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
-    yield put(getBatchesLearnerSuccess(response?.data))
+    yield put(getBatchesLearnerSuccess(response?.data[0]))
     yield put(getBatchesLearnerCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
@@ -115,7 +115,7 @@ function* fetchGradeBook({ payload: data }) {
   try {
     const response = yield call(getBatchesGrade, data)
     tosterMsg(response?.message)
-    yield put(getGradeBookSuccess(response?.data))
+    yield put(getGradeBookSuccess(response?.data[0]))
     yield put(getGradeBookCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)

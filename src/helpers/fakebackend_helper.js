@@ -124,16 +124,17 @@ const getBatches = async data => {
         data?.search || ""
       }`
   )
+
   return resp
 }
 
 const getBatchesLearner = async data => {
-  const resp = await getCourseData(url.GET_BATCHES_LEARNER_LIST + "/145/5023")
+  const resp = await getCourseData(url.GET_BATCHES_LEARNER_LIST + `/${data}`)
   return resp
 }
 
 const getBatchesGrade = async data => {
-  const resp = await getCourseData(url.GET_GRADE_BOOK + "/145/0")
+  const resp = await getCourseData(url.GET_GRADE_BOOK + `/${data}`)
   return resp
 }
 
