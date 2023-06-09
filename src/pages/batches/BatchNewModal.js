@@ -57,7 +57,7 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
   //   <Label check={isChecked}>{name}</Label>
   // </>
 }
-const BatchNewModal = ({ modal, toggle, setModal }) => {
+const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
   const axios = require("axios")
 
   const [batchName, setBatchName] = useState("")
@@ -138,10 +138,8 @@ const BatchNewModal = ({ modal, toggle, setModal }) => {
       data: temp,
     })
       .then(res => {
-        // window.location.reload
-        // window.location.reload()
         setModal(false)
-        console.log(JSON.stringify(res.data))
+        setItem([...item, res.data.data])
       })
       .catch(err => {
         console.log(err)

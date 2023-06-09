@@ -30,21 +30,7 @@ const EditNewModal = ({
   editNewModal,
   cancelNewModal,
   setEditModal,
-  setItem,
-  item,
 }) => {
-  const params = useParams()
-
-  //   const [days, setDays] = useState([
-  //     { day: 1, name: "Mon", isSelected: false },
-  //     { day: 2, name: "Tue", isSelected: false },
-  //     { day: 3, name: "Wed", isSelected: false },
-  //     { day: 4, name: "Thu", isSelected: false },
-  //     { day: 5, name: "Fri", isSelected: false },
-  //     { day: 6, name: "Sat", isSelected: false },
-  //     { day: 7, name: "Sun", isSelected: false },
-  //   ])
-
   const data = {
     name: batchApi?.name,
     description: batchApi?.description,

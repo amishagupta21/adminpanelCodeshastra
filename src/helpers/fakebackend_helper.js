@@ -148,7 +148,7 @@ const getNewBatches = async data => {
   return resp
 }
 
-// CREATE NEW BATCHES
+// EDIT NEW BATCHES
 
 const editNewBatchesData = async (data, id) => {
   const resp = await patch(url.EDIT_NEW_BATCHES + `/${id}`, data)
