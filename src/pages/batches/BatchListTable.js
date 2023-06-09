@@ -41,7 +41,6 @@ const BatchListTable = ({
   onGetBatchesLearner,
 }) => {
   const { ExportCSVButton } = CSVExport
-
   const [isExpanded, setIsExpanded] = useState(null)
   const params = useParams()
   const [modal, setModal] = useState(false)
@@ -66,7 +65,7 @@ const BatchListTable = ({
         text: "Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.name}</div>
+          <div className="fw-bold">{user?.learnername}</div>
         ),
       },
 
@@ -94,28 +93,25 @@ const BatchListTable = ({
         dataField: "projects_total",
         text: "Projects",
         sort: true,
-        formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.projects_total}</div>
-        ),
       },
       {
         dataField: "attendence",
         text: "Attendance",
         sort: true,
         formatter: (cellContent, user) => (
-          <span>{user?.attendence.toFixed(2)} %</span>
+          <span>{user?.attendance.toFixed(2)}%</span>
         ),
       },
-      {
-        dataField: "total",
-        text: "Total",
-        sort: true,
-        // formatter: (cellContent, user) => (
-        //   <div className="fw-bold">{user?.assessments
+      // {
+      //   dataField: "total",
+      //   text: "Total",
+      //   sort: true,
+      //   // formatter: (cellContent, user) => (
+      //   //   <div className="fw-bold">{user?.assessments
 
-        //   }</div>
-        // ),
-      },
+      //   //   }</div>
+      //   // ),
+      // },
       {
         dataField: "status",
         text: "Status",
@@ -176,7 +172,6 @@ const BatchListTable = ({
   }
 
   const handleSearch = e => {
-    const { onGetBatchesLearner } = props
     const data = {
       search: e,
     }

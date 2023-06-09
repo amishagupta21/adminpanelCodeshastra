@@ -57,7 +57,7 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
   //   <Label check={isChecked}>{name}</Label>
   // </>
 }
-const BatchNewModal = ({ modal, toggle, setModal }) => {
+const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
   const axios = require("axios")
 
   const [batchName, setBatchName] = useState("")
@@ -71,7 +71,7 @@ const BatchNewModal = ({ modal, toggle, setModal }) => {
   const [startTime, setStartTime] = useState("")
   const [endTime, setendTime] = useState("")
   const [courseIdData, setCourseIdData] = useState([])
-  const [selectedCourseId, setSelectedCourseId] = useState(null)
+  const [selectedCourseId, setSelectedCourseId] = useState("0")
   const SelectTime = ["AM", "PM"]
 
   const mentors = ["select", 1, 2]
@@ -130,7 +130,7 @@ const BatchNewModal = ({ modal, toggle, setModal }) => {
         value: updateDays,
       },
       moodle_course:
-        selectedCourseId === "Select Course ID" ? null : selectedCourseId,
+        selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
     }
     axios({
       method: "POST",
@@ -138,10 +138,8 @@ const BatchNewModal = ({ modal, toggle, setModal }) => {
       data: temp,
     })
       .then(res => {
-        // window.location.reload
-        // window.location.reload()
         setModal(false)
-        console.log(JSON.stringify(res.data))
+        setItem([...item, res.data.data])
       })
       .catch(err => {
         console.log(err)
@@ -551,7 +549,7 @@ const BatchNewModal = ({ modal, toggle, setModal }) => {
                             setSelectedCourseId(e.target.value)
                           }}
                         >
-                          <option value={null}>Select Course ID</option>
+                          <option value="0">Select Course ID</option>
                           {courseIdData.map((item, index) => {
                             return (
                               <option key={index} value={item?.courseid}>

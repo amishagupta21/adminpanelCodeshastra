@@ -125,8 +125,6 @@ const Batches = props => {
     // onSelectAll: handleOnSelectAll,
   }
 
-  // console.log(manageUser, "/////////manageUser")
-
   let state = {
     columns: [
       {
@@ -294,6 +292,7 @@ const Batches = props => {
         batchApi={batchApi}
         cancelNewModal={cancelNewModal}
         setEditModal={setEditModal}
+        onGetBatchesList={onGetBatchesList}
       />
 
       <Row>
@@ -410,6 +409,9 @@ const Batches = props => {
                   modal={modal}
                   toggle={toggle}
                   setModal={setModal}
+                  onGetBatchesList={onGetBatchesList}
+                  setItem={setItem}
+                  item={item}
                   // createBatches={createBatches}
                 />
               </div>
@@ -565,6 +567,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Batches)
-
-// Hey Abhay, I tried my best but unfortunately, our code base is not scalable enough to ship the features faster.  Scalability simply means code should be modular. Ideally, a component should contain 100-150 lines of code which is manageable but here we have 1000's of lines of code in a single component. Which is why it is getting difficult to implement features. We should make this a priority and should refactor this code base or else we will end up taking a very long to deliver this product.
-// And if you think we don't have the bandwidth to refactor this code then It'll take 3-4 days for me to implement this feature.
