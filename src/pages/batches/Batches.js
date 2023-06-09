@@ -121,8 +121,6 @@ const Batches = props => {
     // onSelectAll: handleOnSelectAll,
   }
 
-  // console.log(manageUser, "/////////manageUser")
-
   let state = {
     columns: [
       {
@@ -290,6 +288,7 @@ const Batches = props => {
         batchApi={batchApi}
         cancelNewModal={cancelNewModal}
         setEditModal={setEditModal}
+        onGetBatchesList={onGetBatchesList}
       />
 
       <Row>
@@ -406,6 +405,9 @@ const Batches = props => {
                   modal={modal}
                   toggle={toggle}
                   setModal={setModal}
+                  onGetBatchesList={onGetBatchesList}
+                  setItem={setItem}
+                  item={item}
                   // createBatches={createBatches}
                 />
               </div>

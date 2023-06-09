@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from "redux-saga/effects"
+import { takeEvery, put, call, fork } from "redux-saga/effects"
 
 // Login Redux States
 import {
@@ -154,7 +154,7 @@ function* fetchNewBatches({ payload: data }) {
   }
 }
 
-// CREATE NEW BATCH
+// EDIT BATCH
 
 function* editBatch({ payload: data }) {
   try {
@@ -162,6 +162,7 @@ function* editBatch({ payload: data }) {
     delete data?.id
     const response = yield call(editNewBatchesData, data, id)
     tosterMsg(response?.message)
+    yield call(fetchBatches, {})
     yield put(editNewBatchSuccess(response))
   } catch (error) {
     tosterMsg(error?.message)
