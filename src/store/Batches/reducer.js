@@ -9,7 +9,6 @@ import {
   GET_BATCHES_LIST_FAIL,
   GET_BATCHES_LIST_COUNT_SUCCESS,
   GET_BATCHES_LIST_COUNT_FAIL,
-  GET_BATCHES_LEARNER,
   GET_BATCHES_LEARNER_SUCCESS,
   GET_BATCHES_LEARNER_FAIL,
   GET_BATCHES_LEARNER_COUNT_SUCCESS,
@@ -57,7 +56,6 @@ const INIT_STATE = {
 }
 
 const Batches = (state = INIT_STATE, action) => {
-  // console.log(action.type)
   switch (action.type) {
     case GET_BATCHES:
       return {
@@ -121,11 +119,6 @@ const Batches = (state = INIT_STATE, action) => {
 
     // LEARNER
 
-    case GET_BATCHES_LEARNER:
-      return {
-        ...state,
-        data: action.payload,
-      }
     case GET_BATCHES_LEARNER_SUCCESS:
       return {
         ...state,

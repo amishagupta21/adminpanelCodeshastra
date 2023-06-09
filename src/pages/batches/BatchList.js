@@ -53,19 +53,6 @@ const BatchList = props => {
     mentor,
   } = props
   const [item, setItem] = useState(manageUser)
-  const [searchTerm, setSearchTerm] = useState("")
-  const handleSearch = e => {
-    // console.log(e.target.value)
-    setSearchTerm(e.target.value)
-  }
-  useEffect(() => {
-    const { onGetBatchesLearner } = props
-    const data = {
-      search: searchTerm,
-    }
-    onGetBatchesLearner(data)
-  }
-  , [searchTerm])
 
   useEffect(() => {
     setItem(manageUser)
@@ -73,7 +60,7 @@ const BatchList = props => {
 
   useEffect(() => {
     const { onGetBatchesLearner, onGetNewBatches } = props
-    
+
     onGetBatchesLearner(params.id)
 
     onGetNewBatches(params.id)
@@ -99,24 +86,6 @@ const BatchList = props => {
       mentorsApi()
     }
   }
-  // const handleSearch = e => {
-  //   const { onGetBatchesLearner } = props
-  //   const data = {
-  //     search: e,
-  //   }
-  //   onGetBatchesLearner(data)
-  //   // const { Batches } = props
-  //   // setState({ Batches })
-
-  // }
-  // const handleSearch = (e) => {
-  //   const { onGetBatchesLearner } = props;
-  //   const searchTerm = e.target.value; // Assuming the search term is obtained from an input field
-  //   const data = {
-  //     search: searchTerm,
-  //   };
-  //   onGetBatchesLearner(data);
-  // };
 
   return (
     <div className="page-content batches-list">

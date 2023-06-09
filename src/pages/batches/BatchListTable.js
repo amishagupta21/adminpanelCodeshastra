@@ -37,7 +37,6 @@ const BatchListTable = ({
   onGetBatchesLearner,
 }) => {
   const { ExportCSVButton } = CSVExport
-console.log("batchesLearner",batchesLearner)
   const [isExpanded, setIsExpanded] = useState(null)
   const params = useParams()
   const [modal, setModal] = useState(false)
@@ -90,19 +89,13 @@ console.log("batchesLearner",batchesLearner)
         dataField: "projects_total",
         text: "Projects",
         sort: true,
-        formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.projects_total}</div>
-        ),
       },
       {
         dataField: "attendence",
         text: "Attendance",
         sort: true,
         formatter: (cellContent, user) => (
-          <span>
-            {user?.attendance.toFixed(2)
-}%
-            </span>
+          <span>{user?.attendance.toFixed(2)}%</span>
         ),
       },
       // {
@@ -175,7 +168,6 @@ console.log("batchesLearner",batchesLearner)
   }
 
   const handleSearch = e => {
-    const { onGetBatchesLearner } = props
     const data = {
       search: e,
     }
