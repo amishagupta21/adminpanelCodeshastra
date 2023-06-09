@@ -71,7 +71,7 @@ const BatchListTable = ({
         sort: true,
         formatter: (cellContent, user) => (
           <div>
-            {user?.assingment}/{user?.assignmentsMax}
+            {user?.assignments}/{user?.assignmentsMax}
           </div>
         ),
       },
