@@ -64,7 +64,8 @@ const BatchList = props => {
       search: searchTerm,
     }
     onGetBatchesLearner(data)
-  }, [searchTerm])
+  }
+  , [searchTerm])
 
   useEffect(() => {
     setItem(manageUser)
@@ -72,8 +73,9 @@ const BatchList = props => {
 
   useEffect(() => {
     const { onGetBatchesLearner, onGetNewBatches } = props
-
+    
     onGetBatchesLearner(params.id)
+
     onGetNewBatches(params.id)
   }, [])
 
@@ -193,12 +195,18 @@ const BatchList = props => {
                     </Row>
                     <Row>
                       <div className="table-responsive">
-                        <BatchListTable batchesLearner={batchesLearner || []} />
+                        <BatchListTable
+                          batchesLearner={batchesLearner || []}
+                          onGetBatchesLearner={props.onGetBatchesLearner}
+                        />
                       </div>
                     </Row>
                   </Tab>
                   <Tab eventKey="Grade Book" title="Grade Book">
-                    <GradeBook gradeBook={gradeBook || []} />
+                    <GradeBook
+                      gradeBook={gradeBook || []}
+                      onGetGradeBook={props.onGetGradeBook}
+                    />
                   </Tab>
                   <Tab eventKey="lectures" title="Lectures">
                     <LectureListTable />

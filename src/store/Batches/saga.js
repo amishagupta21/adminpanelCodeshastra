@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from "redux-saga/effects"
+import { takeEvery, put, call, fork } from "redux-saga/effects"
 
 // Login Redux States
 import {
@@ -7,11 +7,12 @@ import {
   GET_BATCHES_LEARNER,
   GET_GRADE_BOOK,
   GET_NEW_BATCHES,
-  CREATE_NEW_BATCH,
+  EDIT_NEW_BATCH,
   GET_DASHBOARD,
   GET_MENTOR,
   DELETE_LEARNER,
   DELETE_BATCHES,
+  GET_BATCH_API,
   FILTER_STATUS_LEARNER,
 } from "./actionTypes"
 
@@ -32,11 +33,14 @@ import {
   getGradeBookSuccess,
   getGradeBookCountSuccess,
   getGradeBookCountFail,
+  getBatchApiSuccess,
+  getBatchApiCountSuccess,
+  getBatchApiCountFail,
   getNewBatchesSuccess,
   getNewBatchesCountSuccess,
   getNewBatchesCountFail,
-  createNewBatchSuccess,
-  createNewBatchFail,
+  editNewBatchSuccess,
+  editNewBatchFail,
   getDashboardSuccess,
   getDashboardCountSuccess,
   getDashboardCountFail,
@@ -51,7 +55,8 @@ import {
   getBatches,
   getBatchesLearner,
   getBatchesGrade,
-  createNewBatchesData,
+  getBatchesApi,
+  editNewBatchesData,
   getDashboardApi,
   getNewBatches,
   getMentorApi,
@@ -95,7 +100,7 @@ function* fetchBatchesLearner({ payload: data }) {
   try {
     const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
-    yield put(getBatchesLearnerSuccess(response?.data))
+    yield put(getBatchesLearnerSuccess(response?.data[0]))
     yield put(getBatchesLearnerCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
@@ -110,11 +115,26 @@ function* fetchGradeBook({ payload: data }) {
   try {
     const response = yield call(getBatchesGrade, data)
     tosterMsg(response?.message)
-    yield put(getGradeBookSuccess(response?.data))
+    yield put(getGradeBookSuccess(response?.data[0]))
     yield put(getGradeBookCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getGradeBookCountFail(error))
+    // yield put(getGradeBookCountFail(error))
+  }
+}
+
+// GET EDIT BATCH API
+
+function* fetchBatchApi({ payload: data }) {
+  try {
+    const response = yield call(getBatchesApi, data)
+    tosterMsg(response?.message)
+    yield put(getBatchApiSuccess(response?.data))
+    yield put(getBatchApiCountSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getBatchApiCountFail(error))
     // yield put(getGradeBookCountFail(error))
   }
 }
@@ -134,17 +154,19 @@ function* fetchNewBatches({ payload: data }) {
   }
 }
 
-// CREATE NEW BATCH
+// EDIT BATCH
 
-function* createBatch({ payload: data }) {
-  console.log("chlra", data)
+function* editBatch({ payload: data }) {
   try {
-    const response = yield call(createNewBatchesData, data)
+    const id = data.id
+    delete data?.id
+    const response = yield call(editNewBatchesData, data, id)
     tosterMsg(response?.message)
-    yield put(createNewBatchSuccess(response))
+    yield call(fetchBatches, {})
+    yield put(editNewBatchSuccess(response))
   } catch (error) {
     tosterMsg(error?.message)
-    yield put(createNewBatchFail(error))
+    yield put(editNewBatchFail(error))
   }
 }
 
@@ -193,10 +215,11 @@ function* usersManageSaga() {
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
   yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
+  yield takeEvery(GET_BATCH_API, fetchBatchApi)
   yield takeEvery(GET_NEW_BATCHES, fetchNewBatches)
   yield takeEvery(GET_DASHBOARD, fetchNewDashboard)
   yield takeEvery(GET_MENTOR, fetchNewMentor)
-  yield takeEvery(CREATE_NEW_BATCH, createBatch)
+  yield takeEvery(EDIT_NEW_BATCH, editBatch)
   yield takeEvery(DELETE_BATCHES, onDeleteBatches)
 }
 

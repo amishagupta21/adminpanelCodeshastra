@@ -28,7 +28,8 @@ import { connect, useDispatch } from "react-redux"
 import {
   getBatchesList,
   getDashboard,
-  createNewBatch,
+  editNewBatch,
+  getBatchApi,
 } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
@@ -38,25 +39,32 @@ import BatchNewModal from "./BatchNewModal"
 import DeleteModel from "components/DeleteModal"
 import ModalDelete from "components/Common/ModalDelete"
 import DeleteModal from "components/Common/DeleteModal"
+import EditNewModal from "./EditNewModal"
 
 const Batches = props => {
   const axios = require("axios")
   const params = useParams()
-  const { manageUser, usersCount, dashboard } = props
+  const {
+    manageUser,
+    usersCount,
+    dashboard,
+    batchApi,
+    onGetBatchesList,
+    onGetDashboard,
+    onGetBatchesApi,
+  } = props
   const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
   const [user, setUser] = useState({})
   const [users, setUsers] = useState([])
-  // const dispatch = useDispatch();
+  const [editModal, setEditModal] = useState(false)
 
-  // const handleDeleteUser = async () => {
-  //   if (user !== undefined) {
-  //     const res = await deleteAnUser(user.uId)
-  //     if (res.data.deleted) setDeleteModalIsOpen(false)
-  //     getUsersList()
-  //   }
-  // }
+  const editNewModal = id => {
+    onGetBatchesApi(id)
+    setEditModal(true)
+  }
+
   const handleDeleteUser = () => {
     if (user !== undefined) {
       const updatedUsers = users.filter(e => e.id !== user.id)
@@ -79,8 +87,6 @@ const Batches = props => {
   }, [manageUser])
 
   useEffect(() => {
-    const { onGetBatchesList, onGetDashboard } = props
-
     onGetBatchesList()
     onGetDashboard()
   }, [])
@@ -114,7 +120,6 @@ const Batches = props => {
     // onSelect: handleOnSelect,
     // onSelectAll: handleOnSelectAll,
   }
-
 
   let state = {
     columns: [
@@ -213,11 +218,17 @@ const Batches = props => {
         formatter: (cellContent, userData) => (
           <div className="d-flex">
             <div className="me-2">
-              <Link to="/">
-                <i className="mdi mdi-eye font-size-16 text-primary" />
-              </Link>
+              <div
+                onClick={e => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  editNewModal(userData?.id)
+                }}
+              >
+                <i className="mdi mdi-pencil font-size-16 text-success" />
+              </div>
             </div>
-          
+
             <div className="me-2">
               <div
                 onClick={e => {
@@ -237,7 +248,9 @@ const Batches = props => {
     ],
   }
 
-  // console.log(manageUser, "////////manageUser")
+  const cancelNewModal = () => {
+    setEditModal(false)
+  }
 
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
@@ -257,49 +270,6 @@ const Batches = props => {
     // setState({ Batches })
   }
 
-  // const createBatches = event => {
-  //   event.preventDefault()
-  //   const { onCreateNewBatch } = props
-  //   onCreateNewBatch({
-  //       name: item?.name,
-  //       description: item?.description,
-  //       course: item?.course,
-  //       variant_type: "full time",
-  //       class_link: www.google.meet/saq-faw-brs,
-  //       mentors: [
-  //           28a6216b-4ac6-4398-8766-f0d274e56afc
-  //       ],
-  //       learner_limit: 23,
-  //       start_date: 2023-06-20,
-  //       end_date: 2023-06-21,
-  //       batch_schedule: {
-  //           name: Batch Schedule,
-  //           value: [
-  //               {
-  //                   day: 4,
-  //                   start_time: 2023-03-21T06:58:58.648Z,
-  //                   end_time: 2023-03-21T07:58:58.648Z
-  //               },
-  //               {
-  //                   day: 5,
-  //                   start_time: 2023-03-21T06:58:58.648Z,
-  //                   end_time: 2023-03-21T07:58:58.648Z
-  //               },
-  //               {
-  //                   day: 2,
-  //                   start_time: 2023-03-21T06:58:58.648Z,
-  //                   end_time: 2023-03-22T13:58:58.648Z
-  //               },
-  //               {
-  //                   day: 3,
-  //                   start_time: 2023-03-21T11:58:58.648Z,
-  //                   end_time: 2023-03-21T13:58:58.648Z
-  //               }
-  //           ]
-  //       }
-  //   })
-  // }
-
   const onRowClick = (e, row, rowIndex) => {
     history.push(`/batch-list/edit/${user?.id}`)
   }
@@ -312,6 +282,15 @@ const Batches = props => {
         onClickDelete={onClickDelete}
         onCloseClick={() => setDeleteModalIsOpen(false)}
       />
+      <EditNewModal
+        editNewModal={editNewModal}
+        editModal={editModal}
+        batchApi={batchApi}
+        cancelNewModal={cancelNewModal}
+        setEditModal={setEditModal}
+        onGetBatchesList={onGetBatchesList}
+      />
+
       <Row>
         <Col md={12}>
           <h4 className="mb-3">BATCHES</h4>
@@ -425,6 +404,10 @@ const Batches = props => {
                 <BatchNewModal
                   modal={modal}
                   toggle={toggle}
+                  setModal={setModal}
+                  onGetBatchesList={onGetBatchesList}
+                  setItem={setItem}
+                  item={item}
                   // createBatches={createBatches}
                 />
               </div>
@@ -432,29 +415,6 @@ const Batches = props => {
           </Row>
           <Card>
             <CardBody>
-              {/* <div className="d-flex justify-content-between my-4">
-                <h4>ALL BATCHES</h4>
-                <span>
-                <Button
-                  color="success"
-                  className="rounded-pill mb-3 me-3">
-                  + Add Synchronized
-                </Button>
-                <Button
-                  color="success"
-                  className="rounded-pill mb-3"
-                  onClick={toggle}
-                >
-                  + Create New Batch
-                </Button>
-                </span>
-                
-                <BatchNewModal
-                  modal={modal}
-                  toggle={toggle}
-                  createBatches={createBatches}
-                />
-              </div> */}
               <div className="mt-2 batches-home">
                 <Row>
                   <Col className="col-12">
@@ -583,25 +543,23 @@ Batches.propTypes = {
 }
 
 const mapStateToProps = ({ Batches, state, count }) => {
-  // console.log("shit",Batches)
   return {
     manageUser: Batches?.manageUser,
     usersCount: Batches?.count.count,
     dashboard: Batches?.dashboard,
     userRoles: Batches?.roles,
+    batchApi: Batches?.batchApi,
     // deleteData: false,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesList: data => dispatch(getBatchesList(data)),
+  onGetBatchesApi: data => dispatch(getBatchApi(data)),
   onGetDashboard: data => dispatch(getDashboard(data)),
-  onCreateNewBatch: data => dispatch(createNewBatch(data)),
 
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Batches)
-
-

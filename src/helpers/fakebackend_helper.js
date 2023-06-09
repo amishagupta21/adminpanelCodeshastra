@@ -124,18 +124,26 @@ const getBatches = async data => {
         data?.search || ""
       }`
   )
+  
   return resp
 }
 
 const getBatchesLearner = async data => {
-  const resp = await getCourseData(url.GET_BATCHES_LEARNER_LIST + "/145/5023")
+  const resp = await getCourseData(url.GET_BATCHES_LEARNER_LIST + "/00501e24-0381-49db-8a52-7b3545f9a57b")
   return resp
 }
 
 const getBatchesGrade = async data => {
-  const resp = await getCourseData(url.GET_GRADE_BOOK + "/145/0")
+  const resp = await getCourseData(url.GET_GRADE_BOOK + "/00501e24-0381-49db-8a52-7b3545f9a57b")
   return resp
 }
+
+const getBatchesApi = async data => {
+  const resp = await getCourseData(url.GET_BATCHES_API + `/${data}`)
+  return resp
+}
+
+
 
 // NEW BATCHES
 const getNewBatches = async data => {
@@ -143,10 +151,10 @@ const getNewBatches = async data => {
   return resp
 }
 
-// CREATE NEW BATCHES
+// EDIT NEW BATCHES
 
-const createNewBatchesData = async data => {
-  const resp = await post(url.NEW_BATCHES, data)
+const editNewBatchesData = async (data, id) => {
+  const resp = await patch(url.EDIT_NEW_BATCHES + `/${id}`, data)
   return resp
 }
 
@@ -620,9 +628,10 @@ export {
   getBatches,
   getBatchesLearner,
   getBatchesGrade,
-  createNewBatchesData,
+  editNewBatchesData,
   getNewBatches,
   getDashboardApi,
   getMentorApi,
+  getBatchesApi,
   // getFilter,
 }

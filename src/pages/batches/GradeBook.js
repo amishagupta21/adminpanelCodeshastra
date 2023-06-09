@@ -28,7 +28,7 @@ import { connect } from "react-redux"
 import { getGradeBook } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 
-const GradeBook = ({ gradeBook }) => {
+const GradeBook = ({ gradeBook, onGetGradeBook }) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const { ExportCSVButton } = CSVExport
 
@@ -42,22 +42,67 @@ const GradeBook = ({ gradeBook }) => {
 
   useEffect(() => {
     const finalColumn = []
+    // for (let x in gradeBook[0]) {
+    //   let startingKey = x.split(" ")[0]
+    //   if (
+    //     startingKey === "name"
+    //   ){
+    //         finalColumn.push({
+    //           dataField: x,
+    //           text: x,
+    //           sort: true,
+    //         })
+    //       }
+    //     for (let x in gradeBook[0]?.GradeItems
+    //     ) {
+    //       let startingKey = x.split(" ")[0]
+    //       if (
+    //         startingKey === "Assignment" ||
+    //         // startingKey === "name" ||
+    //         startingKey === "Exercise" ||
+    //         // startingKey === "id" ||
+    //         startingKey === "Attendance"
+    //       ) {
+    //         finalColumn.push({
+    //           dataField: x,
+    //           text: x,
+    //           sort: true,
+    //         })
+    //       }
+    //     }
+    // }
     for (let x in gradeBook[0]) {
       let startingKey = x.split(" ")[0]
-      if (
-        startingKey === "Assignment" ||
-        startingKey === "name" ||
-        startingKey === "Exercise" ||
-        // startingKey === "id" ||
-        startingKey === "Attendance"
-      ) {
+      if (startingKey === "name") {
         finalColumn.push({
           dataField: x,
           text: x,
           sort: true,
-        })
+        });
+    
+        for (let x in gradeBook[0]?.GradeItems) {
+          let startingKey = x.split(" ")[0];
+          if (
+            startingKey === "Assignment" ||
+            startingKey === "Exercise" ||
+            startingKey === "Attendance"
+          ) {
+            finalColumn.push({
+              dataField: x,
+              text: x,
+              sort: true,
+            });
+          }
+        }
       }
     }
+    
+    
+    
+    
+    
+    
+    
     finalColumn.push({
       dataField: "Actions",
       text: "Actions",
@@ -80,384 +125,6 @@ const GradeBook = ({ gradeBook }) => {
     })
     setColumn(finalColumn)
   }, [gradeBook])
-
-  // let state = {
-  //   columns: [
-  //     {
-  //       dataField: "id",
-  //       sort: true,
-  //       hidden: true,
-  //       formatter: (cellContent, user) => <>{row?.id}</>,
-  //     },
-  //     {
-  //       dataField: "name",
-  //       text: "Name",
-  //       sort: true,
-  //       formatter: (cellContent, user) => (
-  //         <div className="fw-bold">{user?.name}</div>
-  //       ),
-  //     },
-
-  //     // {
-  //     //   dataField: "id",
-  //     //   text: "Id Number",
-  //     //   sort: true,
-  //     // },
-  //     {
-  //       dataField: "Assignment - 1",
-  //       text: "Assignment 1",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 2",
-  //       text: "Assignment 2",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 3",
-  //       text: "Assignment 3",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 4",
-  //       text: "Assignment 4",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 5",
-  //       text: "Assignment 5",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 6",
-  //       text: "Assignment 6",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 7",
-  //       text: "Assignment 7",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 8",
-  //       text: "Assignment 8",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 9",
-  //       text: "Assignment 9",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 10",
-  //       text: "Assignment 10",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 11",
-  //       text: "Assignment 11",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 12",
-  //       text: "Assignment 12",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 13",
-  //       text: "Assignment 13",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 14",
-  //       text: "Assignment 14",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 15",
-  //       text: "Assignment 15",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 16",
-  //       text: "Assignment 16",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 17",
-  //       text: "Assignment 17",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 18",
-  //       text: "Assignment 18",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 19",
-  //       text: "Assignment 19",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 20",
-  //       text: "Assignment 20",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 21",
-  //       text: "Assignment 21",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 22",
-  //       text: "Assignment 22",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 23",
-  //       text: "Assignment 23",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 24",
-  //       text: "Assignment 24",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 25",
-  //       text: "Assignment 25",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 26",
-  //       text: "Assignment 26",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 27",
-  //       text: "Assignment 27",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 28",
-  //       text: "Assignment 28",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 29",
-  //       text: "Assignment 29",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 30",
-  //       text: "Assignment 30",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 31",
-  //       text: "Assignment 31",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 32",
-  //       text: "Assignment 32",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 33",
-  //       text: "Assignment 33",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 34",
-  //       text: "Assignment 34",
-  //       sort: true,
-  //     },
-
-  //     {
-  //       dataField: "final_assessment.phase_1",
-  //       text: "Assessment",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Attendance",
-  //       text: "Attendance",
-  //       sort: true,
-  //       formatter: (cellContent, user) => (
-  //         <span>{user?.Attendance.toFixed(2)} %</span>
-  //       ),
-  //     },
-  //     {
-  //       dataField: "Exercise 1",
-  //       text: "Exercise 1",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 1",
-  //       text: "Exercise 1(Hello World)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 3",
-  //       text: "Exercise 2",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 4",
-  //       text: "Exercise 3",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 5",
-  //       text: "Exercise 3 (days conversion)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 6",
-  //       text: "Exercise 4",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 7",
-  //       text: "Exercise 4 (Bio Data)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 8",
-  //       text: "Exercise 5",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 9",
-  //       text: "Exercise 5 (Ukraine Mishap)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 9",
-  //       text: "Exercise 6",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 10",
-  //       text: "Exercise 6 (Declaring the variables)",
-  //       sort: true,
-  //     },
-
-  //     {
-  //       dataField: "Exercise 11",
-  //       text: "Exercise 7",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 12",
-  //       text: "Exercise 7 (Price List)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 13",
-  //       text: "Exercise 8",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 14",
-  //       text: "Exercise 8 (Operations)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise 9",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise 9 (Temperature)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise 10 (Multiple Operations)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise 11 (Fencing The Ground)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise 12 Splitting into Teams",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise 13 Mailing Address",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise 14 SwapCase",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise (Computing the sum)",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Exercise 15",
-  //       text: "Exercise",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "virtual_grade",
-  //       text: "Virtual Programming Grade",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 1",
-  //       text: "DSA MCT",
-  //       sort: true,
-  //     },
-  //     {
-  //       dataField: "Assignment - 2",
-  //       text: "FE MCT1",
-  //       sort: true,
-  //     },
-  //     // {
-  //     //   dataField: "lectures",
-  //     //   text: "Week Test 1",
-  //     //   sort: true,
-  //     // },
-  //     // {
-  //     //   dataField: "lectures",
-  //     //   text: "Week Test 2",
-  //     //   sort: true,
-  //     // },
-  //     // {
-  //     //   dataField: "lectures",
-  //     //   text: "Week Test 3",
-  //     //   sort: true,
-  //     // },
-
-  //     {
-  //       dataField: "Actions",
-  //       text: "Actions",
-  //       formatter: (cellContent, user) => (
-  //         <div className="d-flex">
-  //           <div className="me-2">
-  //             <Link
-  //               // onClick={toggle}
-  //               to={`/report/${user?.id}`}
-  //               className="text-muted ms-2"
-  //             >
-  //               <i className="mdi mdi-clipboard-account mdi-18px text-success" />
-  //             </Link>
-  //           </div>
-  //         </div>
-  //       ),
-  //     },
-  //   ],
-  // }
 
   const defaultSorted = [
     {
@@ -621,6 +288,16 @@ const GradeBook = ({ gradeBook }) => {
     // onSelectAll: handleOnSelectAll,
   }
 
+  const handleSearch = e => {
+    const { onGetGradeBook } = props
+    const data = {
+      search: e,
+    }
+    onGetGradeBook(data)
+    // const { Batches } = props
+    // setState({ Batches })
+  }
+
   return (
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
@@ -642,12 +319,12 @@ const GradeBook = ({ gradeBook }) => {
           column.length
             ? column
             : [
-                {
-                  dataField: "",
-                  text: "",
-                  sort: false,
-                },
-              ]
+              {
+                dataField: "",
+                text: "",
+                sort: false,
+              },
+            ]
         }
         data={gradeBook}
         exportCSV={{ onlyExportSelection: false, exportAll: true }}
@@ -659,11 +336,8 @@ const GradeBook = ({ gradeBook }) => {
                 <div className="search-box">
                   <div className="app-search p-0">
                     <div className="position-relative mb-2">
-                      <input
-                        className="form-control mb-3"
-                        type="text"
-                        placeholder="Search by Batch name"
-                      />
+                      <DeBounceSearch handleSearch={handleSearch} />
+
                       <span className="bx bx-search-alt" />
                     </div>
                   </div>
