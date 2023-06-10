@@ -30,6 +30,7 @@ import {
   getDashboard,
   editNewBatch,
   getBatchApi,
+  deleteBatches,
 } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
@@ -101,6 +102,14 @@ const Batches = props => {
     },
   ]
 
+  const onClickDelete = async id => {
+    const resp = await del(url.GET_DELETE_BATCHES + `${user?.id}`)
+    const finalItem = item.filter(item => item.id !== user?.id)
+    setItem(finalItem)
+    setDeleteModalIsOpen(false)
+    return resp
+  }
+
   // const onClickDelete = () => {
   //   axios({
   //     method: "DELETE",
@@ -116,18 +125,10 @@ const Batches = props => {
   //       console.log(err)
   //     })
   // }
-  const onClickDelete = async id => {
-    const resp = await del(url.GET_DELETE_BATCHES + `${user?.id}`)
-    const finalItem = item.filter(item => item.id !== user?.id)
-    setItem(finalItem)
-    setDeleteModalIsOpen(false)
-    return resp
-  }
+
   const selectRow = {
     mode: "checkbox",
     clickToSelect: false,
-    // onSelect: handleOnSelect,
-    // onSelectAll: handleOnSelectAll,
   }
 
   let state = {
@@ -208,8 +209,6 @@ const Batches = props => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          // Active css className="btn-status-active"
-          // Inactive css className="btn-status-inactive"
           <div>
             <span
               className={
@@ -281,6 +280,11 @@ const Batches = props => {
 
   const onRowClick = (e, row, rowIndex) => {
     history.push(`/batch-list/edit/${user?.id}`)
+  }
+
+  const syncNow = async () => {
+    const response = await post(url.BATCH_SYNC)
+    return response
   }
 
   return (
@@ -398,6 +402,7 @@ const Batches = props => {
                   <Button
                     color="primary"
                     className="rounded-pill mb-3 me-3 px-4"
+                    onClick={syncNow}
                   >
                     Sync Now
                   </Button>
@@ -559,7 +564,7 @@ const mapStateToProps = ({ Batches, state, count }) => {
     dashboard: Batches?.dashboard,
     userRoles: Batches?.roles,
     batchApi: Batches?.batchApi,
-    createNewBatch:Batches?.createNewBatch,
+    createNewBatch: Batches?.createNewBatch,
     // deleteData: false,
   }
 }
@@ -568,7 +573,7 @@ const mapDispatchToProps = dispatch => ({
   onGetBatchesList: data => dispatch(getBatchesList(data)),
   onGetBatchesApi: data => dispatch(getBatchApi(data)),
   onGetDashboard: data => dispatch(getDashboard(data)),
-
+  onGetDeleteBatches: id => dispatch(deleteBatches(id)),
   // onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   // onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })

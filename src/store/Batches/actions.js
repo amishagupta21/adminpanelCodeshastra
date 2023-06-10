@@ -259,10 +259,6 @@ export const getDashboardCountFail = error => ({
   payload: error,
 })
 
-export const deleteBatches = id => ({
-  type: DELETE_BATCHES,
-  payload: id,
-})
 // MENTOR API
 
 export const getMentor = data => ({
@@ -344,10 +340,10 @@ export const getBatchApiCountFail = error => ({
   payload: error,
 })
 
-// export const deleteLearner = id => ({
-//   type: DELETE_LEARNER,
-//   payload: id,
-// })
+export const deleteBatches = id => ({
+  type: DELETE_BATCHES,
+  payload: id,
+})
 
 export const deleteBatchesSuccess = event => ({
   type: DELETE_BATCHES_SUCCESS,

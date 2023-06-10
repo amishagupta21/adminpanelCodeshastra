@@ -429,7 +429,7 @@ const EditNewModal = ({
                   </Row>
                 </AccordionBody>
               </AccordionItem> */}
-              <AccordionItem className="mb-3">
+              {/* <AccordionItem className="mb-3">
                 <AccordionHeader targetId="3">
                   Moodle Course ID
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
@@ -442,24 +442,24 @@ const EditNewModal = ({
                         <Input
                           type="select"
                           name="course_id"
-                          //   onChange={e => {
-                          //     setSelectedCourseId(e.target.value)
-                          //   }}
+                            onChange={e => {
+                              setSelectedCourseId(e.target.value)
+                            }}
                         >
                           <option value={null}>Select Course ID</option>
-                          {/* {courseIdData.map((item, index) => {
+                          {courseIdData.map((item, index) => {
                             return (
                               <option key={index} value={item?.courseid}>
                                 {item?.coursename}
                               </option>
                             )
-                          })} */}
+                          })}
                         </Input>
                       </FormGroup>
                     </Col>
                   </Row>
                 </AccordionBody>
-              </AccordionItem>
+              </AccordionItem> */}
             </UncontrolledAccordion>
           </Col>
         </Row>
