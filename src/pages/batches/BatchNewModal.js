@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+// import { FaStar } from 'react-icons/fa-solid';
+import { FaStar } from 'react-icons/fa';
 import axios from "axios"
 import {
   Row,
@@ -64,6 +66,7 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
 }
 const BatchNewModal = ({ modal, toggle, setModal, setItem, item,createNewBatch,onCreateNewBatch }) => {
   const axios = require("axios")
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const [batchName, setBatchName] = useState("")
   const [description, setDescription] = useState("")
@@ -81,6 +84,22 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item,createNewBatch,o
 
   const mentors = ["select", 1, 2]
   const [mentor, setMentor] = useState("")
+  useEffect(() => {
+    // Check if all mandatory fields have values
+    const isValid =
+      batchName !== '' &&
+      description !== '' &&
+      course !== 'Select' &&
+      variantType !== 'Select' &&
+      classLink !== '' &&
+      mentor !== 'Select' &&
+      learnersLimit !== '' &&
+      startDate !== '' &&
+      endDate !== '';
+  
+    setIsFormValid(isValid);
+  }, [batchName, description, course, variantType, classLink, mentor, learnersLimit, startDate, endDate]);
+  
 
   const [days, setDays] = useState([
     { day: 1, name: "Mon", isSelected: false },
@@ -220,7 +239,7 @@ useEffect(() => {
         <Row>
           <Col md={3}>
             <FormGroup>
-              <Label>Batch Name</Label>
+              <Label>Batch Name <FaStar className="text-danger" /></Label>
               <Input
                 value={batchName}
                 onChange={e => {
@@ -228,12 +247,13 @@ useEffect(() => {
                 }}
                 type="text"
                 placeholder="Batch_10"
+                required
               />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Description</Label>
+              <Label>Description <FaStar className="text-danger" /></Label>
               <Input
                 value={description}
                 onChange={e => {
@@ -241,18 +261,20 @@ useEffect(() => {
                 }}
                 type="text"
                 placeholder="Freshers Only"
+                required
               />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Course</Label>
+              <Label>Course <FaStar className="text-danger" /></Label>
               <Input
                 name="select"
                 onChange={e => {
                   setCourse(e.target.value)
                 }}
                 type="select"
+                required
               >
                 <option>Select</option>
                 <option>Full Stack Web Developer</option>
@@ -261,13 +283,14 @@ useEffect(() => {
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Variant Type</Label>
+              <Label>Variant Type <FaStar className="text-danger" /></Label>
               <Input
                 name="select"
                 onChange={e => {
                   setVariantType(e.target.value)
                 }}
                 type="select"
+                required
               >
                 <option>Select</option>
                 <option>Full Time</option>
@@ -278,7 +301,7 @@ useEffect(() => {
         <Row>
           <Col md={6}>
             <FormGroup>
-              <Label>Class Link</Label>
+              <Label>Class Link </Label>
               <Input
                 value={classLink}
                 onChange={e => {
@@ -302,10 +325,10 @@ useEffect(() => {
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>Mentor</th>
-                        <th>Learners Limit</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>Mentor <FaStar className="text-danger" /></th>
+                        <th>Learners Limit <FaStar className="text-danger" /></th>
+                        <th>Start Date <FaStar className="text-danger" /></th>
+                        <th>End Date <FaStar className="text-danger" /></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -317,9 +340,11 @@ useEffect(() => {
                               type="select"
                               className="border-0"
                               value={mentor}
+                              required
                               onChange={e => {
                                 setMentor(e.target.value)
                               }}
+                              
                             >
                               {mentors.map((mentor, index) => {
                                 return <option key={index}>{mentor}</option>
@@ -340,6 +365,7 @@ useEffect(() => {
                               onChange={e => {
                                 setLearnersLimit(e.target.value)
                               }}
+                              required
                             />
                           </FormGroup>
                         </td>
@@ -350,6 +376,7 @@ useEffect(() => {
                             onChange={e => {
                               setStartDate(e.target.value)
                             }}
+                            required
                           />
                         </td>
                         <td>
@@ -359,6 +386,7 @@ useEffect(() => {
                             onChange={e => {
                               setEndDate(e.target.value)
                             }}
+                            required
                           />
                         </td>
                       </tr>
@@ -375,9 +403,9 @@ useEffect(() => {
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Days</th>
+                        <th>Start Time<FaStar className="text-danger" /></th>
+                        <th>End Time<FaStar className="text-danger" /></th>
+                        <th>Days<FaStar className="text-danger" /></th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -395,6 +423,8 @@ useEffect(() => {
                                 onChange={e => {
                                   setStartTime(e.target.value)
                                 }}
+
+                                required
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -403,6 +433,7 @@ useEffect(() => {
                                 type="select"
                                 style={{ width: "64px" }}
                                 className="border-0"
+                                required
                               >
                                 {SelectTime.map((time, index) => {
                                   return <option key={index}>{time}</option>
@@ -426,6 +457,7 @@ useEffect(() => {
 
                                   setendTime(e.target.value)
                                 }}
+                                required
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -433,6 +465,7 @@ useEffect(() => {
                                 name="select"
                                 type="select"
                                 style={{ width: "64px" }}
+                                required
                               >
                                 {SelectTime.map((time, index) => {
                                   return <option key={index}>{time}</option>
@@ -495,6 +528,7 @@ useEffect(() => {
                                 className="me-2 bg-grey border-0"
                                 style={{ width: "64px" }}
                                 placeholder="09:00"
+                                
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -619,7 +653,7 @@ useEffect(() => {
         <Button color="primary" outline onClick={toggle} className="px-5">
           Cancel
         </Button>
-        <Button color="primary" onClick={createBatch} className="px-5">
+        <Button color="primary" onClick={createBatch} className="px-5" disabled={!isFormValid}>
           Create
         </Button>
       </ModalFooter>
