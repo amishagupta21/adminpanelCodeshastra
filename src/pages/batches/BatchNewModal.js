@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 // import { FaStar } from 'react-icons/fa-solid';
-import { FaStar } from "react-icons/fa"
+import { FaStar } from 'react-icons/fa';
 import axios from "axios"
 import {
   Row,
@@ -25,7 +25,7 @@ import {
 import { createNewBatch } from "store/actions"
 import { connect } from "react-redux"
 // import { post, getCourseData } from "../../helpers/api_helper"
-import { post, getCourseData } from "../../helpers/api_helper"
+import {post,getCourseData} from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
@@ -47,18 +47,26 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
       <label htmlFor={name}>{name}</label>
     </>
   )
+
+  // return <>
+  //   <Input
+  //     type="checkbox"
+  //     id={name}
+  //     name={name}
+  //     value={isChecked}
+  //     onChange={() => {
+  //       setIsChecked(!isChecked)
+  //       // console.log(name)
+  //       // alert("data")
+  //        selectDays({isSelected,name});
+  //     }}
+  //   />
+  //   <Label check={isChecked}>{name}</Label>
+  // </>
 }
-const BatchNewModal = ({
-  modal,
-  toggle,
-  setModal,
-  setItem,
-  item,
-  createNewBatch,
-  onCreateNewBatch,
-}) => {
+const BatchNewModal = ({ modal, toggle, setModal, setItem, item,createNewBatch,onCreateNewBatch }) => {
   const axios = require("axios")
-  const [isFormValid, setIsFormValid] = useState(false)
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const [batchName, setBatchName] = useState("")
   const [description, setDescription] = useState("")
@@ -79,28 +87,19 @@ const BatchNewModal = ({
   useEffect(() => {
     // Check if all mandatory fields have values
     const isValid =
-      batchName !== "" &&
-      description !== "" &&
-      course !== "Select" &&
-      variantType !== "Select" &&
-      classLink !== "" &&
-      mentor !== "Select" &&
-      learnersLimit !== "" &&
-      startDate !== "" &&
-      endDate !== ""
-
-    setIsFormValid(isValid)
-  }, [
-    batchName,
-    description,
-    course,
-    variantType,
-    classLink,
-    mentor,
-    learnersLimit,
-    startDate,
-    endDate,
-  ])
+      batchName !== '' &&
+      description !== '' &&
+      course !== 'Select' &&
+      variantType !== 'Select' &&
+      classLink !== '' &&
+      mentor !== 'Select' &&
+      learnersLimit !== '' &&
+      startDate !== '' &&
+      endDate !== '';
+  
+    setIsFormValid(isValid);
+  }, [batchName, description, course, variantType, classLink, mentor, learnersLimit, startDate, endDate]);
+  
 
   const [days, setDays] = useState([
     { day: 1, name: "Mon", isSelected: false },
@@ -129,113 +128,109 @@ const BatchNewModal = ({
     setDays(updateDays)
   }
 
-  const filterDay = days.filter(day => day.isSelected)
+  // const createBatch = () => {
+    useEffect(() => {
+    const filterDay = days.filter(day => day.isSelected)
 
-  const updateDays = filterDay.map(day => {
-    return {
-      day: day.day,
-      start_time: "2023-03-21T06:58:58.648Z",
-      end_time: "2023-03-21T07:58:58.648Z",
-    }
-  })
+    const updateDays = filterDay.map(day => {
+      return {
+        day: day.day,
+        start_time: "2023-03-21T06:58:58.648Z",
+        end_time: "2023-03-21T07:58:58.648Z",
+      }
+    })
 
-  const temp = {
-    name: batchName,
-    description: description,
-    course: course,
-    variant_type: variantType,
-    class_link: classLink,
-    mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
-    learner_limit: learnersLimit,
-    start_date: startDate,
-    end_date: endDate,
-    batch_schedule: {
+    const temp = {
       name: batchName,
-      value: updateDays,
-    },
-    unikodecourseid:
-      selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
-  }
-
-  const createBatch = data1 => {
-    // fetch(post(url.CREATE_NEW_BATCHES), {
-    //   data: temp,
+      description: description,
+      course: course,
+      variant_type: variantType,
+      class_link: classLink,
+      mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
+      learner_limit: learnersLimit,
+      start_date: startDate,
+      end_date: endDate,
+      batch_schedule: {
+        name: batchName,
+        value: updateDays,
+      },
+      moodle_course:
+        selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
+    }
+    // axios({
     //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
+    //   url: "https://lms.unikaksha.dev/api/lms/admin/batch",
+    //   data: temp,
     // })
     //   .then(res => {
-    //     console.log("res", res)
     //     setModal(false)
     //     setItem([...item, res.data.data])
     //   })
     //   .catch(err => {
-    //     console.log("err", err)
+    //     console.log(err)
     //   })
+    // console.log(JSON.stringify(temp))
+  // }
+}, [createNewBatch])
 
-    // const postData = async () => {
-    // try {
-    //   const response = await axios
-    //     .post(postImage(url.CREATE_NEW_BATCHES), temp)
-    //     .then(res => {
-    //       console.log("res", res)
-    //     })
-    //   console.log(response)
-    //   setModal(false)
-    //   setItem([...item, res.data.data])
-    // } catch (error) {
-    //   console.log(error)
-    // }
-    // }
 
-    axios({
-      method: "POST",
-      // url: "https://lms.unikaksha.dev/api/lms/admin/batch",
-      url: `${process.env.REACT_APP_API_URL}${url.CREATE_NEW_BATCHES}`,
+
+
+  const createBatch = async () => {
+    const filterDay = days.filter(day => day.isSelected)
+    const updateDays = filterDay.map(day => {
+      return {
+        day: day.day,
+        start_time: "2023-03-21T06:58:58.648Z",
+        end_time: "2023-03-21T07:58:58.648Z",
+      }
+    })
+    const temp = {
+      name: batchName,
+      description: description,
+      course: course,
+      variant_type: variantType,
+      class_link: classLink,
+      mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
+      learner_limit: learnersLimit,
+      start_date: startDate,
+      end_date: endDate,
+      batch_schedule: {
+        name: batchName,
+        value: updateDays,
+      },
+      unikodecourseid:
+        selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
+    }
+    const resp = await post(url.CREATE_NEW_BATCHES, {
       data: temp,
     })
       .then(res => {
-        console.log("res", res)
         setModal(false)
         setItem([...item, res.data.data])
       })
       .catch(err => {
-        console.log("err", err)
+        console.log(err)
       })
     return resp
+}
+useEffect(() => {
+  if (modal) {
+    const getNewBatches = async () => {
+      const resp = await getCourseData(url.GET_MOODLE_COURSE)
+      setCourseIdData(resp.data)
+      return resp
+    }
+    getNewBatches()
+    // axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
+    //   .then(res => setCourseIdData(res.data.data))
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
   }
-  useEffect(() => {
-    if (modal) {
-      const getNewBatches = async () => {
-        const resp = await getCourseData(url.GET_MOODLE_COURSE)
-        setCourseIdData(resp.data)
-        return resp
-      }
-      getNewBatches()
-      // axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
-      //   .then(res => setCourseIdData(res.data.data))
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
-    }
-  }, [modal])
+}, [modal])
 
-  useEffect(() => {
-    if (modal) {
-      const getNewBatches = async () => {
-        const resp = await getCourseData(url.GET_MOODLE_COURSE)
-        setCourseIdData(resp.data)
-        return resp
-      }
-      getNewBatches()
-      // axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
-      //   .then(res => setCourseIdData(res.data.data))
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
-    }
-  }, [modal])
+
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
@@ -244,9 +239,7 @@ const BatchNewModal = ({
         <Row>
           <Col md={3}>
             <FormGroup>
-              <Label>
-                Batch Name <FaStar className="text-danger" />
-              </Label>
+              <Label>Batch Name  <span className="mandotary star" style={{color:"red"}}>*</span></Label>
               <Input
                 value={batchName}
                 onChange={e => {
@@ -260,9 +253,7 @@ const BatchNewModal = ({
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>
-                Description <FaStar className="text-danger" />
-              </Label>
+              <Label>Description  <span className="mandotary star" style={{color:"red"}}>*</span></Label>
               <Input
                 value={description}
                 onChange={e => {
@@ -276,9 +267,7 @@ const BatchNewModal = ({
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>
-                Course <FaStar className="text-danger" />
-              </Label>
+              <Label>Course  <span className="mandotary star" style={{color:"red"}}>*</span></Label>
               <Input
                 name="select"
                 onChange={e => {
@@ -294,9 +283,7 @@ const BatchNewModal = ({
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>
-                Variant Type <FaStar className="text-danger" />
-              </Label>
+              <Label>Variant Type  <span className="mandotary star" style={{color:"red"}}>*</span></Label>
               <Input
                 name="select"
                 onChange={e => {
@@ -314,7 +301,9 @@ const BatchNewModal = ({
         <Row>
           <Col md={6}>
             <FormGroup>
-              <Label>Class Link <FaStar className="text-danger" /></Label>
+              <Label>Class Link 
+                <span className="mandotary star" style={{color:"red"}}>*</span>
+              </Label>
               <Input
                 value={classLink}
                 onChange={e => {
@@ -338,18 +327,10 @@ const BatchNewModal = ({
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>
-                          Mentor <FaStar className="text-danger" />
-                        </th>
-                        <th>
-                          Learners Limit <FaStar className="text-danger" />
-                        </th>
-                        <th>
-                          Start Date <FaStar className="text-danger" />
-                        </th>
-                        <th>
-                          End Date <FaStar className="text-danger" />
-                        </th>
+                        <th>Mentor  <span className="mandotary star" style={{color:"red"}}>*</span></th>
+                        <th>Learners Limit  <span className="mandotary star" style={{color:"red"}}>*</span></th>
+                        <th>Start Date  <span className="mandotary star" style={{color:"red"}}>*</span></th>
+                        <th>End Date  <span className="mandotary star" style={{color:"red"}}>*</span></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -365,6 +346,7 @@ const BatchNewModal = ({
                               onChange={e => {
                                 setMentor(e.target.value)
                               }}
+                              
                             >
                               {mentors.map((mentor, index) => {
                                 return <option key={index}>{mentor}</option>
@@ -423,18 +405,9 @@ const BatchNewModal = ({
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>
-                          Start Time
-                          <FaStar className="text-danger" />
-                        </th>
-                        <th>
-                          End Time
-                          <FaStar className="text-danger" />
-                        </th>
-                        <th>
-                          Days
-                          <FaStar className="text-danger" />
-                        </th>
+                        <th>Start Time <span className="mandotary star" style={{color:"red"}}>*</span></th>
+                        <th>End Time <span className="mandotary star" style={{color:"red"}}>*</span></th>
+                        <th>Days <span className="mandotary star" style={{color:"red"}}>*</span></th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -452,6 +425,7 @@ const BatchNewModal = ({
                                 onChange={e => {
                                   setStartTime(e.target.value)
                                 }}
+
                                 required
                               />
                             </FormGroup>
@@ -482,6 +456,7 @@ const BatchNewModal = ({
                                 placeholder="05:00"
                                 value={endTime}
                                 onChange={e => {
+
                                   setendTime(e.target.value)
                                 }}
                                 required
@@ -555,6 +530,7 @@ const BatchNewModal = ({
                                 className="me-2 bg-grey border-0"
                                 style={{ width: "64px" }}
                                 placeholder="09:00"
+                                
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -679,12 +655,7 @@ const BatchNewModal = ({
         <Button color="primary" outline onClick={toggle} className="px-5">
           Cancel
         </Button>
-        <Button
-          color="primary"
-          onClick={createBatch}
-          className="px-5"
-          disabled={!isFormValid}
-        >
+        <Button color="primary" onClick={createBatch} className="px-5" disabled={!isFormValid}>
           Create
         </Button>
       </ModalFooter>
@@ -696,5 +667,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(null, mapDispatchToProps)(BatchNewModal)
+
 
 // export default BatchNewModal
