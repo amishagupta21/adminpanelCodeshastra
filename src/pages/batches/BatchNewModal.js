@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+// import { FaStar } from 'react-icons/fa-solid';
+import { FaStar } from 'react-icons/fa';
 import axios from "axios"
 import {
   Row,
@@ -220,7 +222,7 @@ useEffect(() => {
         <Row>
           <Col md={3}>
             <FormGroup>
-              <Label>Batch Name</Label>
+              <Label>Batch Name <FaStar className="text-danger" /></Label>
               <Input
                 value={batchName}
                 onChange={e => {
@@ -228,12 +230,13 @@ useEffect(() => {
                 }}
                 type="text"
                 placeholder="Batch_10"
+                required
               />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Description</Label>
+              <Label>Description <FaStar className="text-danger" /></Label>
               <Input
                 value={description}
                 onChange={e => {
@@ -246,7 +249,7 @@ useEffect(() => {
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Course</Label>
+              <Label>Course <FaStar className="text-danger" /></Label>
               <Input
                 name="select"
                 onChange={e => {
@@ -261,7 +264,7 @@ useEffect(() => {
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Variant Type</Label>
+              <Label>Variant Type <FaStar className="text-danger" /></Label>
               <Input
                 name="select"
                 onChange={e => {
@@ -278,7 +281,7 @@ useEffect(() => {
         <Row>
           <Col md={6}>
             <FormGroup>
-              <Label>Class Link</Label>
+              <Label>Class Link </Label>
               <Input
                 value={classLink}
                 onChange={e => {
@@ -302,10 +305,10 @@ useEffect(() => {
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>Mentor</th>
-                        <th>Learners Limit</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>Mentor <FaStar className="text-danger" /></th>
+                        <th>Learners Limit <FaStar className="text-danger" /></th>
+                        <th>Start Date <FaStar className="text-danger" /></th>
+                        <th>End Date <FaStar className="text-danger" /></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -375,9 +378,9 @@ useEffect(() => {
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Days</th>
+                        <th>Start Time<FaStar className="text-danger" /></th>
+                        <th>End Time<FaStar className="text-danger" /></th>
+                        <th>Days<FaStar className="text-danger" /></th>
                         <th>Action</th>
                       </tr>
                     </thead>
