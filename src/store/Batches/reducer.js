@@ -43,6 +43,10 @@ import {
   GET_MENTOR_FAIL,
   GET_MENTOR_COUNT_SUCCESS,
   GET_MENTOR_COUNT_FAIL,
+  CREATE_NEW_BATCH,
+  CREATE_NEW_BATCH_SUCCESS,
+  CREATE_NEW_BATCH_FAIL,
+
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -210,12 +214,12 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_NEW_BATCHES:
       return {
         ...state,
-        newBatch: action.payload,
+        createBatch: action.payload,
       }
     case GET_NEW_BATCHES_SUCCESS:
       return {
         ...state,
-        newBatch: action.payload,
+        createBatch: action.payload,
       }
 
     case GET_NEW_BATCHES_FAIL:
@@ -249,6 +253,26 @@ const Batches = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
+
+
+      //CREATE  BATCH
+      case CREATE_NEW_BATCH:
+        return {
+          ...state,
+          createNewBatch: action.payload,
+        }
+  
+      case CREATE_NEW_BATCH_SUCCESS:
+        return {
+          ...state,
+          createNewBatch: action.payload,
+        }
+
+        case CREATE_NEW_BATCH_FAIL:
+          return {
+            ...state,
+            error: action.payload,
+          }
 
     // DASHBOARD
 

@@ -156,6 +156,12 @@ const editNewBatchesData = async (data, id) => {
   return resp
 }
 
+const createNewBatchesData = async (data) => {
+  const resp = await post(url.CREATE_NEW_BATCHES)
+  return resp
+}
+
+
 // DASHBOARD
 const getDashboardApi = async data => {
   const resp = await getCourseData(url.GET_DASHBOARD + "/dashboard")
@@ -631,5 +637,6 @@ export {
   getDashboardApi,
   getMentorApi,
   getBatchesApi,
+  createNewBatchesData,
   // getFilter,
 }

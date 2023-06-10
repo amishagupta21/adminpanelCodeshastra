@@ -20,6 +20,11 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "reactstrap"
+import { createNewBatch } from "store/actions"
+import { connect } from "react-redux"
+// import { post, getCourseData } from "../../helpers/api_helper"
+import {post,getCourseData} from "../../helpers/api_helper"
+import * as url from "../../helpers/url_helper"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
@@ -57,7 +62,7 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
   //   <Label check={isChecked}>{name}</Label>
   // </>
 }
-const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
+const BatchNewModal = ({ modal, toggle, setModal, setItem, item,createNewBatch,onCreateNewBatch }) => {
   const axios = require("axios")
 
   const [batchName, setBatchName] = useState("")
@@ -104,7 +109,8 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     setDays(updateDays)
   }
 
-  const createBatch = () => {
+  // const createBatch = () => {
+    useEffect(() => {
     const filterDay = days.filter(day => day.isSelected)
 
     const updateDays = filterDay.map(day => {
@@ -132,9 +138,52 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       moodle_course:
         selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
     }
-    axios({
-      method: "POST",
-      url: "https://lms.unikaksha.dev/api/lms/admin/batch",
+    // axios({
+    //   method: "POST",
+    //   url: "https://lms.unikaksha.dev/api/lms/admin/batch",
+    //   data: temp,
+    // })
+    //   .then(res => {
+    //     setModal(false)
+    //     setItem([...item, res.data.data])
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+    // console.log(JSON.stringify(temp))
+  // }
+}, [createNewBatch])
+
+
+
+
+  const createBatch = async () => {
+    const filterDay = days.filter(day => day.isSelected)
+    const updateDays = filterDay.map(day => {
+      return {
+        day: day.day,
+        start_time: "2023-03-21T06:58:58.648Z",
+        end_time: "2023-03-21T07:58:58.648Z",
+      }
+    })
+    const temp = {
+      name: batchName,
+      description: description,
+      course: course,
+      variant_type: variantType,
+      class_link: classLink,
+      mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
+      learner_limit: learnersLimit,
+      start_date: startDate,
+      end_date: endDate,
+      batch_schedule: {
+        name: batchName,
+        value: updateDays,
+      },
+      unikodecourseid:
+        selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
+    }
+    const resp = await post(url.CREATE_NEW_BATCHES, {
       data: temp,
     })
       .then(res => {
@@ -144,18 +193,25 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       .catch(err => {
         console.log(err)
       })
-    console.log(JSON.stringify(temp))
-  }
-
-  useEffect(() => {
-    if (modal) {
-      axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
-        .then(res => setCourseIdData(res.data.data))
-        .catch(err => {
-          console.log(err)
-        })
+    return resp
+}
+useEffect(() => {
+  if (modal) {
+    const getNewBatches = async () => {
+      const resp = await getCourseData(url.GET_MOODLE_COURSE)
+      setCourseIdData(resp.data)
+      return resp
     }
-  }, [modal])
+    getNewBatches()
+    // axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
+    //   .then(res => setCourseIdData(res.data.data))
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+  }
+}, [modal])
+
+
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
@@ -209,7 +265,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
               <Input
                 name="select"
                 onChange={e => {
-                  console.log(e.target.value)
                   setVariantType(e.target.value)
                 }}
                 type="select"
@@ -263,7 +318,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                               className="border-0"
                               value={mentor}
                               onChange={e => {
-                                console.log(e.target.value)
                                 setMentor(e.target.value)
                               }}
                             >
@@ -284,7 +338,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                               className="bg-grey border-0"
                               value={learnersLimit}
                               onChange={e => {
-                                console.log(e.target.value)
                                 setLearnersLimit(e.target.value)
                               }}
                             />
@@ -295,7 +348,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                             type="date"
                             value={startDate}
                             onChange={e => {
-                              console.log(e.target.value)
                               setStartDate(e.target.value)
                             }}
                           />
@@ -305,7 +357,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                             type="date"
                             value={endDate}
                             onChange={e => {
-                              console.log(e.target.value)
                               setEndDate(e.target.value)
                             }}
                           />
@@ -342,7 +393,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                 placeholder="09:00"
                                 value={startTime}
                                 onChange={e => {
-                                  console.log(e.target.value)
                                   setStartTime(e.target.value)
                                 }}
                               />
@@ -373,7 +423,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                 placeholder="05:00"
                                 value={endTime}
                                 onChange={e => {
-                                  console.log(e.target.value)
 
                                   setendTime(e.target.value)
                                 }}
@@ -505,7 +554,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                     name={day.name}
                                     // checked={day.isSelected}
                                     onChange={() => {
-                                      console.log(day)
                                       selectDays(day)
                                     }}
                                   />
@@ -578,5 +626,11 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     </Modal>
   )
 }
+const mapDispatchToProps = dispatch => ({
+  onCreateNewBatch: data => dispatch(createNewBatch(data)),
+})
 
-export default BatchNewModal
+export default connect(null, mapDispatchToProps)(BatchNewModal)
+
+
+// export default BatchNewModal

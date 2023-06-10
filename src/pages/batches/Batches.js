@@ -40,6 +40,8 @@ import DeleteModel from "components/DeleteModal"
 import ModalDelete from "components/Common/ModalDelete"
 import DeleteModal from "components/Common/DeleteModal"
 import EditNewModal from "./EditNewModal"
+import { del, post } from "../../helpers/api_helper"
+import * as url from "../../helpers/url_helper"
 
 const Batches = props => {
   const axios = require("axios")
@@ -52,6 +54,7 @@ const Batches = props => {
     onGetBatchesList,
     onGetDashboard,
     onGetBatchesApi,
+    createNewBatch,
   } = props
   const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
@@ -98,22 +101,28 @@ const Batches = props => {
     },
   ]
 
-  const onClickDelete = () => {
-    axios({
-      method: "DELETE",
-      url: `https://lms.unikaksha.dev/api/lms/admin/batch/${user?.id}`,
-      data: user,
-    })
-      .then(res => {
-        const finalItem = item.filter(item => item.id !== user?.id)
-        setItem(finalItem)
-        setDeleteModalIsOpen(false)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  // const onClickDelete = () => {
+  //   axios({
+  //     method: "DELETE",
+  //     url: `https://lms.unikaksha.dev/api/lms/admin/batch/${user?.id}`,
+  //     data: user,
+  //   })
+  //     .then(res => {
+  //       const finalItem = item.filter(item => item.id !== user?.id)
+  //       setItem(finalItem)
+  //       setDeleteModalIsOpen(false)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  const onClickDelete = async id => {
+    const resp = await del(url.GET_DELETE_BATCHES + `${user?.id}`)
+    const finalItem = item.filter(item => item.id !== user?.id)
+    setItem(finalItem)
+    setDeleteModalIsOpen(false)
+    return resp
   }
-
   const selectRow = {
     mode: "checkbox",
     clickToSelect: false,
@@ -405,6 +414,7 @@ const Batches = props => {
                   modal={modal}
                   toggle={toggle}
                   setModal={setModal}
+                  createNewBatch={createNewBatch}
                   onGetBatchesList={onGetBatchesList}
                   setItem={setItem}
                   item={item}
@@ -549,6 +559,7 @@ const mapStateToProps = ({ Batches, state, count }) => {
     dashboard: Batches?.dashboard,
     userRoles: Batches?.roles,
     batchApi: Batches?.batchApi,
+    createNewBatch:Batches?.createNewBatch,
     // deleteData: false,
   }
 }
