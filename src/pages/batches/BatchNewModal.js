@@ -301,7 +301,7 @@ useEffect(() => {
         <Row>
           <Col md={6}>
             <FormGroup>
-              <Label>Class Link </Label>
+              <Label>Class Link <FaStar className="text-danger" /></Label>
               <Input
                 value={classLink}
                 onChange={e => {
