@@ -225,7 +225,6 @@ function* fetchNewMentor({ payload: data }) {
   }
 }
 
-
 function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)

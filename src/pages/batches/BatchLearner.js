@@ -42,7 +42,7 @@ const BatchLearner = ({ newBatch }) => {
               <tbody>
                 <tr>
                   <td>Course Name:</td>
-                  <th>{newBatch?.course}</th>
+                  <th>{newBatch?.name}</th>
                 </tr>
                 <tr>
                   <td>Description:</td>

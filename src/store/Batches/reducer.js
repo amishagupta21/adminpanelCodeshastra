@@ -213,12 +213,12 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_NEW_BATCHES:
       return {
         ...state,
-        createBatch: action.payload,
+        newBatch: action.payload,
       }
     case GET_NEW_BATCHES_SUCCESS:
       return {
         ...state,
-        createBatch: action.payload,
+        newBatch: action.payload,
       }
 
     case GET_NEW_BATCHES_FAIL:
