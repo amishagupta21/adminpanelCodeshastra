@@ -283,7 +283,7 @@ const Batches = props => {
   }
 
   const syncNow = async () => {
-    const response = await post(url.BATCH_SYNC)
+    const response = await `${process.env.REACT_APP_API_URL}${url.BATCH_SYNC}`
     return response
   }
 
