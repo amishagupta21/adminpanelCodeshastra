@@ -158,7 +158,7 @@ const Batches = props => {
           <OverlayTrigger
             key={`tooltip-${user.id}`}
             placement="top"
-            overlay={<Tooltip>{cellContent}</Tooltip>}
+            overlay={<Tooltip>{user?.description}</Tooltip>}
           >
             <div
               style={{
@@ -169,7 +169,7 @@ const Batches = props => {
                 width: "fit-content",
               }}
             >
-              {cellContent}
+              {user?.description}
             </div>
           </OverlayTrigger>
         ),
