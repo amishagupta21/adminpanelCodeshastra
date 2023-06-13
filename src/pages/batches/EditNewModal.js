@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react"
 import {
   Row,
   Col,
-  Card,
-  CardBody,
   Button,
   Input,
   Table,
-  Progress,
   FormGroup,
   Modal,
   ModalHeader,
@@ -19,9 +16,9 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "reactstrap"
-import { Link, useParams } from "react-router-dom"
 import { editNewBatch } from "store/actions"
 import { connect } from "react-redux"
+import BatchSchedule from "./BatchSchedule"
 
 const EditNewModal = ({
   onEditNewBatch,
@@ -31,52 +28,33 @@ const EditNewModal = ({
   cancelNewModal,
   setEditModal,
 }) => {
-  const data = {
-    name: batchApi?.name,
-    description: batchApi?.description,
-    course: batchApi?.course,
-    id: batchApi?.id,
-    //variant_type: batchApi?.variant_type,
-    //class_link: batchApi?.class_link,
-    mentors: [],
-    // learner_limit: batchApi?.learner_limit,
-    start_date: batchApi?.start_date,
-    end_date: batchApi?.end_date,
-    // batch_schedule: batchApi?.batch_schedule,
-  }
-
-  const [editData, setEditData] = useState(data)
+  const [editData, setEditData] = useState({ ...batchApi })
 
   useEffect(() => {
-    setEditData({
-      name: batchApi?.name,
-      description: batchApi?.description,
-      course: batchApi?.course,
-      id: batchApi?.id,
-      //  variant_type: batchApi?.variant_type,
-      //class_link: batchApi?.class_link,
-      mentors: [],
-      // learner_limit: batchApi?.learner_limit,
-      start_date: batchApi?.start_date,
-      end_date: batchApi?.end_date,
-      // batch_schedule: batchApi?.batch_schedule,
-    })
+    setEditData(batchApi)
   }, [batchApi])
-
-  const days = [
-    { value: 1, name: "Mon", isSelected: false },
-    { value: 2, name: "Tue", isSelected: false },
-    { value: 3, name: "Wed", isSelected: false },
-    { value: 4, name: "Thu", isSelected: false },
-    { value: 5, name: "Fri", isSelected: false },
-    { value: 6, name: "Sat", isSelected: false },
-    { value: 7, name: "Sun", isSelected: false },
-  ]
 
   const updateBatches = event => {
     event.preventDefault()
+
     onEditNewBatch(editData)
     setEditModal(false)
+  }
+
+  const handleChange = (event, index) => {
+    const data = { ...batchApi }
+    const result = [...batchApi.batch_schedule.value]
+    let indexValue = batchApi.batch_schedule.value[index]
+    indexValue = {
+      ...indexValue,
+      [event.target.name]:
+        event.target.name === "enable"
+          ? !event.target.checked
+          : event.target.value,
+    }
+    result[index] = indexValue
+    data.batch_schedule.value = result
+    setEditData(data)
   }
 
   return (
@@ -96,12 +74,12 @@ const EditNewModal = ({
               <Input
                 type="text"
                 value={editData?.name}
-                onChange={e =>
+                onChange={e => {
                   setEditData({
                     ...editData,
                     name: e.target.value,
                   })
-                }
+                }}
                 placeholder="Batch_10"
               />
             </FormGroup>
@@ -150,7 +128,7 @@ const EditNewModal = ({
               </Input>
             </FormGroup>
           </Col>
-          {/* <Col md={3}>
+          <Col md={3}>
             <FormGroup>
               <Label>Variant Type</Label>
               <Input
@@ -165,12 +143,12 @@ const EditNewModal = ({
                 type="select"
               >
                 <option value="Select">Select</option>
-                <option value="full time">full time</option>
+                <option value="full Time">full Time</option>
               </Input>
             </FormGroup>
-          </Col> */}
+          </Col>
         </Row>
-        {/* <Row>
+        <Row>
           <Col md={6}>
             <FormGroup>
               <Label>Class Link</Label>
@@ -187,7 +165,7 @@ const EditNewModal = ({
               />
             </FormGroup>
           </Col>
-        </Row> */}
+        </Row>
         <Row>
           <Col md={12} className="batch-accord">
             <UncontrolledAccordion defaultOpen={["1", "2", "3"]} stayOpen>
@@ -200,43 +178,38 @@ const EditNewModal = ({
                   <Table responsive>
                     <thead>
                       <tr>
-                        {/* <th>Mentor</th> */}
-                        {/* <th>Learners Limit</th> */}
+                        <th>Mentor</th>
+                        <th>Learners Limit</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        {/* <td>
+                        <td>
                           <FormGroup>
-                            <Input
-                              type="text"
-                              name="course_id"
-                              value={editData?.mentors?.value}
-                              onChange={e =>
-                                setEditData({
-                                  ...editData,
-                                  mentors: e.target.value,
-                                })
-                              }
-                            ></Input>
+                            <FormGroup className="select_box border-0">
+                              <Input
+                                name="select"
+                                type="select"
+                                className="border-0"
+                                value={editData?.mentors?.value}
+                                required
+                                onChange={e => {
+                                  setEditData({
+                                    ...editData,
+                                    mentors: e.target.value,
+                                  })
+                                }}
+                              >
+                                <option value="select">select</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                              </Input>
+                            </FormGroup>
                           </FormGroup>
-                          <FormGroup>
-                            <Input
-                              type="text"
-                              name="course_id"
-                              value={[]}
-                              onChange={e =>
-                                setEditData({
-                                  ...editData,
-                                  mentors: e.target.value,
-                                })
-                              }
-                            ></Input>
-                          </FormGroup>
-                        </td> */}
-                        {/* <td>
+                        </td>
+                        <td>
                           <FormGroup>
                             <Input
                               placeholder="75"
@@ -251,7 +224,7 @@ const EditNewModal = ({
                               }
                             />
                           </FormGroup>
-                        </td> */}
+                        </td>
                         <td>
                           <Input
                             type="date"
@@ -281,185 +254,13 @@ const EditNewModal = ({
                   </Table>
                 </AccordionBody>
               </AccordionItem>
-              {/* <AccordionItem className="mb-2">
-                <AccordionHeader targetId="2">
-                  Batch Schedule
-                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                </AccordionHeader>
-                <AccordionBody accordionId="2">
-                  <Table responsive>
-                    <thead>
-                      <tr>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Days</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {editData?.batch_schedule?.value.map((item, index) => {
-                        const data = item?.start_time?.split(" ").slice(-1)
-                        const data1 = item?.end_time?.split(" ").slice(-1)
-                        return (
-                          <tr key={index}>
-                            <td>
-                              <div className="accordionItem-table">
-                                <FormGroup>
-                                  <Input
-                                    type="text"
-                                    // className="me-2 bg-grey border-0"
-                                    style={{ width: "64px" }}
-                                    placeholder="09:00"
-                                    value={item?.start_time}
-                                    onChange={e =>
-                                      setEditData({
-                                        ...editData,
-                                        course: e.target.value,
-                                      })
-                                    }
-                                  />
-                                </FormGroup>
-                                <FormGroup>
-                                  <Input
-                                    type="select"
-                                    name="course_id"
-                                    value={data[0]}
-                                    onChange={e =>
-                                      setEditData({
-                                        ...editData,
-                                        course: e.target.value,
-                                      })
-                                    }
-                                  >
-                                    <option value="PM">PM</option>
-                                    <option value="AM">AM</option>
-                                  </Input>
-                                </FormGroup>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="d-flex">
-                                <FormGroup>
-                                  <Input
-                                    type="text"
-                                    // className="me-2 bg-grey border-0"
-                                    style={{ width: "64px" }}
-                                    placeholder="05:00"
-                                    value={item?.end_time}
-                                    onChange={e =>
-                                      setEditData({
-                                        ...editData,
-                                        course: e.target.value,
-                                      })
-                                    }
-                                  />
-                                </FormGroup>
-                                <FormGroup>
-                                  <Input
-                                    type="select"
-                                    name="course_id"
-                                    value={data1[0]}
-                                    onClick={e =>
-                                      setEditData({
-                                        ...editData,
-                                        course: e.target.value,
-                                      })
-                                    }
-                                  >
-                                    <option value="PM">PM</option>
-                                    <option value="AM">AM</option>
-                                  </Input>
-                                </FormGroup>
-                              </div>
-                            </td>
-                            <td>
-                              <div>
-                                {days.map((dayValue, index) => {
-                                  return (
-                                    <FormGroup key={index} check inline>
-                                      <Input
-                                        type="checkbox"
-                                        checked={dayValue?.value === item.day}
-                                        onClick={e =>
-                                          setEditData({
-                                            ...editData,
-                                            course: e.target.value,
-                                          })
-                                        }
-                                      />
-                                      <Label check>{dayValue?.name}</Label>
-                                    </FormGroup>
-                                  )
-                                })}
-                              </div>
-                            </td>
-                            <td>
-                              <span className="me-3">
-                                <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                              </span>
-                            </td>
-                          </tr>
-                        )
-                      })}
-
-                      <tr>
-                        <td
-                          colSpan={4}
-                          style={{
-                            paddingLeft: "0px",
-                            paddingRight: "0px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              height: "1px",
-                              background: "#CED4DA",
-                            }}
-                          ></div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                  <Row>
-                    <Col md={12}>
-                      <button className="px-4 ms-3 create-new-appointment">
-                        Add A Schedule +
-                      </button>
-                    </Col>
-                  </Row>
-                </AccordionBody>
-              </AccordionItem> */}
-              {/* <AccordionItem className="mb-3">
-                <AccordionHeader targetId="3">
-                  Moodle Course ID
-                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                </AccordionHeader>
-                <AccordionBody accordionId="3">
-                  <Row>
-                    <Col md={4} style={{ paddingLeft: "33px" }}>
-                      <FormGroup>
-                        <Label>Course ID</Label>
-                        <Input
-                          type="select"
-                          name="course_id"
-                            onChange={e => {
-                              setSelectedCourseId(e.target.value)
-                            }}
-                        >
-                          <option value={null}>Select Course ID</option>
-                          {courseIdData.map((item, index) => {
-                            return (
-                              <option key={index} value={item?.courseid}>
-                                {item?.coursename}
-                              </option>
-                            )
-                          })}
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </AccordionBody>
-              </AccordionItem> */}
+              {editData && (
+                <BatchSchedule
+                  editData={editData}
+                  handleChange={handleChange}
+                  setEditData={setEditData}
+                />
+              )}
             </UncontrolledAccordion>
           </Col>
         </Row>
