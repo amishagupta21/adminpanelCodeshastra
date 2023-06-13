@@ -20,6 +20,7 @@ import {
   UncontrolledAccordion,
   AccordionItem,
   AccordionHeader,
+  Spinner,
   AccordionBody,
 } from "reactstrap"
 import { createNewBatch } from "store/actions"
@@ -71,6 +72,15 @@ const BatchNewModal = ({
   const [endTime, setendTime] = useState("")
   const [courseIdData, setCourseIdData] = useState([])
   const [selectedCourseId, setSelectedCourseId] = useState("0")
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [updateDays, setUpdateDays] = useState([
+    {
+      day: "",
+      start_time: "",
+      end_time: "",
+    },
+  ])
   const SelectTime = ["AM", "PM"]
 
   const mentors = ["select", 1, 2]
@@ -128,16 +138,6 @@ const BatchNewModal = ({
     setDays(updateDays)
   }
 
-  const filterDay = days.filter(day => day.isSelected)
-
-  const updateDays = filterDay.map(day => {
-    return {
-      day: day.day,
-      start_time: "2023-03-21T06:58:58.648Z",
-      end_time: "2023-03-21T07:58:58.648Z",
-    }
-  })
-
   const temp = {
     name: batchName,
     description: description,
@@ -157,6 +157,8 @@ const BatchNewModal = ({
   }
 
   const createBatch = data1 => {
+    setIsLoading(true)
+
     axios({
       method: "POST",
       url: `${process.env.REACT_APP_API_URL}${url.CREATE_NEW_BATCHES}`,
@@ -164,12 +166,14 @@ const BatchNewModal = ({
     })
       .then(res => {
         console.log("res", res)
+        setIsLoading(false)
         setModal(false)
         setItem([...item, res.data.data])
       })
       .catch(err => {
         console.log("err", err)
       })
+
     // return resp
   }
 
@@ -183,6 +187,19 @@ const BatchNewModal = ({
       getNewBatches()
     }
   }, [modal])
+
+  const handleBatchScheduleChange = (e, index, item) => {
+    const updateObj = {
+      ...item,
+      [e.target.name]: e.target.value,
+    }
+    const updateArray = [...updateDays]
+    updateArray[index] = updateObj
+    console.log(updateObj, "updateObj", updateArray)
+    setUpdateDays(updateArray)
+  }
+
+  console.log(updateDays)
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
@@ -297,7 +314,7 @@ const BatchNewModal = ({
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>
+                        {/* <th>
                           Mentor{" "}
                           <span
                             className="mandotary star"
@@ -314,7 +331,7 @@ const BatchNewModal = ({
                           >
                             *
                           </span>
-                        </th>
+                        </th> */}
                         <th>
                           Start Date{" "}
                           <span
@@ -337,7 +354,7 @@ const BatchNewModal = ({
                     </thead>
                     <tbody>
                       <tr>
-                        <td>
+                        {/* <td>
                           <FormGroup className="select_box border-0">
                             <Input
                               name="select"
@@ -368,7 +385,7 @@ const BatchNewModal = ({
                               required
                             />
                           </FormGroup>
-                        </td>
+                        </td> */}
                         <td>
                           <Input
                             type="date"
@@ -434,84 +451,95 @@ const BatchNewModal = ({
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <div className="accordionItem-table">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="09:00"
-                                value={startTime}
-                                onChange={e => {
-                                  setStartTime(e.target.value)
-                                }}
-                                required
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                className="border-0"
-                                required
-                              >
-                                {SelectTime.map((time, index) => {
-                                  return <option key={index}>{time}</option>
-                                })}
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="d-flex">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="05:00"
-                                value={endTime}
-                                onChange={e => {
-                                  setendTime(e.target.value)
-                                }}
-                                required
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                required
-                              >
-                                {SelectTime.map((time, index) => {
-                                  return <option key={index}>{time}</option>
-                                })}
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div></div>
-                          <div>
-                            {days.map((day, index) => {
-                              return (
-                                <FormGroup key={index} check inline>
-                                  <CheckBox {...day} selectDays={selectDays} />
-                                </FormGroup>
-                              )
-                            })}
-                          </div>
-                        </td>
-                        <td>
-                          <span className="me-3">
-                            <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                          </span>
-                        </td>
-                      </tr>
+                      {updateDays.map((item, index) => (
+                        <tr key={index}>
+                          <td>
+                            <div className="accordionItem-table">
+                              <FormGroup>
+                                <Input
+                                  type="text"
+                                  className="me-2 bg-grey border-0"
+                                  style={{ width: "64px" }}
+                                  placeholder="09:00"
+                                  value={item.start_time}
+                                  name="start_time"
+                                  onChange={e => {
+                                    handleBatchScheduleChange(e, index, item)
+                                  }}
+                                  required
+                                />
+                              </FormGroup>
+                              <FormGroup className="select_box border-0">
+                                <Input
+                                  name="day"
+                                  type="select"
+                                  style={{ width: "64px" }}
+                                  className="border-0"
+                                  value={item.day}
+                                  onChange={e =>
+                                    handleBatchScheduleChange(e, index, item)
+                                  }
+                                  required
+                                >
+                                  {SelectTime.map((time, index) => {
+                                    return <option key={index}>{time}</option>
+                                  })}
+                                </Input>
+                              </FormGroup>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="d-flex">
+                              <FormGroup>
+                                <Input
+                                  name="end_time"
+                                  type="text"
+                                  className="me-2 bg-grey border-0"
+                                  style={{ width: "64px" }}
+                                  placeholder="05:00"
+                                  value={item.end_time}
+                                  onChange={e => {
+                                    handleBatchScheduleChange(e, index, item)
+                                  }}
+                                  required
+                                />
+                              </FormGroup>
+                              <FormGroup className="select_box border-0">
+                                <Input
+                                  name="select"
+                                  type="select"
+                                  style={{ width: "64px" }}
+                                  required
+                                >
+                                  {SelectTime.map((time, index) => {
+                                    return <option key={index}>{time}</option>
+                                  })}
+                                </Input>
+                              </FormGroup>
+                            </div>
+                          </td>
+                          <td>
+                            <div></div>
+                            <div>
+                              {days.map((day, index) => {
+                                return (
+                                  <FormGroup key={index} check inline>
+                                    <CheckBox
+                                      {...day}
+                                      selectDays={selectDays}
+                                    />
+                                  </FormGroup>
+                                )
+                              })}
+                            </div>
+                          </td>
+                          <td>
+                            <span className="me-3">
+                              <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
                       <tr>
                         <td
                           colSpan={4}
@@ -528,76 +556,23 @@ const BatchNewModal = ({
                           ></div>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <div className="d-flex">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="09:00"
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                className="border-0"
-                              >
-                                <option selected>AM</option>
-                                <option>PM</option>
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="d-flex">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="05:00"
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                className="border-0"
-                              >
-                                {SelectTime.map((time, index) => {
-                                  return <option key={index}>{time}</option>
-                                })}
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            {days.map((day, index) => {
-                              return (
-                                <FormGroup key={index} check inline>
-                                  <CheckBox {...day} selectDays={selectDays} />
-                                </FormGroup>
-                              )
-                            })}
-                          </div>
-                        </td>
-                        <td>
-                          <span className="me-3">
-                            <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                          </span>
-                        </td>
-                      </tr>
                     </tbody>
                   </Table>
                   <Row>
                     <Col md={12}>
-                      <button className="px-4 ms-3 create-new-appointment">
+                      <button
+                        className="px-4 ms-3 create-new-appointment"
+                        onClick={() =>
+                          setUpdateDays([
+                            ...updateDays,
+                            {
+                              day: "",
+                              start_time: "",
+                              end_time: "",
+                            },
+                          ])
+                        }
+                      >
                         Add A Schedule +
                       </button>
                     </Col>
@@ -643,14 +618,26 @@ const BatchNewModal = ({
         <Button color="primary" outline onClick={toggle} className="px-5">
           Cancel
         </Button>
-        <Button
-          color="primary"
-          onClick={createBatch}
-          className="px-5"
-          disabled={!isFormValid}
-        >
-          Create
-        </Button>
+        {isLoading ? (
+          <Button
+            color="primary"
+            onClick={createBatch}
+            className="px-5"
+            disabled
+          >
+            <Spinner style={{ width: "1rem", height: "1rem" }} />
+            &nbsp;&nbsp; Creating...
+          </Button>
+        ) : (
+          <Button
+            color="primary"
+            onClick={createBatch}
+            className="px-5"
+            disabled={!isFormValid}
+          >
+            Create
+          </Button>
+        )}
       </ModalFooter>
     </Modal>
   )
