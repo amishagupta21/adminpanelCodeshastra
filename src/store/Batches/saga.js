@@ -14,6 +14,7 @@ import {
   DELETE_BATCHES,
   GET_BATCH_API,
   FILTER_STATUS_LEARNER,
+  CREATE_NEW_BATCH,
 } from "./actionTypes"
 
 import {
@@ -49,6 +50,8 @@ import {
   getMentorSuccess,
   getMentorCountSuccess,
   getMentorCountFail,
+  createNewBatchSuccess,
+  createNewBatchFail,
 } from "./actions"
 import {
   getBatchesList,
@@ -63,6 +66,7 @@ import {
   getDeleteData,
   getDeleteBatches,
   getStatusFilter,
+  createNewBatchesData,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
 
@@ -153,6 +157,17 @@ function* fetchNewBatches({ payload: data }) {
     // yield put(getGradeBookCountFail(error))
   }
 }
+//create batch
+function* createBatch({ payload: data }) {
+  try {
+    const response = yield call(createNewBatchesData, data)
+    tosterMsg(response?.message)
+    yield put(createNewBatchSuccess(response?.data))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(createNewBatchFail(error))
+  }
+}
 
 // EDIT BATCH
 
@@ -220,6 +235,7 @@ function* usersManageSaga() {
   yield takeEvery(GET_DASHBOARD, fetchNewDashboard)
   yield takeEvery(GET_MENTOR, fetchNewMentor)
   yield takeEvery(EDIT_NEW_BATCH, editBatch)
+  yield takeEvery(CREATE_NEW_BATCH, createBatch)
   yield takeEvery(DELETE_BATCHES, onDeleteBatches)
 }
 

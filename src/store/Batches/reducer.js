@@ -18,8 +18,6 @@ import {
   GET_GRADE_BOOK_COUNT_SUCCESS,
   GET_GRADE_BOOK_FAIL,
   GET_GRADE_BOOK_COUNT_FAIL,
-  DELETE_BATCHES_SUCCESS,
-  DELETE_BATCHES_FAIL,
   FILTER_STATUS_LEARNER,
   GET_NEW_BATCHES,
   GET_NEW_BATCHES_SUCCESS,
@@ -43,6 +41,11 @@ import {
   GET_MENTOR_FAIL,
   GET_MENTOR_COUNT_SUCCESS,
   GET_MENTOR_COUNT_FAIL,
+  CREATE_NEW_BATCH,
+  CREATE_NEW_BATCH_SUCCESS,
+  CREATE_NEW_BATCH_FAIL,
+  DELETE_BATCHES_SUCCESS,
+  DELETE_BATCHES_FAIL,
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -250,6 +253,25 @@ const Batches = (state = INIT_STATE, action) => {
         error: action.payload,
       }
 
+    //CREATE  BATCH
+    case CREATE_NEW_BATCH:
+      return {
+        ...state,
+        createNewBatch: action.payload,
+      }
+
+    case CREATE_NEW_BATCH_SUCCESS:
+      return {
+        ...state,
+        createNewBatch: action.payload,
+      }
+
+    case CREATE_NEW_BATCH_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
+
     // DASHBOARD
 
     case GET_DASHBOARD:
@@ -316,10 +338,10 @@ const Batches = (state = INIT_STATE, action) => {
         error: action.payload,
       }
 
-    // case DELETE_LEARNER_SUCCESS:
-    //   return {
-    //     ...state,
-    //   }
+    case DELETE_BATCHES_SUCCESS:
+      return {
+        ...state,
+      }
 
     case DELETE_BATCHES_FAIL:
       return {

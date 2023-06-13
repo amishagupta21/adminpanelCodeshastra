@@ -54,6 +54,10 @@ import {
   EDIT_NEW_BATCH_SUCCESS,
   EDIT_NEW_BATCH_FAIL,
   FILTER_STATUS_LEARNER,
+  CREATE_NEW_BATCH,
+  CREATE_NEW_BATCH_SUCCESS,
+  CREATE_NEW_BATCH_FAIL,
+
 } from "./actionTypes"
 
 export const getBatches = data => ({
@@ -142,6 +146,7 @@ export const getGradeBook = data => ({
   payload: data,
 })
 
+
 export const getGradeBookSuccess = data => ({
   type: GET_GRADE_BOOK_SUCCESS,
   payload: data,
@@ -208,6 +213,25 @@ export const editNewBatchFail = error => ({
   payload: error,
 })
 
+//create batch
+
+export const createNewBatch = data => {
+  return {
+    type: CREATE_NEW_BATCH,
+    payload: data,
+  }
+}
+
+export const createNewBatchSuccess = data => ({
+  type:   CREATE_NEW_BATCH_SUCCESS,
+  payload: data,
+})
+
+export const createNewBatchFail = error => ({
+  type:   CREATE_NEW_BATCH_FAIL,
+  payload: error,
+})
+
 // DASHBOARD API
 
 export const getDashboard = data => ({
@@ -235,10 +259,6 @@ export const getDashboardCountFail = error => ({
   payload: error,
 })
 
-export const deleteBatches = id => ({
-  type: DELETE_BATCHES,
-  payload: id,
-})
 // MENTOR API
 
 export const getMentor = data => ({
@@ -320,10 +340,10 @@ export const getBatchApiCountFail = error => ({
   payload: error,
 })
 
-// export const deleteLearner = id => ({
-//   type: DELETE_LEARNER,
-//   payload: id,
-// })
+export const deleteBatches = id => ({
+  type: DELETE_BATCHES,
+  payload: id,
+})
 
 export const deleteBatchesSuccess = event => ({
   type: DELETE_BATCHES_SUCCESS,

@@ -126,43 +126,44 @@ const SidebarContent = props => {
             </li> */}
             <li>
               <Link to="/users">
-                <i className="bx bx-user" />
+              <i className='bx bx-user' />
                 <span>{props.t("Users")}</span>
               </Link>
             </li>
             <li>
               <Link to="/learner">
-                <i className="bx bx-user" />
+                
+                <i className='bx bx-user-circle' />
                 <span>{props.t("Learner")}</span>
               </Link>
             </li>
             <li>
               <Link to="/application">
-                <i className="bx bx-user" />
+                <i className="mdi mdi-file-document" />
                 <span>{props.t("Application")}</span>
               </Link>
             </li>
             <li>
               <Link to="/payment">
-                <i className="bx bx-user" />
+                <i className="mdi mdi-currency-inr" />
                 <span>{props.t("Payment")}</span>
               </Link>
             </li>
             <li>
               <Link to="/faq-configuration">
-                <i className="bx bx-user" />
+                <i className="mdi mdi-comment-question-outline" />
                 <span>{props.t("FAQ Configuration")}</span>
               </Link>
             </li>
             <li>
               <Link to="/sms-email-templates">
-                <i className="bx bx-bell" /> 
+                <i className="mdi mdi-bell-ring" /> 
                 <span>{props.t("SMS/Email Templates")}</span>
               </Link>
             </li>
             <li>
               <Link to="/batch">
-                <i className="bx bx-user" /> 
+                <i className="mdi mdi-account-multiple-outline" /> 
                 <span>{props.t("Batches")}</span>
               </Link>
             </li>

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+// import { FaStar } from 'react-icons/fa-solid';
+import { FaStar } from "react-icons/fa"
 import axios from "axios"
 import {
   Row,
@@ -20,6 +22,11 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "reactstrap"
+import { createNewBatch } from "store/actions"
+import { connect } from "react-redux"
+// import { post, getCourseData } from "../../helpers/api_helper"
+import { post, getCourseData } from "../../helpers/api_helper"
+import * as url from "../../helpers/url_helper"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
@@ -40,25 +47,18 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
       <label htmlFor={name}>{name}</label>
     </>
   )
-
-  // return <>
-  //   <Input
-  //     type="checkbox"
-  //     id={name}
-  //     name={name}
-  //     value={isChecked}
-  //     onChange={() => {
-  //       setIsChecked(!isChecked)
-  //       // console.log(name)
-  //       // alert("data")
-  //        selectDays({isSelected,name});
-  //     }}
-  //   />
-  //   <Label check={isChecked}>{name}</Label>
-  // </>
 }
-const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
+const BatchNewModal = ({
+  modal,
+  toggle,
+  setModal,
+  setItem,
+  item,
+  createNewBatch,
+  onCreateNewBatch,
+}) => {
   const axios = require("axios")
+  const [isFormValid, setIsFormValid] = useState(false)
 
   const [batchName, setBatchName] = useState("")
   const [description, setDescription] = useState("")
@@ -76,6 +76,31 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
 
   const mentors = ["select", 1, 2]
   const [mentor, setMentor] = useState("")
+  useEffect(() => {
+    // Check if all mandatory fields have values
+    const isValid =
+      batchName !== "" &&
+      description !== "" &&
+      course !== "Select" &&
+      variantType !== "Select" &&
+      classLink !== "" &&
+      mentor !== "Select" &&
+      learnersLimit !== "" &&
+      startDate !== "" &&
+      endDate !== ""
+
+    setIsFormValid(isValid)
+  }, [
+    batchName,
+    description,
+    course,
+    variantType,
+    classLink,
+    mentor,
+    learnersLimit,
+    startDate,
+    endDate,
+  ])
 
   const [days, setDays] = useState([
     { day: 1, name: "Mon", isSelected: false },
@@ -104,56 +129,96 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     setDays(updateDays)
   }
 
-  const createBatch = () => {
-    const filterDay = days.filter(day => day.isSelected)
+  const filterDay = days.filter(day => day.isSelected)
 
-    const updateDays = filterDay.map(day => {
-      return {
-        day: day.day,
-        start_time: "2023-03-21T06:58:58.648Z",
-        end_time: "2023-03-21T07:58:58.648Z",
-      }
-    })
-
-    const temp = {
-      name: batchName,
-      description: description,
-      course: course,
-      variant_type: variantType,
-      class_link: classLink,
-      mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
-      learner_limit: learnersLimit,
-      start_date: startDate,
-      end_date: endDate,
-      batch_schedule: {
-        name: batchName,
-        value: updateDays,
-      },
-      moodle_course:
-        selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
+  const updateDays = filterDay.map(day => {
+    return {
+      day: day.day,
+      start_time: "2023-03-21T06:58:58.648Z",
+      end_time: "2023-03-21T07:58:58.648Z",
     }
+  })
+
+  const temp = {
+    name: batchName,
+    description: description,
+    course: course,
+    variant_type: variantType,
+    class_link: classLink,
+    mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
+    learner_limit: learnersLimit,
+    start_date: startDate,
+    end_date: endDate,
+    batch_schedule: {
+      name: batchName,
+      value: updateDays,
+    },
+    unikodecourseid:
+      selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
+  }
+
+  const createBatch = data1 => {
+    // fetch(post(url.CREATE_NEW_BATCHES), {
+    //   data: temp,
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then(res => {
+    //     console.log("res", res)
+    //     setModal(false)
+    //     setItem([...item, res.data.data])
+    //   })
+    //   .catch(err => {
+    //     console.log("err", err)
+    //   })
+
+    // const postData = async () => {
+    // try {
+    //   const response = await axios
+    //     .post(postImage(url.CREATE_NEW_BATCHES), temp)
+    //     .then(res => {
+    //       console.log("res", res)
+    //     })
+    //   console.log(response)
+    //   setModal(false)
+    //   setItem([...item, res.data.data])
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    // }
+
     axios({
       method: "POST",
-      url: "https://lms.unikaksha.dev/api/lms/admin/batch",
+      // url: "https://lms.unikaksha.dev/api/lms/admin/batch",
+      url: `${process.env.REACT_APP_API_URL}${url.CREATE_NEW_BATCHES}`,
       data: temp,
     })
       .then(res => {
+        console.log("res", res)
         setModal(false)
         setItem([...item, res.data.data])
       })
       .catch(err => {
-        console.log(err)
+        console.log("err", err)
       })
-    console.log(JSON.stringify(temp))
+    // return resp
   }
 
   useEffect(() => {
     if (modal) {
-      axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
-        .then(res => setCourseIdData(res.data.data))
-        .catch(err => {
-          console.log(err)
-        })
+      const getNewBatches = async () => {
+        const resp = await getCourseData(url.GET_MOODLE_COURSE)
+        setCourseIdData(resp.data)
+        return resp
+      }
+      getNewBatches()
+      // axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
+      //   .then(res => setCourseIdData(res.data.data))
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
     }
   }, [modal])
 
@@ -164,7 +229,12 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
         <Row>
           <Col md={3}>
             <FormGroup>
-              <Label>Batch Name</Label>
+              <Label>
+                Batch Name{" "}
+                <span className="mandotary star" style={{ color: "red" }}>
+                  *
+                </span>
+              </Label>
               <Input
                 value={batchName}
                 onChange={e => {
@@ -172,12 +242,18 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                 }}
                 type="text"
                 placeholder="Batch_10"
+                required
               />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Description</Label>
+              <Label>
+                Description{" "}
+                <span className="mandotary star" style={{ color: "red" }}>
+                  *
+                </span>
+              </Label>
               <Input
                 value={description}
                 onChange={e => {
@@ -185,18 +261,25 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                 }}
                 type="text"
                 placeholder="Freshers Only"
+                required
               />
             </FormGroup>
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Course</Label>
+              <Label>
+                Course{" "}
+                <span className="mandotary star" style={{ color: "red" }}>
+                  *
+                </span>
+              </Label>
               <Input
                 name="select"
                 onChange={e => {
                   setCourse(e.target.value)
                 }}
                 type="select"
+                required
               >
                 <option>Select</option>
                 <option>Full Stack Web Developer</option>
@@ -205,14 +288,19 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Variant Type</Label>
+              <Label>
+                Variant Type{" "}
+                <span className="mandotary star" style={{ color: "red" }}>
+                  *
+                </span>
+              </Label>
               <Input
                 name="select"
                 onChange={e => {
-                  console.log(e.target.value)
                   setVariantType(e.target.value)
                 }}
                 type="select"
+                required
               >
                 <option>Select</option>
                 <option>Full Time</option>
@@ -223,7 +311,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
         <Row>
           <Col md={6}>
             <FormGroup>
-              <Label>Class Link</Label>
+              <Label>Class Link </Label>
               <Input
                 value={classLink}
                 onChange={e => {
@@ -247,10 +335,42 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>Mentor</th>
-                        <th>Learners Limit</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>
+                          Mentor{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </th>
+                        <th>
+                          Learners Limit{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </th>
+                        <th>
+                          Start Date{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </th>
+                        <th>
+                          End Date{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -262,8 +382,8 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                               type="select"
                               className="border-0"
                               value={mentor}
+                              required
                               onChange={e => {
-                                console.log(e.target.value)
                                 setMentor(e.target.value)
                               }}
                             >
@@ -284,9 +404,9 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                               className="bg-grey border-0"
                               value={learnersLimit}
                               onChange={e => {
-                                console.log(e.target.value)
                                 setLearnersLimit(e.target.value)
                               }}
+                              required
                             />
                           </FormGroup>
                         </td>
@@ -295,9 +415,9 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                             type="date"
                             value={startDate}
                             onChange={e => {
-                              console.log(e.target.value)
                               setStartDate(e.target.value)
                             }}
+                            required
                           />
                         </td>
                         <td>
@@ -305,9 +425,9 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                             type="date"
                             value={endDate}
                             onChange={e => {
-                              console.log(e.target.value)
                               setEndDate(e.target.value)
                             }}
+                            required
                           />
                         </td>
                       </tr>
@@ -324,9 +444,33 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                   <Table responsive>
                     <thead>
                       <tr>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Days</th>
+                        <th>
+                          Start Time
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </th>
+                        <th>
+                          End Time
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </th>
+                        <th>
+                          Days
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -342,9 +486,9 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                 placeholder="09:00"
                                 value={startTime}
                                 onChange={e => {
-                                  console.log(e.target.value)
                                   setStartTime(e.target.value)
                                 }}
+                                required
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -353,6 +497,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                 type="select"
                                 style={{ width: "64px" }}
                                 className="border-0"
+                                required
                               >
                                 {SelectTime.map((time, index) => {
                                   return <option key={index}>{time}</option>
@@ -373,10 +518,9 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                 placeholder="05:00"
                                 value={endTime}
                                 onChange={e => {
-                                  console.log(e.target.value)
-
                                   setendTime(e.target.value)
                                 }}
+                                required
                               />
                             </FormGroup>
                             <FormGroup className="select_box border-0">
@@ -384,6 +528,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                 name="select"
                                 type="select"
                                 style={{ width: "64px" }}
+                                required
                               >
                                 {SelectTime.map((time, index) => {
                                   return <option key={index}>{time}</option>
@@ -505,7 +650,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                     name={day.name}
                                     // checked={day.isSelected}
                                     onChange={() => {
-                                      console.log(day)
                                       selectDays(day)
                                     }}
                                   />
@@ -585,5 +729,10 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     </Modal>
   )
 }
+const mapDispatchToProps = dispatch => ({
+  onCreateNewBatch: data => dispatch(createNewBatch(data)),
+})
 
-export default BatchNewModal
+export default connect(null, mapDispatchToProps)(BatchNewModal)
+
+// export default BatchNewModal

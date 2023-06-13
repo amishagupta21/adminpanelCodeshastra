@@ -120,7 +120,7 @@ const getBatchesList = async data => {
 const getBatches = async data => {
   const resp = await getCourseData(
     url.GET_BATCHES +
-      `?pageSize=${data?.pageSize || 10}&page=${data?.page || 1}&keyword=${
+      `?pageSize=${data?.pageSize || 39}&page=${data?.page || 1}&keyword=${
         data?.search || ""
       }`
   )
@@ -153,6 +153,11 @@ const getNewBatches = async data => {
 
 const editNewBatchesData = async (data, id) => {
   const resp = await patch(url.EDIT_NEW_BATCHES + `/${id}`, data)
+  return resp
+}
+
+const createNewBatchesData = async data => {
+  const resp = await post(url.CREATE_NEW_BATCHES)
   return resp
 }
 
@@ -387,7 +392,9 @@ const getEditWorkDetail = async data => {
 
 const getDeleteData = uid => deleteData(url?.GET_DELETE_LEARNER + `${uid}`)
 
-const getDeleteBatches = id => deleteData(url?.GET_DELETE_BATCHES + `${id}`)
+const getDeleteBatches = id => {
+  deleteData(url?.GET_DELETE_BATCHES + `/${data}`)
+}
 
 // get dashboard charts data
 export const getDashboardData = data =>
@@ -631,5 +638,6 @@ export {
   getDashboardApi,
   getMentorApi,
   getBatchesApi,
+  createNewBatchesData,
   // getFilter,
 }

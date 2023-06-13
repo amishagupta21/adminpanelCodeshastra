@@ -136,17 +136,20 @@ export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 
 export const GET_BATCHES = "/admin/batch"
 export const EDIT_NEW_BATCHES = "/admin/batch"
+export const GET_MOODLE_COURSE = "/moodle/getCourseids"
 
+export const CREATE_NEW_BATCHES = "/admin/batch"
 export const GET_BATCHES_LEARNER_LIST = "/admin/batch/learners/listing"
-export const GET_DELETE_BATCHES = "/users/delete/"
+export const GET_DELETE_BATCHES = "/admin/batch/"
 // GRADE_BOOK
 
 export const GET_GRADE_BOOK = "/admin/batch/learners/gradebook"
 
-
 export const GET_BATCHES_API = "/admin/batch"
 
 // NEW BATCHES
+
+export const BATCH_SYNC = "/admin/batch/sync"
 
 export const GET_NEW_BATCHES = "/admin/batch"
 

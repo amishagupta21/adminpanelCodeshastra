@@ -5,6 +5,44 @@
     margin-top: 20px;
     flex-wrap: wrap;
 } */
+/* i.left-arrow
+{
+  display: none !important;
+} */
+/* .navbar-brand-box
+{
+  position: relative;
+} */
+.vertical-menu, .navbar-brand-box, .navbar-header, #page-topbar, .main-content, #vertical-menu-btn i
+{
+  transition: 0.8s !important;
+}
+
+.sidebar-enable #vertical-menu-btn i
+{
+  /* background: #000 !important; */
+  color: #fff;
+  transform:rotate(180deg) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#vertical-menu-btn
+{
+  width: 40px;
+  height: 40px;
+  position: relative;
+  box-shadow: none !important;
+  color: #fff;
+  border: 0;
+  background:#2A3042;
+  margin-top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px
+}
 .btn-light-grey
 {
   background: #F1F1F3 !important;
@@ -222,7 +260,7 @@ table thead
 }
 .assign-text {
   text-align: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
 }
 .assign-text span {
@@ -287,7 +325,42 @@ table thead
 }
 .card-height-470
 {
-  height: 470px !important;
+  height: 740px !important;
+}
+.progress-bar-heading
+{
+    font-size: 18px;
+    font-weight: 600;
+}
+.progress-bar-subheading
+{
+  font-size: 15px;
+  font-weight: 600;
+  color: #74788D;
+}
+.progress-bar-para
+{
+    font-size: 15px;
+    color: #74788D;
+}
+.text-limit
+{
+  max-width: 190px;
+  overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 1; 
+           line-clamp: 1;
+   -webkit-box-orient: vertical;
+   box-orient: vertical;
+   
+}
+.prog-bar-accordion .accordion .accordion-item button.accordion-button
+{
+  background: #f8f9fa !important;
+}
+.prog-bar-accordion .accordion .accordion-item button.collapsed
+{
+  background: transparent !important;
 }
 
 
@@ -301,9 +374,32 @@ table thead
   .box-r-btn select {
     width: 100%;
   }
+  .card-height-470
+  {
+    height: auto !important;
+  }
+  
+}
+@media (max-width: 992px) {
+  .sidebar-enable #vertical-menu-btn i
+  {
+    transition:0s;
+    color: #2A3042;
+  }
+  #vertical-menu-btn
+  {
+    transition:0s;
+    margin-top: 20px;
+    background:transparent;
+    color: #2A3042;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1199px) {
+  .card-height-470
+  {
+    min-height: 760px !important;
+  }
   .batches-box {
     justify-content: flex-start;
   }

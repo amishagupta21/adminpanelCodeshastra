@@ -16,8 +16,8 @@ import {
 } from "reactstrap"
 import { Link, useParams } from "react-router-dom"
 import axios from "axios"
-
-import Report from "./Report"
+import { post, getCourseData } from "../../helpers/api_helper"
+import * as url from "../../helpers/url_helper"
 
 const ReportCard = ({ modal, toggle, viewData }) => {
   const params = useParams()

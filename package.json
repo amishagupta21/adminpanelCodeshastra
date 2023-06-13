@@ -70,6 +70,7 @@
     "react-flatpickr": "^3.10.7",
     "react-google-login": "^5.2.2",
     "react-i18next": "^11.10.0",
+    "react-icons": "^4.9.0",
     "react-image-lightbox": "^5.1.1",
     "react-input-mask": "^2.0.4",
     "react-jvectormap": "^0.0.16",
