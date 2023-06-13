@@ -79,6 +79,8 @@ const BatchNewModal = ({
       day: "",
       start_time: "",
       end_time: "",
+      started_time: "",
+      ended_time: "",
     },
   ])
   const SelectTime = ["AM", "PM"]
@@ -134,7 +136,7 @@ const BatchNewModal = ({
       }
       return _day
     })
-    console.log("updateday", updateDays)
+    // console.log("updateday", updateDays)
     setDays(updateDays)
   }
 
@@ -195,7 +197,7 @@ const BatchNewModal = ({
     }
     const updateArray = [...updateDays]
     updateArray[index] = updateObj
-    console.log(updateObj, "updateObj", updateArray)
+    // console.log(updateObj, "updateObj", updateArray)
     setUpdateDays(updateArray)
   }
 
@@ -458,95 +460,101 @@ const BatchNewModal = ({
                       </tr>
                     </thead>
                     <tbody>
-                      {updateDays.map((item, index) => (
-                        <tr key={index}>
-                          <td>
-                            <div className="accordionItem-table">
-                              <FormGroup>
-                                <Input
-                                  type="text"
-                                  className="me-2 bg-grey border-0"
-                                  style={{ width: "64px" }}
-                                  placeholder="09:00"
-                                  value={item.start_time}
-                                  name="start_time"
-                                  onChange={e => {
-                                    handleBatchScheduleChange(e, index, item)
-                                  }}
-                                  required
-                                />
-                              </FormGroup>
-                              <FormGroup className="select_box border-0">
-                                <Input
-                                  name="day"
-                                  type="select"
-                                  style={{ width: "64px" }}
-                                  className="border-0"
-                                  value={item.day}
-                                  onChange={e =>
-                                    handleBatchScheduleChange(e, index, item)
-                                  }
-                                  required
-                                >
-                                  {SelectTime.map((time, index) => {
-                                    return <option key={index}>{time}</option>
-                                  })}
-                                </Input>
-                              </FormGroup>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="d-flex">
-                              <FormGroup>
-                                <Input
-                                  name="end_time"
-                                  type="text"
-                                  className="me-2 bg-grey border-0"
-                                  style={{ width: "64px" }}
-                                  placeholder="05:00"
-                                  value={item.end_time}
-                                  onChange={e => {
-                                    handleBatchScheduleChange(e, index, item)
-                                  }}
-                                  required
-                                />
-                              </FormGroup>
-                              <FormGroup className="select_box border-0">
-                                <Input
-                                  name="select"
-                                  type="select"
-                                  style={{ width: "64px" }}
-                                  required
-                                >
-                                  {SelectTime.map((time, index) => {
-                                    return <option key={index}>{time}</option>
-                                  })}
-                                </Input>
-                              </FormGroup>
-                            </div>
-                          </td>
-                          <td>
-                            <div></div>
-                            <div>
-                              {days.map((day, index) => {
-                                return (
-                                  <FormGroup key={index} check inline>
-                                    <CheckBox
-                                      {...day}
-                                      selectDays={selectDays}
-                                    />
-                                  </FormGroup>
-                                )
-                              })}
-                            </div>
-                          </td>
-                          <td>
-                            <span className="me-3">
-                              <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
+                      {updateDays.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>
+                              <div className="accordionItem-table">
+                                <FormGroup>
+                                  <Input
+                                    type="text"
+                                    className="me-2 bg-grey border-0"
+                                    style={{ width: "64px" }}
+                                    placeholder="09:00"
+                                    value={item.start_time}
+                                    name="start_time"
+                                    onChange={e => {
+                                      handleBatchScheduleChange(e, index, item)
+                                    }}
+                                    required
+                                  />
+                                </FormGroup>
+                                <FormGroup className="select_box border-0">
+                                  <Input
+                                    name="started_time"
+                                    type="select"
+                                    style={{ width: "64px" }}
+                                    className="border-0"
+                                    value={item.started_time}
+                                    onChange={e =>
+                                      handleBatchScheduleChange(e, index, item)
+                                    }
+                                    required
+                                  >
+                                    {SelectTime.map((time, index) => {
+                                      return <option key={index}>{time}</option>
+                                    })}
+                                  </Input>
+                                </FormGroup>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="d-flex">
+                                <FormGroup>
+                                  <Input
+                                    name="end_time"
+                                    type="text"
+                                    className="me-2 bg-grey border-0"
+                                    style={{ width: "64px" }}
+                                    placeholder="05:00"
+                                    value={item.end_time}
+                                    onChange={e => {
+                                      handleBatchScheduleChange(e, index, item)
+                                    }}
+                                    required
+                                  />
+                                </FormGroup>
+                                <FormGroup className="select_box border-0">
+                                  <Input
+                                    name="ended_time"
+                                    type="select"
+                                    style={{ width: "64px" }}
+                                    required
+                                    value={item.ended_time}
+                                    onChange={e => {
+                                      handleBatchScheduleChange(e, index, item)
+                                    }}
+                                  >
+                                    {SelectTime.map((time, index) => {
+                                      return <option key={index}>{time}</option>
+                                    })}
+                                  </Input>
+                                </FormGroup>
+                              </div>
+                            </td>
+                            <td>
+                              <div></div>
+                              <div>
+                                {days.map((day, index) => {
+                                  return (
+                                    <FormGroup key={index} check inline>
+                                      <CheckBox
+                                        {...day}
+                                        selectDays={selectDays}
+                                      />
+                                    </FormGroup>
+                                  )
+                                })}
+                              </div>
+                            </td>
+                            <td>
+                              <span className="me-3">
+                                <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        )
+                      })}
                       <tr>
                         <td
                           colSpan={4}

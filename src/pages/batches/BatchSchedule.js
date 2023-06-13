@@ -41,6 +41,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
           </thead>
           <tbody>
             {editData?.batch_schedule?.value.map((item, index) => {
+              console.log(item, "/////////item")
               // const timestamp = item?.start_time
               // const date = new Date(timestamp)
               // const options = {
@@ -67,20 +68,14 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                           style={{ width: "64px" }}
                           placeholder="09:00"
                           value={response?.length ? response[0] : ""}
-                          onChange={
-                            e => handleChange(e, index)
-                            // setEditData({
-                            //   ...editData,
-                            //   editData: e.target.value,
-                            // })
-                          }
+                          onChange={e => handleChange(e, index)}
                         />
                       </FormGroup>
                       <FormGroup>
                         <Input
                           type="select"
-                          name="course_id"
-                          defaultValue={response?.length ? response?.[1] : ""}
+                          name="started_time"
+                          value={item?.started_time}
                           onChange={
                             e => handleChange(e, index)
                             // setEditData({
@@ -105,21 +100,15 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                           style={{ width: "64px" }}
                           placeholder="05:00"
                           value={response1[0]}
-                          onChange={
-                            e => handleChange(e, index)
-                            // setEditData({
-                            //   ...editData,
-                            //   editData: e.target.value,
-                            // })
-                          }
+                          onChange={e => handleChange(e, index)}
                         />
                       </FormGroup>
                       <FormGroup>
                         <Input
                           type="select"
-                          name="course_id"
-                          value={response1[1]}
-                          onClick={
+                          name="ended_time"
+                          value={item?.ended_time}
+                          onChange={
                             e => handleChange(e, index)
                             // setEditData({
                             //   ...editData,
