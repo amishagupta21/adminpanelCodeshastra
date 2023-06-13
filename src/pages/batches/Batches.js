@@ -43,6 +43,8 @@ import DeleteModal from "components/Common/DeleteModal"
 import EditNewModal from "./EditNewModal"
 import { del, post } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
+import OverlayTrigger from "react-bootstrap/OverlayTrigger"
+import Tooltip from "react-bootstrap/Tooltip"
 
 const Batches = props => {
   const axios = require("axios")
@@ -152,6 +154,26 @@ const Batches = props => {
         dataField: "description",
         text: "Description",
         sort: true,
+        formatter: (cellContent, user) => (
+          <OverlayTrigger
+            key={`tooltip-${user.id}`}
+            placement="top"
+            overlay={<Tooltip>{cellContent}</Tooltip>}
+          >
+            <div
+              style={{
+                maxWidth: "130px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                width: "fit-content",
+              }}
+            >
+              {cellContent}
+            </div>
+          </OverlayTrigger>
+        ),
+
         // formatter: (cellContent, user) => (
         //   <div
         //     dangerouslySetInnerHTML={{
@@ -282,9 +304,24 @@ const Batches = props => {
     history.push(`/batch-list/edit/${user?.id}`)
   }
 
-  const syncNow = async () => {
-    const response = await `${process.env.REACT_APP_API_URL}${url.BATCH_SYNC}`
-    return response
+  const syncNow = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC}`, "")
+      .then(res => {
+        console.log("res", res)
+      })
+      .catch(err => {
+        console.log("err", err)
+      })
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, "")
+      .then(res => {
+        console.log("res", res)
+      })
+      .catch(err => {
+        console.log("err", err)
+      })
   }
 
   return (
@@ -295,14 +332,16 @@ const Batches = props => {
         onClickDelete={onClickDelete}
         onCloseClick={() => setDeleteModalIsOpen(false)}
       />
-      <EditNewModal
-        editNewModal={editNewModal}
-        editModal={editModal}
-        batchApi={batchApi}
-        cancelNewModal={cancelNewModal}
-        setEditModal={setEditModal}
-        onGetBatchesList={onGetBatchesList}
-      />
+      {editModal && (
+        <EditNewModal
+          editNewModal={editNewModal}
+          editModal={editModal}
+          batchApi={batchApi}
+          cancelNewModal={cancelNewModal}
+          setEditModal={setEditModal}
+          onGetBatchesList={onGetBatchesList}
+        />
+      )}
 
       <Row>
         <Col md={12}>

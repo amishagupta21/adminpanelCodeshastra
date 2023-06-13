@@ -24,7 +24,6 @@ import {
 } from "reactstrap"
 import { createNewBatch } from "store/actions"
 import { connect } from "react-redux"
-// import { post, getCourseData } from "../../helpers/api_helper"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 
@@ -158,40 +157,8 @@ const BatchNewModal = ({
   }
 
   const createBatch = data1 => {
-    // fetch(post(url.CREATE_NEW_BATCHES), {
-    //   data: temp,
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log("res", res)
-    //     setModal(false)
-    //     setItem([...item, res.data.data])
-    //   })
-    //   .catch(err => {
-    //     console.log("err", err)
-    //   })
-
-    // const postData = async () => {
-    // try {
-    //   const response = await axios
-    //     .post(postImage(url.CREATE_NEW_BATCHES), temp)
-    //     .then(res => {
-    //       console.log("res", res)
-    //     })
-    //   console.log(response)
-    //   setModal(false)
-    //   setItem([...item, res.data.data])
-    // } catch (error) {
-    //   console.log(error)
-    // }
-    // }
-
     axios({
       method: "POST",
-      // url: "https://lms.unikaksha.dev/api/lms/admin/batch",
       url: `${process.env.REACT_APP_API_URL}${url.CREATE_NEW_BATCHES}`,
       data: temp,
     })
@@ -214,11 +181,6 @@ const BatchNewModal = ({
         return resp
       }
       getNewBatches()
-      // axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
-      //   .then(res => setCourseIdData(res.data.data))
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
     }
   }, [modal])
 
@@ -303,7 +265,7 @@ const BatchNewModal = ({
                 required
               >
                 <option>Select</option>
-                <option>Full Time</option>
+                <option>full Time</option>
               </Input>
             </FormGroup>
           </Col>
@@ -390,9 +352,6 @@ const BatchNewModal = ({
                               {mentors.map((mentor, index) => {
                                 return <option key={index}>{mentor}</option>
                               })}
-                              {/* <option selected> 2 select </option>
-                              <option>1</option>
-                              <option>2</option> */}
                             </Input>
                           </FormGroup>
                         </td>
@@ -502,8 +461,6 @@ const BatchNewModal = ({
                                 {SelectTime.map((time, index) => {
                                   return <option key={index}>{time}</option>
                                 })}
-                                {/* <option selected>AM</option>
-                                <option>PM</option> */}
                               </Input>
                             </FormGroup>
                           </div>
@@ -533,23 +490,12 @@ const BatchNewModal = ({
                                 {SelectTime.map((time, index) => {
                                   return <option key={index}>{time}</option>
                                 })}
-
-                                {/* <option selected>PM</option> */}
                               </Input>
                             </FormGroup>
                           </div>
                         </td>
                         <td>
-                          <div>
-                            {/* {days.map((day, index) => {
-                              return (
-                                <FormGroup key={index} check inline>
-                                  <Input type="checkbox" />
-                                  <Label check>{day}</Label>
-                                </FormGroup>
-                              )
-                            })} */}
-                          </div>
+                          <div></div>
                           <div>
                             {days.map((day, index) => {
                               return (
@@ -637,24 +583,6 @@ const BatchNewModal = ({
                                 <FormGroup key={index} check inline>
                                   <CheckBox {...day} selectDays={selectDays} />
                                 </FormGroup>
-                              )
-
-                              // return <h1 key={index} onClick={()=>{
-                              //   console.log("working")
-                              // }}>days</h1>
-                              return (
-                                <div className="day" key={index}>
-                                  <input
-                                    type="checkbox"
-                                    id={day.name}
-                                    name={day.name}
-                                    // checked={day.isSelected}
-                                    onChange={() => {
-                                      selectDays(day)
-                                    }}
-                                  />
-                                  <label htmlFor={day.name}>{day.name}</label>
-                                </div>
                               )
                             })}
                           </div>
