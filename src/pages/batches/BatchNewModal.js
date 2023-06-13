@@ -199,8 +199,6 @@ const BatchNewModal = ({
     setUpdateDays(updateArray)
   }
 
-  console.log(updateDays)
-
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
@@ -261,7 +259,16 @@ const BatchNewModal = ({
                 required
               >
                 <option>Select</option>
-                <option>Full Stack Web Developer</option>
+                <option value="Full Stack Web Developer">
+                  Full Stack Web Developer
+                </option>
+                <option value="Software Developer Program">
+                  Software Developer Program
+                </option>
+                <option value="Data Science">Data Science</option>
+                <option value="Python Full Stack Developer">
+                  Python Full Stack Developer
+                </option>
               </Input>
             </FormGroup>
           </Col>
