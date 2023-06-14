@@ -11,6 +11,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "reactstrap"
+import TimeField from "react-simple-timefield"
 
 const days = [
   { value: 1, name: "Mon", isSelected: false },
@@ -41,7 +42,6 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
           </thead>
           <tbody>
             {editData?.batch_schedule?.value.map((item, index) => {
-              console.log(item, "/////////item")
               // const timestamp = item?.start_time
               // const date = new Date(timestamp)
               // const options = {
@@ -61,7 +61,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                   <td>
                     <div className="accordionItem-table">
                       <FormGroup>
-                        <Input
+                        <TimeField
                           name="start_time"
                           type="text"
                           // className="me-2 bg-grey border-0"
@@ -93,7 +93,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                   <td>
                     <div className="d-flex">
                       <FormGroup>
-                        <Input
+                        <TimeField
                           type="text"
                           name="end_time"
                           // className="me-2 bg-grey border-0"

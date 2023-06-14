@@ -27,6 +27,7 @@ import { createNewBatch } from "store/actions"
 import { connect } from "react-redux"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
+import TimeField from "react-simple-timefield"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
@@ -197,7 +198,6 @@ const BatchNewModal = ({
     }
     const updateArray = [...updateDays]
     updateArray[index] = updateObj
-    // console.log(updateObj, "updateObj", updateArray)
     setUpdateDays(updateArray)
   }
 
@@ -466,11 +466,9 @@ const BatchNewModal = ({
                             <td>
                               <div className="accordionItem-table">
                                 <FormGroup>
-                                  <Input
-                                    type="text"
-                                    className="me-2 bg-grey border-0"
+                                  <TimeField
+                                    // className="me-2 bg-grey border-0"
                                     style={{ width: "64px" }}
-                                    placeholder="09:00"
                                     value={item.start_time}
                                     name="start_time"
                                     onChange={e => {
@@ -484,7 +482,7 @@ const BatchNewModal = ({
                                     name="started_time"
                                     type="select"
                                     style={{ width: "64px" }}
-                                    className="border-0"
+                                    // className="border-0"
                                     value={item.started_time}
                                     onChange={e =>
                                       handleBatchScheduleChange(e, index, item)
@@ -501,7 +499,7 @@ const BatchNewModal = ({
                             <td>
                               <div className="d-flex">
                                 <FormGroup>
-                                  <Input
+                                  <TimeField
                                     name="end_time"
                                     type="text"
                                     className="me-2 bg-grey border-0"
