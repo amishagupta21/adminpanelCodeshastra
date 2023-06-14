@@ -44,7 +44,7 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
           selectDays({ isSelected, name })
         }}
       />
-      <label htmlFor={name}>{name}</label>
+      <label htmlFor={name} className="check-label">{name}</label>
     </>
   )
 }

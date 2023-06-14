@@ -41,7 +41,7 @@
   justify-content: center;
   align-items: center;
   border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px
+  border-bottom-right-radius: 5px;
 }
 .btn-light-grey
 {
@@ -345,14 +345,11 @@ table thead
 }
 .text-limit
 {
-  max-width: 190px;
-  overflow: hidden;
-   display: -webkit-box;
-   -webkit-line-clamp: 1; 
-           line-clamp: 1;
-   -webkit-box-orient: vertical;
-   box-orient: vertical;
-   
+  width: 190px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 .prog-bar-accordion .accordion .accordion-item button.accordion-button
 {
@@ -362,6 +359,12 @@ table thead
 {
   background: transparent !important;
 }
+.check-label
+{
+  margin-left: 8px;
+  margin-bottom: 20px;
+}
+
 
 
 @media (max-width: 767px) {
