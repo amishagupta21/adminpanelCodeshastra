@@ -408,6 +408,7 @@ const BatchNewModal = ({
                         <td>
                           <Input
                             type="date"
+                            min={startDate}
                             value={endDate}
                             onChange={e => {
                               setEndDate(e.target.value)
@@ -546,7 +547,16 @@ const BatchNewModal = ({
                               </div>
                             </td>
                             <td>
-                              <span className="me-3">
+                              <span
+                                className="me-3"
+                                onClick={() => {
+                                  if (updateDays.length > 1) {
+                                    const newUpdateDays = [...updateDays]
+                                    newUpdateDays.splice(index, 1)
+                                    setUpdateDays(newUpdateDays)
+                                  }
+                                }}
+                              >
                                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
                               </span>
                             </td>
