@@ -148,7 +148,7 @@ const BatchNewModal = ({
     variant_type: variantType,
     class_link: classLink,
     mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
-    learner_limit: learnersLimit,
+    learner_limit: learnersLimit || 23,
     start_date: startDate,
     end_date: endDate,
     batch_schedule: {
