@@ -201,6 +201,11 @@ table thead
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+.batch-accord .my-padding
+{
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
 .btn-grey {
   background: #f1f1f3 !important;
   border: 1px solid #f1f1f3 !important;
@@ -361,8 +366,70 @@ table thead
 }
 .check-label
 {
-  margin-left: 8px;
+  margin-left: 4px;
   margin-bottom: 20px;
+}
+.checkbox
+{
+  padding-left: 0px !important;
+}
+.select_box1
+{
+  overflow: hidden;
+  border: 1px solid #ced4da !important;
+  position: relative;
+  background: transparent !important;
+  border-radius: 0.25rem !important;
+}
+.select_box1:after
+{
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #CED4DA !important;
+  border-radius: 0.25rem !important;
+  position: absolute;
+  top: 40%;
+  right: 5px;
+  content: "";
+  z-index: 98;
+ }
+.select_box1 select
+{
+  border: 0;
+  position: relative;
+  z-index: 99;
+  background: none;
+  border: 1px solid #ced4da !important;
+}
+.my-date-icon input[type="date"]::-webkit-calendar-picker-indicator 
+{
+  color: #000;
+  display: block;
+  background:  url('../../assets/images/calendar.png') no-repeat;
+  background-position:100%;
+  width: 13px;
+  height: 15px;
+  position: relative;
+  z-index: 2;
+}
+.date-bg
+{
+  position: relative;
+}
+.date-bg::after
+{
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  background:#74788D;
+  z-index: 1;
+}
+.tr-border
+{
+  border-bottom: 1px solid #CED4DA;
 }
 
 
@@ -381,7 +448,6 @@ table thead
   {
     height: auto !important;
   }
-  
 }
 @media (max-width: 992px) {
   .sidebar-enable #vertical-menu-btn i

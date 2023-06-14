@@ -20,13 +20,14 @@ import {
   UncontrolledAccordion,
   AccordionItem,
   AccordionHeader,
+  Spinner,
   AccordionBody,
 } from "reactstrap"
 import { createNewBatch } from "store/actions"
 import { connect } from "react-redux"
-// import { post, getCourseData } from "../../helpers/api_helper"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
+import TimeField from "react-simple-timefield"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
@@ -72,6 +73,17 @@ const BatchNewModal = ({
   const [endTime, setendTime] = useState("")
   const [courseIdData, setCourseIdData] = useState([])
   const [selectedCourseId, setSelectedCourseId] = useState("0")
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [updateDays, setUpdateDays] = useState([
+    {
+      day: "",
+      start_time: "",
+      end_time: "",
+      started_time: "",
+      ended_time: "",
+    },
+  ])
   const SelectTime = ["AM", "PM"]
 
   const mentors = ["select", 1, 2]
@@ -125,19 +137,9 @@ const BatchNewModal = ({
       }
       return _day
     })
-    console.log("updateday", updateDays)
+    // console.log("updateday", updateDays)
     setDays(updateDays)
   }
-
-  const filterDay = days.filter(day => day.isSelected)
-
-  const updateDays = filterDay.map(day => {
-    return {
-      day: day.day,
-      start_time: "2023-03-21T06:58:58.648Z",
-      end_time: "2023-03-21T07:58:58.648Z",
-    }
-  })
 
   const temp = {
     name: batchName,
@@ -158,51 +160,23 @@ const BatchNewModal = ({
   }
 
   const createBatch = data1 => {
-    // fetch(post(url.CREATE_NEW_BATCHES), {
-    //   data: temp,
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log("res", res)
-    //     setModal(false)
-    //     setItem([...item, res.data.data])
-    //   })
-    //   .catch(err => {
-    //     console.log("err", err)
-    //   })
-
-    // const postData = async () => {
-    // try {
-    //   const response = await axios
-    //     .post(postImage(url.CREATE_NEW_BATCHES), temp)
-    //     .then(res => {
-    //       console.log("res", res)
-    //     })
-    //   console.log(response)
-    //   setModal(false)
-    //   setItem([...item, res.data.data])
-    // } catch (error) {
-    //   console.log(error)
-    // }
-    // }
+    setIsLoading(true)
 
     axios({
       method: "POST",
-      // url: "https://lms.unikaksha.dev/api/lms/admin/batch",
       url: `${process.env.REACT_APP_API_URL}${url.CREATE_NEW_BATCHES}`,
       data: temp,
     })
       .then(res => {
         console.log("res", res)
+        setIsLoading(false)
         setModal(false)
         setItem([...item, res.data.data])
       })
       .catch(err => {
         console.log("err", err)
       })
+
     // return resp
   }
 
@@ -214,19 +188,64 @@ const BatchNewModal = ({
         return resp
       }
       getNewBatches()
-      // axios("https://lms.unikaksha.dev/api/lms/moodle/getCourseids")
-      //   .then(res => setCourseIdData(res.data.data))
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
     }
   }, [modal])
+
+  const handleBatchScheduleChange = (e, index, item) => {
+    const updateObj = {
+      ...item,
+      [e.target.name]: e.target.value,
+    }
+    const updateArray = [...updateDays]
+    updateArray[index] = updateObj
+    setUpdateDays(updateArray)
+  }
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
       <ModalBody>
         <Row>
+          <Col md={12} className="batch-accord">
+            <UncontrolledAccordion defaultOpen={["1", "2", "3"]} stayOpen>
+            <AccordionItem className="mb-3">
+                <AccordionHeader targetId="3">
+                  Moodle Course
+                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
+                </AccordionHeader>
+                <AccordionBody accordionId="3" className="my-padding">
+                  <Row>
+                    <Col md={4} >
+                      <FormGroup>
+                        <Label>Course</Label>
+                        <Input
+                          type="select"
+                          name="course_id"
+                          onChange={e => {
+                            setSelectedCourseId(e.target.value)
+                          }}
+                        >
+                          <option value="0">Select Course ID</option>
+                          {courseIdData.map((item, index) => {
+                            return (
+                              <option key={index} value={item?.courseid}>
+                                {item?.coursename}
+                              </option>
+                            )
+                          })}
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </AccordionBody>
+              </AccordionItem>
+              <AccordionItem className="mb-3">
+                <AccordionHeader targetId="1">
+                  Batch Configuration
+                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
+                </AccordionHeader>
+                <AccordionBody accordionId="1" className="my-padding">
+                <Row>
           <Col md={3}>
             <FormGroup>
               <Label>
@@ -282,7 +301,16 @@ const BatchNewModal = ({
                 required
               >
                 <option>Select</option>
-                <option>Full Stack Web Developer</option>
+                <option value="Full Stack Web Developer">
+                  Full Stack Web Developer
+                </option>
+                <option value="Software Developer Program">
+                  Software Developer Program
+                </option>
+                <option value="Data Science">Data Science</option>
+                <option value="Python Full Stack Developer">
+                  Python Full Stack Developer
+                </option>
               </Input>
             </FormGroup>
           </Col>
@@ -303,7 +331,7 @@ const BatchNewModal = ({
                 required
               >
                 <option>Select</option>
-                <option>Full Time</option>
+                <option>full Time</option>
               </Input>
             </FormGroup>
           </Col>
@@ -322,20 +350,39 @@ const BatchNewModal = ({
               />
             </FormGroup>
           </Col>
+          <Col md={3} className="my-date-icon">
+            <Label>
+              Start Date <span className="mandotary star" style={{ color: "red" }}>*</span>
+            </Label>
+            <Input
+              type="date"
+              value={startDate}
+              onChange={e => {
+                setStartDate(e.target.value)
+              }}
+              required
+              className="date-bg"
+            />
+          </Col>
+          <Col md={3} className="my-date-icon">
+            <Label>
+              End Date <span className="mandotary star" style={{ color: "red" }}>*</span>
+            </Label>
+            <Input
+              type="date"
+              value={endDate}
+              onChange={e => {
+                setEndDate(e.target.value)
+              }}
+              required
+              className="date-bg"
+            />
+          </Col>
         </Row>
-        <Row>
-          <Col md={12} className="batch-accord">
-            <UncontrolledAccordion defaultOpen={["1", "2", "3"]} stayOpen>
-              <AccordionItem className="mb-3">
-                <AccordionHeader targetId="1">
-                  Batch Configuration
-                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                </AccordionHeader>
-                <AccordionBody accordionId="1">
-                  <Table responsive>
+                  {/* <Table responsive>
                     <thead>
-                      <tr>
-                        <th>
+                      <tr> */}
+                        {/* <th>
                           Mentor{" "}
                           <span
                             className="mandotary star"
@@ -352,8 +399,8 @@ const BatchNewModal = ({
                           >
                             *
                           </span>
-                        </th>
-                        <th>
+                        </th> */}
+                        {/* <th>
                           Start Date{" "}
                           <span
                             className="mandotary star"
@@ -370,12 +417,12 @@ const BatchNewModal = ({
                           >
                             *
                           </span>
-                        </th>
-                      </tr>
+                        </th> */}
+                      {/* </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
+                      <tr> */}
+                        {/* <td>
                           <FormGroup className="select_box border-0">
                             <Input
                               name="select"
@@ -390,9 +437,6 @@ const BatchNewModal = ({
                               {mentors.map((mentor, index) => {
                                 return <option key={index}>{mentor}</option>
                               })}
-                              {/* <option selected> 2 select </option>
-                              <option>1</option>
-                              <option>2</option> */}
                             </Input>
                           </FormGroup>
                         </td>
@@ -409,8 +453,8 @@ const BatchNewModal = ({
                               required
                             />
                           </FormGroup>
-                        </td>
-                        <td>
+                        </td> */}
+                        {/* <td>
                           <Input
                             type="date"
                             value={startDate}
@@ -419,8 +463,8 @@ const BatchNewModal = ({
                             }}
                             required
                           />
-                        </td>
-                        <td>
+                        </td> */}
+                        {/* <td>
                           <Input
                             type="date"
                             value={endDate}
@@ -429,10 +473,10 @@ const BatchNewModal = ({
                             }}
                             required
                           />
-                        </td>
-                      </tr>
+                        </td> */}
+                      {/* </tr>
                     </tbody>
-                  </Table>
+                  </Table> */}
                 </AccordionBody>
               </AccordionItem>
               <AccordionItem className="mb-2">
@@ -442,7 +486,7 @@ const BatchNewModal = ({
                 </AccordionHeader>
                 <AccordionBody accordionId="2">
                   <Table responsive>
-                    <thead>
+                    <thead className="bg-transparent">
                       <tr>
                         <th>
                           Start Time
@@ -475,97 +519,100 @@ const BatchNewModal = ({
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <div className="accordionItem-table">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="09:00"
-                                value={startTime}
-                                onChange={e => {
-                                  setStartTime(e.target.value)
-                                }}
-                                required
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                className="border-0"
-                                required
-                              >
-                                {SelectTime.map((time, index) => {
-                                  return <option key={index}>{time}</option>
-                                })}
-                                {/* <option selected>AM</option>
-                                <option>PM</option> */}
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="d-flex">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="05:00"
-                                value={endTime}
-                                onChange={e => {
-                                  setendTime(e.target.value)
-                                }}
-                                required
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                required
-                              >
-                                {SelectTime.map((time, index) => {
-                                  return <option key={index}>{time}</option>
-                                })}
-
-                                {/* <option selected>PM</option> */}
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            {/* {days.map((day, index) => {
-                              return (
-                                <FormGroup key={index} check inline>
-                                  <Input type="checkbox" />
-                                  <Label check>{day}</Label>
+                      {updateDays.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>
+                              <div className="accordionItem-table">
+                                <FormGroup>
+                                  <TimeField
+                                    // className="me-2 bg-grey border-0"
+                                    className="form-control me-2"
+                                    style={{ width: "64px" }}
+                                    value={item.start_time}
+                                    name="start_time"
+                                    onChange={e => {
+                                      handleBatchScheduleChange(e, index, item)
+                                    }}
+                                    required
+                                  />
                                 </FormGroup>
-                              )
-                            })} */}
-                          </div>
-                          <div>
-                            {days.map((day, index) => {
-                              return (
-                                <FormGroup key={index} check inline>
-                                  <CheckBox {...day} selectDays={selectDays} />
+                                <FormGroup className="select_box1 border-0">
+                                  <Input
+                                    name="started_time"
+                                    type="select"
+                                    style={{ width: "64px" }}
+                                    // className="border-0"
+                                    value={item.started_time}
+                                    onChange={e =>
+                                      handleBatchScheduleChange(e, index, item)
+                                    }
+                                    required
+                                  >
+                                    {SelectTime.map((time, index) => {
+                                      return <option key={index}>{time}</option>
+                                    })}
+                                  </Input>
                                 </FormGroup>
-                              )
-                            })}
-                          </div>
-                        </td>
-                        <td>
-                          <span className="me-3">
-                            <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                          </span>
-                        </td>
-                      </tr>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="d-flex">
+                                <FormGroup>
+                                  <TimeField
+                                    name="end_time"
+                                    type="text"
+                                    className="me-2 form-control"
+                                    style={{ width: "64px" }}
+                                    placeholder="05:00"
+                                    value={item.end_time}
+                                    onChange={e => {
+                                      handleBatchScheduleChange(e, index, item)
+                                    }}
+                                    required
+                                  />
+                                </FormGroup>
+                                <FormGroup className="select_box1 border-0">
+                                  <Input
+                                    name="ended_time"
+                                    type="select"
+                                    style={{ width: "64px" }}
+                                    required
+                                    value={item.ended_time}
+                                    onChange={e => {
+                                      handleBatchScheduleChange(e, index, item)
+                                    }}
+                                  >
+                                    {SelectTime.map((time, index) => {
+                                      return <option key={index}>{time}</option>
+                                    })}
+                                  </Input>
+                                </FormGroup>
+                              </div>
+                            </td>
+                            <td>
+                              
+                              <div>
+                                {days.map((day, index) => {
+                                  return (
+                                    <FormGroup key={index} check inline className="checkbox">
+                                      <CheckBox
+                                        {...day}
+                                        selectDays={selectDays}
+                                      />
+                                    </FormGroup>
+                                  )
+                                })}
+                              </div>
+                            </td>
+                            <td>
+                              <span className="me-3">
+                                <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        )
+                      })}
                       <tr>
                         <td
                           colSpan={4}
@@ -582,127 +629,25 @@ const BatchNewModal = ({
                           ></div>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <div className="d-flex">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="09:00"
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                className="border-0"
-                              >
-                                <option selected>AM</option>
-                                <option>PM</option>
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="d-flex">
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                className="me-2 bg-grey border-0"
-                                style={{ width: "64px" }}
-                                placeholder="05:00"
-                              />
-                            </FormGroup>
-                            <FormGroup className="select_box border-0">
-                              <Input
-                                name="select"
-                                type="select"
-                                style={{ width: "64px" }}
-                                className="border-0"
-                              >
-                                {SelectTime.map((time, index) => {
-                                  return <option key={index}>{time}</option>
-                                })}
-                              </Input>
-                            </FormGroup>
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            {days.map((day, index) => {
-                              return (
-                                <FormGroup key={index} check inline>
-                                  <CheckBox {...day} selectDays={selectDays} />
-                                </FormGroup>
-                              )
-
-                              // return <h1 key={index} onClick={()=>{
-                              //   console.log("working")
-                              // }}>days</h1>
-                              return (
-                                <div className="day" key={index}>
-                                  <input
-                                    type="checkbox"
-                                    id={day.name}
-                                    name={day.name}
-                                    // checked={day.isSelected}
-                                    onChange={() => {
-                                      selectDays(day)
-                                    }}
-                                  />
-                                  <label htmlFor={day.name}>{day.name}</label>
-                                </div>
-                              )
-                            })}
-                          </div>
-                        </td>
-                        <td>
-                          <span className="me-3">
-                            <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                          </span>
-                        </td>
-                      </tr>
                     </tbody>
                   </Table>
                   <Row>
                     <Col md={12}>
-                      <button className="px-4 ms-3 create-new-appointment">
+                      <button
+                        className="px-4 ms-3 create-new-appointment"
+                        onClick={() =>
+                          setUpdateDays([
+                            ...updateDays,
+                            {
+                              day: "",
+                              start_time: "",
+                              end_time: "",
+                            },
+                          ])
+                        }
+                      >
                         Add A Schedule +
                       </button>
-                    </Col>
-                  </Row>
-                </AccordionBody>
-              </AccordionItem>
-              <AccordionItem className="mb-3">
-                <AccordionHeader targetId="3">
-                  Moodle Course ID
-                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                </AccordionHeader>
-                <AccordionBody accordionId="3">
-                  <Row>
-                    <Col md={4} style={{ paddingLeft: "33px" }}>
-                      <FormGroup>
-                        <Label>Course ID</Label>
-                        <Input
-                          type="select"
-                          name="course_id"
-                          onChange={e => {
-                            setSelectedCourseId(e.target.value)
-                          }}
-                        >
-                          <option value="0">Select Course ID</option>
-                          {courseIdData.map((item, index) => {
-                            return (
-                              <option key={index} value={item?.courseid}>
-                                {item?.coursename}
-                              </option>
-                            )
-                          })}
-                        </Input>
-                      </FormGroup>
                     </Col>
                   </Row>
                 </AccordionBody>
@@ -712,18 +657,36 @@ const BatchNewModal = ({
         </Row>
       </ModalBody>
       <ModalFooter className="justify-content-between">
-        <div>
+       
+      <div>
           <Button color="success" className="px-5">
             Clone
           </Button>
-        </div>
-        <div>
-          <Button color="primary" outline onClick={toggle} className="px-5">
-            Cancel
+      </div>
+      <div>
+        <Button color="primary" outline onClick={toggle} className="px-5">
+          Cancel
+        </Button>
+        {isLoading ? (
+          <Button
+            color="primary"
+            onClick={createBatch}
+            className="px-5"
+            disabled
+          >
+            <Spinner style={{ width: "1rem", height: "1rem" }} />
+            &nbsp;&nbsp; Creating...
           </Button>
-          <Button color="primary" onClick={createBatch} className="px-5 ms-4">
+        ) : (
+          <Button
+            color="primary"
+            onClick={createBatch}
+            className="px-5 ms-3"
+            disabled={!isFormValid}
+          >
             Create
           </Button>
+        )}
         </div>
       </ModalFooter>
     </Modal>

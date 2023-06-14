@@ -151,6 +151,8 @@ export const GET_BATCHES_API = "/admin/batch"
 
 export const BATCH_SYNC = "/admin/batch/sync"
 
+export const BATCH_SYNC_GRADES = "/admin/batch/sync/grades"
+
 export const GET_NEW_BATCHES = "/admin/batch"
 
 // DASHBOARD

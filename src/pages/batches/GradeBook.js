@@ -184,9 +184,6 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
       <Row>
         <Col md={12} className="text-end">
-          <Button color="success" className="rounded-pill mb-3">
-            + Add New Grade Book
-          </Button>
           <div className="text-start">
             <h4>Grade Book</h4>
           </div>
