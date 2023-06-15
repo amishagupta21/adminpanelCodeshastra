@@ -28,6 +28,7 @@ import { connect } from "react-redux"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import TimeField from "react-simple-timefield"
+import Select from "react-select"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
@@ -84,6 +85,20 @@ const BatchNewModal = ({
       ended_time: "",
     },
   ])
+  const [options, setOptions] = useState([
+    {
+      label: "Select Course ID",
+      value: "0",
+    },
+  ])
+
+  useEffect(() => {
+    const formatedCourseId = []
+    courseIdData.map(item =>
+      formatedCourseId.push({ label: item.coursename, value: item.courseid })
+    )
+    setOptions([...options, ...formatedCourseId])
+  }, [courseIdData])
   const SelectTime = ["AM", "PM"]
 
   const mentors = ["select", 1, 2]
@@ -155,8 +170,7 @@ const BatchNewModal = ({
       name: batchName,
       value: updateDays,
     },
-    unikodecourseid:
-      selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
+    unikodecourseid: selectedCourseId?.value,
   }
 
   const createBatch = data1 => {
@@ -612,22 +626,17 @@ const BatchNewModal = ({
                     <Col md={4} style={{ paddingLeft: "33px" }}>
                       <FormGroup>
                         <Label>Course ID</Label>
-                        <Input
-                          type="select"
-                          name="course_id"
+                        <Select
+                          name="filter"
+                          placeholder="Course ID"
                           onChange={e => {
-                            setSelectedCourseId(e.target.value)
+                            setSelectedCourseId(e)
                           }}
-                        >
-                          <option value="0">Select Course ID</option>
-                          {courseIdData.map((item, index) => {
-                            return (
-                              <option key={index} value={item?.courseid}>
-                                {item?.coursename}
-                              </option>
-                            )
-                          })}
-                        </Input>
+                          value={selectedCourseId}
+                          options={options}
+                          menuPlacement="top"
+                          className="couserId-width"
+                        />
                       </FormGroup>
                     </Col>
                   </Row>
