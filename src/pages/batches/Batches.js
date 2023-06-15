@@ -13,6 +13,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Spinner,
   Table,
   Progress,
   FormGroup,
@@ -69,6 +70,7 @@ const Batches = props => {
   const [user, setUser] = useState({})
   const [users, setUsers] = useState([])
   const [editModal, setEditModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const editNewModal = id => {
     onGetBatchesApi(id)
@@ -313,8 +315,9 @@ const Batches = props => {
     history.push(`/batch-list/edit/${user?.id}`)
   }
 
-  const syncNow = () => {
-    axios
+  const syncNow = async () => {
+    setIsLoading(true)
+    await axios
       .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC}`, "")
       .then(res => {
         console.log("res", res)
@@ -323,13 +326,13 @@ const Batches = props => {
         console.log("err", err)
       })
 
-    axios
+    await axios
       .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, "")
-      .then(res => {
-        console.log("res", res)
+      .then(() => {
+        setIsLoading(false)
       })
-      .catch(err => {
-        console.log("err", err)
+      .catch(() => {
+        setIsLoading(false)
       })
   }
 
@@ -446,14 +449,31 @@ const Batches = props => {
             <Col>
               <div className="d-flex justify-content-between my-2">
                 <h4>ALL BATCHES</h4>
-                <span>
-                  <Button
-                    color="primary"
-                    className="rounded-pill mb-3 me-3 px-4"
-                    onClick={syncNow}
-                  >
-                    Sync Now
-                  </Button>
+                <span style={{ display: "flex" }}>
+                  {isLoading ? (
+                    <Button
+                      color="primary"
+                      className="rounded-pill mb-3 me-3 px-4"
+                      disabled
+                      style={{
+                        display: "flex",
+                        gap: "5px",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Spinner style={{ width: "1rem", height: "1rem" }} />
+                      syncing...
+                    </Button>
+                  ) : (
+                    <Button
+                      color="primary"
+                      className="rounded-pill mb-3 me-3 px-4"
+                      onClick={syncNow}
+                    >
+                      Sync Now
+                    </Button>
+                  )}
+
                   <Button
                     color="success"
                     className="rounded-pill mb-3"

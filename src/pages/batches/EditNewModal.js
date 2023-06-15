@@ -15,6 +15,7 @@ import {
   AccordionItem,
   AccordionHeader,
   AccordionBody,
+  CloseButton,
 } from "reactstrap"
 import { editNewBatch } from "store/actions"
 import { connect } from "react-redux"
@@ -71,7 +72,7 @@ const EditNewModal = ({
     data.batch_schedule.value = result
     setEditData(data)
   }
-
+  console.log(editData)
   return (
     <Modal
       isOpen={editModal}
@@ -80,21 +81,23 @@ const EditNewModal = ({
       centered
       size="lg"
     >
-      <ModalHeader editNewModal={editNewModal}>Edit Batch</ModalHeader>
+      <ModalHeader editNewModal={editNewModal} className="my-modal-header" ><span>Edit Batch</span>
+        <CloseButton onClick={cancelNewModal} />
+      </ModalHeader>
       <ModalBody>
         <Row>
           <Col md={12} className="batch-accord">
             <UncontrolledAccordion defaultOpen={["1", "2", "3"]} stayOpen>
             <AccordionItem className="mb-3">
                 <AccordionHeader targetId="3">
-                  Moodle Course ID
+                  Moodle Course
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
                 </AccordionHeader>
                 <AccordionBody accordionId="3">
                   <Row>
                     <Col md={4} style={{ paddingLeft: "33px" }}>
                       <FormGroup>
-                        <Label>Course ID</Label>
+                        <Label>Course</Label>
                         <Input
                           name="select"
                           onChange={e =>
@@ -106,7 +109,7 @@ const EditNewModal = ({
                           value={editData?.course}
                           type="select"
                         >
-                          <option value="0">Select Course ID</option>
+                          <option value="0">Select Course</option>
                           {courseIdData.map((item, index) => {
                             return (
                               <option key={index} value={editData?.courseid}>
@@ -129,7 +132,7 @@ const EditNewModal = ({
                 <Row>
           <Col md={3}>
             <FormGroup>
-              <Label>Batch Name</Label>
+              <Label>Batch Name <span className="mandotary star" style={{ color: "red" }}>*</span></Label>
               <Input
                 type="text"
                 value={editData?.name}
@@ -145,7 +148,7 @@ const EditNewModal = ({
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Description</Label>
+              <Label>Description <span className="mandotary star" style={{ color: "red" }}>*</span></Label>
               <Input
                 value={editData?.description}
                 onChange={e =>
@@ -161,7 +164,7 @@ const EditNewModal = ({
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Course</Label>
+              <Label>Course <span className="mandotary star" style={{ color: "red" }}>*</span></Label>
               <Input
                 name="select"
                 onChange={e =>
@@ -189,7 +192,7 @@ const EditNewModal = ({
           </Col>
           <Col md={3}>
             <FormGroup>
-              <Label>Variant Type</Label>
+              <Label>Variant Type <span className="mandotary star" style={{ color: "red" }}>*</span></Label>
               <Input
                 name="select"
                 value={editData?.variant_type}
@@ -225,7 +228,7 @@ const EditNewModal = ({
             </FormGroup>
           </Col>
           <Col md={3} className="my-date-icon">
-            <Label>Start Date</Label>
+            <Label>Start Date <span className="mandotary star" style={{ color: "red" }}>*</span></Label>
             <Input
               type="date"
               value={editData?.start_date}
@@ -239,7 +242,7 @@ const EditNewModal = ({
             />
           </Col>
           <Col md={3} className="my-date-icon">
-            <Label>End Date</Label>
+            <Label>End Date <span className="mandotary star" style={{ color: "red" }}>*</span></Label>
             <Input
               type="date"
               value={editData?.end_date}
@@ -318,6 +321,7 @@ const EditNewModal = ({
                         <td>
                           <Input
                             type="date"
+                            min={editData?.start_date}
                             value={editData?.end_date}
                             onChange={e =>
                               setEditData({

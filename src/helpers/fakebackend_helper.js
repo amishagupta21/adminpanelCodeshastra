@@ -129,12 +129,26 @@ const getBatches = async data => {
 }
 
 const getBatchesLearner = async data => {
-  const resp = await getCourseData(url.GET_BATCHES_LEARNER_LIST + `/${data}`)
+  const resp = await getCourseData(
+    url.GET_BATCHES_LEARNER_LIST +
+      `/${data}?pageSize=${data?.pageSize || 28}&page=${
+        data?.page || 1
+      }&sortBy=${data?.sortBy || "created_at"}&?sortOrder=${
+        data?.sortOrder || "DESC"
+      }`
+  )
   return resp
 }
 
 const getBatchesGrade = async data => {
-  const resp = await getCourseData(url.GET_GRADE_BOOK + `/${data}`)
+  const resp = await getCourseData(
+    url.GET_GRADE_BOOK +
+      `/${data}?pageSize=${data?.pageSize || 28}&page=${
+        data?.page || 1
+      }&sortBy=${data?.sortBy || "created_at"}&?sortOrder=${
+        data?.sortOrder || "DESC"
+      }`
+  )
   return resp
 }
 

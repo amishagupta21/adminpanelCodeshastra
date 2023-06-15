@@ -28,6 +28,7 @@ import { connect } from "react-redux"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import TimeField from "react-simple-timefield"
+import Select from "react-select"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
@@ -84,6 +85,20 @@ const BatchNewModal = ({
       ended_time: "",
     },
   ])
+  const [options, setOptions] = useState([
+    {
+      label: "Select Course ID",
+      value: "0",
+    },
+  ])
+
+  useEffect(() => {
+    const formatedCourseId = []
+    courseIdData.map(item =>
+      formatedCourseId.push({ label: item.coursename, value: item.courseid })
+    )
+    setOptions([...options, ...formatedCourseId])
+  }, [courseIdData])
   const SelectTime = ["AM", "PM"]
 
   const mentors = ["select", 1, 2]
@@ -115,13 +130,14 @@ const BatchNewModal = ({
   ])
 
   const [days, setDays] = useState([
+    { day: 7, name: "Sun", isSelected: false },
     { day: 1, name: "Mon", isSelected: false },
     { day: 2, name: "Tue", isSelected: false },
     { day: 3, name: "Wed", isSelected: false },
     { day: 4, name: "Thu", isSelected: false },
     { day: 5, name: "Fri", isSelected: false },
     { day: 6, name: "Sat", isSelected: false },
-    { day: 7, name: "Sun", isSelected: false },
+    
   ])
 
   const selectDays = day => {
@@ -148,15 +164,14 @@ const BatchNewModal = ({
     variant_type: variantType,
     class_link: classLink,
     mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
-    learner_limit: learnersLimit,
+    learner_limit: learnersLimit || 23,
     start_date: startDate,
     end_date: endDate,
     batch_schedule: {
       name: batchName,
       value: updateDays,
     },
-    unikodecourseid:
-      selectedCourseId === "Select Course ID" ? "0" : selectedCourseId,
+    unikodecourseid: selectedCourseId?.value,
   }
 
   const createBatch = data1 => {
@@ -225,7 +240,7 @@ const BatchNewModal = ({
                             setSelectedCourseId(e.target.value)
                           }}
                         >
-                          <option value="0">Select Course ID</option>
+                          <option value="0">Select Course</option>
                           {courseIdData.map((item, index) => {
                             return (
                               <option key={index} value={item?.courseid}>
@@ -467,6 +482,7 @@ const BatchNewModal = ({
                         {/* <td>
                           <Input
                             type="date"
+                            min={startDate}
                             value={endDate}
                             onChange={e => {
                               setEndDate(e.target.value)
@@ -521,7 +537,7 @@ const BatchNewModal = ({
                     <tbody>
                       {updateDays.map((item, index) => {
                         return (
-                          <tr key={index}>
+                          <tr key={index} className="tr-border">
                             <td>
                               <div className="accordionItem-table">
                                 <FormGroup>
@@ -606,29 +622,22 @@ const BatchNewModal = ({
                               </div>
                             </td>
                             <td>
-                              <span className="me-3">
+                              <span
+                                className="me-3"
+                                onClick={() => {
+                                  if (updateDays.length > 1) {
+                                    const newUpdateDays = [...updateDays]
+                                    newUpdateDays.splice(index, 1)
+                                    setUpdateDays(newUpdateDays)
+                                  }
+                                }}
+                              >
                                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
                               </span>
                             </td>
                           </tr>
                         )
                       })}
-                      <tr>
-                        <td
-                          colSpan={4}
-                          style={{
-                            paddingLeft: "0px",
-                            paddingRight: "0px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              height: "1px",
-                              background: "#CED4DA",
-                            }}
-                          ></div>
-                        </td>
-                      </tr>
                     </tbody>
                   </Table>
                   <Row>

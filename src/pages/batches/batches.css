@@ -367,7 +367,7 @@ table thead
 .check-label
 {
   margin-left: 4px;
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 .checkbox
 {
@@ -430,6 +430,12 @@ table thead
 .tr-border
 {
   border-bottom: 1px solid #CED4DA;
+}
+.my-modal-header .modal-title
+{
+  display: flex !important;
+  justify-content: space-between !important;
+  width: 100% !important;
 }
 
 
