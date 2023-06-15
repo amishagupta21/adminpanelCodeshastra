@@ -71,7 +71,7 @@ const EditNewModal = ({
     data.batch_schedule.value = result
     setEditData(data)
   }
-
+  console.log(editData)
   return (
     <Modal
       isOpen={editModal}
@@ -289,19 +289,19 @@ const EditNewModal = ({
                         <Label>Course ID</Label>
                         <Input
                           name="select"
-                          onChange={e =>
-                            setEditData({
+                          onChange={e => {
+                            return setEditData({
                               ...editData,
-                              course: e.target.value,
+                              unikodecourseid: e.target.value,
                             })
-                          }
-                          value={editData?.course}
+                          }}
+                          value={editData?.unikodecourseid}
                           type="select"
                         >
                           <option value="0">Select Course ID</option>
                           {courseIdData.map((item, index) => {
                             return (
-                              <option key={index} value={editData?.courseid}>
+                              <option key={index} value={item?.courseid}>
                                 {item?.coursename}
                               </option>
                             )
