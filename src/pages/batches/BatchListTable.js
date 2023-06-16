@@ -120,7 +120,7 @@ const BatchListTable = ({
           <div onClick={confirmStatus}>
             <div
               className={
-                user?.status === 0 ? "btn-status-inactive" : "btn-status-active"
+                user?.status === 0 ? "btn-status-active" : "btn-status-inactive"
               }
             >
               {user?.status === "true" ? "Active" : "Inactive"}

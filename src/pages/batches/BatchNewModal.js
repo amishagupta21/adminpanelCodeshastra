@@ -46,7 +46,7 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
           selectDays({ isSelected, name })
         }}
       />
-      <label htmlFor={name} className="check-label">{name}</label>
+      <label htmlFor={name} className="check-label" style={{marginLeft:'6px'}}>{name}</label>
     </>
   )
 }
@@ -232,7 +232,7 @@ const BatchNewModal = ({
                   <Row>
                     <Col md={4} >
                       <FormGroup>
-                        <Label>Course</Label>
+                        <Label>Course Name</Label>
                         <Input
                           type="select"
                           name="course_id"

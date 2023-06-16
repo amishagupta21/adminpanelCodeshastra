@@ -97,7 +97,7 @@ const EditNewModal = ({
                   <Row>
                     <Col md={4} style={{ paddingLeft: "33px" }}>
                       <FormGroup>
-                        <Label>Course</Label>
+                        <Label>Course Name</Label>
                         <Input
                           name="select"
                           onChange={e =>
