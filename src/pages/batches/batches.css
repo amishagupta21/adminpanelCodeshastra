@@ -364,10 +364,16 @@ table thead
 {
   background: transparent !important;
 }
+.form-check-inline
+{
+  margin-right:5px !important;
+}
 .check-label
 {
-  margin-left: 4px;
+  margin-left: 0px;
   margin-bottom: 20px !important;
+  font-weight: normal !important;
+  font-size: 12px;
 }
 .checkbox
 {

@@ -120,10 +120,12 @@ const BatchListTable = ({
           <div onClick={confirmStatus}>
             <div
               className={
-                user?.status === 0 ? "btn-status-inactive" : "btn-status-active"
+                user?.status === true
+                  ? "btn-status-active"
+                  : "btn-status-inactive"
               }
             >
-              {user?.status === "true" ? "Active" : "Inactive"}
+              {user?.status === true ? "Active" : "Inactive"}
             </div>
           </div>
           // Active css className="btn-status-active"
@@ -215,16 +217,15 @@ const BatchListTable = ({
                   <ExportCSVButton {...toolkitProps.csvProps}>
                     {/* <Button color="secondary">Export</Button> */}
                     <UncontrolledDropdown className="me-2" direction="down">
-                        <DropdownToggle caret color="primary">
-                          Export <i className="mdi mdi-menu-down"></i>
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem >Export as pdf</DropdownItem>
-                          <DropdownItem >Export as excel</DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
+                      <DropdownToggle caret color="primary">
+                        Export <i className="mdi mdi-menu-down"></i>
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem>Export as pdf</DropdownItem>
+                        <DropdownItem>Export as excel</DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
                   </ExportCSVButton>
-                                    
                 </div>
               </Col>
             </Row>

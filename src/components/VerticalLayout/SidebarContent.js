@@ -126,14 +126,13 @@ const SidebarContent = props => {
             </li> */}
             <li>
               <Link to="/users">
-              <i className='bx bx-user' />
+                <i className="bx bx-user" />
                 <span>{props.t("Users")}</span>
               </Link>
             </li>
             <li>
               <Link to="/learner">
-                
-                <i className='bx bx-user-circle' />
+                <i className="bx bx-user-circle" />
                 <span>{props.t("Learner")}</span>
               </Link>
             </li>
@@ -157,20 +156,26 @@ const SidebarContent = props => {
             </li>
             <li>
               <Link to="/sms-email-templates">
-                <i className="mdi mdi-bell-ring" /> 
+                <i className="mdi mdi-bell-ring" />
                 <span>{props.t("SMS/Email Templates")}</span>
               </Link>
             </li>
             <li>
               <Link to="/batch">
-                <i className="mdi mdi-account-multiple-outline" /> 
+                <i className="mdi mdi-account-multiple-outline" />
                 <span>{props.t("Batches")}</span>
               </Link>
             </li>
             <li>
               <Link to="/add-mentors">
-                <i className="mdi mdi-account-plus" /> 
+                <i className="mdi mdi-account-plus" />
                 <span>{props.t("Add Mentors")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/firebase">
+                <i className="mdi mdi-account-plus" />
+                <span>{props.t("Firebase Config")}</span>
               </Link>
             </li>
           </ul>

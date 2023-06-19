@@ -46,7 +46,11 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
           selectDays({ isSelected, name })
         }}
       />
-      <label htmlFor={name} className="check-label">
+      <label
+        htmlFor={name}
+        className="check-label"
+        style={{ marginLeft: "6px" }}
+      >
         {name}
       </label>
     </>
@@ -216,6 +220,17 @@ const BatchNewModal = ({
     updateArray[index] = updateObj
     setUpdateDays(updateArray)
   }
+
+  useEffect(() => {
+    if (modal) {
+      const moodleDetail = async () => {
+        const resp = await getCourseData(url.GET_MOODLE_COURSE)
+        setCourseIdData(resp.data)
+        return resp
+      }
+      moodleDetail()
+    }
+  }, [modal])
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
@@ -409,6 +424,7 @@ const BatchNewModal = ({
                         onChange={e => {
                           setEndDate(e.target.value)
                         }}
+                        min={startDate}
                         required
                         className="date-bg"
                       />
@@ -691,9 +707,9 @@ const BatchNewModal = ({
       </ModalBody>
       <ModalFooter className="justify-content-between">
         <div>
-          <Button color="success" className="px-5">
+          {/* <Button color="success" className="px-5">
             Clone
-          </Button>
+          </Button> */}
         </div>
         <div>
           <Button color="primary" outline onClick={toggle} className="px-5">
