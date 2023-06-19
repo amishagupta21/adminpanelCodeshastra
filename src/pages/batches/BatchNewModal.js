@@ -46,7 +46,9 @@ const CheckBox = ({ isSelected, name, selectDays }) => {
           selectDays({ isSelected, name })
         }}
       />
-      <label htmlFor={name}>{name}</label>
+      <label htmlFor={name} className="check-label">
+        {name}
+      </label>
     </>
   )
 }
@@ -87,7 +89,7 @@ const BatchNewModal = ({
   ])
   const [options, setOptions] = useState([
     {
-      label: "Select Course ID",
+      label: "Select Course Name",
       value: "0",
     },
   ])
@@ -130,13 +132,13 @@ const BatchNewModal = ({
   ])
 
   const [days, setDays] = useState([
+    { day: 7, name: "Sun", isSelected: false },
     { day: 1, name: "Mon", isSelected: false },
     { day: 2, name: "Tue", isSelected: false },
     { day: 3, name: "Wed", isSelected: false },
     { day: 4, name: "Thu", isSelected: false },
     { day: 5, name: "Fri", isSelected: false },
     { day: 6, name: "Sat", isSelected: false },
-    { day: 7, name: "Sun", isSelected: false },
   ])
 
   const selectDays = day => {
@@ -220,124 +222,202 @@ const BatchNewModal = ({
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
       <ModalBody>
         <Row>
-          <Col md={3}>
-            <FormGroup>
-              <Label>
-                Batch Name{" "}
-                <span className="mandotary star" style={{ color: "red" }}>
-                  *
-                </span>
-              </Label>
-              <Input
-                value={batchName}
-                onChange={e => {
-                  setBatchName(e.target.value)
-                }}
-                type="text"
-                placeholder="Batch_10"
-                required
-              />
-            </FormGroup>
-          </Col>
-          <Col md={3}>
-            <FormGroup>
-              <Label>
-                Description{" "}
-                <span className="mandotary star" style={{ color: "red" }}>
-                  *
-                </span>
-              </Label>
-              <Input
-                value={description}
-                onChange={e => {
-                  setDescription(e.target.value)
-                }}
-                type="text"
-                placeholder="Freshers Only"
-                required
-              />
-            </FormGroup>
-          </Col>
-          <Col md={3}>
-            <FormGroup>
-              <Label>
-                Course{" "}
-                <span className="mandotary star" style={{ color: "red" }}>
-                  *
-                </span>
-              </Label>
-              <Input
-                name="select"
-                onChange={e => {
-                  setCourse(e.target.value)
-                }}
-                type="select"
-                required
-              >
-                <option>Select</option>
-                <option value="Full Stack Web Developer">
-                  Full Stack Web Developer
-                </option>
-                <option value="Software Developer Program">
-                  Software Developer Program
-                </option>
-                <option value="Data Science">Data Science</option>
-                <option value="Python Full Stack Developer">
-                  Python Full Stack Developer
-                </option>
-              </Input>
-            </FormGroup>
-          </Col>
-          <Col md={3}>
-            <FormGroup>
-              <Label>
-                Variant Type{" "}
-                <span className="mandotary star" style={{ color: "red" }}>
-                  *
-                </span>
-              </Label>
-              <Input
-                name="select"
-                onChange={e => {
-                  setVariantType(e.target.value)
-                }}
-                type="select"
-                required
-              >
-                <option>Select</option>
-                <option>full Time</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Class Link </Label>
-              <Input
-                value={classLink}
-                onChange={e => {
-                  setClassLink(e.target.value)
-                }}
-                type="text"
-                placeholder="www.google.meet/saq-faw-brs"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
           <Col md={12} className="batch-accord">
             <UncontrolledAccordion defaultOpen={["1", "2", "3"]} stayOpen>
+              <AccordionItem className="mb-3">
+                <AccordionHeader targetId="3">
+                  Moodle Course
+                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
+                </AccordionHeader>
+                <AccordionBody accordionId="3" className="my-padding">
+                  <Row>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label>Course</Label>
+                        <Select
+                          name="filter"
+                          placeholder="Course Name"
+                          defaultValue={courseIdData}
+                          onChange={e => {
+                            setSelectedCourseId(e)
+                          }}
+                          value={selectedCourseId}
+                          options={options}
+                          className="couserId-width"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </AccordionBody>
+              </AccordionItem>
               <AccordionItem className="mb-3">
                 <AccordionHeader targetId="1">
                   Batch Configuration
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
                 </AccordionHeader>
-                <AccordionBody accordionId="1">
-                  <Table responsive>
+                <AccordionBody accordionId="1" className="my-padding">
+                  <Row>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Batch Name{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          value={batchName}
+                          onChange={e => {
+                            setBatchName(e.target.value)
+                          }}
+                          type="text"
+                          placeholder="Batch_10"
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Description{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          value={description}
+                          onChange={e => {
+                            setDescription(e.target.value)
+                          }}
+                          type="text"
+                          placeholder="Freshers Only"
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Course{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          name="select"
+                          onChange={e => {
+                            setCourse(e.target.value)
+                          }}
+                          type="select"
+                          required
+                        >
+                          <option>Select</option>
+                          <option value="Full Stack Web Developer">
+                            Full Stack Web Developer
+                          </option>
+                          <option value="Software Developer Program">
+                            Software Developer Program
+                          </option>
+                          <option value="Data Science">Data Science</option>
+                          <option value="Python Full Stack Developer">
+                            Python Full Stack Developer
+                          </option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Variant Type{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          name="select"
+                          onChange={e => {
+                            setVariantType(e.target.value)
+                          }}
+                          type="select"
+                          required
+                        >
+                          <option>Select</option>
+                          <option>full Time</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label>Class Link </Label>
+                        <Input
+                          value={classLink}
+                          onChange={e => {
+                            setClassLink(e.target.value)
+                          }}
+                          type="text"
+                          placeholder="www.google.meet/saq-faw-brs"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={3} className="my-date-icon">
+                      <Label>
+                        Start Date{" "}
+                        <span
+                          className="mandotary star"
+                          style={{ color: "red" }}
+                        >
+                          *
+                        </span>
+                      </Label>
+                      <Input
+                        type="date"
+                        value={startDate}
+                        onChange={e => {
+                          setStartDate(e.target.value)
+                        }}
+                        required
+                        className="date-bg"
+                      />
+                    </Col>
+                    <Col md={3} className="my-date-icon">
+                      <Label>
+                        End Date{" "}
+                        <span
+                          className="mandotary star"
+                          style={{ color: "red" }}
+                        >
+                          *
+                        </span>
+                      </Label>
+                      <Input
+                        type="date"
+                        value={endDate}
+                        onChange={e => {
+                          setEndDate(e.target.value)
+                        }}
+                        required
+                        className="date-bg"
+                      />
+                    </Col>
+                  </Row>
+                  {/* <Table responsive>
                     <thead>
-                      <tr>
-                        {/* <th>
+                      <tr> */}
+                  {/* <th>
                           Mentor{" "}
                           <span
                             className="mandotary star"
@@ -355,7 +435,7 @@ const BatchNewModal = ({
                             *
                           </span>
                         </th> */}
-                        <th>
+                  {/* <th>
                           Start Date{" "}
                           <span
                             className="mandotary star"
@@ -372,12 +452,12 @@ const BatchNewModal = ({
                           >
                             *
                           </span>
-                        </th>
-                      </tr>
+                        </th> */}
+                  {/* </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        {/* <td>
+                      <tr> */}
+                  {/* <td>
                           <FormGroup className="select_box border-0">
                             <Input
                               name="select"
@@ -409,7 +489,7 @@ const BatchNewModal = ({
                             />
                           </FormGroup>
                         </td> */}
-                        <td>
+                  {/* <td>
                           <Input
                             type="date"
                             value={startDate}
@@ -418,8 +498,8 @@ const BatchNewModal = ({
                             }}
                             required
                           />
-                        </td>
-                        <td>
+                        </td> */}
+                  {/* <td>
                           <Input
                             type="date"
                             min={startDate}
@@ -429,10 +509,10 @@ const BatchNewModal = ({
                             }}
                             required
                           />
-                        </td>
-                      </tr>
+                        </td> */}
+                  {/* </tr>
                     </tbody>
-                  </Table>
+                  </Table> */}
                 </AccordionBody>
               </AccordionItem>
               <AccordionItem className="mb-2">
@@ -442,7 +522,7 @@ const BatchNewModal = ({
                 </AccordionHeader>
                 <AccordionBody accordionId="2">
                   <Table responsive>
-                    <thead>
+                    <thead className="bg-transparent">
                       <tr>
                         <th>
                           Start Time
@@ -477,12 +557,13 @@ const BatchNewModal = ({
                     <tbody>
                       {updateDays.map((item, index) => {
                         return (
-                          <tr key={index}>
+                          <tr key={index} className="tr-border">
                             <td>
                               <div className="accordionItem-table">
                                 <FormGroup>
                                   <TimeField
                                     // className="me-2 bg-grey border-0"
+                                    className="form-control me-2"
                                     style={{ width: "64px" }}
                                     value={item.start_time}
                                     name="start_time"
@@ -492,7 +573,7 @@ const BatchNewModal = ({
                                     required
                                   />
                                 </FormGroup>
-                                <FormGroup className="select_box border-0">
+                                <FormGroup className="select_box1 border-0">
                                   <Input
                                     name="started_time"
                                     type="select"
@@ -517,7 +598,7 @@ const BatchNewModal = ({
                                   <TimeField
                                     name="end_time"
                                     type="text"
-                                    className="me-2 bg-grey border-0"
+                                    className="me-2 form-control"
                                     style={{ width: "64px" }}
                                     placeholder="05:00"
                                     value={item.end_time}
@@ -527,7 +608,7 @@ const BatchNewModal = ({
                                     required
                                   />
                                 </FormGroup>
-                                <FormGroup className="select_box border-0">
+                                <FormGroup className="select_box1 border-0">
                                   <Input
                                     name="ended_time"
                                     type="select"
@@ -546,11 +627,15 @@ const BatchNewModal = ({
                               </div>
                             </td>
                             <td>
-                              <div></div>
                               <div>
                                 {days.map((day, index) => {
                                   return (
-                                    <FormGroup key={index} check inline>
+                                    <FormGroup
+                                      key={index}
+                                      check
+                                      inline
+                                      className="checkbox"
+                                    >
                                       <CheckBox
                                         {...day}
                                         selectDays={selectDays}
@@ -577,22 +662,6 @@ const BatchNewModal = ({
                           </tr>
                         )
                       })}
-                      <tr>
-                        <td
-                          colSpan={4}
-                          style={{
-                            paddingLeft: "0px",
-                            paddingRight: "0px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              height: "1px",
-                              background: "#CED4DA",
-                            }}
-                          ></div>
-                        </td>
-                      </tr>
                     </tbody>
                   </Table>
                   <Row>
@@ -616,60 +685,41 @@ const BatchNewModal = ({
                   </Row>
                 </AccordionBody>
               </AccordionItem>
-              <AccordionItem className="mb-3">
-                <AccordionHeader targetId="3">
-                  Moodle Course ID
-                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                </AccordionHeader>
-                <AccordionBody accordionId="3">
-                  <Row>
-                    <Col md={4} style={{ paddingLeft: "33px" }}>
-                      <FormGroup>
-                        <Label>Course ID</Label>
-                        <Select
-                          name="filter"
-                          placeholder="Course ID"
-                          onChange={e => {
-                            setSelectedCourseId(e)
-                          }}
-                          value={selectedCourseId}
-                          options={options}
-                          menuPlacement="top"
-                          className="couserId-width"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </AccordionBody>
-              </AccordionItem>
             </UncontrolledAccordion>
           </Col>
         </Row>
       </ModalBody>
-      <ModalFooter>
-        <Button color="primary" outline onClick={toggle} className="px-5">
-          Cancel
-        </Button>
-        {isLoading ? (
-          <Button
-            color="primary"
-            onClick={createBatch}
-            className="px-5"
-            disabled
-          >
-            <Spinner style={{ width: "1rem", height: "1rem" }} />
-            &nbsp;&nbsp; Creating...
+      <ModalFooter className="justify-content-between">
+        <div>
+          <Button color="success" className="px-5">
+            Clone
           </Button>
-        ) : (
-          <Button
-            color="primary"
-            onClick={createBatch}
-            className="px-5"
-            disabled={!isFormValid}
-          >
-            Create
+        </div>
+        <div>
+          <Button color="primary" outline onClick={toggle} className="px-5">
+            Cancel
           </Button>
-        )}
+          {isLoading ? (
+            <Button
+              color="primary"
+              onClick={createBatch}
+              className="px-5"
+              disabled
+            >
+              <Spinner style={{ width: "1rem", height: "1rem" }} />
+              &nbsp;&nbsp; Creating...
+            </Button>
+          ) : (
+            <Button
+              color="primary"
+              onClick={createBatch}
+              className="px-5 ms-3"
+              disabled={!isFormValid}
+            >
+              Create
+            </Button>
+          )}
+        </div>
       </ModalFooter>
     </Modal>
   )

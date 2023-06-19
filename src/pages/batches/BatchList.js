@@ -92,21 +92,21 @@ const BatchList = props => {
       <div className="d-flex justify-content-between">
         <div>
           <Link to="/batch">
-            <i className="mdi mdi-chevron-left"></i> Batch Detail
+            <i className="mdi mdi-chevron-left"></i> Batch List
           </Link>
         </div>
         {/* <div>Batch List / Batch Information</div> */}
         <div>
           <Breadcrumb>
             <BreadcrumbItem>
-              <Link to="/batch">Batch Detail</Link>
+              <Link to="/batch">Batch List</Link>
             </BreadcrumbItem>
             <BreadcrumbItem active>Batch Information</BreadcrumbItem>
           </Breadcrumb>
         </div>
       </div>
       <Row>
-        <Col md={6}>
+        <Col md={6} className="mb-4">
           <h4>BATCH INFORMATION</h4>
         </Col>
         <Col md={6}>
@@ -118,7 +118,7 @@ const BatchList = props => {
             {/* <Button color="success" className="mb-3 ms-2">
               Edit Batch
             </Button> */}
-            <UncontrolledDropdown className="mb-3 ms-2">
+            {/* <UncontrolledDropdown className="mb-3 ms-2">
               <DropdownToggle caret color="primary">
                 More <i className="mdi mdi-dots-vertical"></i>
               </DropdownToggle>
@@ -131,17 +131,17 @@ const BatchList = props => {
                   <i className="mdi mdi-delete text-danger"></i> Delete Batch
                 </DropdownItem>
               </DropdownMenu>
-            </UncontrolledDropdown>
+            </UncontrolledDropdown> */}
           </div>
-        </Col>
+        </Col> 
       </Row>
       <Row>
-        <Col md={5}>
-          <BatchLearner newBatch={newBatch} />
-          <BatchProgress />
-          <CompletionStatus />
-        </Col>
-        <Col md={7}>
+        <Col md={6}><BatchLearner newBatch={newBatch} /></Col>
+        <Col md={6}><BatchProgress /></Col>
+        {/* <Col md={4}><CompletionStatus /> </Col> */}
+      </Row>
+      <Row>
+        <Col md={12}>
           <Card>
             <CardBody>
               <div>

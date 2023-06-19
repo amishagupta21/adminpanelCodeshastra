@@ -14,13 +14,14 @@ import {
 import TimeField from "react-simple-timefield"
 
 const days = [
+  { value: 7, name: "Sun", isSelected: false },
   { value: 1, name: "Mon", isSelected: false },
   { value: 2, name: "Tue", isSelected: false },
   { value: 3, name: "Wed", isSelected: false },
   { value: 4, name: "Thu", isSelected: false },
   { value: 5, name: "Fri", isSelected: false },
   { value: 6, name: "Sat", isSelected: false },
-  { value: 7, name: "Sun", isSelected: false },
+
 ]
 
 function BatchSchedule({ editData, handleChange, setEditData }) {
@@ -32,11 +33,11 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
       </AccordionHeader>
       <AccordionBody accordionId="2">
         <Table responsive>
-          <thead>
+          <thead className="bg-transparent">
             <tr>
-              <th>Start Time</th>
-              <th>End Time</th>
-              <th>Days</th>
+              <th>Start Time <span className="mandotary star" style={{ color: "red" }}>*</span></th>
+              <th>End Time <span className="mandotary star" style={{ color: "red" }}>*</span></th>
+              <th>Days <span className="mandotary star" style={{ color: "red" }}>*</span></th>
               <th>Action</th>
             </tr>
           </thead>
@@ -57,7 +58,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
               const response1 = endTime?.split(" ")
 
               return (
-                <tr key={index}>
+                <tr key={index} className="tr-border">
                   <td>
                     <div className="accordionItem-table">
                       <FormGroup>
@@ -65,14 +66,16 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                           name="start_time"
                           type="text"
                           // className="me-2 bg-grey border-0"
+                          className="form-control me-2"
                           style={{ width: "64px" }}
                           placeholder="09:00"
                           value={response?.length ? response[0] : ""}
                           onChange={e => handleChange(e, index)}
                         />
                       </FormGroup>
-                      <FormGroup>
+                      <FormGroup className="select_box1 border-0">
                         <Input
+                          style={{ width: "64px" }}
                           type="select"
                           name="started_time"
                           value={item?.started_time}
@@ -97,14 +100,16 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                           type="text"
                           name="end_time"
                           // className="me-2 bg-grey border-0"
+                          className="me-2 form-control"
                           style={{ width: "64px" }}
                           placeholder="05:00"
                           value={response1[0]}
                           onChange={e => handleChange(e, index)}
                         />
                       </FormGroup>
-                      <FormGroup>
+                      <FormGroup className="select_box1 border-0">
                         <Input
+                          style={{ width: "64px" }}
                           type="select"
                           name="ended_time"
                           value={item?.ended_time}
@@ -126,7 +131,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                     <div>
                       {days.map((dayValue, index) => {
                         return (
-                          <FormGroup key={index} check inline>
+                          <FormGroup key={index} check inline  >
                             <Input
                               name="day"
                               type="checkbox"
@@ -139,7 +144,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                                 // })
                               }
                             />
-                            <Label check>{dayValue?.name}</Label>
+                            <Label check className="check-label">{dayValue?.name}</Label>
                           </FormGroup>
                         )
                       })}
@@ -151,10 +156,10 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                     </span>
                   </td>
                 </tr>
+                
               )
             })}
-
-            <tr>
+            {/* <tr>
               <td
                 colSpan={4}
                 style={{
@@ -169,7 +174,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                   }}
                 ></div>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </Table>
         <Row>

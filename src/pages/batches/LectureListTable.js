@@ -1,5 +1,14 @@
 import React, { useState } from "react"
-import { Input, Col, Button, Row } from "reactstrap"
+import { 
+  Input, 
+  Col, 
+  Button, 
+  Row,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
 import { Link } from "react-router-dom"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
@@ -113,7 +122,15 @@ const LectureListTable = ({ mentor }) => {
           </Col>
           <Col md={6}>
             <div className="text-end">
-              <Button color="secondary">Export</Button>
+            <UncontrolledDropdown className="me-2" direction="down">
+                <DropdownToggle caret color="primary">
+                  Export <i className="mdi mdi-menu-down"></i>
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem >Export as pdf</DropdownItem>
+                  <DropdownItem >Export as excel</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </div>
           </Col>
         </Row>

@@ -15,12 +15,14 @@ import {
   AccordionItem,
   AccordionHeader,
   AccordionBody,
+  CloseButton,
 } from "reactstrap"
 import { editNewBatch } from "store/actions"
 import { connect } from "react-redux"
 import BatchSchedule from "./BatchSchedule"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
+import Select from "react-select"
 
 const EditNewModal = ({
   onEditNewBatch,
@@ -31,12 +33,30 @@ const EditNewModal = ({
   setEditModal,
 }) => {
   const [editData, setEditData] = useState({ ...batchApi })
-  const [selectedCourseId, setSelectedCourseId] = useState("0")
+  const [selectedCourseId, setSelectedCourseId] = useState()
   const [courseIdData, setCourseIdData] = useState([])
+  const [isClearable, setIsClearable] = useState(true)
+
+  const [options, setOptions] = useState([
+    {
+      label: "Select Course Name",
+      value: "0",
+    },
+  ])
 
   useEffect(() => {
     setEditData(batchApi)
   }, [batchApi])
+
+  useEffect(() => {
+    const selectedID = options.find(item => {
+      return item?.value.toString() === batchApi?.unikodecourseid
+    })
+    setSelectedCourseId({
+      label: selectedID?.label,
+      value: selectedID?.value,
+    })
+  }, [batchApi, options])
 
   useEffect(() => {
     if (editModal) {
@@ -48,6 +68,14 @@ const EditNewModal = ({
       getNewBatches()
     }
   }, [editModal])
+
+  useEffect(() => {
+    const formatedCourseId = []
+    courseIdData.map(item =>
+      formatedCourseId.push({ label: item.coursename, value: item.courseid })
+    )
+    setOptions([...options, ...formatedCourseId])
+  }, [courseIdData])
 
   const updateBatches = event => {
     event.preventDefault()
@@ -71,7 +99,7 @@ const EditNewModal = ({
     data.batch_schedule.value = result
     setEditData(data)
   }
-  console.log(editData)
+
   return (
     <Modal
       isOpen={editModal}
@@ -80,128 +108,278 @@ const EditNewModal = ({
       centered
       size="lg"
     >
-      <ModalHeader editNewModal={editNewModal}>Edit Batch</ModalHeader>
+      <ModalHeader editNewModal={editNewModal} className="my-modal-header">
+        <span>Edit Batch</span>
+        <CloseButton onClick={cancelNewModal} />
+      </ModalHeader>
       <ModalBody>
-        <Row>
-          <Col md={3}>
-            <FormGroup>
-              <Label>Batch Name</Label>
-              <Input
-                type="text"
-                value={editData?.name}
-                onChange={e => {
-                  setEditData({
-                    ...editData,
-                    name: e.target.value,
-                  })
-                }}
-                placeholder="Batch_10"
-              />
-            </FormGroup>
-          </Col>
-          <Col md={3}>
-            <FormGroup>
-              <Label>Description</Label>
-              <Input
-                value={editData?.description}
-                onChange={e =>
-                  setEditData({
-                    ...editData,
-                    description: e.target.value,
-                  })
-                }
-                type="text"
-                placeholder="Freshers Only"
-              />
-            </FormGroup>
-          </Col>
-          <Col md={3}>
-            <FormGroup>
-              <Label>Course</Label>
-              <Input
-                name="select"
-                onChange={e =>
-                  setEditData({
-                    ...editData,
-                    course: e.target.value,
-                  })
-                }
-                value={editData?.course}
-                type="select"
-              >
-                <option value="Select">Select</option>
-                <option value="Full Stack Web Developer">
-                  Full Stack Web Developer
-                </option>
-                <option value="Software Developer Program">
-                  Software Developer Program
-                </option>
-                <option value="Data Science">Data Science</option>
-                <option value="Python Full Stack Developer">
-                  Python Full Stack Developer
-                </option>
-              </Input>
-            </FormGroup>
-          </Col>
-          <Col md={3}>
-            <FormGroup>
-              <Label>Variant Type</Label>
-              <Input
-                name="select"
-                value={editData?.variant_type}
-                onChange={e =>
-                  setEditData({
-                    ...editData,
-                    variant_type: e.target.value,
-                  })
-                }
-                type="select"
-              >
-                <option value="Select">Select</option>
-                <option value="full Time">full Time</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Class Link</Label>
-              <Input
-                value={editData?.class_link}
-                onChange={e =>
-                  setEditData({
-                    ...editData,
-                    class_link: e.target.value,
-                  })
-                }
-                type="text"
-                placeholder="www.google.meet/saq-faw-brs"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
         <Row>
           <Col md={12} className="batch-accord">
             <UncontrolledAccordion defaultOpen={["1", "2", "3"]} stayOpen>
+              <AccordionItem className="mb-3">
+                <AccordionHeader targetId="3">
+                  Moodle Course
+                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
+                </AccordionHeader>
+                <AccordionBody accordionId="3">
+                  <Row>
+                    <Col md={4} style={{ paddingLeft: "33px" }}>
+                      <FormGroup>
+                        <Label>Course</Label>
+                        {/* <Input
+                          name="select"
+                          onChange={e =>
+                            setEditData({
+                              ...editData,
+                              course: e.target.value,
+                            })
+                          }
+                          value={editData?.course}
+                          type="select"
+                        >
+                          <option value="0">Select Course</option>
+                          {courseIdData.map((item, index) => {
+                            return (
+                              <option key={index} value={editData?.courseid}>
+                                {item?.coursename}
+                              </option>
+                            )
+                          })}
+                        </Input> */}
+                        <Select
+                          name="filter"
+                          placeholder="Course Name"
+                          onChange={e => {
+                            setEditData({
+                              ...editData,
+                              unikodecourseid: e?.value.toString(),
+                            })
+                            setSelectedCourseId(e)
+                          }}
+                          value={selectedCourseId}
+                          // defaultValue={colourOptions[0]}
+                          options={options}
+                          isClearable={isClearable}
+                          className="couserId-width"
+                        />
+                        {/* <Input
+                          name="select"
+                          onChange={e => {
+                            return setEditData({
+                              ...editData,
+                              unikodecourseid: e.target.value,
+                            })
+                          }}
+                          value={editData?.unikodecourseid}
+                          type="select"
+                        >
+                          <option value="0">Select Course ID</option>
+                          {courseIdData.map((item, index) => {
+                            return (
+                              <option key={index} value={item?.courseid}>
+                                {item?.coursename}
+                              </option>
+                            )
+                          })}
+                        </Input> */}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </AccordionBody>
+              </AccordionItem>
               <AccordionItem className="mb-3">
                 <AccordionHeader targetId="1">
                   Batch Configuration
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
                 </AccordionHeader>
-                <AccordionBody accordionId="1">
-                  <Table responsive>
+                <AccordionBody accordionId="1" className="my-padding">
+                  <Row>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Batch Name{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          type="text"
+                          value={editData?.name}
+                          onChange={e => {
+                            setEditData({
+                              ...editData,
+                              name: e.target.value,
+                            })
+                          }}
+                          placeholder="Batch_10"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Description{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          value={editData?.description}
+                          onChange={e =>
+                            setEditData({
+                              ...editData,
+                              description: e.target.value,
+                            })
+                          }
+                          type="text"
+                          placeholder="Freshers Only"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Course{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          name="select"
+                          onChange={e =>
+                            setEditData({
+                              ...editData,
+                              course: e.target.value,
+                            })
+                          }
+                          value={editData?.course}
+                          type="select"
+                        >
+                          <option value="Select">Select</option>
+                          <option value="Full Stack Web Developer">
+                            Full Stack Web Developer
+                          </option>
+                          <option value="Software Developer Program">
+                            Software Developer Program
+                          </option>
+                          <option value="Data Science">Data Science</option>
+                          <option value="Python Full Stack Developer">
+                            Python Full Stack Developer
+                          </option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                      <FormGroup>
+                        <Label>
+                          Variant Type{" "}
+                          <span
+                            className="mandotary star"
+                            style={{ color: "red" }}
+                          >
+                            *
+                          </span>
+                        </Label>
+                        <Input
+                          name="select"
+                          value={editData?.variant_type}
+                          onChange={e =>
+                            setEditData({
+                              ...editData,
+                              variant_type: e.target.value,
+                            })
+                          }
+                          type="select"
+                        >
+                          <option value="Select">Select</option>
+                          <option value="full Time">full Time</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label>Class Link</Label>
+                        <Input
+                          value={editData?.class_link}
+                          onChange={e =>
+                            setEditData({
+                              ...editData,
+                              class_link: e.target.value,
+                            })
+                          }
+                          type="text"
+                          placeholder="www.google.meet/saq-faw-brs"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={3} className="my-date-icon">
+                      <Label>
+                        Start Date{" "}
+                        <span
+                          className="mandotary star"
+                          style={{ color: "red" }}
+                        >
+                          *
+                        </span>
+                      </Label>
+                      <Input
+                        type="date"
+                        value={editData?.start_date}
+                        onChange={e =>
+                          setEditData({
+                            ...editData,
+                            start_date: e.target.value,
+                          })
+                        }
+                        className="date-bg"
+                      />
+                    </Col>
+                    <Col md={3} className="my-date-icon">
+                      <Label>
+                        End Date{" "}
+                        <span
+                          className="mandotary star"
+                          style={{ color: "red" }}
+                        >
+                          *
+                        </span>
+                      </Label>
+                      <Input
+                        type="date"
+                        value={editData?.end_date}
+                        onChange={e =>
+                          setEditData({
+                            ...editData,
+                            end_date: e.target.value,
+                          })
+                        }
+                        className="date-bg"
+                      />
+                    </Col>
+                  </Row>
+                  {/* <Table responsive>
                     <thead>
-                      <tr>
-                        {/* <th>Mentor</th>
+                      <tr> */}
+                  {/* <th>Mentor</th>
                         <th>Learners Limit</th> */}
-                        <th>Start Date</th>
+                  {/* <th>Start Date</th>
                         <th>End Date</th>
-                      </tr>
-                    </thead>
+                      </tr> */}
+                  {/* </thead>
                     <tbody>
-                      <tr>
-                        {/* <td>
+                      <tr> */}
+                  {/* <td>
                           <FormGroup>
                             <FormGroup className="select_box border-0">
                               <Input
@@ -240,7 +418,7 @@ const EditNewModal = ({
                             />
                           </FormGroup>
                         </td> */}
-                        <td>
+                  {/* <td>
                           <Input
                             type="date"
                             value={editData?.start_date}
@@ -264,10 +442,10 @@ const EditNewModal = ({
                               })
                             }
                           />
-                        </td>
-                      </tr>
+                        </td> */}
+                  {/* </tr>
                     </tbody>
-                  </Table>
+                  </Table> */}
                 </AccordionBody>
               </AccordionItem>
               {editData && (
@@ -277,41 +455,6 @@ const EditNewModal = ({
                   setEditData={setEditData}
                 />
               )}
-              <AccordionItem className="mb-3">
-                <AccordionHeader targetId="3">
-                  Moodle Course ID
-                  <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
-                </AccordionHeader>
-                <AccordionBody accordionId="3">
-                  <Row>
-                    <Col md={4} style={{ paddingLeft: "33px" }}>
-                      <FormGroup>
-                        <Label>Course ID</Label>
-                        <Input
-                          name="select"
-                          onChange={e => {
-                            return setEditData({
-                              ...editData,
-                              unikodecourseid: e.target.value,
-                            })
-                          }}
-                          value={editData?.unikodecourseid}
-                          type="select"
-                        >
-                          <option value="0">Select Course ID</option>
-                          {courseIdData.map((item, index) => {
-                            return (
-                              <option key={index} value={item?.courseid}>
-                                {item?.coursename}
-                              </option>
-                            )
-                          })}
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </AccordionBody>
-              </AccordionItem>
             </UncontrolledAccordion>
           </Col>
         </Row>

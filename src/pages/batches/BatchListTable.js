@@ -3,6 +3,10 @@ import {
   Button,
   Row,
   Col,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   FormGroup,
   Label,
   Input,
@@ -209,8 +213,18 @@ const BatchListTable = ({
               <Col md={6}>
                 <div className="text-end">
                   <ExportCSVButton {...toolkitProps.csvProps}>
-                    <Button color="secondary">Export</Button>
+                    {/* <Button color="secondary">Export</Button> */}
+                    <UncontrolledDropdown className="me-2" direction="down">
+                        <DropdownToggle caret color="primary">
+                          Export <i className="mdi mdi-menu-down"></i>
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem >Export as pdf</DropdownItem>
+                          <DropdownItem >Export as excel</DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
                   </ExportCSVButton>
+                                    
                 </div>
               </Col>
             </Row>

@@ -104,7 +104,9 @@ const Header = props => {
               className="btn btn-sm px-3 font-size-16 header-item "
               id="vertical-menu-btn"
             >
-              <i className="fa fa-fw fa-bars" />
+              <i className="fa fa-fw fa-bars d-lg-none" />
+              <i className='bx bx-arrow-back d-none d-lg-block'></i>
+              {/* <i className='bx bx-right-arrow-alt right-arrow'></i> */}
             </button>
 
             {/* <form className="app-search d-none d-lg-block">

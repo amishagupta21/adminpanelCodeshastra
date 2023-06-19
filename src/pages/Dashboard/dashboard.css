@@ -7,10 +7,15 @@
 }
 .dashboard-box
 {
-    
+
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.top-date-box
+{
+    position: relative;
+    z-index: 2;
 }
 .circle
 {
@@ -181,3 +186,11 @@
 {
     display: none !important;
 }
+/* .donut-chart .apexcharts-canvas
+{
+    min-height: 190px !important;
+} */
+/* .donut-chart .apexcharts-legend
+{
+    top: 10px !important;
+} */

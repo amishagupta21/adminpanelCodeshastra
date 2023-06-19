@@ -449,7 +449,7 @@ class Dashboard extends Component {
               <Col md={6} xxl={4}>
                 <Card className="card-height">
                   <CardBody>
-                    <div className="d-flex justify-content-between align-items-baseline mb-4">
+                    <div className="d-flex justify-content-between align-items-baseline">
                       <div className="chart-heading">Classes </div>
                       <div className="chart-subheading d-flex">
                         <FormGroup>
@@ -462,7 +462,7 @@ class Dashboard extends Component {
                         </FormGroup>
                       </div>
                     </div>
-                    {/* <div className="table-responsive">
+                    <div className="table-responsive">
                       <Table className="ongoing-table">
                         <tbody>
                           <tr>
@@ -501,36 +501,9 @@ class Dashboard extends Component {
                               <div className="ongoing-light">10:00 AM - 05:00 PM</div>
                             </td>
                           </tr>
-                          <tr>
-                            <td>
-                              <div className="ongoing-bold">Class_28</div>
-                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
-                            </td>
-                            <td>
-                              <div className="ongoing-light">10:00 AM - 05:00 PM</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="ongoing-bold">Class_28</div>
-                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
-                            </td>
-                            <td>
-                              <div className="ongoing-light">10:00 AM - 05:00 PM </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="ongoing-bold">Class_28</div>
-                              <div className="ongoing-light">#Batch_24 - Python Full Stack Web Developer</div>
-                            </td>
-                            <td>
-                              <div className="ongoing-light">10:00 AM - 05:00 PM</div>
-                            </td>
-                          </tr>
                         </tbody>
                       </Table>
-                    </div> */}
+                    </div>
                   </CardBody>
                 </Card>
               </Col>

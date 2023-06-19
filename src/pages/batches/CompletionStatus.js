@@ -5,7 +5,7 @@ const CompletionStatus = () => {
   return (
     <div>
       <Card>
-        <CardBody>
+        <CardBody className="card-height-470">
           <div className="d-flex justify-content-between px-2">
             <div className="assign-text">
               Assignments

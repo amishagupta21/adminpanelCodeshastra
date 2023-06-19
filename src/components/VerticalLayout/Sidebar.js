@@ -29,7 +29,7 @@ const Sidebar = props => {
           </Link>
 
           <Link to="/" className="logo logo-light">
-            <span className="logo-sm">
+            <span className="logo-sm" style={{marginLeft:'-15px'}}>
               <img src={logo} alt="" height="50" />
             </span>
             <span className="logo-lg">
