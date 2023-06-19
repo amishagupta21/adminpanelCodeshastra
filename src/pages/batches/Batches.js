@@ -50,6 +50,7 @@ import { del, post } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
+import tosterMsg from "components/Common/toster"
 
 const Batches = props => {
   const axios = require("axios")
@@ -71,6 +72,7 @@ const Batches = props => {
   const [users, setUsers] = useState([])
   const [editModal, setEditModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [clickedIds, setClickedIds] = useState([])
 
   const editNewModal = id => {
     onGetBatchesApi(id)
@@ -134,11 +136,6 @@ const Batches = props => {
   //     })
   // }
 
-  const selectRow = {
-    mode: "checkbox",
-    clickToSelect: false,
-  }
-
   let state = {
     columns: [
       {
@@ -187,43 +184,37 @@ const Batches = props => {
         //     }}
         //   />
         // ),
-        formatter: (cellContent, user) => (
-          <p className="text-limit">
-            {user?.description}
-          </p>
-        ),
       },
       {
         dataField: "start_date",
         text: "Start Date",
         sort: true,
-        // formatter: (cellContent, user) => {
-        //   var newDate = new Date(user?.startdate * 1000)
-        //   var startDate = newDate.toLocaleDateString()
-        //   return (
-        //     <div>
-        //       <span>{startDate}</span>
-        //     </div>
-        //   )
-        // },
       },
       {
         dataField: "end_date",
         text: "End Date",
         sort: true,
-        // formatter: (cellContent, user) => {
-        //   var date = new Date(user?.enddate * 1000)
-        //   var endDate = date.toLocaleDateString()
-        //   return (
-        //     <div>
-        //       <span>{endDate}</span>
-        //     </div>
-        //   )
-        // },
       },
       {
         dataField: "course",
         text: "Course Name",
+        sort: true,
+      },
+
+      {
+        dataField: "syncing_status",
+        text: "Syncing Status",
+        sort: true,
+      },
+      {
+        dataField: "unikodecourseid",
+        text: "Unikode Course Id",
+        sort: true,
+      },
+
+      {
+        dataField: "last_sync",
+        text: "Last Sync",
         sort: true,
       },
       {
@@ -231,6 +222,7 @@ const Batches = props => {
         text: "Lectures",
         sort: true,
       },
+
       {
         dataField: "learner_limit",
         text: "Learners",
@@ -283,10 +275,42 @@ const Batches = props => {
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
               </div>
             </div>
+            {/* <div className="me-2">
+              <div className="text-muted">
+                <input
+                  id={`age-cell-${userData?.id}`}
+                  onClick={e => {
+                    handleClick(userData?.id)
+                    e.stopPropagation()
+                    e.preventDefault()
+                  }}
+                  type="checkbox"
+                />
+                <i className="mdi mdi-eye font-size-16 text-danger"></i>
+              </div>
+            </div> */}
           </div>
         ),
       },
     ],
+  }
+
+  const handleClick = (row, isSelected, rowIndex, e) => {
+    if (isSelected) {
+      setClickedIds(prevClickedIds => [...prevClickedIds, row.id])
+    } else {
+      setClickedIds(prevClickedIds => prevClickedIds.filter(id => id != row.id))
+    }
+  }
+
+  // const handleClick = id => {
+  //   setClickedIds(prevClickedIds => [...prevClickedIds, id])
+  // }
+
+  const selectRow = {
+    mode: "checkbox",
+    clickToSelect: true,
+    onSelect: handleClick,
   }
 
   const cancelNewModal = () => {
@@ -311,15 +335,14 @@ const Batches = props => {
     // setState({ Batches })
   }
 
-  const onRowClick = (e, row, rowIndex) => {
-    history.push(`/batch-list/edit/${user?.id}`)
-  }
-
   const syncNow = async () => {
     setIsLoading(true)
     await axios
-      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC}`, "")
+      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC}`, {
+        batchIdArray: clickedIds,
+      })
       .then(res => {
+        tosterMsg(res?.data?.message)
         console.log("res", res)
       })
       .catch(err => {
@@ -327,8 +350,11 @@ const Batches = props => {
       })
 
     await axios
-      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, "")
-      .then(() => {
+      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, {
+        batchIdArray: clickedIds,
+      })
+      .then(res => {
+        tosterMsg(res?.data?.message)
         setIsLoading(false)
       })
       .catch(() => {
@@ -448,6 +474,7 @@ const Batches = props => {
           <Row>
             <Col>
               <div className="d-flex justify-content-between my-2">
+                {/* <div>Clicked IDs: {clickedIds.join(", ")}</div> */}
                 <h4>ALL BATCHES</h4>
                 <span style={{ display: "flex" }}>
                   {isLoading ? (
@@ -466,6 +493,7 @@ const Batches = props => {
                     </Button>
                   ) : (
                     <Button
+                      disabled={clickedIds.length === 0}
                       color="primary"
                       className="rounded-pill mb-3 me-3 px-4"
                       onClick={syncNow}
@@ -567,13 +595,21 @@ const Batches = props => {
                                     </Button>
                                   </div>
                                   <div className="ms-lg-3 mb-3">
-                                    <UncontrolledDropdown className="me-2" direction="down">
+                                    <UncontrolledDropdown
+                                      className="me-2"
+                                      direction="down"
+                                    >
                                       <DropdownToggle caret color="primary">
-                                        Export <i className="mdi mdi-menu-down"></i>
+                                        Export{" "}
+                                        <i className="mdi mdi-menu-down"></i>
                                       </DropdownToggle>
                                       <DropdownMenu>
-                                        <DropdownItem >Export as pdf</DropdownItem>
-                                        <DropdownItem >Export as excel</DropdownItem>
+                                        <DropdownItem>
+                                          Export as pdf
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                          Export as excel
+                                        </DropdownItem>
                                       </DropdownMenu>
                                     </UncontrolledDropdown>
                                   </div>
