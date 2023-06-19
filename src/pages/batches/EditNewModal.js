@@ -358,6 +358,7 @@ const EditNewModal = ({
                       <Input
                         type="date"
                         value={editData?.end_date}
+                        min={editData?.start_date}
                         onChange={e =>
                           setEditData({
                             ...editData,

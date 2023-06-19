@@ -27,6 +27,7 @@ import Batch from "pages/batches/Batches"
 import BatchList from "pages/batches/BatchList"
 import Report from "pages/batches/Report"
 import AddMentors from "pages/Mentors/AddMentors"
+import FireBaseConfig from "pages/batches/FireBaseConfig"
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -45,6 +46,7 @@ const authProtectedRoutes = [
   { path: "/batch-detail/edit/:id", component: BatchList },
   { path: "/report/:id", component: Report },
   { path: "/add-mentors", component: AddMentors },
+  { path: "/firebase", component: FireBaseConfig },
 
   // //profile
   { path: "/profile", component: UserProfile },

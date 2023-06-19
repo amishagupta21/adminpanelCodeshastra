@@ -200,23 +200,12 @@ const Batches = props => {
         text: "Course Name",
         sort: true,
       },
-
-      {
-        dataField: "syncing_status",
-        text: "Syncing Status",
-        sort: true,
-      },
       {
         dataField: "unikodecourseid",
-        text: "Unikode Course Id",
+        text: "Course Id",
         sort: true,
       },
 
-      {
-        dataField: "last_sync",
-        text: "Last Sync",
-        sort: true,
-      },
       {
         dataField: "lectures",
         text: "Lectures",
@@ -237,13 +226,37 @@ const Batches = props => {
           <div>
             <span
               className={
-                user?.status === 0 ? "btn-status-inactive" : "btn-status-active"
+                user?.enable === true
+                  ? "btn-status-active"
+                  : "btn-status-inactive"
               }
             >
-              {user?.status === 0 ? "Inactive" : "Active"}
+              {user?.enable === true ? "Active" : "Inactive"}
             </span>
           </div>
         ),
+      },
+      {
+        dataField: "syncing_status",
+        text: "Syncing Status",
+        sort: true,
+        formatter: (cellContent, user) => (
+          <div>
+            <span
+              className={
+                user?.syncing_status === null ? "" : "btn-status-active"
+              }
+            >
+              {user?.syncing_status}
+            </span>
+          </div>
+        ),
+      },
+
+      {
+        dataField: "last_sync",
+        text: "Last Sync",
+        sort: true,
       },
       {
         dataField: "Actions",
