@@ -379,7 +379,6 @@ const Batches = props => {
       })
       .then(res => {
         tosterMsg(res?.data?.message)
-        console.log("res", res)
       })
       .catch(err => {
         console.log("err", err)

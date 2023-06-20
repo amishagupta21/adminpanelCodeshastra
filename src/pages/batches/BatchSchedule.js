@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React, { memo, useEffect, useState } from "react"
 import { connect } from "react-redux"
 import {
   Row,
@@ -21,10 +21,38 @@ const days = [
   { value: 4, name: "Thu", isSelected: false },
   { value: 5, name: "Fri", isSelected: false },
   { value: 6, name: "Sat", isSelected: false },
-
 ]
 
 function BatchSchedule({ editData, handleChange, setEditData }) {
+  const [editValue, setValue] = useState(editData?.batch_schedule?.value)
+
+  useEffect(() => {
+    setValue(editData?.batch_schedule?.value)
+  }, [])
+
+  const handleDaysChange = (e, index) => {
+    const indexDays = { ...editValue[index] }
+    const mainArray = [...editValue]
+    const result = [...indexDays.day]
+    if (indexDays.day.includes(e.target.value)) {
+      // If exits, then we'll delete the record
+      result.splice(indexDays.day.indexOf(e.target.value), 1)
+    } else {
+      // If  not exist we will add the record in array
+      result.push(e.target.value)
+    }
+    console.log(result, "result")
+
+    // Reinitialize the updatedDays Array
+    indexDays.day = result
+    mainArray[index] = indexDays
+    setEditData({
+      ...editData,
+      batch_schedule: { ...editData?.batch_schedule, value: mainArray },
+    })
+    setValue(mainArray)
+  }
+
   return (
     <AccordionItem className="mb-2">
       <AccordionHeader targetId="2">
@@ -35,14 +63,29 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
         <Table responsive>
           <thead className="bg-transparent">
             <tr>
-              <th>Start Time <span className="mandotary star" style={{ color: "red" }}>*</span></th>
-              <th>End Time <span className="mandotary star" style={{ color: "red" }}>*</span></th>
-              <th>Days <span className="mandotary star" style={{ color: "red" }}>*</span></th>
+              <th>
+                Start Time{" "}
+                <span className="mandotary star" style={{ color: "red" }}>
+                  *
+                </span>
+              </th>
+              <th>
+                End Time{" "}
+                <span className="mandotary star" style={{ color: "red" }}>
+                  *
+                </span>
+              </th>
+              <th>
+                Days{" "}
+                <span className="mandotary star" style={{ color: "red" }}>
+                  *
+                </span>
+              </th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {editData?.batch_schedule?.value.map((item, index) => {
+            {editValue?.map((item, index) => {
               // const timestamp = item?.start_time
               // const date = new Date(timestamp)
               // const options = {
@@ -103,7 +146,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                           className="me-2 form-control"
                           style={{ width: "64px" }}
                           placeholder="05:00"
-                          value={response1[0]}
+                          value={response1?.length ? response1[0] : ""}
                           onChange={e => handleChange(e, index)}
                         />
                       </FormGroup>
@@ -129,22 +172,22 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                   </td>
                   <td>
                     <div>
-                      {days.map((dayValue, index) => {
+                      {days.map((dayValue, dayIndex) => {
                         return (
-                          <FormGroup key={index} check inline  >
-                            <Input
+                          <FormGroup key={dayIndex} inline>
+                            <input
                               name="day"
+                              id="day"
+                              value={dayValue.value}
                               type="checkbox"
-                              checked={dayValue?.value === item.day}
-                              onChange={
-                                e => handleChange(e, index)
-                                // setEditData({
-                                //   ...editData,
-                                //   course: e.target.value,
-                                // })
-                              }
+                              checked={item?.day.includes(
+                                dayValue.value.toString()
+                              )}
+                              onClick={e => handleDaysChange(e, index)}
                             />
-                            <Label check className="check-label">{dayValue?.name}</Label>
+                            <label className="check-label">
+                              {dayValue?.name}
+                            </label>
                           </FormGroup>
                         )
                       })}
@@ -156,7 +199,6 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                     </span>
                   </td>
                 </tr>
-                
               )
             })}
             {/* <tr>
