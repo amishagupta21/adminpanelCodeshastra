@@ -29,9 +29,11 @@ import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import TimeField from "react-simple-timefield"
 import Select from "react-select"
+import { Link, useParams } from "react-router-dom"
 
 const CheckBox = ({ isSelected, name, selectDays }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
+  const params = useParams()
 
   return (
     <>
@@ -81,6 +83,9 @@ const BatchNewModal = ({
   const [courseIdData, setCourseIdData] = useState([])
   const [selectedCourseId, setSelectedCourseId] = useState("0")
   const [isLoading, setIsLoading] = useState(false)
+  const [moodleDetail, setMoodleDetail] = useState([])
+
+  console.log(moodleDetail, "////////moodleDetail")
 
   const [updateDays, setUpdateDays] = useState([
     {
@@ -173,7 +178,7 @@ const BatchNewModal = ({
     start_date: startDate,
     end_date: endDate,
     batch_schedule: {
-      name: batchName,
+      name: "Batch Schedule",
       value: updateDays,
     },
     unikodecourseid: selectedCourseId?.value,
@@ -224,13 +229,15 @@ const BatchNewModal = ({
   useEffect(() => {
     if (modal) {
       const moodleDetail = async () => {
-        const resp = await getCourseData(url.GET_MOODLE_COURSE)
-        setCourseIdData(resp.data)
+        const resp = await getCourseData(
+          url.GET_MOODLE_DETAIL + `/${selectedCourseId?.value}`
+        )
+        setMoodleDetail(resp.data)
         return resp
       }
       moodleDetail()
     }
-  }, [modal])
+  }, [modal, selectedCourseId])
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
@@ -285,6 +292,7 @@ const BatchNewModal = ({
                         </Label>
                         <Input
                           value={batchName}
+                          // value={moodleDetail[0]?.fullname}
                           onChange={e => {
                             setBatchName(e.target.value)
                           }}
@@ -307,6 +315,7 @@ const BatchNewModal = ({
                         </Label>
                         <Input
                           value={description}
+                          // value={moodleDetail[0]?.summary}
                           onChange={e => {
                             setDescription(e.target.value)
                           }}
