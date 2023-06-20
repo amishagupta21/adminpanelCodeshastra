@@ -137,6 +137,7 @@ export const GET_BATCHES_LIST = "/admin/course/batch/listing"
 export const GET_BATCHES = "/admin/batch"
 export const EDIT_NEW_BATCHES = "/admin/batch"
 export const GET_MOODLE_COURSE = "/moodle/getCourseids"
+export const GET_MOODLE_DETAIL = "/moodle/getAllTheCourses"
 
 export const CREATE_NEW_BATCHES = "/admin/batch"
 export const GET_BATCHES_LEARNER_LIST = "/admin/batch/learners/listing"
