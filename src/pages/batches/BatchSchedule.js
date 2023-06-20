@@ -171,10 +171,10 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                     </div>
                   </td>
                   <td>
-                    <div>
+                    <div className="d-flex justify-content-between">
                       {days.map((dayValue, dayIndex) => {
                         return (
-                          <FormGroup key={dayIndex} inline>
+                          <FormGroup key={dayIndex} className="checkbox" inline>
                             <input
                               name="day"
                               id="day"
@@ -185,6 +185,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                               )}
                               onClick={e => handleDaysChange(e, index)}
                             />
+                            &nbsp;
                             <label className="check-label">
                               {dayValue?.name}
                             </label>

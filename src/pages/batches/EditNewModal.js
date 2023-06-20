@@ -37,8 +37,6 @@ const EditNewModal = ({
   const [courseIdData, setCourseIdData] = useState([])
   const [isClearable, setIsClearable] = useState(true)
 
-  console.log(batchApi, "/////////batchApi")
-
   const [options, setOptions] = useState([
     {
       label: "Select Course Name",

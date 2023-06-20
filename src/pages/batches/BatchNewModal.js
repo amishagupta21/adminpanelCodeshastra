@@ -118,8 +118,8 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
   useEffect(() => {
     // Check if all mandatory fields have values
     const isValid =
-      batchName !== "" &&
-      description !== "" &&
+      // batchName !== "" &&
+      // description !== "" &&
       course !== "Select" &&
       variantType !== "Select" &&
       classLink !== "" &&
@@ -168,15 +168,32 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
   //   setDays(updateDays)
   // }
 
+  // const temp = {
+  //   name: batchName ,
+  //   description: description,
+  //   course: course,
+  //   variant_type: variantType,
+  //   class_link: classLink,
+  //   mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
+  //   learner_limit: learnersLimit || 23,
+  //   start_date: startDate,
+  //   end_date: endDate,
+  //   batch_schedule: {
+  //     name: "Batch Schedule",
+  //     value: updateDays,
+  //   },
+  //   unikodecourseid: selectedCourseId?.value,
+  // }
+
   const temp = {
-    name: batchName,
-    description: description,
+    name: moodleDetail[0]?.fullname,
+    description: moodleDetail[0]?.displayname,
     course: course,
     variant_type: variantType,
     class_link: classLink,
     mentors: ["28a6216b-4ac6-4398-8766-f0d274e56afc"],
     learner_limit: learnersLimit || 23,
-    start_date: startDate,
+    start_date: moodleDetail[0]?.startdate,
     end_date: endDate,
     batch_schedule: {
       name: "Batch Schedule",
@@ -184,7 +201,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     },
     unikodecourseid: selectedCourseId?.value,
   }
-
   const createBatch = data1 => {
     setIsLoading(true)
 
@@ -273,9 +289,10 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     setStartDate(formattedDate)
   }, [moodleDetail])
 
-  const selectHandle = () => {
-    if (selectedCourseId?.value === "Select Course Name") {
-      setBatchName("")
+  const selectHandle = event => {
+    const { value } = event.target
+    if (selectedCourseId?.label === "Select Course Name") {
+      setBatchName([])
     }
   }
 
@@ -301,7 +318,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                           placeholder="Course Name"
                           defaultValue={courseIdData}
                           onChange={e => {
-                            setSelectedCourseId(e), selectHandle()
+                            setSelectedCourseId(e), selectHandle
                           }}
                           value={selectedCourseId}
                           options={options}
@@ -333,9 +350,9 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                         <Input
                           // value={batchName}
                           value={moodleDetail[0]?.fullname}
-                          onChange={e => {
-                            setBatchName(e.target.value)
-                          }}
+                          // onChange={e => {
+                          //   setBatchName(e.target.value)
+                          // }}
                           type="text"
                           placeholder="Batch_10"
                           required
@@ -356,9 +373,9 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                         <Input
                           // value={description}
                           value={moodleDetail[0]?.displayname}
-                          onChange={e => {
-                            setDescription(e.target.value)
-                          }}
+                          // onChange={e => {
+                          //   setDescription(e.target.value)
+                          // }}
                           type="text"
                           placeholder="Freshers Only"
                           required
