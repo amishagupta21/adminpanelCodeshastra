@@ -85,7 +85,7 @@ const BatchNewModal = ({
   const [isLoading, setIsLoading] = useState(false)
   const [moodleDetail, setMoodleDetail] = useState([])
 
-  console.log(moodleDetail, "////////moodleDetail")
+  // console.log(moodleDetail, "////////moodleDetail")
 
   const [updateDays, setUpdateDays] = useState([
     {
@@ -239,6 +239,11 @@ const BatchNewModal = ({
     }
   }, [modal, selectedCourseId])
 
+  const startFormatDate = new Date(
+    moodleDetail[0]?.startdate * 1000
+  ).toLocaleString()
+  // console.log(startFormatDate, "/////////startFormatDate")
+
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
@@ -291,8 +296,8 @@ const BatchNewModal = ({
                           </span>
                         </Label>
                         <Input
-                          value={batchName}
-                          // value={moodleDetail[0]?.fullname}
+                          // value={batchName}
+                          value={moodleDetail[0]?.fullname}
                           onChange={e => {
                             setBatchName(e.target.value)
                           }}
@@ -314,8 +319,8 @@ const BatchNewModal = ({
                           </span>
                         </Label>
                         <Input
-                          value={description}
-                          // value={moodleDetail[0]?.summary}
+                          // value={description}
+                          value={moodleDetail[0]?.summary}
                           onChange={e => {
                             setDescription(e.target.value)
                           }}

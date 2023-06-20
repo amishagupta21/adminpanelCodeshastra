@@ -189,11 +189,34 @@ const Batches = props => {
         dataField: "start_date",
         text: "Start Date",
         sort: true,
+        formatter: (cellContent, user) => {
+          const startFormatDate = new Date(user?.start_date)
+            .toLocaleString()
+            .split(",")
+
+          return (
+            <div>
+              {" "}
+              <span>{startFormatDate[0]}</span>
+            </div>
+          )
+        },
       },
       {
         dataField: "end_date",
         text: "End Date",
         sort: true,
+        formatter: (cellContent, user) => {
+          const endFormatDate = new Date(user?.end_date)
+            .toLocaleString()
+            .split(",")
+          return (
+            <div>
+              {" "}
+              <span>{endFormatDate[0]}</span>
+            </div>
+          )
+        },
       },
       {
         dataField: "course",
