@@ -31,33 +31,12 @@ import TimeField from "react-simple-timefield"
 import Select from "react-select"
 import { Link, useParams } from "react-router-dom"
 
-const CheckBox = ({ isSelected, name, selectDays }) => {
-  const [isChecked, setIsChecked] = useState(isSelected)
-  const params = useParams()
+// const CheckBox = ({ isSelected, name, selectDays }) => {
+//   const [isChecked, setIsChecked] = useState(isSelected)
+//   const params = useParams()
 
-  return (
-    <>
-      <input
-        type="checkbox"
-        id={name}
-        value={isChecked}
-        // checked={isChecked}
-        onChange={() => {
-          setIsChecked(!isChecked)
-          // console.log(name)
-          selectDays({ isSelected, name })
-        }}
-      />
-      <label
-        htmlFor={name}
-        className="check-label"
-        style={{ marginLeft: "6px" }}
-      >
-        {name}
-      </label>
-    </>
-  )
-}
+//   return <></>
+// }
 const BatchNewModal = ({
   modal,
   toggle,
@@ -84,12 +63,13 @@ const BatchNewModal = ({
   const [selectedCourseId, setSelectedCourseId] = useState("0")
   const [isLoading, setIsLoading] = useState(false)
   const [moodleDetail, setMoodleDetail] = useState([])
+  const [selectedDays, setSelectedDays] = useState([])
 
   // console.log(moodleDetail, "////////moodleDetail")
 
   const [updateDays, setUpdateDays] = useState([
     {
-      day: "",
+      day: [],
       start_time: "",
       end_time: "",
       started_time: "",
@@ -150,22 +130,22 @@ const BatchNewModal = ({
     { day: 6, name: "Sat", isSelected: false },
   ])
 
-  const selectDays = day => {
-    // console.log(day)
-    const updateDays = days.map(_day => {
-      if (day.name === _day.name) {
-        const temp = {
-          name: _day.name,
-          isSelected: !_day.isSelected,
-          day: _day.day,
-        }
-        return temp
-      }
-      return _day
-    })
-    // console.log("updateday", updateDays)
-    setDays(updateDays)
-  }
+  // const selectDays = day => {
+  //   // console.log(day)
+  //   const updateDays = days.map(_day => {
+  //     if (day.name === _day.name) {
+  //       const temp = {
+  //         name: _day.name,
+  //         isSelected: !_day.isSelected,
+  //         day: _day.day,
+  //       }
+  //       return temp
+  //     }
+  //     return _day
+  //   })
+  //   // console.log("updateday", updateDays)
+  //   setDays(updateDays)
+  // }
 
   const temp = {
     name: batchName,
@@ -239,10 +219,19 @@ const BatchNewModal = ({
     }
   }, [modal, selectedCourseId])
 
-  const startFormatDate = new Date(
-    moodleDetail[0]?.startdate * 1000
-  ).toLocaleString()
-  // console.log(startFormatDate, "/////////startFormatDate")
+  const handleDaysChange = (e, index) => {
+    const indexDays = { ...updateDays[index] }
+    const mainArray = [...updateDays]
+    const result = [...indexDays.day]
+    if (indexDays.day.includes(e.target.value)) {
+      result.splice(indexDays.day.indexOf(e.target.value), 1)
+    } else {
+      result.push(e.target.value)
+    }
+    indexDays.day = result
+    mainArray[index] = indexDays
+    setUpdateDays(mainArray)
+  }
 
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
@@ -658,18 +647,33 @@ const BatchNewModal = ({
                             </td>
                             <td>
                               <div>
-                                {days.map((day, index) => {
+                                {days.map((day, daysIndex) => {
                                   return (
                                     <FormGroup
-                                      key={index}
+                                      key={daysIndex}
                                       check
                                       inline
                                       className="checkbox"
                                     >
-                                      <CheckBox
+                                      <input
+                                        type="checkbox"
+                                        id={day.day}
+                                        value={day.day}
+                                        onChange={event => {
+                                          handleDaysChange(event, index)
+                                        }}
+                                      />
+                                      <label
+                                        htmlFor={day.name}
+                                        className="check-label"
+                                        style={{ marginLeft: "6px" }}
+                                      >
+                                        {day.name}
+                                      </label>
+                                      {/* <CheckBox
                                         {...day}
                                         selectDays={selectDays}
-                                      />
+                                      /> */}
                                     </FormGroup>
                                   )
                                 })}
