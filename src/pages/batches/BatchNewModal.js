@@ -79,6 +79,31 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     },
   ])
 
+  const CheckBox = ({ isSelected, name, selectDays }) => {
+    const [isChecked, setIsChecked] = useState(isSelected)
+    const params = useParams()
+
+    return (
+      <>
+        <input
+          type="checkbox"
+          id={name}
+          checked={isChecked}
+          onClick={event => {
+            console.log(event.target)
+          }}
+        />
+        <label
+          htmlFor={name}
+          className="check-label"
+          style={{ marginLeft: "6px" }}
+        >
+          {name}
+        </label>
+      </>
+    )
+  }
+
   useEffect(() => {
     const formatedCourseId = []
     courseIdData.map(item =>
@@ -239,6 +264,21 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     setUpdateDays(mainArray)
   }
 
+  useEffect(() => {
+    const startFormatDate = new Date(moodleDetail[0]?.startdate * 1000)
+      .toLocaleString()
+      .split(",")
+    const parts = startFormatDate[0].split("/")
+    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`
+    setStartDate(formattedDate)
+  }, [moodleDetail])
+
+  const selectHandle = () => {
+    if (selectedCourseId?.value === "Select Course Name") {
+      setBatchName("")
+    }
+  }
+
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>
@@ -261,7 +301,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                           placeholder="Course Name"
                           defaultValue={courseIdData}
                           onChange={e => {
-                            setSelectedCourseId(e)
+                            setSelectedCourseId(e), selectHandle()
                           }}
                           value={selectedCourseId}
                           options={options}
@@ -315,7 +355,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                         </Label>
                         <Input
                           // value={description}
-                          value={moodleDetail[0]?.summary}
+                          value={moodleDetail[0]?.displayname}
                           onChange={e => {
                             setDescription(e.target.value)
                           }}
