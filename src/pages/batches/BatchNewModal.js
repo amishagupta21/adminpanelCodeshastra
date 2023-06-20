@@ -37,15 +37,13 @@ import { Link, useParams } from "react-router-dom"
 
 //   return <></>
 // }
-const BatchNewModal = ({
-  modal,
-  toggle,
-  setModal,
-  setItem,
-  item,
-  createNewBatch,
-  onCreateNewBatch,
-}) => {
+const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
+  const INITIAL_BATCH_SCHEDULE_OBJ = {
+    day: [],
+    start_time: "",
+    end_time: "",
+  }
+
   const axios = require("axios")
   const [isFormValid, setIsFormValid] = useState(false)
 
@@ -64,8 +62,6 @@ const BatchNewModal = ({
   const [isLoading, setIsLoading] = useState(false)
   const [moodleDetail, setMoodleDetail] = useState([])
   const [selectedDays, setSelectedDays] = useState([])
-
-  // console.log(moodleDetail, "////////moodleDetail")
 
   const [updateDays, setUpdateDays] = useState([
     {
@@ -219,15 +215,25 @@ const BatchNewModal = ({
     }
   }, [modal, selectedCourseId])
 
+  /****
+   *
+   * index => It's parent array index
+   * e => It is checkbox event when someone click on checkbox
+   *
+   * ***/
+
   const handleDaysChange = (e, index) => {
     const indexDays = { ...updateDays[index] }
     const mainArray = [...updateDays]
     const result = [...indexDays.day]
     if (indexDays.day.includes(e.target.value)) {
+      // If exits, then we'll delete the record
       result.splice(indexDays.day.indexOf(e.target.value), 1)
     } else {
+      // If  not exist we will add the record in array
       result.push(e.target.value)
     }
+    // Reinitialize the updatedDays Array
     indexDays.day = result
     mainArray[index] = indexDays
     setUpdateDays(mainArray)
@@ -705,11 +711,7 @@ const BatchNewModal = ({
                         onClick={() =>
                           setUpdateDays([
                             ...updateDays,
-                            {
-                              day: "",
-                              start_time: "",
-                              end_time: "",
-                            },
+                            INITIAL_BATCH_SCHEDULE_OBJ,
                           ])
                         }
                       >
