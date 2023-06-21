@@ -53,6 +53,22 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
     setValue(mainArray)
   }
 
+  // const [updateDays, setUpdateDays] = useState([
+  //   {
+  //     day: [],
+  //     start_time: "",
+  //     end_time: "",
+  //     started_time: "",
+  //     ended_time: "",
+  //   },
+  // ])
+
+  // const INITIAL_BATCH_SCHEDULE_OBJ = {
+  //   day: [],
+  //   start_time: "",
+  //   end_time: "",
+  // }
+
   return (
     <AccordionItem className="mb-2">
       <AccordionHeader targetId="2">
@@ -222,7 +238,12 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
         </Table>
         <Row>
           <Col md={12}>
-            <button className="px-4 ms-3 create-new-appointment">
+            <button
+              // onClick={() =>
+              //   setUpdateDays([...updateDays, INITIAL_BATCH_SCHEDULE_OBJ])
+              // }
+              className="px-4 ms-3 create-new-appointment"
+            >
               Add A Schedule +
             </button>
           </Col>
