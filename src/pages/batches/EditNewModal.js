@@ -34,33 +34,52 @@ const EditNewModal = ({
   setEditModal,
 }) => {
   const [editData, setEditData] = useState({ ...batchApi })
-  const [selectedCourseId, setSelectedCourseId] = useState("0")
+  const [selectedCourseId, setSelectedCourseId] = useState({
+    label: "Select Course Name",
+    value: "0",
+  })
   const [courseIdData, setCourseIdData] = useState([])
   const [isClearable, setIsClearable] = useState(true)
-  const [selectedValue, setSelectedValue] = useState("0")
+  const [courseIdChanged, setCourseIdChanged] = useState(false)
   const [batchId, setBatchId] = useState("")
-
-  console.log(editData, "/////////editData")
-
-  const [moodleDetail, setMoodleDetail] = useState([
-    {
-      fullname: "",
-      displayname: "",
-      startDate: "",
-    },
-  ])
-
   const [options, setOptions] = useState([
     {
       label: "Select Course Name",
       value: "0",
     },
   ])
+
   const moodleDetailfunction = async () => {
     const resp = await getCourseData(
       url.GET_MOODLE_DETAIL + `/${selectedCourseId?.value}`
     )
-    setEditData(await formatFunction(resp.data[0]))
+    setEditData(formatFunction(resp.data[0]))
+  }
+
+  const updateBatches = event => {
+    event.preventDefault()
+
+    onEditNewBatch({
+      data: { ...editData, unikodecourseid: selectedCourseId?.value },
+      id: batchId,
+    })
+    setEditModal(false)
+  }
+
+  const handleChange = (event, index) => {
+    const data = { ...batchApi }
+    const result = [...batchApi?.batch_schedule?.value]
+    let indexValue = batchApi?.batch_schedule?.value[index]
+    indexValue = {
+      ...indexValue,
+      [event.target.name]:
+        event.target.name === "enable"
+          ? !event.target.checked
+          : event.target.value,
+    }
+    result[index] = indexValue
+    data.batch_schedule.value = result
+    setEditData(data)
   }
 
   useEffect(() => {
@@ -97,44 +116,24 @@ const EditNewModal = ({
     setOptions([...options, ...formatedCourseId])
   }, [courseIdData])
 
-  const updateBatches = event => {
-    event.preventDefault()
-
-    onEditNewBatch({ data: editData, id: batchId })
-    setEditModal(false)
-  }
-
-  const handleChange = (event, index) => {
-    const data = { ...batchApi }
-    const result = [...batchApi.batch_schedule.value]
-    let indexValue = batchApi.batch_schedule.value[index]
-    indexValue = {
-      ...indexValue,
-      [event.target.name]:
-        event.target.name === "enable"
-          ? !event.target.checked
-          : event.target.value,
-    }
-    result[index] = indexValue
-    data.batch_schedule.value = result
-    setEditData(data)
-  }
-
   useEffect(() => {
-    if (editModal && selectedCourseId.label !== "Select Course Name") {
+    if (
+      editModal &&
+      selectedCourseId?.label !== "Select Course Name" &&
+      selectedCourseId?.value
+    ) {
       moodleDetailfunction()
     }
   }, [editModal, selectedCourseId])
 
   useEffect(() => {
-    if (selectedCourseId?.label === "Select Course Name") {
-      setEditData([
-        {
-          fullname: "",
-          displayname: "",
-          startDate: "",
-        },
-      ])
+    if (selectedCourseId?.label === "Select Course Name" && courseIdChanged) {
+      setEditData({
+        fullname: "",
+        displayname: "",
+        startDate: "",
+        unikodecourseid: "0",
+      })
     }
   }, [selectedCourseId])
 
@@ -164,26 +163,6 @@ const EditNewModal = ({
                     <Col md={4} style={{ paddingLeft: "33px" }}>
                       <FormGroup>
                         <Label>Course</Label>
-                        {/* <Input
-                          name="select"
-                          onChange={e =>
-                            setEditData({
-                              ...editData,
-                              course: e.target.value,
-                            })
-                          }
-                          value={editData?.course}
-                          type="select"
-                        >
-                          <option value="0">Select Course</option>
-                          {courseIdData.map((item, index) => {
-                            return (
-                              <option key={index} value={editData?.courseid}>
-                                {item?.coursename}
-                              </option>
-                            )
-                          })}
-                        </Input> */}
                         <Select
                           name="filter"
                           placeholder="Course Name"
@@ -192,34 +171,14 @@ const EditNewModal = ({
                               ...editData,
                               unikodecourseid: e?.value.toString(),
                             })
+                            setCourseIdChanged(true)
                             setSelectedCourseId(e)
                           }}
                           value={selectedCourseId}
-                          // defaultValue={colourOptions[0]}
                           options={options}
                           isClearable={isClearable}
                           className="couserId-width"
                         />
-                        {/* <Input
-                          name="select"
-                          onChange={e => {
-                            return setEditData({
-                              ...editData,
-                              unikodecourseid: e.target.value,
-                            })
-                          }}
-                          value={editData?.unikodecourseid}
-                          type="select"
-                        >
-                          <option value="0">Select Course ID</option>
-                          {courseIdData.map((item, index) => {
-                            return (
-                              <option key={index} value={item?.courseid}>
-                                {item?.coursename}
-                              </option>
-                            )
-                          })}
-                        </Input> */}
                       </FormGroup>
                     </Col>
                   </Row>
@@ -245,20 +204,15 @@ const EditNewModal = ({
                         </Label>
                         <Input
                           type="text"
-                          value={editData?.name}
-                          // onChange={e => {
-                          //   setEditData({
-                          //     ...editData,
-                          //     name: e.target.value,
-                          //   })
-                          // }}
+                          value={editData?.name || ""}
                           onChange={e => {
                             if (
-                              selectedCourseId.label === "Select Course Name"
+                              selectedCourseId?.label === "Select Course Name"
                             ) {
-                              const data = [...editData]
-                              data[0].fullname = e.target.value
-                              setEditData(data)
+                              setEditData({
+                                ...editData,
+                                name: e.target.value,
+                              })
                             }
                           }}
                           placeholder="Batch_10"
@@ -277,19 +231,15 @@ const EditNewModal = ({
                           </span>
                         </Label>
                         <Input
-                          // value={editData?.description}
-                          value={
-                            selectedCourseId?.label === "Select Course Name"
-                              ? ""
-                              : editData?.description
-                          }
+                          value={editData?.description || ""}
                           onChange={e => {
                             if (
-                              selectedCourseId.label === "Select Course Name"
+                              selectedCourseId?.label === "Select Course Name"
                             ) {
-                              const data = [...editData]
-                              data[0].description = e.target.value
-                              setEditData(data)
+                              setEditData({
+                                ...editData,
+                                description: e.target.value,
+                              })
                             }
                           }}
                           type="text"
@@ -310,27 +260,17 @@ const EditNewModal = ({
                         </Label>
                         <Input
                           name="select"
-                          // onChange={e =>
-                          //   setEditData({
-                          //     ...editData,
-                          //     course: e.target.value,
-                          //   })
-                          // }
                           onChange={e => {
                             if (
-                              selectedCourseId.label === "Select Course Name"
+                              selectedCourseId?.label === "Select Course Name"
                             ) {
-                              const data = [...editData]
-                              data[0].course = e.target.value
-                              setEditData(data)
+                              setEditData({
+                                ...editData,
+                                course: e.target.value,
+                              })
                             }
                           }}
-                          // value={editData?.course}
-                          value={
-                            selectedCourseId?.label === "Select Course Name"
-                              ? ""
-                              : editData?.course
-                          }
+                          value={editData?.course || ""}
                           type="select"
                         >
                           <option value="Select">Select</option>
@@ -360,27 +300,17 @@ const EditNewModal = ({
                         </Label>
                         <Input
                           name="select"
-                          // value={editData?.variant_type}
-                          value={
-                            selectedCourseId?.label === "Select Course Name"
-                              ? ""
-                              : editData?.variant_type
-                          }
+                          value={editData?.variant_type || ""}
                           onChange={e => {
                             if (
-                              selectedCourseId.label === "Select Course Name"
+                              selectedCourseId?.label === "Select Course Name"
                             ) {
-                              const data = [...editData]
-                              data[0].variant_type = e.target.value
-                              setEditData(data)
+                              setEditData({
+                                ...editData,
+                                variant_type: e.target.value,
+                              })
                             }
                           }}
-                          // onChange={e =>
-                          //   setEditData({
-                          //     ...editData,
-                          //     variant_type: e.target.value,
-                          //   })
-                          // }
                           type="select"
                         >
                           <option value="Select">Select</option>
@@ -394,19 +324,15 @@ const EditNewModal = ({
                       <FormGroup>
                         <Label>Class Link</Label>
                         <Input
-                          // value={editData?.class_link}
-                          value={
-                            selectedCourseId?.label === "Select Course Name"
-                              ? ""
-                              : editData?.class_link
-                          }
+                          value={editData?.class_link || ""}
                           onChange={e => {
                             if (
-                              selectedCourseId.label === "Select Course Name"
+                              selectedCourseId?.label === "Select Course Name"
                             ) {
-                              const data = [...editData]
-                              data[0].class_link = e.target.value
-                              setEditData(data)
+                              setEditData({
+                                ...editData,
+                                class_link: e.target.value,
+                              })
                             }
                           }}
                           type="text"
@@ -426,12 +352,7 @@ const EditNewModal = ({
                       </Label>
                       <Input
                         type="date"
-                        // value={editData?.start_date}
-                        value={
-                          selectedCourseId?.label === "Select Course Name"
-                            ? ""
-                            : editData?.start_date
-                        }
+                        value={editData?.start_date}
                         onChange={e =>
                           setEditData({
                             ...editData,
@@ -453,12 +374,7 @@ const EditNewModal = ({
                       </Label>
                       <Input
                         type="date"
-                        // value={editData?.end_date}
-                        value={
-                          selectedCourseId?.label === "Select Course Name"
-                            ? ""
-                            : editData?.end_date
-                        }
+                        value={editData?.end_date}
                         min={editData?.start_date}
                         onChange={e =>
                           setEditData({

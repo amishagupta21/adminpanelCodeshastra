@@ -9,7 +9,7 @@ export const formatFunction = editData => {
     // created_at: "",
     // updated_at: "",
     // deleted_at: "",
-    // id: "",
+    unikodecourseid: editData?.id.toString(),
     name: editData?.fullname,
     description: editData?.displayname,
     // course: "",
