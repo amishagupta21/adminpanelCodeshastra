@@ -55,6 +55,8 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
     day: [],
     start_time: "",
     end_time: "",
+    started_time: "",
+    ended_time: "",
   }
 
   return (
@@ -215,22 +217,6 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                 </tr>
               )
             })}
-            {/* <tr>
-              <td
-                colSpan={4}
-                style={{
-                  paddingLeft: "0px",
-                  paddingRight: "0px",
-                }}
-              >
-                <div
-                  style={{
-                    height: "1px",
-                    background: "#CED4DA",
-                  }}
-                ></div>
-              </td>
-            </tr> */}
           </tbody>
         </Table>
         <Row>

@@ -276,14 +276,11 @@ const Batches = props => {
                 {user?.syncing_status}
               </span>
             )
+          } else {
+            return (
+              <span className="btn-status-pending">{user?.syncing_status}</span>
+            )
           }
-          // else (user?.syncing_status === "Incomplete") {
-          //   return (
-          //     <span className="btn-status-inactive">
-          //       {user?.syncing_status}
-          //     </span>
-          //   )
-          // }
         },
       },
 
