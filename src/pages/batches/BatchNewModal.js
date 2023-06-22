@@ -308,8 +308,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     }
   }, [selectedCourseId])
 
-  console.log(moodleDetail, "moodleDetail")
-
   return (
     <Modal isOpen={modal} toggle={toggle} fade={false} centered size="lg">
       <ModalHeader toggle={toggle}>Create Batch</ModalHeader>

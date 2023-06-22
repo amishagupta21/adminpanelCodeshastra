@@ -263,17 +263,28 @@ const Batches = props => {
         dataField: "syncing_status",
         text: "Syncing Status",
         sort: true,
-        formatter: (cellContent, user) => (
-          <div>
-            <span
-              className={
-                user?.syncing_status === null ? "" : "btn-status-active"
-              }
-            >
-              {user?.syncing_status}
-            </span>
-          </div>
-        ),
+        formatter: (cellContent, user) => {
+          if (user?.syncing_status === null) {
+            return <span>{user?.syncing_status}</span>
+          } else if (user?.syncing_status === "Complete") {
+            return (
+              <span className="btn-status-active">{user?.syncing_status}</span>
+            )
+          } else if (user?.syncing_status === "Incomplete") {
+            return (
+              <span className="btn-status-inactive">
+                {user?.syncing_status}
+              </span>
+            )
+          }
+          // else (user?.syncing_status === "Incomplete") {
+          //   return (
+          //     <span className="btn-status-inactive">
+          //       {user?.syncing_status}
+          //     </span>
+          //   )
+          // }
+        },
       },
 
       {

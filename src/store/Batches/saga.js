@@ -175,7 +175,7 @@ function* editBatch({ payload: data }) {
   try {
     const id = data.id
     delete data?.id
-    const response = yield call(editNewBatchesData, data, id)
+    const response = yield call(editNewBatchesData, data.data, id)
     tosterMsg(response?.message)
     yield call(fetchBatches, {})
     yield put(editNewBatchSuccess(response))
