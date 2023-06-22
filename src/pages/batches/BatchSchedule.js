@@ -34,15 +34,13 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
     const indexDays = { ...editValue[index] }
     const mainArray = [...editValue]
     const result = [...indexDays.day]
-    if (indexDays.day.includes(e.target.value)) {
+    if (indexDays?.day?.includes(e.target.value)) {
       // If exits, then we'll delete the record
       result.splice(indexDays.day.indexOf(e.target.value), 1)
     } else {
       // If  not exist we will add the record in array
       result.push(e.target.value)
     }
-    console.log(result, "result")
-
     // Reinitialize the updatedDays Array
     indexDays.day = result
     mainArray[index] = indexDays
@@ -53,21 +51,13 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
     setValue(mainArray)
   }
 
-  // const [updateDays, setUpdateDays] = useState([
-  //   {
-  //     day: [],
-  //     start_time: "",
-  //     end_time: "",
-  //     started_time: "",
-  //     ended_time: "",
-  //   },
-  // ])
-
-  // const INITIAL_BATCH_SCHEDULE_OBJ = {
-  //   day: [],
-  //   start_time: "",
-  //   end_time: "",
-  // }
+  const INITIAL_BATCH_SCHEDULE_OBJ = {
+    day: [],
+    start_time: "",
+    end_time: "",
+    started_time: "",
+    ended_time: "",
+  }
 
   return (
     <AccordionItem className="mb-2">
@@ -196,7 +186,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                               id="day"
                               value={dayValue.value}
                               type="checkbox"
-                              checked={item?.day.includes(
+                              checked={item?.day?.includes(
                                 dayValue.value.toString()
                               )}
                               onClick={e => handleDaysChange(e, index)}
@@ -211,37 +201,30 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                     </div>
                   </td>
                   <td>
-                    <span className="me-3">
+                    <span
+                      className="me-3"
+                      onClick={() => {
+                        if (editValue.length > 1) {
+                          const newUpdateDays = [...editValue]
+                          newUpdateDays.splice(index, 1)
+                          setValue(newUpdateDays)
+                        }
+                      }}
+                    >
                       <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
                     </span>
                   </td>
                 </tr>
               )
             })}
-            {/* <tr>
-              <td
-                colSpan={4}
-                style={{
-                  paddingLeft: "0px",
-                  paddingRight: "0px",
-                }}
-              >
-                <div
-                  style={{
-                    height: "1px",
-                    background: "#CED4DA",
-                  }}
-                ></div>
-              </td>
-            </tr> */}
           </tbody>
         </Table>
         <Row>
           <Col md={12}>
             <button
-              // onClick={() =>
-              //   setUpdateDays([...updateDays, INITIAL_BATCH_SCHEDULE_OBJ])
-              // }
+              onClick={() =>
+                setValue([...editValue, INITIAL_BATCH_SCHEDULE_OBJ])
+              }
               className="px-4 ms-3 create-new-appointment"
             >
               Add A Schedule +
