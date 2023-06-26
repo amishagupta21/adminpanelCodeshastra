@@ -100,9 +100,11 @@ function* fetchBatches({ payload: data }) {
 
 // MAIN LEARNER
 
-function* fetchBatchesLearner({ payload: data }) {
+function* fetchBatchesLearner({ payload: id }) {
   try {
-    const response = yield call(getBatchesLearner, data)
+    const responseMain = yield call(getNewBatches, id)
+    const finalData = { id: id, pageSize: responseMain?.data?.learner_limit }
+    const response = yield call(getBatchesLearner, finalData)
     tosterMsg(response?.message)
     yield put(getBatchesLearnerSuccess(response?.data[0]))
     yield put(getBatchesLearnerCountSuccess(response?.data))

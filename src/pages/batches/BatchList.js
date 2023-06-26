@@ -59,11 +59,8 @@ const BatchList = props => {
   }, [manageUser])
 
   useEffect(() => {
-    const { onGetBatchesLearner, onGetNewBatches } = props
-
+    const { onGetBatchesLearner } = props
     onGetBatchesLearner(params.id)
-
-    onGetNewBatches(params.id)
   }, [])
 
   const gradeBookApi = () => {
@@ -133,11 +130,15 @@ const BatchList = props => {
               </DropdownMenu>
             </UncontrolledDropdown> */}
           </div>
-        </Col> 
+        </Col>
       </Row>
       <Row>
-        <Col md={6}><BatchLearner newBatch={newBatch} /></Col>
-        <Col md={6}><BatchProgress /></Col>
+        <Col md={6}>
+          <BatchLearner newBatch={newBatch} />
+        </Col>
+        <Col md={6}>
+          <BatchProgress />
+        </Col>
         {/* <Col md={4}><CompletionStatus /> </Col> */}
       </Row>
       <Row>
