@@ -39,9 +39,18 @@ const EditNewModal = ({
     value: "0",
   })
   const [courseIdData, setCourseIdData] = useState([])
-  const [isClearable, setIsClearable] = useState(true)
   const [courseIdChanged, setCourseIdChanged] = useState(false)
   const [batchId, setBatchId] = useState("")
+  const [isDisable, setIsDisable] = useState(false)
+
+  useEffect(() => {
+    if (selectedCourseId?.label === "Select Course Name") {
+      setIsDisable(false)
+    } else {
+      setIsDisable(true)
+    }
+  }, [selectedCourseId])
+
   const [options, setOptions] = useState([
     {
       label: "Select Course Name",
@@ -50,10 +59,12 @@ const EditNewModal = ({
   ])
 
   const moodleDetailfunction = async () => {
-    const resp = await getCourseData(
-      url.GET_MOODLE_DETAIL + `/${selectedCourseId?.value}`
-    )
-    setEditData(formatFunction(resp.data[0]))
+    if (courseIdChanged) {
+      const resp = await getCourseData(
+        url.GET_MOODLE_DETAIL + `/${selectedCourseId?.value}`
+      )
+      setEditData(formatFunction(resp.data[0]))
+    }
   }
 
   const updateBatches = event => {
@@ -127,7 +138,10 @@ const EditNewModal = ({
   }, [editModal, selectedCourseId])
 
   useEffect(() => {
-    if (selectedCourseId?.label === "Select Course Name" && courseIdChanged) {
+    if (
+      (selectedCourseId?.label === "Select Course Name" && courseIdChanged) ||
+      selectedCourseId === null
+    ) {
       setEditData({
         fullname: "",
         displayname: "",
@@ -176,7 +190,7 @@ const EditNewModal = ({
                           }}
                           value={selectedCourseId}
                           options={options}
-                          isClearable={isClearable}
+                          isClearable
                           className="couserId-width"
                         />
                       </FormGroup>
@@ -206,16 +220,12 @@ const EditNewModal = ({
                           type="text"
                           value={editData?.name || ""}
                           onChange={e => {
-                            if (
-                              selectedCourseId?.label === "Select Course Name"
-                            ) {
-                              setEditData({
-                                ...editData,
-                                name: e.target.value,
-                              })
-                            }
+                            setEditData({
+                              ...editData,
+                              name: e.target.value,
+                            })
                           }}
-                          placeholder="Batch_10"
+                          placeholder="Enter Batch Name"
                         />
                       </FormGroup>
                     </Col>
@@ -232,6 +242,7 @@ const EditNewModal = ({
                         </Label>
                         <Input
                           value={editData?.description || ""}
+                          disabled={isDisable}
                           onChange={e => {
                             if (
                               selectedCourseId?.label === "Select Course Name"
@@ -243,7 +254,7 @@ const EditNewModal = ({
                             }
                           }}
                           type="text"
-                          placeholder="Freshers Only"
+                          placeholder="Description"
                         />
                       </FormGroup>
                     </Col>
@@ -260,6 +271,7 @@ const EditNewModal = ({
                         </Label>
                         <Input
                           name="select"
+                          disabled={isDisable}
                           onChange={e => {
                             if (
                               selectedCourseId?.label === "Select Course Name"
@@ -301,6 +313,7 @@ const EditNewModal = ({
                         <Input
                           name="select"
                           value={editData?.variant_type || ""}
+                          disabled={isDisable}
                           onChange={e => {
                             if (
                               selectedCourseId?.label === "Select Course Name"
@@ -325,6 +338,7 @@ const EditNewModal = ({
                         <Label>Class Link</Label>
                         <Input
                           value={editData?.class_link || ""}
+                          disabled={isDisable}
                           onChange={e => {
                             if (
                               selectedCourseId?.label === "Select Course Name"
@@ -336,7 +350,7 @@ const EditNewModal = ({
                             }
                           }}
                           type="text"
-                          placeholder="www.google.meet/saq-faw-brs"
+                          placeholder="Class Link"
                         />
                       </FormGroup>
                     </Col>
@@ -353,6 +367,7 @@ const EditNewModal = ({
                       <Input
                         type="date"
                         value={editData?.start_date}
+                        disabled={isDisable}
                         onChange={e =>
                           setEditData({
                             ...editData,
@@ -376,6 +391,7 @@ const EditNewModal = ({
                         type="date"
                         value={editData?.end_date}
                         min={editData?.start_date}
+                        disabled={isDisable}
                         onChange={e =>
                           setEditData({
                             ...editData,
