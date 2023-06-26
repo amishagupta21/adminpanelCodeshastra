@@ -58,7 +58,10 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
   const [startTime, setStartTime] = useState("")
   const [endTime, setendTime] = useState("")
   const [courseIdData, setCourseIdData] = useState([])
-  const [selectedCourseId, setSelectedCourseId] = useState("0")
+  const [selectedCourseId, setSelectedCourseId] = useState({
+    label: "Select Course Name",
+    value: "0",
+  })
 
   const [isLoading, setIsLoading] = useState(false)
   const [moodleDetail, setMoodleDetail] = useState([
@@ -68,6 +71,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       startDate: "",
     },
   ])
+
   const [selectedDays, setSelectedDays] = useState([])
 
   const [updateDays, setUpdateDays] = useState([
@@ -221,6 +225,12 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
         setIsLoading(false)
         setModal(false)
         setItem([...item, res.data.data])
+        setClassLink("")
+        setStartDate("")
+        setEndDate("")
+        setMoodleDetail("")
+        setCourse("")
+        setVariantType("")
       })
       .catch(err => {
         console.log("err", err)
@@ -328,7 +338,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                         <Select
                           name="filter"
                           placeholder="Course Name"
-                          defaultValue={courseIdData}
                           onChange={e => {
                             setSelectedCourseId(e)
                           }}
@@ -366,6 +375,10 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                             if (
                               selectedCourseId.label === "Select Course Name"
                             ) {
+                              const data = [...moodleDetail]
+                              data[0].fullname = e.target.value
+                              setMoodleDetail(data)
+                            } else {
                               const data = [...moodleDetail]
                               data[0].fullname = e.target.value
                               setMoodleDetail(data)
@@ -531,105 +544,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                       />
                     </Col>
                   </Row>
-                  {/* <Table responsive>
-                    <thead>
-                      <tr> */}
-                  {/* <th>
-                          Mentor{" "}
-                          <span
-                            className="mandotary star"
-                            style={{ color: "red" }}
-                          >
-                            *
-                          </span>
-                        </th>
-                        <th>
-                          Learners Limit{" "}
-                          <span
-                            className="mandotary star"
-                            style={{ color: "red" }}
-                          >
-                            *
-                          </span>
-                        </th> */}
-                  {/* <th>
-                          Start Date{" "}
-                          <span
-                            className="mandotary star"
-                            style={{ color: "red" }}
-                          >
-                            *
-                          </span>
-                        </th>
-                        <th>
-                          End Date{" "}
-                          <span
-                            className="mandotary star"
-                            style={{ color: "red" }}
-                          >
-                            *
-                          </span>
-                        </th> */}
-                  {/* </tr>
-                    </thead>
-                    <tbody>
-                      <tr> */}
-                  {/* <td>
-                          <FormGroup className="select_box border-0">
-                            <Input
-                              name="select"
-                              type="select"
-                              className="border-0"
-                              value={mentor}
-                              required
-                              onChange={e => {
-                                setMentor(e.target.value)
-                              }}
-                            >
-                              {mentors.map((mentor, index) => {
-                                return <option key={index}>{mentor}</option>
-                              })}
-                            </Input>
-                          </FormGroup>
-                        </td>
-                        <td>
-                          <FormGroup>
-                            <Input
-                              placeholder="75"
-                              type="text"
-                              className="bg-grey border-0"
-                              value={learnersLimit}
-                              onChange={e => {
-                                setLearnersLimit(e.target.value)
-                              }}
-                              required
-                            />
-                          </FormGroup>
-                        </td> */}
-                  {/* <td>
-                          <Input
-                            type="date"
-                            value={startDate}
-                            onChange={e => {
-                              setStartDate(e.target.value)
-                            }}
-                            required
-                          />
-                        </td> */}
-                  {/* <td>
-                          <Input
-                            type="date"
-                            min={startDate}
-                            value={endDate}
-                            onChange={e => {
-                              setEndDate(e.target.value)
-                            }}
-                            required
-                          />
-                        </td> */}
-                  {/* </tr>
-                    </tbody>
-                  </Table> */}
                 </AccordionBody>
               </AccordionItem>
               <AccordionItem className="mb-2">
@@ -672,7 +586,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {updateDays.map((item, index) => {
+                      {updateDays?.map((item, index) => {
                         return (
                           <tr key={index} className="tr-border">
                             <td>
