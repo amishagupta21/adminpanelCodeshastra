@@ -56,6 +56,7 @@ const INIT_STATE = {
   dashboard: [],
   batchesLearner: [],
   lecture: [],
+  manageUserLoader: true,
 }
 
 const Batches = (state = INIT_STATE, action) => {
@@ -94,18 +95,20 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_BATCHES_LIST:
       return {
         ...state,
-        data: action.payload,
+        manageUserLoader: true,
       }
     case GET_BATCHES_LIST_SUCCESS:
       return {
         ...state,
         manageUser: action.payload,
+        manageUserLoader: false,
       }
 
     case GET_BATCHES_LIST_FAIL:
       return {
         ...state,
         error: action.payload,
+        manageUserLoader: false,
       }
 
     case GET_BATCHES_LIST_COUNT_SUCCESS:

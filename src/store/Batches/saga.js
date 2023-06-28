@@ -66,6 +66,8 @@ import {
   getDeleteData,
   getDeleteBatches,
   getStatusFilter,
+  AllBatches,
+  getBatchesAllGrade,
   createNewBatchesData,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
@@ -87,7 +89,7 @@ function* fetchBatchesList({ payload: data }) {
 
 function* fetchBatches({ payload: data }) {
   try {
-    const response = yield call(getBatches, data)
+    const response = yield call(AllBatches, data)
     tosterMsg(response?.message)
     yield put(getBatchesListSuccess(response?.data?.result))
     yield put(getBatchesListCountSuccess(response?.data))
@@ -116,6 +118,19 @@ function* fetchBatchesLearner({ payload: id }) {
 }
 
 // GRADE BOOK
+
+// function* fetchAllGradeBook({ payload: data }) {
+//   try {
+//     const response = yield call(getBatchesAllGrade, data)
+//     tosterMsg(response?.message)
+//     yield put(getGradeBookSuccess(response?.data))
+//     yield put(getGradeBookCountSuccess(response?.data))
+//   } catch (error) {
+//     tosterMsg(error?.message)
+//     yield put(getGradeBookCountFail(error))
+//     // yield put(getGradeBookCountFail(error))
+//   }
+// }
 
 function* fetchGradeBook({ payload: data }) {
   try {
@@ -232,6 +247,7 @@ function* usersManageSaga() {
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
   yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
+  // yield takeEvery(GET_GRADE_BOOK, fetchAllGradeBook)
   yield takeEvery(GET_BATCH_API, fetchBatchApi)
   yield takeEvery(GET_NEW_BATCHES, fetchNewBatches)
   yield takeEvery(GET_DASHBOARD, fetchNewDashboard)

@@ -50,6 +50,7 @@ import { del, post } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
+
 import tosterMsg from "components/Common/toster"
 
 const Batches = props => {
@@ -64,6 +65,7 @@ const Batches = props => {
     onGetDashboard,
     onGetBatchesApi,
     createNewBatch,
+    manageUserLoader,
   } = props
   const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
@@ -405,6 +407,8 @@ const Batches = props => {
       })
   }
 
+  console.log(manageUserLoader, "manageUsers")
+
   return (
     <div className="page-content batches-home">
       <DeleteModal
@@ -678,7 +682,23 @@ const Batches = props => {
                                   headerWrapperClasses={"thead-light"}
                                   {...toolkitProps.baseProps}
                                   pagination={paginationFactory()}
-                                  noDataIndication={"No data found"}
+                                  noDataIndication={
+                                    manageUserLoader ? (
+                                      <div className="d-flex justify-content-center">
+                                        <Spinner
+                                          size=""
+                                          color="primary"
+                                          // style={{
+                                          //   width: "3rem",
+                                          //   height: "3rem",
+                                          //   color: "#556ee6",
+                                          // }}
+                                        />
+                                      </div>
+                                    ) : (
+                                      "No data found"
+                                    )
+                                  }
                                 />
                               </div>
                             </Col>
@@ -707,6 +727,7 @@ Batches.propTypes = {
 const mapStateToProps = ({ Batches, state, count }) => {
   return {
     manageUser: Batches?.manageUser,
+    manageUserLoader: Batches?.manageUserLoader,
     usersCount: Batches?.count.count,
     dashboard: Batches?.dashboard,
     userRoles: Batches?.roles,
