@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Col, Row } from "reactstrap"
+import firebase from "firebase/compat/app"
+
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
@@ -40,6 +42,16 @@ const FireBaseConfig = () => {
     ],
   }
 
+  const fetchUsers = async () => {
+    try {
+      const usersS = await firebase.firestore().collection("users").get()
+      const ddddd = usersS.docs.map(doc => doc.data())
+      console.log("============== users =============", firebase.database())
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const defaultSorted = [
     {
       dataField: "id",
@@ -51,7 +63,9 @@ const FireBaseConfig = () => {
     mode: "checkbox",
     clickToSelect: true,
   }
-
+  useEffect(() => {
+    fetchUsers()
+  }, [])
   return (
     <div className="page-content">
       <Row>

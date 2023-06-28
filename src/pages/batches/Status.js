@@ -26,7 +26,7 @@ import { connect } from "react-redux"
 import { getBatchesList } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 
-const Status = ({ active, confirmStatus, closeModal }) => {
+const Status = ({ active, confirmStatus, closeModal, handleEdit, user }) => {
   return (
     <Modal
       isOpen={active}
@@ -55,8 +55,14 @@ const Status = ({ active, confirmStatus, closeModal }) => {
         <Row>
           <Col>
             <div className="text-center mt-3">
-              <button type="button" className="btn btn-success btn-lg ms-2">
-                Yes, delete it!
+              <button
+                onClick={() => {
+                  handleEdit(user?.id)
+                }}
+                type="button"
+                className="btn btn-success btn-lg ms-2"
+              >
+                Yes
               </button>
               <button
                 type="button"
