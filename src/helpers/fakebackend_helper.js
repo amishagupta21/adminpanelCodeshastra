@@ -152,10 +152,10 @@ const getBatchesLearner = async data => {
 //   return getBatchesGrade({ pageSize: resp1?.data[1] })
 // }
 
-const getBatchesGrade = async data => {
+const getBatchesGrade = async (data, id) => {
   const resp = await getCourseData(
     url.GET_GRADE_BOOK +
-      `/${data}?pageSize=${data?.pageSize || 15}&page=${
+      `/${data}?pageSize=${data?.pageSize || 5}&page=${
         data?.page || 1
       }&sortBy=${data?.sortBy || "created_at"}&?sortOrder=${
         data?.sortOrder || "DESC"
