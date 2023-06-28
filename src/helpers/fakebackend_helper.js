@@ -106,7 +106,7 @@ const postJwtRegister = (url, data) => {
 const getBatchesList = async data => {
   const resp = await getCourseData(
     url.GET_BATCHES_LIST +
-      `?pageSize=${data?.pageSize || 20}&page=${data?.page || 1}&sortOrder=${
+      `?pageSize=${data?.pageSize || 12}&page=${data?.page || 1}&sortOrder=${
         data?.sortOrder || "asc"
       }&sortBy=${data?.sortBy || "created_at"}&startDate=${
         data?.startDate || ""
@@ -117,10 +117,17 @@ const getBatchesList = async data => {
 
 // MAIN BATCHES API
 
+const AllBatches = async data => {
+  const allResp = await getCourseData(
+    url.GET_BATCHES + `?&keyword=${data?.search || ""}`
+  )
+  return getBatches({ pageSize: allResp?.data?.count })
+}
+
 const getBatches = async data => {
   const resp = await getCourseData(
     url.GET_BATCHES +
-      `?pageSize=${data?.pageSize || 39}&page=${data?.page || 1}&keyword=${
+      `?pageSize=${data?.pageSize || 10}&page=${data?.page || 1}&keyword=${
         data?.search || ""
       }`
   )
@@ -140,10 +147,15 @@ const getBatchesLearner = async data => {
   return resp
 }
 
+// const getBatchesAllGrade = async data => {
+//   const resp1 = await getCourseData(url.GET_GRADE_BOOK + `/${data}`)
+//   return getBatchesGrade({ pageSize: resp1?.data[1] })
+// }
+
 const getBatchesGrade = async data => {
   const resp = await getCourseData(
     url.GET_GRADE_BOOK +
-      `/${data}?pageSize=${data?.pageSize || 35}&page=${
+      `/${data}?pageSize=${data?.pageSize || 15}&page=${
         data?.page || 1
       }&sortBy=${data?.sortBy || "created_at"}&?sortOrder=${
         data?.sortOrder || "DESC"
@@ -646,6 +658,7 @@ export {
   getFaqList,
   getBatches,
   getBatchesLearner,
+  // getBatchesAllGrade,
   getBatchesGrade,
   editNewBatchesData,
   getNewBatches,
@@ -653,5 +666,6 @@ export {
   getMentorApi,
   getBatchesApi,
   createNewBatchesData,
+  AllBatches,
   // getFilter,
 }

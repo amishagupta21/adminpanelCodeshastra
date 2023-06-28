@@ -59,8 +59,9 @@ const BatchList = props => {
   }, [manageUser])
 
   useEffect(() => {
-    const { onGetBatchesLearner } = props
+    const { onGetBatchesLearner, onGetNewBatches } = props
     onGetBatchesLearner(params.id)
+    onGetNewBatches(params.id)
   }, [])
 
   const gradeBookApi = () => {
