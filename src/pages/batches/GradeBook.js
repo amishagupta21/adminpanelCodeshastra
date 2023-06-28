@@ -179,8 +179,6 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
     // setState({ Batches })
   }
 
-  console.log(gradeBook, "////////gradeBook")
-
   return (
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
