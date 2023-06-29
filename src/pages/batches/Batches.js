@@ -48,7 +48,7 @@ import DeleteModel from "components/DeleteModal"
 import ModalDelete from "components/Common/ModalDelete"
 import DeleteModal from "components/Common/DeleteModal"
 import EditNewModal from "./EditNewModal"
-import { del, post, putImage } from "../../helpers/api_helper"
+import { del, post, patch } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
@@ -324,31 +324,13 @@ const Batches = props => {
     ],
   }
 
-  // // Fetch the initial data
-  // const fetchData = async id => {
-  //   console.log(id, "////////////id")
-  //   try {
-  //     const response = await axios.get(
-  //       `https://lms.unikaksha.dev/api/lms/admin/batch/${data?.id}`
-  //     )
-  //     debugger
-
-  //     console.log(response, "//////////response")
-  //     // setData(response.data)
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error)
-  //   }
-  // }
-
   const handleEdit = async data => {
     try {
       // Make the edit request
-      const response = await axios.patch(
-        `https://lms.unikaksha.dev/api/lms/admin/batch/enable/${data?.id}`,
-        {
-          enable: !data?.enable,
-        }
-      )
+      const response = await patch(url.GET_STATUS + `/${data?.id}`, {
+        enable: !data?.enable,
+      })
+
       setActive(false)
       onGetBatchesList()
       console.log("Edit successful!", response)

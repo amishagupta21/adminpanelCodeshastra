@@ -141,7 +141,7 @@ export const GET_MOODLE_DETAIL = "/moodle/getAllTheCourses"
 
 // STATUS
 
-export const GET_STATUS = "/enable"
+export const GET_STATUS = "/admin/batch/enable"
 
 export const CREATE_NEW_BATCHES = "/admin/batch"
 export const GET_BATCHES_LEARNER_LIST = "/admin/batch/learners/listing"
