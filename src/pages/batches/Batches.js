@@ -38,7 +38,9 @@ import {
   deleteBatches,
 } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
-import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
+import ToolkitProvider, {
+  CSVExport,
+} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { DeBounceSearch } from "common/DeBounceSearch"
 import BatchNewModal from "./BatchNewModal"
@@ -46,12 +48,13 @@ import DeleteModel from "components/DeleteModal"
 import ModalDelete from "components/Common/ModalDelete"
 import DeleteModal from "components/Common/DeleteModal"
 import EditNewModal from "./EditNewModal"
-import { del, post } from "../../helpers/api_helper"
+import { del, post, putImage } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
 
 import tosterMsg from "components/Common/toster"
+import Status from "./Status"
 
 const Batches = props => {
   const axios = require("axios")
@@ -75,6 +78,14 @@ const Batches = props => {
   const [editModal, setEditModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [clickedIds, setClickedIds] = useState([])
+  const { ExportCSVButton } = CSVExport
+  const [active, setActive] = useState(false)
+  const [data, setData] = useState([])
+
+  const confirmStatus = () => {
+    setActive(true)
+  }
+  const closeModal = () => setActive(false)
 
   const editNewModal = id => {
     onGetBatchesApi(id)
@@ -122,22 +133,6 @@ const Batches = props => {
     return resp
   }
 
-  // const onClickDelete = () => {
-  //   axios({
-  //     method: "DELETE",
-  //     url: `https://lms.unikaksha.dev/api/lms/admin/batch/${user?.id}`,
-  //     data: user,
-  //   })
-  //     .then(res => {
-  //       const finalItem = item.filter(item => item.id !== user?.id)
-  //       setItem(finalItem)
-  //       setDeleteModalIsOpen(false)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
-
   let state = {
     columns: [
       {
@@ -178,14 +173,6 @@ const Batches = props => {
             </div>
           </OverlayTrigger>
         ),
-
-        // formatter: (cellContent, user) => (
-        //   <div
-        //     dangerouslySetInnerHTML={{
-        //       __html: user?.summary,
-        //     }}
-        //   />
-        // ),
       },
       {
         dataField: "start_date",
@@ -248,7 +235,17 @@ const Batches = props => {
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div>
+          <div
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+              confirmStatus(user?.id)
+              setData(user)
+              // fetchData()
+              setActive(true)
+              // handleEdit(user?.id)
+            }}
+          >
             <span
               className={
                 user?.enable === true
@@ -321,24 +318,43 @@ const Batches = props => {
                 <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
               </div>
             </div>
-            {/* <div className="me-2">
-              <div className="text-muted">
-                <input
-                  id={`age-cell-${userData?.id}`}
-                  onClick={e => {
-                    handleClick(userData?.id)
-                    e.stopPropagation()
-                    e.preventDefault()
-                  }}
-                  type="checkbox"
-                />
-                <i className="mdi mdi-eye font-size-16 text-danger"></i>
-              </div>
-            </div> */}
           </div>
         ),
       },
     ],
+  }
+
+  // // Fetch the initial data
+  // const fetchData = async id => {
+  //   console.log(id, "////////////id")
+  //   try {
+  //     const response = await axios.get(
+  //       `https://lms.unikaksha.dev/api/lms/admin/batch/${data?.id}`
+  //     )
+  //     debugger
+
+  //     console.log(response, "//////////response")
+  //     // setData(response.data)
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error)
+  //   }
+  // }
+
+  const handleEdit = async data => {
+    try {
+      // Make the edit request
+      const response = await axios.patch(
+        `https://lms.unikaksha.dev/api/lms/admin/batch/enable/${data?.id}`,
+        {
+          enable: !data?.enable,
+        }
+      )
+      setActive(false)
+      onGetBatchesList()
+      console.log("Edit successful!", response)
+    } catch (error) {
+      console.error("Error editing:", error)
+    }
   }
 
   const handleClick = (row, isSelected, rowIndex, e) => {
@@ -407,10 +423,15 @@ const Batches = props => {
       })
   }
 
-  console.log(manageUserLoader, "manageUsers")
-
   return (
     <div className="page-content batches-home">
+      <Status
+        active={active}
+        confirmStatus={confirmStatus}
+        closeModal={closeModal}
+        handleEdit={handleEdit}
+        user={data}
+      />
       <DeleteModal
         show={deleteModalIsOpen}
         onDeleteClick={handleDeleteUser}
@@ -582,6 +603,10 @@ const Batches = props => {
                         keyField="id"
                         columns={state?.columns}
                         data={item || []}
+                        exportCSV={{
+                          onlyExportSelection: false,
+                          exportAll: true,
+                        }}
                       >
                         {toolkitProps => (
                           <>
@@ -654,9 +679,13 @@ const Batches = props => {
                                         <DropdownItem>
                                           Export as pdf
                                         </DropdownItem>
-                                        <DropdownItem>
-                                          Export as excel
-                                        </DropdownItem>
+                                        <ExportCSVButton
+                                          {...toolkitProps.csvProps}
+                                        >
+                                          <DropdownItem>
+                                            Export as excel
+                                          </DropdownItem>{" "}
+                                        </ExportCSVButton>
                                       </DropdownMenu>
                                     </UncontrolledDropdown>
                                   </div>

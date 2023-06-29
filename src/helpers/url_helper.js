@@ -139,6 +139,10 @@ export const EDIT_NEW_BATCHES = "/admin/batch"
 export const GET_MOODLE_COURSE = "/moodle/getCourseids"
 export const GET_MOODLE_DETAIL = "/moodle/getAllTheCourses"
 
+// STATUS
+
+export const GET_STATUS = "/enable"
+
 export const CREATE_NEW_BATCHES = "/admin/batch"
 export const GET_BATCHES_LEARNER_LIST = "/admin/batch/learners/listing"
 export const GET_DELETE_BATCHES = "/admin/batch/"

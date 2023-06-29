@@ -223,18 +223,19 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
               </Col>
               <Col md={6}>
                 <div className="text-end">
-                  <ExportCSVButton {...toolkitProps.csvProps}>
-                    {/* <Button color="secondary">Export</Button> */}
-                    <UncontrolledDropdown className="me-2" direction="down">
-                      <DropdownToggle caret color="primary">
-                        Export <i className="mdi mdi-menu-down"></i>
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem>Export as pdf</DropdownItem>
+                  {/* <Button color="secondary">Export</Button> */}
+                  <UncontrolledDropdown className="me-2" direction="down">
+                    <DropdownToggle caret color="primary">
+                      Export <i className="mdi mdi-menu-down"></i>
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem>Export as pdf</DropdownItem>
+                      <ExportCSVButton {...toolkitProps.csvProps}>
+                        {" "}
                         <DropdownItem>Export as excel</DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </ExportCSVButton>
+                      </ExportCSVButton>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                 </div>
               </Col>
             </Row>

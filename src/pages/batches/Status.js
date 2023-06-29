@@ -26,7 +26,7 @@ import { connect } from "react-redux"
 import { getBatchesList } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 
-const Status = ({ active, confirmStatus, closeModal }) => {
+const Status = ({ active, confirmStatus, closeModal, handleEdit, user }) => {
   return (
     <Modal
       isOpen={active}
@@ -47,7 +47,10 @@ const Status = ({ active, confirmStatus, closeModal }) => {
                 className="mdi mdi-alert-circle-outline"
                 style={{ fontSize: "9em", color: "orange" }}
               />
-              <h2>Are you sure you want to inactive?</h2>
+              <h2>
+                Are you sure you want to {!user?.enable ? "Active" : "Inactive"}
+                ?
+              </h2>
               {/* <h4>{"You won't be able to revert this!"}</h4> */}
             </div>
           </Col>
@@ -55,8 +58,14 @@ const Status = ({ active, confirmStatus, closeModal }) => {
         <Row>
           <Col>
             <div className="text-center mt-3">
-              <button type="button" className="btn btn-success btn-lg ms-2">
-                Yes, delete it!
+              <button
+                onClick={() => {
+                  handleEdit({ id: user?.id, enable: user?.enable })
+                }}
+                type="button"
+                className="btn btn-success btn-lg ms-2"
+              >
+                {!user?.enable ? "Active" : "Inactive"}
               </button>
               <button
                 type="button"

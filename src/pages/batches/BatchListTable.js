@@ -186,11 +186,11 @@ const BatchListTable = ({
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
 
-      <Status
+      {/* <Status
         active={active}
         confirmStatus={confirmStatus}
         closeModal={closeModal}
-      />
+      /> */}
 
       <ToolkitProvider
         key={isExpanded}
@@ -214,18 +214,18 @@ const BatchListTable = ({
               </Col>
               <Col md={6}>
                 <div className="text-end">
-                  <ExportCSVButton {...toolkitProps.csvProps}>
-                    {/* <Button color="secondary">Export</Button> */}
-                    <UncontrolledDropdown className="me-2" direction="down">
-                      <DropdownToggle caret color="primary">
-                        Export <i className="mdi mdi-menu-down"></i>
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem>Export as pdf</DropdownItem>
-                        <DropdownItem>Export as excel</DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                  </ExportCSVButton>
+                  {/* <Button color="secondary">Export</Button> */}
+                  <UncontrolledDropdown className="me-2" direction="down">
+                    <DropdownToggle caret color="primary">
+                      Export <i className="mdi mdi-menu-down"></i>
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem>Export as pdf</DropdownItem>
+                      <ExportCSVButton {...toolkitProps.csvProps}>
+                        <DropdownItem>Export as excel</DropdownItem>{" "}
+                      </ExportCSVButton>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                 </div>
               </Col>
             </Row>

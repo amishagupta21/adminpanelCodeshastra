@@ -1,25 +1,26 @@
-import PropTypes from 'prop-types';
-import React from "react";
+import PropTypes from "prop-types"
+import React from "react"
+import firebase from "firebase/compat/app"
 
-import { Switch, BrowserRouter as Router } from "react-router-dom";
-import { connect } from "react-redux";
+import { Switch, BrowserRouter as Router } from "react-router-dom"
+import { connect } from "react-redux"
 
 // Import Routes all
-import { authProtectedRoutes, publicRoutes } from "./routes";
+import { authProtectedRoutes, publicRoutes } from "./routes"
 
 // Import all middleware
-import Authmiddleware from "./routes/route";
+import Authmiddleware from "./routes/route"
 
 // layouts Format
-import VerticalLayout from "./components/VerticalLayout/";
-import HorizontalLayout from "./components/HorizontalLayout/";
-import NonAuthLayout from "./components/NonAuthLayout";
+import VerticalLayout from "./components/VerticalLayout/"
+import HorizontalLayout from "./components/HorizontalLayout/"
+import NonAuthLayout from "./components/NonAuthLayout"
 
 // Import scss
-import "./assets/scss/theme.scss";
+import "./assets/scss/theme.scss"
 
 // Import Firebase Configuration file
-import { initFirebaseBackend } from "./helpers/firebase_helper";
+import { initFirebaseBackend, remoteConfig } from "./helpers/firebase_helper"
 // Activating fake backend
 // fakeBackend()
 
@@ -32,26 +33,41 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
   appId: process.env.REACT_APP_APPID,
   measurementId: process.env.REACT_APP_MEASUREMENTID,
-};
+}
 
-initFirebaseBackend(firebaseConfig);
+initFirebaseBackend(firebaseConfig)
+
+// firebase.initializeApp(firebaseConfig);
 
 const App = props => {
-
   function getLayout() {
-    let layoutCls = VerticalLayout;
+    let layoutCls = VerticalLayout
     switch (props.layout.layoutType) {
       case "horizontal":
-        layoutCls = HorizontalLayout;
-        break;
+        layoutCls = HorizontalLayout
+        break
       default:
-        layoutCls = VerticalLayout;
-        break;
+        layoutCls = VerticalLayout
+        break
     }
-    return layoutCls;
+    return layoutCls
   }
 
-  const Layout = getLayout();
+  // const fetchRemoteConfig = async () => {
+  //   try {
+  //     await remoteConfig.fetchAndActivate()
+  //     const value = remoteConfig.getString("skill_fit_data")
+  //     console.log("Fetched value:", value)
+  //   } catch (error) {
+  //     console.error("Error fetching remote config:", error)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchRemoteConfig()
+  // }, [])
+
+  const Layout = getLayout()
   return (
     <React.Fragment>
       <Router>
@@ -80,17 +96,17 @@ const App = props => {
         </Switch>
       </Router>
     </React.Fragment>
-  );
-};
+  )
+}
 
 App.propTypes = {
-  layout: PropTypes.any
-};
+  layout: PropTypes.any,
+}
 
 const mapStateToProps = state => {
   return {
     layout: state.Layout,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, null)(App)
