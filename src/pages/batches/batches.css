@@ -476,3 +476,16 @@ table thead {
     flex-direction: column;
   }
 }
+
+.filter-chips {
+  border: 1px solid hsl(0, 0%, 80%) !important;
+  padding: 3px 7px !important;
+  font-size: 11px !important;
+}
+
+.filter-chips span {
+  color: #828080;
+  font-size: 12px;
+  position: relative !important;
+  top: 0px !important;
+}

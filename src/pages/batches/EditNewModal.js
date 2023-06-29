@@ -34,6 +34,7 @@ const EditNewModal = ({
   setEditModal,
 }) => {
   const [editData, setEditData] = useState({ ...batchApi })
+
   const [selectedCourseId, setSelectedCourseId] = useState({
     label: "Select Course Name",
     value: "0",
