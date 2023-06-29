@@ -186,11 +186,11 @@ const BatchListTable = ({
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
 
-      <Status
+      {/* <Status
         active={active}
         confirmStatus={confirmStatus}
         closeModal={closeModal}
-      />
+      /> */}
 
       <ToolkitProvider
         key={isExpanded}

@@ -47,7 +47,10 @@ const Status = ({ active, confirmStatus, closeModal, handleEdit, user }) => {
                 className="mdi mdi-alert-circle-outline"
                 style={{ fontSize: "9em", color: "orange" }}
               />
-              <h2>Are you sure you want to inactive?</h2>
+              <h2>
+                Are you sure you want to {!user?.enable ? "Active" : "Inactive"}
+                ?
+              </h2>
               {/* <h4>{"You won't be able to revert this!"}</h4> */}
             </div>
           </Col>
@@ -57,12 +60,12 @@ const Status = ({ active, confirmStatus, closeModal, handleEdit, user }) => {
             <div className="text-center mt-3">
               <button
                 onClick={() => {
-                  handleEdit(user?.id)
+                  handleEdit({ id: user?.id, enable: user?.enable })
                 }}
                 type="button"
                 className="btn btn-success btn-lg ms-2"
               >
-                Yes
+                {!user?.enable ? "Active" : "Inactive"}
               </button>
               <button
                 type="button"

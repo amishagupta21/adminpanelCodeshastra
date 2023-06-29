@@ -82,10 +82,7 @@ const Batches = props => {
   const [active, setActive] = useState(false)
   const [data, setData] = useState([])
 
-  console.log(data, "/////////data")
-
-  const confirmStatus = id => {
-    onGetBatchesApi(id)
+  const confirmStatus = () => {
     setActive(true)
   }
   const closeModal = () => setActive(false)
@@ -343,16 +340,17 @@ const Batches = props => {
   //   }
   // }
 
-  const handleEdit = async id => {
+  const handleEdit = async data => {
     try {
       // Make the edit request
       const response = await axios.patch(
         `https://lms.unikaksha.dev/api/lms/admin/batch/enable/${data?.id}`,
         {
-          enable: data?.enable,
+          enable: !data?.enable,
         }
       )
       setActive(false)
+      onGetBatchesList()
       console.log("Edit successful!", response)
     } catch (error) {
       console.error("Error editing:", error)
@@ -432,7 +430,7 @@ const Batches = props => {
         confirmStatus={confirmStatus}
         closeModal={closeModal}
         handleEdit={handleEdit}
-        user={user}
+        user={data}
       />
       <DeleteModal
         show={deleteModalIsOpen}
