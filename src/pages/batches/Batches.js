@@ -679,6 +679,7 @@ const Batches = props => {
                                       <Button
                                         color="primary"
                                         className="btn-light-grey"
+                                        onClick={handleFilter}
                                       >
                                         <i className="mdi mdi-filter"></i> Apply
                                         Fillter
@@ -687,7 +688,6 @@ const Batches = props => {
                                       <Button
                                         color="primary"
                                         className="btn-light-grey"
-                                        onClick={handleFilter}
                                         disabled
                                       >
                                         <i className="mdi mdi-filter"></i> Apply
