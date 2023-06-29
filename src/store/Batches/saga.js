@@ -89,7 +89,7 @@ function* fetchBatchesList({ payload: data }) {
 
 function* fetchBatches({ payload: data }) {
   try {
-    const response = yield call(AllBatches, data)
+    const response = yield call(getBatches, data)
     tosterMsg(response?.message)
     yield put(getBatchesListSuccess(response?.data?.result))
     yield put(getBatchesListCountSuccess(response?.data))

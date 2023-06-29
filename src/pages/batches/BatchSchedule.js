@@ -26,10 +26,6 @@ const days = [
 function BatchSchedule({ editData, handleChange, setEditData }) {
   const [editValue, setValue] = useState(editData?.batch_schedule?.value)
 
-  useEffect(() => {
-    setValue(editData?.batch_schedule?.value)
-  }, [])
-
   const handleDaysChange = (e, index) => {
     const indexDays = { ...editValue[index] }
     const mainArray = [...editValue]
@@ -91,15 +87,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
             </tr>
           </thead>
           <tbody>
-            {editValue?.map((item, index) => {
-              // const timestamp = item?.start_time
-              // const date = new Date(timestamp)
-              // const options = {
-              //   hour: "2-digit",
-              //   minute: "2-digit",
-              //   hour12: true,
-              // }
-              // const time = date.toLocaleTimeString([], options)
+            {editData?.batch_schedule?.value?.map((item, index) => {
               const time = item?.start_time
               const response = time?.split(" ")
 
@@ -186,9 +174,10 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                               id="day"
                               value={dayValue.value}
                               type="checkbox"
-                              checked={item?.day?.includes(
-                                dayValue.value.toString()
-                              )}
+                              checked={
+                                item?.day &&
+                                item?.day?.includes(dayValue?.value?.toString())
+                              }
                               onClick={e => handleDaysChange(e, index)}
                             />
                             &nbsp;

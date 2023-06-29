@@ -118,9 +118,7 @@ const getBatchesList = async data => {
 // MAIN BATCHES API
 
 const AllBatches = async data => {
-  const allResp = await getCourseData(
-    url.GET_BATCHES + `?&keyword=${data?.search || ""}`
-  )
+  const allResp = await getCourseData(url.GET_BATCHES)
   return getBatches({ pageSize: allResp?.data?.count })
 }
 
@@ -129,7 +127,7 @@ const getBatches = async data => {
     url.GET_BATCHES +
       `?pageSize=${data?.pageSize || 10}&page=${data?.page || 1}&keyword=${
         data?.search || ""
-      }`
+      }&courseName=${data?.courseName || ""}`
   )
 
   return resp

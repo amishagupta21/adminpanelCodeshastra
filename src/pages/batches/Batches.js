@@ -48,13 +48,15 @@ import DeleteModel from "components/DeleteModal"
 import ModalDelete from "components/Common/ModalDelete"
 import DeleteModal from "components/Common/DeleteModal"
 import EditNewModal from "./EditNewModal"
-import { del, post, patch } from "../../helpers/api_helper"
+import { del, post, patch, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
 
 import tosterMsg from "components/Common/toster"
 import Status from "./Status"
+import Select from "react-select"
+import "./batches.css"
 
 const Batches = props => {
   const axios = require("axios")
@@ -81,7 +83,15 @@ const Batches = props => {
   const { ExportCSVButton } = CSVExport
   const [active, setActive] = useState(false)
   const [data, setData] = useState([])
+  const [courseIdData, setCourseIdData] = useState([])
+  const [selectedCourseId, setSelectedCourseId] = useState([])
 
+  // const [options, setOptions] = useState([
+  //   {
+  //     label: "Select Course Name",
+  //     value: "0",
+  //   },
+  // ])
   const confirmStatus = () => {
     setActive(true)
   }
@@ -333,7 +343,6 @@ const Batches = props => {
 
       setActive(false)
       onGetBatchesList()
-      console.log("Edit successful!", response)
     } catch (error) {
       console.error("Error editing:", error)
     }
@@ -403,6 +412,42 @@ const Batches = props => {
       .catch(() => {
         setIsLoading(false)
       })
+  }
+
+  useEffect(() => {
+    const getNewBatches = async () => {
+      const resp = await getCourseData(url.GET_MOODLE_COURSE)
+      setCourseIdData(resp?.data)
+      return resp
+    }
+    getNewBatches()
+  }, [])
+
+  const handleChange = (selectedOption, e) => {
+    setSelectedCourseId(selectedOption)
+    // setSelectedCourseId(oldItem => {
+    //   return [...oldItem, selectedOption]
+    // })
+  }
+
+  const courseNameDelete = removeItem => {
+    const deleteValue = selectedCourseId.filter(
+      item => item?.value !== removeItem?.value && item
+    )
+    setSelectedCourseId(deleteValue)
+  }
+
+  const options = courseIdData.map(item => ({
+    value: item.courseid,
+    label: item.coursename,
+  }))
+
+  const handleFilter = e => {
+    const { onGetBatchesList } = props
+    const data = {
+      courseName: selectedCourseId.map(item => item.label).toLocaleString(),
+    }
+    onGetBatchesList(data)
   }
 
   return (
@@ -611,42 +656,44 @@ const Batches = props => {
                                     <Input type="select">
                                       <option value="Status">Status</option>
                                       <option value="Not Started">
-                                        Not Started
+                                        Active
                                       </option>
                                       <option value="In-Progress">
-                                        In-Progress
+                                        Inactive
                                       </option>
-                                      <option value="Completed">
-                                        Completed
-                                      </option>
-                                      <option value="Archived">Archived</option>
                                     </Input>
                                   </div>
 
                                   <div className="ms-lg-3 mb-3">
-                                    <Input type="select">
-                                      <option value="Course Name">
-                                        Course Name{" "}
-                                      </option>
-                                      <option value="Full Stack Web Developer">
-                                        Full Stack Web Developer
-                                      </option>
-                                      <option value="Full Stack Web Developer">
-                                        Full Stack Web Developer
-                                      </option>
-                                      <option value="Full Stack Web Developer">
-                                        Full Stack Web Developer
-                                      </option>
-                                    </Input>
+                                    <Select
+                                      value={selectedCourseId}
+                                      onChange={handleChange}
+                                      options={options}
+                                      isMulti
+                                      placeholder="Select Course Name"
+                                      className="couserId-width"
+                                    />
                                   </div>
                                   <div className="ms-lg-3 mb-3">
-                                    <Button
-                                      color="primary"
-                                      className="btn-light-grey"
-                                    >
-                                      <i className="mdi mdi-filter"></i> Apply
-                                      Fillter
-                                    </Button>
+                                    {selectedCourseId.length > 0 ? (
+                                      <Button
+                                        color="primary"
+                                        className="btn-light-grey"
+                                      >
+                                        <i className="mdi mdi-filter"></i> Apply
+                                        Fillter
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        color="primary"
+                                        className="btn-light-grey"
+                                        onClick={handleFilter}
+                                        disabled
+                                      >
+                                        <i className="mdi mdi-filter"></i> Apply
+                                        Fillter
+                                      </Button>
+                                    )}
                                   </div>
                                   <div className="ms-lg-3 mb-3">
                                     <UncontrolledDropdown
@@ -674,6 +721,30 @@ const Batches = props => {
                                 </div>
                               </Col>
                             </Row>
+                            {selectedCourseId.length > 0 && (
+                              <h6 className="filter-text d-flex align-items-baseline mt-3 mb-0">
+                                Test Result: &nbsp;
+                                <div className="filter-status mb-3 d-flex">
+                                  {selectedCourseId.map(item => {
+                                    return (
+                                      <>
+                                        <div className="filter-chips me-3">
+                                          {item.label}
+                                          <span
+                                            className="badge"
+                                            onClick={() =>
+                                              courseNameDelete(item)
+                                            }
+                                          >
+                                            X
+                                          </span>
+                                        </div>
+                                      </>
+                                    )
+                                  })}
+                                </div>
+                              </h6>
+                            )}
                             <Col xl="12">
                               <div className="table-responsive">
                                 <h6 className="mt-2">
