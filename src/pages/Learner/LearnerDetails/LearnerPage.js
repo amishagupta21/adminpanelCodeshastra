@@ -32,6 +32,7 @@ import {
   deleteLearner,
   getStatusFilter,
   registerUser,
+  getAllLearner,
 } from "store/actions"
 import dateFormate from "common/dateFormatter"
 import { DeBounceSearch } from "components/Common/DeBounceSearch"
@@ -67,6 +68,7 @@ class LearnerPage extends Component {
       uid: "",
       user: {},
       manageUser: [],
+      manageUserLoader: "",
       manageUserDataCount: 20,
       userRoles: [],
       selectedMulti: [],
@@ -156,11 +158,9 @@ class LearnerPage extends Component {
                 onClick={() => {
                   this.toggle()
                   this.setState({ uid: user.uid })
-                // onClick={() => this.deleteRow(user.uid)}
-
+                  // onClick={() => this.deleteRow(user.uid)}
                 }}
               >
-
                 <i className="mdi mdi-trash-can font-size-16 text-danger" />
               </Link>
             </div>
@@ -180,10 +180,10 @@ class LearnerPage extends Component {
   }
 
   componentDidMount() {
-    const { manageUser, userRoles, onGetLearner, onGetStatusFilter } =
+    const { manageUser, userRoles, onGetAllLearner, onGetStatusFilter } =
       this.props
     if (manageUser && !manageUser.length) {
-      onGetLearner({ search: "" })
+      onGetAllLearner({ search: "" })
     }
     this.setState({ manageUser, userRoles })
   }
@@ -374,7 +374,7 @@ class LearnerPage extends Component {
   render() {
     const { options, value, isFilterApplied } = this.state
     const { manageUserDataCount } = this.state
-    const { usersCount, manageUser } = this.props
+    const { usersCount, manageUser, manageUserLoader } = this.props
     const pageCount = parseInt(
       (usersCount + manageUserDataCount - 1) / manageUserDataCount
     )
@@ -603,6 +603,7 @@ class LearnerPage extends Component {
                             selectRow={selectRow}
                             key={this.state.expanded}
                             columns={this.state.columns}
+                            manageUserLoader={manageUserLoader}
                           />
                         </React.Fragment>
                       )}
@@ -623,10 +624,12 @@ LearnerPage.propTypes = {
   usersCount: PropTypes.number,
   className: PropTypes.any,
   Learner: PropTypes.array,
+  manageUserLoader: PropTypes.any,
 }
 
 const mapStateToProps = ({ Learner, state, count }) => ({
   manageUser: Learner?.manageUser,
+  manageUserLoader: Learner?.manageUserLoader,
   usersCount: Learner?.count,
   userRoles: Learner?.roles,
   deleteData: false,
@@ -634,6 +637,7 @@ const mapStateToProps = ({ Learner, state, count }) => ({
 
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),
+  onGetAllLearner: data => dispatch(getAllLearner(data)),
   onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })

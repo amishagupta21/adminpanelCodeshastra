@@ -5,6 +5,7 @@ import {
   GET_LEARNER,
   DELETE_LEARNER,
   FILTER_STATUS_LEARNER,
+  GET_ALL_LEARNER,
 } from "./actionTypes"
 
 import {
@@ -12,6 +13,8 @@ import {
   getLearnerFail,
   getLearnerCountFail,
   getLearnerCountSuccess,
+  getAllLearnerSuccess,
+  getAllLearnerFail,
   deleteLearnerSuccess,
   deleteLearnerFail,
 } from "./actions"
@@ -19,6 +22,7 @@ import {
   getLearnerList,
   getDeleteData,
   getStatusFilter,
+  getAllLearnerList,
 } from "helpers/fakebackend_helper"
 import tosterMsg from "components/Common/toster"
 
@@ -31,6 +35,19 @@ function* fetchDemoData({ payload: data }) {
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getLearnerFail(error))
+    yield put(getLearnerCountFail(error))
+  }
+}
+
+function* fetchAllDemoData({ payload: data }) {
+  try {
+    const response = yield call(getAllLearnerList, data)
+    tosterMsg(response?.message)
+    yield put(getAllLearnerSuccess(response?.data?.docs))
+    yield put(getLearnerCountSuccess(response?.data?.totalDocs))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getAllLearnerFail(error))
     yield put(getLearnerCountFail(error))
   }
 }
@@ -61,6 +78,7 @@ function* onFilterLearner({ payload: data }) {
 
 function* usersManageSaga() {
   yield takeEvery(GET_LEARNER, fetchDemoData)
+  yield takeEvery(GET_ALL_LEARNER, fetchAllDemoData)
   yield takeEvery(DELETE_LEARNER, onDeleteLearner)
   yield takeEvery(FILTER_STATUS_LEARNER, onFilterLearner)
 }
