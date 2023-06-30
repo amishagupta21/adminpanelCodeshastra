@@ -707,14 +707,14 @@ const Batches = props => {
                                         <i className="mdi mdi-menu-down"></i>
                                       </DropdownToggle>
                                       <DropdownMenu>
-                                        <DropdownItem>
-                                          Export as pdf
+                                        <DropdownItem disabled>
+                                          Download as pdf
                                         </DropdownItem>
                                         <ExportCSVButton
                                           {...toolkitProps.csvProps}
                                         >
                                           <DropdownItem>
-                                            Export as excel
+                                            Download as excel
                                           </DropdownItem>{" "}
                                         </ExportCSVButton>
                                       </DropdownMenu>
