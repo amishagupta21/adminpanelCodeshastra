@@ -229,10 +229,10 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
                       Export <i className="mdi mdi-menu-down"></i>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>Export as pdf</DropdownItem>
+                      <DropdownItem disabled>Download as pdf</DropdownItem>
                       <ExportCSVButton {...toolkitProps.csvProps}>
                         {" "}
-                        <DropdownItem>Export as excel</DropdownItem>
+                        <DropdownItem>Download as excel</DropdownItem>
                       </ExportCSVButton>
                     </DropdownMenu>
                   </UncontrolledDropdown>
