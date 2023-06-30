@@ -7,6 +7,9 @@ import {
   GET_BATCHES_LIST,
   GET_BATCHES_LIST_SUCCESS,
   GET_BATCHES_LIST_FAIL,
+  GET_ALL_BATCHES_LIST,
+  GET_ALL_BATCHES_LIST_SUCCESS,
+  GET_ALL_BATCHES_LIST_FAIL,
   GET_BATCHES_LIST_COUNT_SUCCESS,
   GET_BATCHES_LIST_COUNT_FAIL,
   GET_BATCHES_LEARNER_SUCCESS,
@@ -105,6 +108,25 @@ const Batches = (state = INIT_STATE, action) => {
       }
 
     case GET_BATCHES_LIST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        manageUserLoader: false,
+      }
+
+    case GET_ALL_BATCHES_LIST:
+      return {
+        ...state,
+        manageUserLoader: true,
+      }
+    case GET_ALL_BATCHES_LIST_SUCCESS:
+      return {
+        ...state,
+        manageUser: action.payload,
+        manageUserLoader: false,
+      }
+
+    case GET_ALL_BATCHES_LIST_FAIL:
       return {
         ...state,
         error: action.payload,
