@@ -38,6 +38,7 @@ import {
 import MentorListTable from "./MentorListTable"
 import { DeBounceSearch } from "common/DeBounceSearch"
 import LectureListTable from "./LectureListTable"
+import AddNewLearner from "./AddNewLearner"
 
 const BatchList = props => {
   const [key, setKey] = useState("tab")
@@ -53,6 +54,15 @@ const BatchList = props => {
     mentor,
   } = props
   const [item, setItem] = useState(manageUser)
+  const [newLearner, setNewLearner] = useState(false)
+
+  const openNewLearner = e => {
+    setNewLearner(true)
+  }
+
+  const closeNewLearner = () => {
+    setNewLearner(false)
+  }
 
   useEffect(() => {
     setItem(manageUser)
@@ -156,9 +166,20 @@ const BatchList = props => {
                   <Tab eventKey="tab" title="Learners">
                     <Row>
                       <Col md={12} className="text-end">
-                        <Button color="success" className="rounded-pill mb-3">
+                        <Button
+                          onClick={openNewLearner}
+                          color="success"
+                          className="rounded-pill mb-3"
+                        >
                           + Add New Learner
                         </Button>
+
+                        <AddNewLearner
+                          newLearner={newLearner}
+                          openNewLearner={openNewLearner}
+                          closeNewLearner={closeNewLearner}
+                        />
+
                         <div className="text-start">
                           <h4>Learners</h4>
                         </div>

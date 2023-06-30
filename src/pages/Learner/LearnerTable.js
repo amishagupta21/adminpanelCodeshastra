@@ -1,11 +1,18 @@
 import BootstrapTable from "react-bootstrap-table-next"
 import React, { useMemo } from "react"
-import { Row, Col, Table } from "reactstrap"
+import { Row, Col, Table, Spinner } from "reactstrap"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { Link } from "react-router-dom"
 
-function LearnerTable({ manageUser, defaultSorted, selectRow, key, columns }) {
+function LearnerTable({
+  manageUser,
+  defaultSorted,
+  selectRow,
+  key,
+  columns,
+  manageUserLoader,
+}) {
   return (
     <>
       <Row>
@@ -42,12 +49,16 @@ function LearnerTable({ manageUser, defaultSorted, selectRow, key, columns }) {
                       headerWrapperClasses={"thead-light"}
                       pagination={paginationFactory()}
                       {...toolkitProps.baseProps}
-
-                      // noDataIndication={"No data found"}
+                      noDataIndication={
+                        manageUserLoader ? (
+                          <div className="d-flex justify-content-center">
+                            <Spinner size="" color="primary" />
+                          </div>
+                        ) : (
+                          "No data found"
+                        )
+                      }
                     />
-                    {manageUser && manageUser.length === 0 && (
-                      <div className="no_data_found_message">No data found</div>
-                    )}
                   </div>
                 </Col>
               </React.Fragment>

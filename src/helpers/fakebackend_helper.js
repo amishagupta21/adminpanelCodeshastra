@@ -279,36 +279,19 @@ const editCourseDetail = async data => {
   return resp
 }
 
-// const getCourseFilters = data => {
-//   if (data?.keyword) {
-//     return `&keyword=${data?.keyword || ""}`
-//   }
-// }
-
-// const getFilter = async data => {
-//   const resp = await getCourseData(
-//     url.GET_COURSELIST +
-//       `?sortOrder=${data?.sortOrder || "asc"}&sortBy=${
-//         data?.sortBy || "created_at"
-//       }&pageSize=${data?.pageSize || 5}&page=${
-//         data?.page || 1
-//       }&keyword=${getCourseFilters(data)}`
-//   )
-//   return resp
-// }
-
-// &status=${
-//   filter?.status || null
-// }
-//  &keyword=${filter?.search || ""}
+const getAllLearnerList = async data => {
+  const res = await getData(url.GET_LEARNER)
+  return getLearnerList({ perPage: res?.data?.count })
+}
 
 const getLearnerList = async data => {
   const res = await getData(
     url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.page || 39501}&search=${
-        data?.search
+      `?page=${data?.page || 1}&perPage=${data?.perPage || 39501}&search=${
+        data?.search || ""
       }`
   )
+
   return res
 }
 
@@ -628,6 +611,7 @@ export {
   onAddReply,
   onAddComment,
   getLearnerList,
+  getAllLearnerList,
   getApplicationListing,
   getDeleteData,
   getDeleteBatches,

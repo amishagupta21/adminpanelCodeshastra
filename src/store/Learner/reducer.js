@@ -4,6 +4,9 @@ import {
   GET_LEARNER_FAIL,
   GET_LEARNER_COUNT_SUCCESS,
   GET_LEARNER_COUNT_FAIL,
+  GET_ALL_LEARNER,
+  GET_ALL_LEARNER_SUCCESS,
+  GET_ALL_LEARNER_FAIL,
   DELETE_LEARNER_SUCCESS,
   DELETE_LEARNER_FAIL,
   FILTER_STATUS_LEARNER,
@@ -13,6 +16,7 @@ const INIT_STATE = {
   manageUser: [],
   roles: [],
   count: 0,
+  manageUserLoader: true,
 }
 
 const Learner = (state = INIT_STATE, action) => {
@@ -21,17 +25,20 @@ const Learner = (state = INIT_STATE, action) => {
       return {
         ...state,
         data: action.payload,
+        manageUserLoader: true,
       }
     case GET_LEARNER_SUCCESS:
       return {
         ...state,
         manageUser: action.payload,
+        manageUserLoader: false,
       }
 
     case GET_LEARNER_FAIL:
       return {
         ...state,
         error: action.payload,
+        manageUserLoader: true,
       }
 
     case GET_LEARNER_COUNT_SUCCESS:
@@ -45,6 +52,28 @@ const Learner = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
+
+    // ALL LEARNER
+    case GET_ALL_LEARNER:
+      return {
+        ...state,
+        data: action.payload,
+        manageUserLoader: true,
+      }
+    case GET_ALL_LEARNER_SUCCESS:
+      return {
+        ...state,
+        manageUser: action.payload,
+        manageUserLoader: false,
+      }
+
+    case GET_ALL_LEARNER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        manageUserLoader: false,
+      }
+
     case DELETE_LEARNER_SUCCESS:
       return {
         ...state,
