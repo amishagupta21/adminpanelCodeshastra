@@ -36,6 +36,7 @@ import {
   editNewBatch,
   getBatchApi,
   deleteBatches,
+  getAllBatchesList,
 } from "store/Batches/actions"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider, {
@@ -71,6 +72,7 @@ const Batches = props => {
     onGetBatchesApi,
     createNewBatch,
     manageUserLoader,
+    onGetAllBatchesList,
   } = props
   const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
@@ -124,7 +126,7 @@ const Batches = props => {
   }, [manageUser])
 
   useEffect(() => {
-    onGetBatchesList()
+    onGetAllBatchesList()
     onGetDashboard()
   }, [])
 
@@ -821,6 +823,7 @@ const mapStateToProps = ({ Batches, state, count }) => {
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesList: data => dispatch(getBatchesList(data)),
+  onGetAllBatchesList: data => dispatch(getAllBatchesList(data)),
   onGetBatchesApi: data => dispatch(getBatchApi(data)),
   onGetDashboard: data => dispatch(getDashboard(data)),
   onGetDeleteBatches: id => dispatch(deleteBatches(id)),

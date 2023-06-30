@@ -57,6 +57,9 @@ import {
   CREATE_NEW_BATCH,
   CREATE_NEW_BATCH_SUCCESS,
   CREATE_NEW_BATCH_FAIL,
+  GET_ALL_BATCHES_LIST,
+  GET_ALL_BATCHES_LIST_SUCCESS,
+  GET_ALL_BATCHES_LIST_FAIL,
 } from "./actionTypes"
 
 export const getBatches = data => ({
@@ -98,6 +101,21 @@ export const getBatchesListSuccess = data => ({
 
 export const getBatchesListFail = error => ({
   type: GET_BATCHES_LIST_FAIL,
+  payload: error,
+})
+
+export const getAllBatchesList = data => ({
+  type: GET_ALL_BATCHES_LIST,
+  payload: data,
+})
+
+export const getAllBatchesListSuccess = data => ({
+  type: GET_ALL_BATCHES_LIST_SUCCESS,
+  payload: data,
+})
+
+export const getAllBatchesListFail = error => ({
+  type: GET_ALL_BATCHES_LIST_FAIL,
   payload: error,
 })
 
