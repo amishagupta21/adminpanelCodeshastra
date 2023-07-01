@@ -201,7 +201,7 @@ class LearnerPage extends Component {
     }
 
     if (prevProps.deleteData !== deleteData) {
-      onGetLearner({ search: "" })
+      onGetLearner({ search: "", currentPage, pageSize })
     }
   }
 
@@ -372,7 +372,8 @@ class LearnerPage extends Component {
   }
 
   render() {
-    const { options, value, isFilterApplied } = this.state
+    const { options, value, isFilterApplied, currentPage, pageSize } =
+      this.state
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser, manageUserLoader } = this.props
     const pageCount = parseInt(
