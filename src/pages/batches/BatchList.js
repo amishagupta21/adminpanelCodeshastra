@@ -52,9 +52,12 @@ const BatchList = props => {
     batchesLearner,
     gradeBook,
     mentor,
+    totalBatchesLearner,
   } = props
   const [item, setItem] = useState(manageUser)
   const [newLearner, setNewLearner] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
 
   const openNewLearner = e => {
     setNewLearner(true)
@@ -70,9 +73,13 @@ const BatchList = props => {
 
   useEffect(() => {
     const { onGetBatchesLearner, onGetNewBatches } = props
-    onGetBatchesLearner(params.id)
+    onGetBatchesLearner({ id: params.id, page: currentPage })
     onGetNewBatches(params.id)
-  }, [])
+  }, [currentPage])
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(totalBatchesLearner / 10))
+  }, [totalBatchesLearner])
 
   const gradeBookApi = () => {
     const { onGetGradeBook } = props
@@ -119,27 +126,7 @@ const BatchList = props => {
         </Col>
         <Col md={6}>
           <div className="d-flex justify-content-end">
-            {/* <Button color="success" onClick={toggle} className="mb-3 ms-2">
-              Duplicate Batch
-            </Button> */}
             <BatchNewModal modal={modal} toggle={toggle} />
-            {/* <Button color="success" className="mb-3 ms-2">
-              Edit Batch
-            </Button> */}
-            {/* <UncontrolledDropdown className="mb-3 ms-2">
-              <DropdownToggle caret color="primary">
-                More <i className="mdi mdi-dots-vertical"></i>
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>
-                  <i className="mdi mdi-send text-success"></i> Send
-                  Notification
-                </DropdownItem>
-                <DropdownItem>
-                  <i className="mdi mdi-delete text-danger"></i> Delete Batch
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
           </div>
         </Col>
       </Row>
@@ -190,6 +177,10 @@ const BatchList = props => {
                         <BatchListTable
                           batchesLearner={batchesLearner || []}
                           onGetBatchesLearner={props.onGetBatchesLearner}
+                          currentPage={currentPage}
+                          totalPages={totalPages}
+                          setCurrentPage={setCurrentPage}
+                          totalBatchesLearner={totalBatchesLearner}
                         />
                       </div>
                     </Row>
@@ -238,16 +229,19 @@ BatchList.propTypes = {
   Batches: PropTypes.array,
 }
 
-const mapStateToProps = ({ Batches, state, count }) => ({
-  manageUser: Batches?.manageUser,
-  usersCount: Batches?.count?.count,
-  userRoles: Batches?.roles,
-  newBatch: Batches?.newBatch,
-  batchesLearner: Batches?.batchesLearner,
-  gradeBook: Batches?.gradeBook,
-  mentor: Batches?.mentor,
-  // deleteData: false,
-})
+const mapStateToProps = ({ Batches, state, count }) => {
+  return {
+    manageUser: Batches?.manageUser,
+    usersCount: Batches?.count?.count,
+    userRoles: Batches?.roles,
+    newBatch: Batches?.newBatch,
+    batchesLearner: Batches?.batchesLearner,
+    totalBatchesLearner: Batches?.totalBatchesLearner,
+    gradeBook: Batches?.gradeBook,
+    mentor: Batches?.mentor,
+    // deleteData: false,
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   onGetBatchesLearner: data => dispatch(getBatchesLearner(data)),

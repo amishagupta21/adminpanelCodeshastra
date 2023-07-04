@@ -133,7 +133,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       // description !== "" &&
       course !== "Select" &&
       variantType !== "Select" &&
-      classLink !== "" &&
+      // classLink !== "" &&
       mentor !== "Select" &&
       learnersLimit !== "" &&
       startDate !== "" &&

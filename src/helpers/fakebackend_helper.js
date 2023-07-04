@@ -279,17 +279,17 @@ const editCourseDetail = async data => {
   return resp
 }
 
-const getAllLearnerList = async data => {
-  const res = await getData(url.GET_LEARNER)
-  return getLearnerList({ perPage: res?.data?.count })
-}
+// const getAllLearnerList = async data => {
+//   const res = await getData(url.GET_LEARNER)
+//   return getLearnerList({ perPage: res?.data?.count })
+// }
 
 const getLearnerList = async data => {
   const res = await getData(
     url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.perPage || 39501}&search=${
-        data?.search || ""
-      }`
+      `?page=${data?.currentPage || 1}&perPage=${
+        data?.sizePerPage || 39502
+      }&search=${data?.search || ""}`
   )
 
   return res
@@ -611,7 +611,7 @@ export {
   onAddReply,
   onAddComment,
   getLearnerList,
-  getAllLearnerList,
+  // getAllLearnerList,
   getApplicationListing,
   getDeleteData,
   getDeleteBatches,

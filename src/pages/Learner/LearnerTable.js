@@ -1,6 +1,14 @@
 import BootstrapTable from "react-bootstrap-table-next"
-import React, { useMemo } from "react"
-import { Row, Col, Table, Spinner } from "reactstrap"
+import React, { useMemo, useState } from "react"
+import {
+  Row,
+  Col,
+  Table,
+  Spinner,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+} from "reactstrap"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { Link } from "react-router-dom"
@@ -12,6 +20,13 @@ function LearnerTable({
   key,
   columns,
   manageUserLoader,
+  totalPages,
+  handlePerPageChange,
+  currentPage,
+  setCurrentPage,
+  handleCurrentPageChange,
+  usersCount,
+  setState,
 }) {
   return (
     <>
@@ -32,7 +47,7 @@ function LearnerTable({
                     <Link>Select All {manageUser?.length} Learners</Link>{" "}
                   </h6>
                 ) : (
-                  <h6 className="mt-5">Total Learners: {manageUser?.length}</h6>
+                  <h6 className="mt-5">Total Learners: {usersCount}</h6>
                 )}
 
                 <Col xl="12">
@@ -60,6 +75,29 @@ function LearnerTable({
                       }
                     />
                   </div>
+                  {/* <div>
+                    <button
+                      onClick={() =>
+                        setState({
+                          currentPage: currentPage - 1,
+                        })
+                      }
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                    <span>{currentPage}</span>
+                    <button
+                      onClick={() =>
+                        setState({
+                          currentPage: currentPage + 1,
+                        })
+                      }
+                      disabled={currentPage === totalPages}
+                    >
+                      Next
+                    </button>
+                  </div> */}
                 </Col>
               </React.Fragment>
             )}

@@ -39,6 +39,10 @@ const BatchListTable = ({
   manageUser,
   batchesLearner,
   onGetBatchesLearner,
+  currentPage,
+  totalPages,
+  setCurrentPage,
+  totalBatchesLearner,
 }) => {
   const { ExportCSVButton } = CSVExport
   const [isExpanded, setIsExpanded] = useState(null)
@@ -59,9 +63,10 @@ const BatchListTable = ({
         sort: true,
         hidden: true,
         formatter: (cellContent, user) => <>{user?.id}</>,
+        csvExport: false,
       },
       {
-        dataField: "name",
+        dataField: "learnername",
         text: "Name",
         sort: true,
         formatter: (cellContent, user) => (
@@ -95,11 +100,11 @@ const BatchListTable = ({
         sort: true,
       },
       {
-        dataField: "attendence",
+        dataField: "attendance",
         text: "Attendance",
         sort: true,
         formatter: (cellContent, user) => (
-          <span>{user?.attendance.toFixed(2)}%</span>
+          <span>{user?.attendance?.toFixed(2)}%</span>
         ),
       },
       // {
@@ -186,11 +191,11 @@ const BatchListTable = ({
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
 
-      {/* <Status
+      <Status
         active={active}
         confirmStatus={confirmStatus}
         closeModal={closeModal}
-      /> */}
+      />
 
       <ToolkitProvider
         key={isExpanded}
@@ -231,9 +236,7 @@ const BatchListTable = ({
             </Row>
             <Col xl="12">
               <div className="table-responsive">
-                <h6 className="mt-3">
-                  Total Learners: {batchesLearner?.length}
-                </h6>
+                <h6 className="mt-3">Total Learners: {totalBatchesLearner}</h6>
                 <BootstrapTable
                   keyField={"id"}
                   responsive
@@ -247,6 +250,21 @@ const BatchListTable = ({
                   pagination={paginationFactory()}
                   noDataIndication={"No data found"}
                 />
+                {/* <div>
+                  <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    Previous
+                  </button>
+                  <span>{currentPage}</span>
+                  <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={totalPages === currentPage}
+                  >
+                    Next
+                  </button>
+                </div> */}
               </div>
             </Col>
           </>
