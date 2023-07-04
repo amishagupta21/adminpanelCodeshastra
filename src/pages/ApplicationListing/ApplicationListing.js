@@ -159,7 +159,7 @@ class ApplicationListing extends Component {
     // const pageCount = parseInt(
     //   (usersCount + manageUserDataCount - 1) / manageUserDataCount
     // )
-    //const paginationPage = Array.apply(null, new Array(pageCount))
+    // const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
       {
@@ -354,7 +354,7 @@ class ApplicationListing extends Component {
                                 {index + 1}
                               </PaginationLink>
                             </PaginationItem>
-                          );
+                          )
                         } else {
                           return (
                             <PaginationItem key={index + 1}>
@@ -364,7 +364,7 @@ class ApplicationListing extends Component {
                                 {index + 1}
                               </PaginationLink>
                             </PaginationItem>
-                          );
+                          )
                         }
                       })}
 

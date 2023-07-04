@@ -20,6 +20,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  Spinner,
   ModalFooter,
 } from "reactstrap"
 // datatable related plugins
@@ -73,7 +74,7 @@ class LearnerPage extends Component {
       userRoles: [],
       selectedMulti: [],
       expanded: false,
-      currentPage: 1,
+      usersCount: [],
       selected: [],
       selectedTestResult: [],
       selectedStatus: [],
@@ -81,6 +82,9 @@ class LearnerPage extends Component {
       multiSelectTestResult: [],
       optionSelected: null,
       isFilterApplied: false,
+      totalPages: 0,
+      currentPage: 1,
+      totalLearner: "",
       columns: [
         {
           dataField: "_id",
@@ -179,16 +183,17 @@ class LearnerPage extends Component {
     this.toggle(!this.state.modal)
   }
 
-  componentDidMount() {
-    const { manageUser, userRoles, onGetAllLearner, onGetStatusFilter } =
+  componentDidMount(page, sizePerPage, currentPage, usersCount) {
+    const { manageUser, userRoles, onGetLearner, onGetStatusFilter } =
       this.props
     if (manageUser && !manageUser.length) {
-      onGetAllLearner({ search: "" })
+      onGetLearner({ search: "", page: currentPage, usersCount })
     }
+
     this.setState({ manageUser, userRoles })
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { manageUser, userRoles, onGetLearner, deleteData } = this.props
     if (
       !isEmpty(manageUser) &&
@@ -201,18 +206,21 @@ class LearnerPage extends Component {
     }
 
     if (prevProps.deleteData !== deleteData) {
-      onGetLearner({ search: "", currentPage, pageSize })
+      onGetLearner({ search: "" })
+    }
+    if (prevState.currentPage !== this.state.currentPage) {
+      onGetLearner({ currentPage: this.state.currentPage })
     }
   }
 
-  handlePageChange = page => {
-    this.setState({ currentPage: page })
-    const data = {
-      page: page,
-      pageSize: this.state.manageUserDataCount,
-    }
-    this.props.onGetmanageUser(data)
-  }
+  // handlePageChange = page => {
+  //   this.setState({ currentPage: page })
+  //   const data = {
+  //     page: page,
+  //     pageSize: this.state.manageUserDataCount,
+  //   }
+  //   this.props.onGetmanageUser(data)
+  // }
 
   handleSearch = e => {
     const { onGetLearner } = this.props
@@ -372,13 +380,11 @@ class LearnerPage extends Component {
   }
 
   render() {
-    const { options, value, isFilterApplied, currentPage, pageSize } =
+    const { options, value, isFilterApplied, currentPage, totalPages } =
       this.state
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser, manageUserLoader } = this.props
-    const pageCount = parseInt(
-      (usersCount + manageUserDataCount - 1) / manageUserDataCount
-    )
+
     // const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
@@ -598,6 +604,7 @@ class LearnerPage extends Component {
                               </h6>
                             </Row>
                           )}
+
                           <LearnerTable
                             manageUser={manageUser}
                             defaultSorted={defaultSorted}
@@ -605,6 +612,10 @@ class LearnerPage extends Component {
                             key={this.state.expanded}
                             columns={this.state.columns}
                             manageUserLoader={manageUserLoader}
+                            setState={data => this.setState(data)}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            usersCount={usersCount?.count}
                           />
                         </React.Fragment>
                       )}

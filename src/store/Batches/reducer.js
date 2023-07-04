@@ -58,6 +58,7 @@ const INIT_STATE = {
   createNewBatch: "",
   dashboard: [],
   batchesLearner: [],
+  totalBatchesLearner: 0,
   lecture: [],
   manageUserLoader: true,
 }
@@ -150,7 +151,8 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_BATCHES_LEARNER_SUCCESS:
       return {
         ...state,
-        batchesLearner: action.payload,
+        batchesLearner: action.payload[0],
+        totalBatchesLearner: action.payload[1],
       }
 
     case GET_BATCHES_LEARNER_FAIL:

@@ -117,13 +117,13 @@ function* fetchAllBatches({ payload: data }) {
 
 // MAIN LEARNER
 
-function* fetchBatchesLearner({ payload: id }) {
+function* fetchBatchesLearner({ payload: data }) {
   try {
-    const responseMain = yield call(getNewBatches, id)
-    const finalData = { id: id, pageSize: responseMain?.data?.learner_limit }
-    const response = yield call(getBatchesLearner, finalData)
+    // const responseMain = yield call(getNewBatches, id)
+    // const finalData = { id: id, pageSize: responseMain?.data?.learner_limit }
+    const response = yield call(getBatchesLearner, data)
     tosterMsg(response?.message)
-    yield put(getBatchesLearnerSuccess(response?.data[0]))
+    yield put(getBatchesLearnerSuccess(response?.data))
     yield put(getBatchesLearnerCountSuccess(response?.data))
   } catch (error) {
     tosterMsg(error?.message)
