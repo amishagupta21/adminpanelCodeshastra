@@ -250,6 +250,7 @@ const BatchListTable = ({
         user={data}
         setActive={setActive}
         params={params}
+        onGetBatchesLearner={onGetBatchesLearner}
       />
 
       <ToolkitProvider

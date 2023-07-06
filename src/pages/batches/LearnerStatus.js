@@ -18,6 +18,9 @@ import {
 } from "reactstrap"
 import { del, post, patch, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
+import { connect } from "react-redux"
+import { getBatchesLearner } from "store/Batches/actions"
+import tosterMsg from "components/Common/toster"
 
 const LearnerStatus = ({
   active,
@@ -26,6 +29,8 @@ const LearnerStatus = ({
   user,
   params,
   setActive,
+  onGetBatchesLearner,
+  batchesLearner,
 }) => {
   const handleEdit = async data => {
     try {
@@ -38,9 +43,11 @@ const LearnerStatus = ({
           status: !user.status,
         }
       )
-
       setActive(false)
-      onGetBatchesLearner()
+      onGetBatchesLearner({
+        id: params.id,
+      })
+      tosterMsg(response?.message)
     } catch (error) {
       console.error("Error editing:", error)
     }
@@ -67,7 +74,7 @@ const LearnerStatus = ({
                 style={{ fontSize: "9em", color: "orange" }}
               />
               <h2>
-                Are you sure you want to {!user?.enable ? "Active" : "Inactive"}
+                Are you sure you want to {!user?.status ? "Active" : "Inactive"}
                 ?
               </h2>
               {/* <h4>{"You won't be able to revert this!"}</h4> */}
@@ -84,7 +91,7 @@ const LearnerStatus = ({
                 type="button"
                 className="btn btn-success btn-lg ms-2"
               >
-                {!user?.enable ? "Active" : "Inactive"}
+                {!user?.status ? "Active" : "Inactive"}
               </button>
               <button
                 type="button"
@@ -101,4 +108,17 @@ const LearnerStatus = ({
   )
 }
 
-export default LearnerStatus
+const mapStateToProps = ({ Batches, state, count }) => {
+  return {
+    batchesLearner: Batches?.batchesLearner,
+    totalBatchesLearner: Batches?.totalBatchesLearner,
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  onGetBatchesLearner: data => dispatch(getBatchesLearner(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LearnerStatus)
+
+// export default LearnerStatus
