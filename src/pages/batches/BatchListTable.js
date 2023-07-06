@@ -33,6 +33,17 @@ import { getBatchesLearner } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 import "./batches.css"
 import Status from "./Status"
+import jsPDF from "jspdf"
+import "jspdf-autotable"
+import LearnerStatus from "./LearnerStatus"
+
+const ref = React.createRef()
+
+const options = {
+  orientation: "landscape",
+  // unit: "in",
+  // format: [4, 2],
+}
 
 const BatchListTable = ({
   item,
@@ -51,9 +62,10 @@ const BatchListTable = ({
   const [selected, setSelected] = useState([])
   const toggle = () => setModal(!modal)
   const [viewData, setViewData] = useState("")
+  const [data, setData] = useState([])
 
   const [active, setActive] = useState(false)
-  const confirmStatus = () => setActive(!active)
+  const confirmLearnerStatus = () => setActive(!active)
   const closeModal = () => setActive(false)
 
   let state = {
@@ -122,7 +134,18 @@ const BatchListTable = ({
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
-          <div onClick={confirmStatus}>
+          <div
+            // onClick={confirmLearnerStatus}
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+              confirmLearnerStatus(user?.id)
+              setData(user)
+              // fetchData()
+              setActive(true)
+              // handleEdit(user?.id)
+            }}
+          >
             <div
               className={
                 user?.status === true
@@ -164,6 +187,37 @@ const BatchListTable = ({
     ],
   }
 
+  const handleDownloadPDF = () => {
+    // Create a new instance of jsPDF
+    const doc = new jsPDF()
+    // Define table headers and data
+
+    const headers = state.columns.map(item => {
+      return item.text
+    })
+
+    const data = batchesLearner.map(item => {
+      return [
+        "",
+        item.learnername,
+        `${item.assignments} / ${item.assessmentsMax}`,
+        `${item.assessments} / ${item.assessmentsMax}`,
+        item.projects_total,
+        `${item.attendance.toFixed(2)}% `,
+        item?.status === true ? "Active" : "Inactive",
+      ]
+    })
+
+    // Add the table to the PDF using the autotable plugin
+    doc.autoTable({
+      head: [headers],
+      body: data,
+    })
+
+    // Save the PDF file
+    doc.save("document.pdf")
+  }
+
   const defaultSorted = [
     {
       dataField: "id",
@@ -183,18 +237,19 @@ const BatchListTable = ({
       search: e,
     }
     onGetBatchesLearner(data)
-    // const { Batches } = props
-    // setState({ Batches })
   }
 
   return (
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
 
-      <Status
+      <LearnerStatus
         active={active}
-        confirmStatus={confirmStatus}
+        confirmLearnerStatus={confirmLearnerStatus}
         closeModal={closeModal}
+        user={data}
+        setActive={setActive}
+        params={params}
       />
 
       <ToolkitProvider
@@ -225,7 +280,9 @@ const BatchListTable = ({
                       Export <i className="mdi mdi-menu-down"></i>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem disabled>Download as pdf</DropdownItem>
+                      <DropdownItem onClick={handleDownloadPDF}>
+                        Download as pdf
+                      </DropdownItem>
                       <ExportCSVButton {...toolkitProps.csvProps}>
                         <DropdownItem>Download as excel</DropdownItem>{" "}
                       </ExportCSVButton>
@@ -234,6 +291,7 @@ const BatchListTable = ({
                 </div>
               </Col>
             </Row>
+
             <Col xl="12">
               <div className="table-responsive">
                 <h6 className="mt-3">Total Learners: {totalBatchesLearner}</h6>
@@ -250,6 +308,11 @@ const BatchListTable = ({
                   pagination={paginationFactory()}
                   noDataIndication={"No data found"}
                 />
+
+                {/* <div ref={ref}>
+                  <h1>Hello CodeSandbox</h1>
+                  <h2>Start editing to see some magic happen!</h2>
+                </div> */}
                 {/* <div>
                   <button
                     onClick={() => setCurrentPage(currentPage - 1)}

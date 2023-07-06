@@ -16,19 +16,47 @@ import {
   AccordionBody,
   Table,
 } from "reactstrap"
+import { del, post, patch, getCourseData } from "../../helpers/api_helper"
+import * as url from "../../helpers/url_helper"
 
-const Status = ({ active, confirmStatus, closeModal, handleEdit, user }) => {
+const LearnerStatus = ({
+  active,
+  confirmLearnerStatus,
+  closeModal,
+  user,
+  params,
+  setActive,
+}) => {
+  const handleEdit = async data => {
+    try {
+      // Make the edit request
+      const response = await patch(
+        url.GET_LEARNER_STATUS + `/${params?.id}/learners/update/status`,
+        {
+          ids: [user?.id],
+          unikodeuserids: [user?.unikodeuserid],
+          status: !user.status,
+        }
+      )
+
+      setActive(false)
+      onGetBatchesLearner()
+    } catch (error) {
+      console.error("Error editing:", error)
+    }
+  }
+
   return (
     <Modal
       isOpen={active}
-      confirmStatus={confirmStatus}
+      confirmLearnerStatus={confirmLearnerStatus}
       modalTransition={{ timeout: 500 }}
       centered={true}
       fade={false}
     >
       <ModalHeader
         className="modalHeader"
-        confirmStatus={confirmStatus}
+        confirmLearnerStatus={confirmLearnerStatus}
       ></ModalHeader>
       <ModalBody className="py-3 px-5">
         <Row>
@@ -51,7 +79,7 @@ const Status = ({ active, confirmStatus, closeModal, handleEdit, user }) => {
             <div className="text-center mt-3">
               <button
                 onClick={() => {
-                  handleEdit({ id: user?.id, enable: user?.enable })
+                  handleEdit({ id: user?.id, status: user?.status })
                 }}
                 type="button"
                 className="btn btn-success btn-lg ms-2"
@@ -73,4 +101,4 @@ const Status = ({ active, confirmStatus, closeModal, handleEdit, user }) => {
   )
 }
 
-export default Status
+export default LearnerStatus
