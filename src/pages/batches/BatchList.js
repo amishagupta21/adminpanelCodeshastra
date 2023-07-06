@@ -232,13 +232,6 @@ BatchList.propTypes = {
   Batches: PropTypes.array,
 }
 
-BatchList.propTypes = {
-  userRoles: PropTypes.array,
-  usersCount: PropTypes.number,
-  className: PropTypes.any,
-  Batches: PropTypes.array,
-}
-
 const mapStateToProps = ({ Batches, state, count }) => {
   return {
     manageUser: Batches?.manageUser,

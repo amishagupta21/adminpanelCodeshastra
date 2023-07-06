@@ -48,6 +48,7 @@ const AddNewLearner = ({
   manageUser,
   manageUserLoader,
   unikodecourseid,
+  usersCount,
 }) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const [selectData, setSelectData] = useState([])
@@ -175,6 +176,9 @@ const AddNewLearner = ({
       )
       .then(res => {
         tosterMsg(res?.data?.message)
+        res?.data?.data.forEach(message => {
+          tosterMsg(message)
+        })
       })
       .catch(error => {
         tosterMsg(error)
@@ -217,6 +221,9 @@ const AddNewLearner = ({
               <>
                 <Col xl="12">
                   <div className="table-responsive">
+                    <h6 className="mt-2">
+                      Total Batches: &nbsp;{usersCount?.count}
+                    </h6>
                     <BootstrapTable
                       keyField={"_id"}
                       responsive
@@ -280,6 +287,7 @@ AddNewLearner.propTypes = {
 
 const mapStateToProps = ({ Learner, state, count }) => ({
   manageUser: Learner?.manageUser,
+  usersCount: Learner?.count,
   manageUserLoader: Learner?.manageUserLoader,
 })
 
