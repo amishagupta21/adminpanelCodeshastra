@@ -31,6 +31,8 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { getGradeBook } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
+import jsPDF from "jspdf"
+import "jspdf-autotable"
 
 const GradeBook = ({ gradeBook, onGetGradeBook }) => {
   const [isExpanded, setIsExpanded] = useState(null)
@@ -179,9 +181,42 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
     // setState({ Batches })
   }
 
+  const handleDownloadPDF = () => {
+    // Create a new instance of jsPDF
+    const doc = new jsPDF()
+    // Define table headers and data
+
+    const headers = Object.entries(gradeBook[1].GradeItems || "").map(item => {
+      return item[0]
+    })
+
+    const data = gradeBook.map(item => {
+      return ["", item.name]
+    })
+
+    // Add the table to the PDF using the autotable plugin
+    doc.autoTable({
+      head: [headers],
+      body: data,
+    })
+
+    // Save the PDF file
+    doc.save("document.pdf")
+  }
+
+  // const headers = Object.entries(gradeBook[1] || "").map(item => {
+  //   console.log(item[0], "///////item")
+  //   return item[0]
+  // })
+
+  // console.log(gradeBook, "////////gradeBook")
+
+  // console.log(headers, "////////gradeBook")
+
   return (
     <div className="batches-home">
       <ReportCard modal={modal} toggle={toggle} viewData={viewData} />
+
       <Row>
         <Col md={12} className="text-end">
           <div className="text-start">
@@ -189,6 +224,7 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
           </div>
         </Col>
       </Row>
+      {/* <Button onClick={handleDownloadPDF}>Download as PDF</Button> */}
 
       <ToolkitProvider
         key={isExpanded}

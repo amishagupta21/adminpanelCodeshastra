@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useLocation } from "react-router-dom"
 import PropTypes from "prop-types"
 import {
   Button,
@@ -58,10 +58,15 @@ const BatchList = props => {
   const [newLearner, setNewLearner] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const unikodecourseid = queryParams.get("unikodecourseid")
 
   const openNewLearner = e => {
     setNewLearner(true)
   }
+
+  // console.log(row?.unikodecourseid)
 
   const closeNewLearner = () => {
     setNewLearner(false)
@@ -73,7 +78,10 @@ const BatchList = props => {
 
   useEffect(() => {
     const { onGetBatchesLearner, onGetNewBatches } = props
-    onGetBatchesLearner({ id: params.id, page: currentPage })
+    onGetBatchesLearner({
+      id: params.id,
+      page: currentPage,
+    })
     onGetNewBatches(params.id)
   }, [currentPage])
 
@@ -160,12 +168,14 @@ const BatchList = props => {
                         >
                           + Add New Learner
                         </Button>
-
-                        <AddNewLearner
-                          newLearner={newLearner}
-                          openNewLearner={openNewLearner}
-                          closeNewLearner={closeNewLearner}
-                        />
+                        {newLearner && (
+                          <AddNewLearner
+                            newLearner={newLearner}
+                            openNewLearner={openNewLearner}
+                            closeNewLearner={closeNewLearner}
+                            unikodecourseid={unikodecourseid}
+                          />
+                        )}
 
                         <div className="text-start">
                           <h4>Learners</h4>

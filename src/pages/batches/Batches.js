@@ -58,6 +58,8 @@ import tosterMsg from "components/Common/toster"
 import Status from "./Status"
 import Select from "react-select"
 import "./batches.css"
+import jsPDF from "jspdf"
+import "jspdf-autotable"
 
 const Batches = props => {
   const axios = require("axios")
@@ -87,6 +89,7 @@ const Batches = props => {
   const [data, setData] = useState([])
   const [courseIdData, setCourseIdData] = useState([])
   const [selectedCourseId, setSelectedCourseId] = useState([])
+  const [sendId, setSendId] = useState([])
 
   // const [options, setOptions] = useState([
   //   {
@@ -94,6 +97,7 @@ const Batches = props => {
   //     value: "0",
   //   },
   // ])
+
   const confirmStatus = () => {
     setActive(true)
   }
@@ -375,8 +379,9 @@ const Batches = props => {
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
       e.stopPropagation()
-
-      history.push(`/batch-detail/edit/${row?.id}`)
+      history.push(
+        `/batch-detail/edit/${row?.id}?unikodecourseid=${row?.unikodecourseid}`
+      )
     },
   }
 
@@ -450,6 +455,42 @@ const Batches = props => {
       courseName: selectedCourseId.map(item => item.label).toLocaleString(),
     }
     onGetBatchesList(data)
+  }
+
+  const handleDownloadPDF = () => {
+    // Create a new instance of jsPDF
+    const doc = new jsPDF("landscape")
+    // Define table headers and data
+
+    const headers = state.columns.map(item => {
+      return item.text
+    })
+
+    const data = manageUser.map(item => {
+      return [
+        "",
+        item.name,
+        item.description,
+        item.start_date,
+        item.end_date,
+        item.course,
+        item.unikodecourseid,
+        item.lectures,
+        item.learner_limit,
+        item?.enable === true ? "Active" : "Inactive",
+        item?.syncing_status,
+        item?.last_sync,
+      ]
+    })
+
+    // Add the table to the PDF using the autotable plugin
+    doc.autoTable({
+      head: [headers],
+      body: data,
+    })
+
+    // Save the PDF file
+    doc.save("document.pdf")
   }
 
   return (
@@ -707,16 +748,18 @@ const Batches = props => {
                                         <i className="mdi mdi-menu-down"></i>
                                       </DropdownToggle>
                                       <DropdownMenu>
-                                        <DropdownItem disabled>
+                                        <DropdownItem
+                                          onClick={handleDownloadPDF}
+                                        >
                                           Download as pdf
                                         </DropdownItem>
-                                        <ExportCSVButton
-                                          {...toolkitProps.csvProps}
-                                        >
-                                          <DropdownItem>
-                                            Download as excel
-                                          </DropdownItem>{" "}
-                                        </ExportCSVButton>
+                                        <DropdownItem>
+                                          <ExportCSVButton
+                                            {...toolkitProps.csvProps}
+                                          >
+                                            Download as CSV
+                                          </ExportCSVButton>
+                                        </DropdownItem>
                                       </DropdownMenu>
                                     </UncontrolledDropdown>
                                   </div>

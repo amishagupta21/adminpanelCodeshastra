@@ -33,26 +33,24 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap
 import { DeBounceSearch } from "common/DeBounceSearch"
 import { Link } from "react-router-dom"
 import paginationFactory from "react-bootstrap-table2-paginator"
+import { connect, useDispatch } from "react-redux"
+import { getLearner } from "store/Learner/actions"
+import PropTypes from "prop-types"
+import { del, post, patch, getCourseData } from "../../helpers/api_helper"
+import * as url from "../../helpers/url_helper"
+import tosterMsg from "components/Common/toster"
 
-const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
+const AddNewLearner = ({
+  newLearner,
+  openNewLearner,
+  closeNewLearner,
+  onGetLearner,
+  manageUser,
+  manageUserLoader,
+  unikodecourseid,
+}) => {
   const [isExpanded, setIsExpanded] = useState(null)
-
-  const products = [
-    {
-      id: 1,
-      name: " Shubham D",
-      email: "shubhamd@gmail.com",
-      topic: "Software Developer Program",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Rajesh K",
-      email: "RajeshK@gmail.com",
-      topic: "Software Developer Program",
-      status: "Active",
-    },
-  ]
+  const [selectData, setSelectData] = useState([])
 
   const defaultSorted = [
     {
@@ -60,13 +58,6 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
       order: "desc",
     },
   ]
-
-  const selectRow = {
-    mode: "checkbox",
-    clickToSelect: false,
-    // onSelect: handleOnSelect,
-    // onSelectAll: handleOnSelectAll,
-  }
 
   let state = {
     columns: [
@@ -81,7 +72,7 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
         text: "Name",
         sort: true,
         formatter: (cellContent, user) => (
-          <div className="fw-bold">{user?.name}</div>
+          <div className="fw-bold">{user?.fullName}</div>
         ),
       },
 
@@ -92,7 +83,7 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
       },
 
       {
-        dataField: "topic",
+        dataField: "phone",
         text: "Mobile",
         sort: true,
       },
@@ -100,8 +91,94 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
       {
         dataField: "status",
         text: "Status",
+        formatter: (cellContent, user) => (
+          <div>
+            <span
+              className={
+                user?.status === true
+                  ? "btn-status-active"
+                  : "btn-status-inactive"
+              }
+            >
+              {user?.status === true ? "Active" : "Inactive"}
+            </span>
+          </div>
+        ),
       },
     ],
+  }
+
+  useEffect(() => {
+    if (newLearner) onGetLearner()
+  }, [newLearner])
+
+  const handleSearch = e => {
+    const data = {
+      search: e,
+    }
+    onGetLearner(data)
+  }
+
+  const handleClick = (row, isSelected, rowIndex, addlearners, e) => {
+    if (isSelected) {
+      setSelectData(prevClickedIds => {
+        if (prevClickedIds.length && prevClickedIds[0].courseid) {
+          const addlearnersdata = [...prevClickedIds[0].addlearners]
+          addlearnersdata.push({
+            email: row.email,
+            unikodeuserid: null,
+          })
+          return [
+            {
+              courseid: unikodecourseid,
+              addlearners: addlearnersdata,
+            },
+          ]
+        } else {
+          return [
+            {
+              courseid: unikodecourseid,
+              addlearners: [
+                {
+                  email: row.email,
+                  unikodeuserid: null,
+                },
+              ],
+            },
+          ]
+        }
+      })
+    } else {
+      const filteredArr = selectData[0]?.addlearners.filter(
+        item => item.unikodeuserid !== row.uid
+      )
+      setSelectData([
+        {
+          courseid: selectData[0].courseid,
+          addlearners: filteredArr,
+        },
+      ])
+    }
+  }
+
+  const selectRow = {
+    mode: "checkbox",
+    clickToSelect: true,
+    onSelect: handleClick,
+  }
+
+  const addNewLearner = async () => {
+    await axios
+      .post(
+        `${process.env.REACT_APP_API_URL}${url.ADD_NEW_LEARNER}`,
+        selectData[0]
+      )
+      .then(res => {
+        tosterMsg(res?.data?.message)
+      })
+      .catch(error => {
+        tosterMsg(error)
+      })
   }
 
   return (
@@ -123,11 +200,7 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
               <div className="search-box">
                 <div className="app-search p-0">
                   <div className="position-relative mb-2">
-                    <input
-                      className="form-control mb-3"
-                      type="text"
-                      placeholder="Search by Batch name"
-                    />
+                    <DeBounceSearch handleSearch={handleSearch} />
                     <span className="bx bx-search-alt" />
                   </div>
                 </div>
@@ -138,7 +211,7 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
             key={isExpanded}
             keyField="_id"
             columns={state?.columns}
-            data={products}
+            data={manageUser}
           >
             {toolkitProps => (
               <>
@@ -155,7 +228,15 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
                       headerWrapperClasses={"thead-light"}
                       {...toolkitProps.baseProps}
                       pagination={paginationFactory()}
-                      noDataIndication={"No data found"}
+                      noDataIndication={
+                        manageUserLoader ? (
+                          <div className="d-flex justify-content-center">
+                            <Spinner size="" color="primary" />
+                          </div>
+                        ) : (
+                          "No data found"
+                        )
+                      }
                     />
                   </div>
                 </Col>
@@ -180,7 +261,7 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
             Cancel
           </Button>
 
-          <Button color="primary" className="px-5 ms-3">
+          <Button onClick={addNewLearner} color="primary" className="px-5 ms-3">
             Add
           </Button>
         </div>
@@ -189,4 +270,21 @@ const AddNewLearner = ({ newLearner, openNewLearner, closeNewLearner }) => {
   )
 }
 
-export default AddNewLearner
+AddNewLearner.propTypes = {
+  userRoles: PropTypes.array,
+  usersCount: PropTypes.number,
+  className: PropTypes.any,
+  Learner: PropTypes.array,
+  manageUserLoader: PropTypes.any,
+}
+
+const mapStateToProps = ({ Learner, state, count }) => ({
+  manageUser: Learner?.manageUser,
+  manageUserLoader: Learner?.manageUserLoader,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onGetLearner: data => dispatch(getLearner(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewLearner)

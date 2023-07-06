@@ -18,6 +18,9 @@ import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
+import Pdf from "react-to-pdf"
+
+const ref = React.createRef()
 
 const ReportCard = ({ modal, toggle, viewData }) => {
   const params = useParams()
@@ -71,10 +74,8 @@ const ReportCard = ({ modal, toggle, viewData }) => {
             </div>
             <h4 className="mb-4">REPORTS</h4>
 
-            <div className="table-responsive report-table">
-              <div className="text-end my-3">
-                <Button>Download</Button>
-              </div>
+            <div className="table-responsive report-table" ref={ref}>
+              <div className="text-end my-3"></div>
               <Table bordered className="mb-5">
                 <thead className="bg-transparent">
                   <tr>

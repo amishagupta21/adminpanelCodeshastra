@@ -14,6 +14,9 @@ import { useParams } from "react-router-dom"
 
 import BootstrapTable from "react-bootstrap-table-next"
 import axios from "axios"
+import Pdf from "react-to-pdf"
+
+const ref = React.createRef()
 
 const Report = () => {
   const params = useParams()
