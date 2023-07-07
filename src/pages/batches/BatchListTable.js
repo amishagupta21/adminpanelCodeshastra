@@ -284,9 +284,11 @@ const BatchListTable = ({
                       <DropdownItem onClick={handleDownloadPDF}>
                         Download as pdf
                       </DropdownItem>
-                      <ExportCSVButton {...toolkitProps.csvProps}>
-                        <DropdownItem>Download as excel</DropdownItem>{" "}
-                      </ExportCSVButton>
+                      <DropdownItem>
+                        <ExportCSVButton {...toolkitProps.csvProps}>
+                          Download as excel
+                        </ExportCSVButton>
+                      </DropdownItem>{" "}
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </div>
