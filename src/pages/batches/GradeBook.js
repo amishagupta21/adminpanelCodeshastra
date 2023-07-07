@@ -267,7 +267,6 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
                     <DropdownMenu>
                       <DropdownItem disabled>Download as pdf</DropdownItem>
                       <ExportCSVButton {...toolkitProps.csvProps}>
-                        {" "}
                         <DropdownItem>Download as excel</DropdownItem>
                       </ExportCSVButton>
                     </DropdownMenu>

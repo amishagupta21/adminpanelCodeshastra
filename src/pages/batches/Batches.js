@@ -744,7 +744,7 @@ const Batches = props => {
                                       direction="down"
                                     >
                                       <DropdownToggle caret color="primary">
-                                        Export{" "}
+                                        Export
                                         <i className="mdi mdi-menu-down"></i>
                                       </DropdownToggle>
                                       <DropdownMenu>

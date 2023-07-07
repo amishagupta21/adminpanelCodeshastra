@@ -489,3 +489,28 @@ table thead {
   position: relative !important;
   top: 0px !important;
 }
+.bg-1
+{
+  background: #F1EEFF;
+  display: flex;
+  align-items: center;
+}
+.bg-2
+{
+  background: #E0E0E0;
+  display: flex;
+  align-items: center;
+}
+.bg-3
+{
+  background: #B9B9B9;
+}
+.total
+{
+  font-size: 26px;
+  color: #6C57D2;
+}
+.my-table-border th, .my-table-border td
+{
+  border: 1px solid #B9B9B9 !important;
+}

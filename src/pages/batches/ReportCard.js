@@ -20,6 +20,8 @@ import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import Pdf from "react-to-pdf"
 
+import Banner from "../../assets/images/report-card-banner.png";
+
 const ref = React.createRef()
 
 const ReportCard = ({ modal, toggle, viewData }) => {
@@ -53,8 +55,8 @@ const ReportCard = ({ modal, toggle, viewData }) => {
       size="xl"
     >
       <ModalHeader className="modalHeader" toggle={toggle}></ModalHeader>
-      <ModalBody className="w-100">
-        <Row>
+      <ModalBody className="w-100" style={{height:'70vh', overflowY:'auto', marginTop:'40px'}}>
+                <Row>
           <Col md={12}>
             <div className="d-flex justify-content-between">
               <div>
@@ -64,188 +66,90 @@ const ReportCard = ({ modal, toggle, viewData }) => {
               </div>
               {/* <div>Batch List / Batch Information</div> */}
               <div>
-                <Breadcrumb>
+                {/* <Breadcrumb>
                   <BreadcrumbItem>
                     <Link to="/batch-list">Batch</Link>
                   </BreadcrumbItem>
                   <BreadcrumbItem active>Report</BreadcrumbItem>
-                </Breadcrumb>
+                </Breadcrumb> */}
               </div>
             </div>
-            <h4 className="mb-4">REPORTS</h4>
-            <Row>
+            {/* <h4 className="mb-4">REPORTS</h4> */}
+            <div style={{background:'#6C57D2', marginBottom:'20px'}}>
+              <img src={Banner} style={{width:'100%'}} />
+            </div>
+            <Row className="mx-5">
               <Col md={6}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Student Name</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        required
-                        bsSize="sm"
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={3}>Student Name</Label>
+                  <Col sm={9} className="bg-1">ABC</Col>
                 </FormGroup>
               </Col>
               <Col md={6}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Batch Code</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        bsSize="sm"
-                        required
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={3} className="text-center">Batch Code</Label>
+                  <Col sm={9} className="bg-1"></Col>
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
               <Col md={12}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={2}>Total No of Live Classes</Label>
-                    <Col sm={9}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        bsSize="sm"
-                        required
-                      />
-                    </Col>
-                  </Row>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Attended Live Tech Classes</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        required
-                        bsSize="sm"
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={3}>Total No of Live Tech Classes</Label>
+                  <Col sm={9} className="bg-2"></Col>
                 </FormGroup>
               </Col>
               <Col md={6}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Absent</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        bsSize="sm"
-                        required
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={6}>Attended Live Tech Classes</Label>
+                  <Col sm={6} className="bg-1"></Col>
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={3} className="text-center">Absent</Label>
+                  <Col sm={9} className="bg-1"></Col>
+                </FormGroup>
+              </Col>
               <Col md={12}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={2}>Attendance (Technical)%</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        required
-                        bsSize="sm"
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={3}>Attendance (Technical) %</Label>
+                  <Col sm={9} className="bg-2"></Col>
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
               <Col md={12}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Total No of Soft Skills Classes</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        required
-                        bsSize="sm"
-                      />
-                    </Col>
-                  </Row>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Attended Soft Skills Classes</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        required
-                        bsSize="sm"
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={3}>Total No of Soft Skills Classes</Label>
+                  <Col sm={9} className="bg-1"></Col>
                 </FormGroup>
               </Col>
               <Col md={6}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Absent</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        required
-                        bsSize="sm"
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={6}>Attended Soft Skills Classes</Label>
+                  <Col sm={6} className="bg-2"> </Col>
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
               <Col md={6}>
-                <FormGroup>
-                  <Row>
-                    <Label sm={3}>Attendance (Soft Skills)%</Label>
-                    <Col sm={8}>
-                      <Input
-                        type="text"
-                        placeholder="Freshers Only"
-                        required
-                        bsSize="sm"
-                      />
-                    </Col>
-                  </Row>
+                <FormGroup row>
+                  <Label sm={3} className="text-center">Absent</Label>
+                  <Col sm={9} className="bg-2"></Col>
+                </FormGroup>
+              </Col>
+              <Col md={12}>
+                <FormGroup row>
+                  <Label sm={3}>Attendance (Soft skills) %</Label>
+                  <Col sm={9} className="bg-1"></Col>
                 </FormGroup>
               </Col>
             </Row>
-            <div className="table-responsive report-table" ref={ref}>
+            <Row className="mx-5">
+              <Col md={12}>
+              <div className="table-responsive report-table" ref={ref}>
               <div className="text-end my-3"></div>
-              <Table bordered className="mb-5">
+              <Table bordered className="mb-5" striped>
                 <thead>
                   <tr>
-                    <th>Current Week Avg Score</th>
-
-                    <th>Previous Week Avg Score</th>
-                    <th>Total Avg Score</th>
+                    <th style={{background:'#6C57D2',color:'#fff'}}>Current Week Avg Score</th>
+                    <th style={{background:'#8E78F9',color:'#fff'}}>Previous Week Avg Score</th>
+                    <th style={{background:'#6C57D2',color:'#fff'}}>Total Avg Score</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -255,14 +159,29 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                     <td>No Data</td>
                   </tr>
                   <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td>{data?.Attendance?.toFixed(2)} %</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
                   </tr>
+                  <tr>
+                    <td>{data?.Attendance?.toFixed(2)} %</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
+                  </tr>
+                  <tr>
+                    <td>{data?.Attendance?.toFixed(2)} %</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
+                  </tr>
+                  {/* <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr> */}
                 </tbody>
               </Table>
-              <Table bordered className="mb-5">
-                <thead className="bg-transparent">
+              <Table bordered className="mb-5 my-table-border" striped>
+                {/* <thead className="bg-transparent">
                   <tr>
                     <th colSpan={7}>
                       <div className="d-flex">
@@ -278,15 +197,14 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                       </div>
                     </th>
                   </tr>
-                </thead>
+                </thead> */}
                 <thead>
                   <tr>
-                    <th>S.No.</th>
-
-                    <th>Class</th>
-                    <th>Score (Max.100)</th>
-                    <th>Aggregate Score(Max. 100)</th>
-                    <th>Grade</th>
+                    <th style={{background:'#6C57D2',color:'#fff'}}>S.No.</th>
+                    <th style={{background:'#8E78F9',color:'#fff'}}>Class</th>
+                    <th style={{background:'#6C57D2',color:'#fff'}}>Score (Max.100)</th>
+                    <th style={{background:'#8E78F9',color:'#fff'}}>Aggregate Score(Max. 100)</th>
+                    <th style={{background:'#6C57D2',color:'#fff'}}>Grade</th>
                     {/* <th colSpan={2}>Weekly Assessments</th> */}
                   </tr>
                 </thead>
@@ -301,28 +219,72 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                     <td>No Data</td>
                   </tr>
                   <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td>{data?.Attendance?.toFixed(2)} %</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
+                    {/* <td>{data?.Assignment - 11}</td>
+                  <td>{data?.Assignment - 21}</td> */}
+                    <td>No Data</td>
                   </tr>
                   <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td>{data?.Attendance?.toFixed(2)} %</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
+                    {/* <td>{data?.Assignment - 11}</td>
+                  <td>{data?.Assignment - 21}</td> */}
+                    <td>No Data</td>
                   </tr>
                   <tr>
-                    <td colSpan={7}>
-                      <strong>Note :</strong>
+                    <td colSpan={2}>
+                      <div className="total">Total Avg Score</div>
                     </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </tbody>
+              </Table>
+              <Table bordered className="mb-5 my-table-border">
+                <tbody>
+                  <tr>
+                    <th style={{backgroundColor:'#6C57D2',color:'#fff'}}>Grades</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                    <th className="bg-3">A+</th>
+                  </tr>
+                  <tr>
+                    <th style={{background:'#8E78F9',color:'#fff'}}>Grades</th>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
+                    <td>A+</td>
                   </tr>
                 </tbody>
               </Table>
               <Button color="success">Email To Student</Button>
+              <Button color="primary" className="ms-4">Download PDF</Button>
             </div>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </ModalBody>
