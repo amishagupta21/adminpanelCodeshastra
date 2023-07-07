@@ -119,7 +119,7 @@ const AddNewLearner = ({
     const data = {
       search: e,
     }
-    onGetAllLearner(data)
+    onGetLearner(data)
   }
 
   const handleClick = (row, isSelected, rowIndex, addlearners, e) => {
