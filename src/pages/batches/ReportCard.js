@@ -73,9 +73,194 @@ const ReportCard = ({ modal, toggle, viewData }) => {
               </div>
             </div>
             <h4 className="mb-4">REPORTS</h4>
-
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Student Name</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        required
+                        bsSize="sm"
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Batch Code</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        bsSize="sm"
+                        required
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={2}>Total No of Live Classes</Label>
+                    <Col sm={9}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        bsSize="sm"
+                        required
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Attended Live Tech Classes</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        required
+                        bsSize="sm"
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Absent</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        bsSize="sm"
+                        required
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={2}>Attendance (Technical)%</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        required
+                        bsSize="sm"
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Total No of Soft Skills Classes</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        required
+                        bsSize="sm"
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Attended Soft Skills Classes</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        required
+                        bsSize="sm"
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Absent</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        required
+                        bsSize="sm"
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Row>
+                    <Label sm={3}>Attendance (Soft Skills)%</Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        placeholder="Freshers Only"
+                        required
+                        bsSize="sm"
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              </Col>
+            </Row>
             <div className="table-responsive report-table" ref={ref}>
               <div className="text-end my-3"></div>
+              <Table bordered className="mb-5">
+                <thead>
+                  <tr>
+                    <th>Current Week Avg Score</th>
+
+                    <th>Previous Week Avg Score</th>
+                    <th>Total Avg Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{data?.Attendance?.toFixed(2)} %</td>
+                    <td>No Data</td>
+                    <td>No Data</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </tbody>
+              </Table>
               <Table bordered className="mb-5">
                 <thead className="bg-transparent">
                   <tr>
@@ -96,12 +281,13 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                 </thead>
                 <thead>
                   <tr>
-                    <th>Attendance</th>
-                    <th>Total Assessment</th>
-                    <th>Total Assignment</th>
-                    <th>DSA MCT</th>
+                    <th>S.No.</th>
+
+                    <th>Class</th>
+                    <th>Score (Max.100)</th>
+                    <th>Aggregate Score(Max. 100)</th>
+                    <th>Grade</th>
                     {/* <th colSpan={2}>Weekly Assessments</th> */}
-                    <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>

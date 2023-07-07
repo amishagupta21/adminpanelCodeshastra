@@ -184,10 +184,15 @@ class LearnerPage extends Component {
   }
 
   componentDidMount(page, sizePerPage, currentPage, usersCount) {
-    const { manageUser, userRoles, onGetLearner, onGetStatusFilter } =
-      this.props
+    const {
+      manageUser,
+      userRoles,
+      onGetLearner,
+      onGetAllLearner,
+      onGetStatusFilter,
+    } = this.props
     if (manageUser && !manageUser.length) {
-      onGetLearner({ search: "", page: currentPage, usersCount })
+      onGetAllLearner({ search: "", page: currentPage, usersCount })
     }
 
     this.setState({ manageUser, userRoles })

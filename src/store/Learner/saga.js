@@ -39,18 +39,18 @@ function* fetchDemoData({ payload: data }) {
   }
 }
 
-// function* fetchAllDemoData({ payload: data }) {
-//   try {
-//     const response = yield call(getAllLearnerList, data)
-//     tosterMsg(response?.message)
-//     yield put(getAllLearnerSuccess(response?.data?.docs))
-//     yield put(getLearnerCountSuccess(response?.data?.totalDocs))
-//   } catch (error) {
-//     tosterMsg(error?.message)
-//     yield put(getAllLearnerFail(error))
-//     yield put(getLearnerCountFail(error))
-//   }
-// }
+function* fetchAllDemoData({ payload: data }) {
+  try {
+    const response = yield call(getAllLearnerList, data)
+    tosterMsg(response?.message)
+    yield put(getAllLearnerSuccess(response?.data?.docs))
+    yield put(getLearnerCountSuccess(response?.data?.totalDocs))
+  } catch (error) {
+    tosterMsg(error?.message)
+    yield put(getAllLearnerFail(error))
+    yield put(getLearnerCountFail(error))
+  }
+}
 
 function* onDeleteLearner({ payload: event }) {
   try {
@@ -78,7 +78,7 @@ function* onFilterLearner({ payload: data }) {
 
 function* usersManageSaga() {
   yield takeEvery(GET_LEARNER, fetchDemoData)
-  // yield takeEvery(GET_ALL_LEARNER, fetchAllDemoData)
+  yield takeEvery(GET_ALL_LEARNER, fetchAllDemoData)
   yield takeEvery(DELETE_LEARNER, onDeleteLearner)
   yield takeEvery(FILTER_STATUS_LEARNER, onFilterLearner)
 }

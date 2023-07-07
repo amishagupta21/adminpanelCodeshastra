@@ -34,7 +34,7 @@ import { DeBounceSearch } from "common/DeBounceSearch"
 import { Link } from "react-router-dom"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { connect, useDispatch } from "react-redux"
-import { getLearner } from "store/Learner/actions"
+import { getLearner, getAllLearner } from "store/Learner/actions"
 import PropTypes from "prop-types"
 import { del, post, patch, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
@@ -45,6 +45,7 @@ const AddNewLearner = ({
   openNewLearner,
   closeNewLearner,
   onGetLearner,
+  onGetAllLearner,
   manageUser,
   manageUserLoader,
   unikodecourseid,
@@ -110,14 +111,14 @@ const AddNewLearner = ({
   }
 
   useEffect(() => {
-    if (newLearner) onGetLearner()
+    if (newLearner) onGetAllLearner()
   }, [newLearner])
 
   const handleSearch = e => {
     const data = {
       search: e,
     }
-    onGetLearner(data)
+    onGetAllLearner(data)
   }
 
   const handleClick = (row, isSelected, rowIndex, addlearners, e) => {
@@ -222,7 +223,7 @@ const AddNewLearner = ({
                 <Col xl="12">
                   <div className="table-responsive">
                     <h6 className="mt-2">
-                      Total Batches: &nbsp;{usersCount?.count}
+                      Total Batches: &nbsp;{manageUser?.length}
                     </h6>
                     <BootstrapTable
                       keyField={"_id"}
@@ -293,6 +294,7 @@ const mapStateToProps = ({ Learner, state, count }) => ({
 
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),
+  onGetAllLearner: data => dispatch(getAllLearner(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewLearner)
