@@ -50,6 +50,7 @@ const AddNewLearner = ({
   manageUserLoader,
   unikodecourseid,
   usersCount,
+  setNewLearner,
 }) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const [selectData, setSelectData] = useState([])
@@ -180,6 +181,7 @@ const AddNewLearner = ({
         res?.data?.data.forEach(message => {
           tosterMsg(message)
         })
+        closeNewLearner()
       })
       .catch(error => {
         tosterMsg(error)

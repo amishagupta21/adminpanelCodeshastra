@@ -174,6 +174,7 @@ const BatchList = props => {
                             openNewLearner={openNewLearner}
                             closeNewLearner={closeNewLearner}
                             unikodecourseid={unikodecourseid}
+                            setNewLearner={setNewLearner}
                           />
                         )}
 
