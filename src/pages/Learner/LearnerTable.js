@@ -47,7 +47,7 @@ function LearnerTable({
                     <Link>Select All {manageUser?.length} Learners</Link>{" "}
                   </h6>
                 ) : (
-                  <h6 className="mt-5">Total Learners: {usersCount}</h6>
+                  <h6 className="mt-5">Total Learners: {manageUser?.length}</h6>
                 )}
 
                 <Col xl="12">
