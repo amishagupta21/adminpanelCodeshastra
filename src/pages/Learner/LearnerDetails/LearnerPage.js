@@ -82,7 +82,7 @@ class LearnerPage extends Component {
       multiSelectTestResult: [],
       optionSelected: null,
       isFilterApplied: false,
-      totalPages: 0,
+      totalPages: "",
       currentPage: 1,
       totalLearner: "",
       columns: [
@@ -192,10 +192,11 @@ class LearnerPage extends Component {
       onGetStatusFilter,
     } = this.props
     if (manageUser && !manageUser.length) {
-      onGetAllLearner({ search: "", page: currentPage, usersCount })
+      onGetLearner({ search: "", page: page, usersCount })
     }
 
     this.setState({ manageUser, userRoles })
+    // this.setState({ totalPages: Math.ceil(totalBatchesLearner / 10) })
   }
 
   componentDidUpdate(prevProps, prevState) {

@@ -117,10 +117,10 @@ const getBatchesList = async data => {
 
 // MAIN BATCHES API
 
-const AllBatches = async data => {
-  const allResp = await getCourseData(url.GET_BATCHES)
-  return getBatches({ pageSize: allResp?.data?.count })
-}
+// const AllBatches = async data => {
+//   const allResp = await getCourseData(url.GET_BATCHES)
+//   return getBatches({ pageSize: allResp?.data?.count })
+// }
 
 const getBatches = async data => {
   const resp = await getCourseData(
@@ -136,7 +136,7 @@ const getBatches = async data => {
 const getBatchesLearner = async data => {
   const resp = await getCourseData(
     url.GET_BATCHES_LEARNER_LIST +
-      `/${data?.id}?pageSize=${data?.pageSize || 28}&page=${
+      `/${data?.id}?pageSize=${data?.pageSize || 10}&page=${
         data?.page || 1
       }&sortBy=${data?.sortBy || "created_at"}&?sortOrder=${
         data?.sortOrder || "DESC"
@@ -279,17 +279,17 @@ const editCourseDetail = async data => {
   return resp
 }
 
-const getAllLearnerList = async data => {
-  const res = await getData(url.GET_LEARNER)
-  return getLearnerList({ perPage: res?.data?.count })
-}
+// const getAllLearnerList = async data => {
+//   const res = await getData(url.GET_LEARNER)
+//   // return getLearnerList({ perPage: res?.data?.count })
+// }
 
 const getLearnerList = async data => {
   const res = await getData(
     url.GET_LEARNER +
-      `?page=${data?.currentPage || 1}&perPage=${data?.perPage || 10}&search=${
-        data?.search || ""
-      }`
+      `?page=${data?.page || data?.currentPage || 1}&pageSize=${
+        data?.pageSize || 10
+      }&search=${data?.search || ""}`
   )
 
   return res
@@ -611,7 +611,7 @@ export {
   onAddReply,
   onAddComment,
   getLearnerList,
-  getAllLearnerList,
+  // getAllLearnerList,
   getApplicationListing,
   getDeleteData,
   getDeleteBatches,
@@ -648,6 +648,6 @@ export {
   getMentorApi,
   getBatchesApi,
   createNewBatchesData,
-  AllBatches,
+  // AllBatches,
   // getFilter,
 }

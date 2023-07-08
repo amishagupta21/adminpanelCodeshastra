@@ -12,6 +12,7 @@ import {
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { Link } from "react-router-dom"
+import ResponsivePagination from "react-responsive-pagination"
 
 function LearnerTable({
   manageUser,
@@ -43,11 +44,10 @@ function LearnerTable({
                 {selectRow?.selected?.length > 0 ? (
                   <h6 className="mt-5">
                     All {selectRow?.selected?.length} Learner on this page are
-                    selected.{" "}
-                    <Link>Select All {manageUser?.length} Learners</Link>{" "}
+                    selected. <Link>Select All {usersCount} Learners</Link>{" "}
                   </h6>
                 ) : (
-                  <h6 className="mt-5">Total Learners: {manageUser?.length}</h6>
+                  <h6 className="mt-5">Total Learners: {usersCount}</h6>
                 )}
 
                 <Col xl="12">
@@ -74,6 +74,14 @@ function LearnerTable({
                         )
                       }
                     />
+                    {/* <ResponsivePagination
+                      currentPage={currentPage}
+                      total={totalPages}
+                      onPageChange={n => {
+                        setCurrentPage(n)
+                        onGetBatchesLearner(n)
+                      }}
+                    />{" "} */}
                   </div>
                   {/* <div>
                     <button

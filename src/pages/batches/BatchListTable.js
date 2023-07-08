@@ -37,6 +37,9 @@ import jsPDF from "jspdf"
 import "jspdf-autotable"
 import LearnerStatus from "./LearnerStatus"
 
+import "react-responsive-pagination/themes/classic.css"
+import ResponsivePagination from "react-responsive-pagination"
+
 const ref = React.createRef()
 
 const options = {
@@ -308,14 +311,22 @@ const BatchListTable = ({
                   classes={"table align-middle table-nowrap"}
                   headerWrapperClasses={"thead-light"}
                   {...toolkitProps.baseProps}
-                  pagination={paginationFactory()}
+                  // pagination={paginationFactory({
+                  //   current: currentPage,
+                  //   totalPages: totalPages,
+                  //   onPageChange: handlePageChange,
+                  // })}
                   noDataIndication={"No data found"}
                 />
+                <ResponsivePagination
+                  current={currentPage}
+                  total={totalPages}
+                  onPageChange={n => {
+                    setCurrentPage(n)
+                    // onGetBatchesLearner(n)
+                  }}
+                />
 
-                {/* <div ref={ref}>
-                  <h1>Hello CodeSandbox</h1>
-                  <h2>Start editing to see some magic happen!</h2>
-                </div> */}
                 {/* <div>
                   <button
                     onClick={() => setCurrentPage(currentPage - 1)}
