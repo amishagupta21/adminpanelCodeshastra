@@ -27,6 +27,7 @@ import {
   AccordionHeader,
   Spinner,
   AccordionBody,
+  Pagination,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
@@ -39,13 +40,17 @@ import PropTypes from "prop-types"
 import { del, post, patch, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import tosterMsg from "components/Common/toster"
+import ResponsivePagination from "react-responsive-pagination"
+import "react-responsive-pagination/themes/classic.css"
+
+// import Pagination from "react-responsive-pagination"
 
 const AddNewLearner = ({
   newLearner,
   openNewLearner,
   closeNewLearner,
   onGetLearner,
-  onGetAllLearner,
+  // onGetAllLearner,
   manageUser,
   manageUserLoader,
   unikodecourseid,
@@ -54,6 +59,9 @@ const AddNewLearner = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const [selectData, setSelectData] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState()
+  console.log(totalPages, "/////////totalPages")
 
   const defaultSorted = [
     {
@@ -112,8 +120,12 @@ const AddNewLearner = ({
   }
 
   useEffect(() => {
-    if (newLearner) onGetAllLearner()
-  }, [newLearner])
+    setTotalPages(Math.ceil(usersCount / 10))
+  }, [usersCount])
+
+  useEffect(() => {
+    onGetLearner({ page: currentPage })
+  }, [currentPage])
 
   const handleSearch = e => {
     const data = {
@@ -224,9 +236,7 @@ const AddNewLearner = ({
               <>
                 <Col xl="12">
                   <div className="table-responsive">
-                    <h6 className="mt-2">
-                      Total Batches: &nbsp;{manageUser?.length}
-                    </h6>
+                    <h6 className="mt-2">Total Batches: &nbsp;{usersCount}</h6>
                     <BootstrapTable
                       keyField={"_id"}
                       responsive
@@ -237,7 +247,7 @@ const AddNewLearner = ({
                       classes={"table align-middle table-nowrap"}
                       headerWrapperClasses={"thead-light"}
                       {...toolkitProps.baseProps}
-                      pagination={paginationFactory()}
+                      // pagination={paginationFactory()}
                       noDataIndication={
                         manageUserLoader ? (
                           <div className="d-flex justify-content-center">
@@ -248,6 +258,30 @@ const AddNewLearner = ({
                         )
                       }
                     />
+                    <ResponsivePagination
+                      current={currentPage}
+                      maxWidth={5}
+                      total={totalPages}
+                      onPageChange={n => {
+                        setCurrentPage(n)
+                        // onGetLearner(n)
+                      }}
+                    />{" "}
+                    {/* <div>
+                      <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                      >
+                        Previous
+                      </button>
+                      <span>{currentPage}</span>
+                      <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={totalPages === currentPage}
+                      >
+                        Next
+                      </button>
+                    </div> */}
                   </div>
                 </Col>
               </>
@@ -290,13 +324,13 @@ AddNewLearner.propTypes = {
 
 const mapStateToProps = ({ Learner, state, count }) => ({
   manageUser: Learner?.manageUser,
-  usersCount: Learner?.count,
+  usersCount: Learner?.count?.count,
   manageUserLoader: Learner?.manageUserLoader,
 })
 
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),
-  onGetAllLearner: data => dispatch(getAllLearner(data)),
+  // onGetAllLearner: data => dispatch(getAllLearner(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewLearner)

@@ -102,18 +102,18 @@ function* fetchBatches({ payload: data }) {
   }
 }
 
-function* fetchAllBatches({ payload: data }) {
-  try {
-    const response = yield call(AllBatches, data)
-    tosterMsg(response?.message)
-    yield put(getAllBatchesListSuccess(response?.data?.result))
-    yield put(getBatchesListCountSuccess(response?.data))
-  } catch (error) {
-    tosterMsg(error?.message)
-    yield put(getBatchesListCountFail(error))
-    yield put(getBatchesCountFail(error))
-  }
-}
+// function* fetchAllBatches({ payload: data }) {
+//   try {
+//     const response = yield call(AllBatches, data)
+//     tosterMsg(response?.message)
+//     yield put(getAllBatchesListSuccess(response?.data?.result))
+//     yield put(getBatchesListCountSuccess(response?.data))
+//   } catch (error) {
+//     tosterMsg(error?.message)
+//     yield put(getBatchesListCountFail(error))
+//     yield put(getBatchesCountFail(error))
+//   }
+// }
 
 // MAIN LEARNER
 
@@ -260,7 +260,7 @@ function* fetchNewMentor({ payload: data }) {
 function* usersManageSaga() {
   yield takeEvery(GET_BATCHES, fetchBatchesList)
   yield takeEvery(GET_BATCHES_LIST, fetchBatches)
-  yield takeEvery(GET_ALL_BATCHES_LIST, fetchAllBatches)
+  // yield takeEvery(GET_ALL_BATCHES_LIST, fetchAllBatches)
   yield takeEvery(GET_BATCHES_LEARNER, fetchBatchesLearner)
   yield takeEvery(GET_GRADE_BOOK, fetchGradeBook)
   // yield takeEvery(GET_GRADE_BOOK, fetchAllGradeBook)

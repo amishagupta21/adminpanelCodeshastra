@@ -57,7 +57,7 @@ const BatchList = props => {
   const [item, setItem] = useState(manageUser)
   const [newLearner, setNewLearner] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(0)
+  const [totalPages, setTotalPages] = useState()
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const unikodecourseid = queryParams.get("unikodecourseid")
@@ -65,8 +65,6 @@ const BatchList = props => {
   const openNewLearner = e => {
     setNewLearner(true)
   }
-
-  // console.log(row?.unikodecourseid)
 
   const closeNewLearner = () => {
     setNewLearner(false)
