@@ -39,6 +39,7 @@ import LearnerStatus from "./LearnerStatus"
 
 import "react-responsive-pagination/themes/classic.css"
 import ResponsivePagination from "react-responsive-pagination"
+import EnrollStatusModel from "./EnrollStatusModel"
 
 const ref = React.createRef()
 
@@ -68,8 +69,11 @@ const BatchListTable = ({
   const [data, setData] = useState([])
 
   const [active, setActive] = useState(false)
+  const [enroll, setEnroll] = useState(false)
   const confirmLearnerStatus = () => setActive(!active)
+  const confirmEnrollStatus = () => setActive(!active)
   const closeModal = () => setActive(false)
+  const closeEnrollModal = () => setEnroll(false)
 
   let state = {
     columns: [
@@ -173,7 +177,7 @@ const BatchListTable = ({
               {/* <Link to="/batch-list" className="text-muted">
                 <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
               </Link> */}
-              <div
+              <span
                 // to={`/report/${user?.id}`}
                 onClick={() => {
                   setViewData(user)
@@ -182,7 +186,19 @@ const BatchListTable = ({
                 className="text-muted ms-2"
               >
                 <i className="mdi mdi-clipboard-account mdi-18px text-success" />
-              </div>
+              </span>
+              <span
+                // to={`/report/${user?.id}`}
+                onClick={e => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  setData(user)
+                  setEnroll(true)
+                }}
+                className="text-muted ms-2"
+              >
+                <i className="mdi mdi-file-check font-size-18 text-primary"></i>
+              </span>
             </div>
           </div>
         ),
@@ -252,6 +268,15 @@ const BatchListTable = ({
         closeModal={closeModal}
         user={data}
         setActive={setActive}
+        params={params}
+        onGetBatchesLearner={onGetBatchesLearner}
+      />
+      <EnrollStatusModel
+        active={enroll}
+        confirmEnrollStatus={confirmEnrollStatus}
+        closeModal={closeEnrollModal}
+        user={data}
+        setActive={setEnroll}
         params={params}
         onGetBatchesLearner={onGetBatchesLearner}
       />
