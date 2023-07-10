@@ -130,7 +130,7 @@ const Batches = props => {
   }, [manageUser])
 
   useEffect(() => {
-    onGetAllBatchesList()
+    onGetBatchesList()
     onGetDashboard()
   }, [])
 
