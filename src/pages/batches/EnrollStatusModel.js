@@ -37,8 +37,9 @@ const EnrollStatusModel = ({
     try {
       // Make the unenroll request
       const response = await post(url.UNENROLL_STUDENT, {
-        unikodecourseid: [id],
-        unikodeuserid: [courseId],
+        id: params?.id,
+        unikodecourseid: courseId,
+        unikodeuserid: id,
       })
 
       setActive(false)
