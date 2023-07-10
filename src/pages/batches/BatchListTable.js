@@ -192,15 +192,12 @@ const BatchListTable = ({
                 onClick={e => {
                   e.stopPropagation()
                   e.preventDefault()
-                  // confirmEnrollStatus(user?.id)
                   setData(user)
-                  // fetchData()
                   setEnroll(true)
-                  // handleEdit(user?.id)
                 }}
                 className="text-muted ms-2"
               >
-                <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                <i className="mdi mdi-file-check font-size-18 text-primary"></i>
               </span>
             </div>
           </div>

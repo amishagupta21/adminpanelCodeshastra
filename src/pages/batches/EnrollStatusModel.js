@@ -71,11 +71,7 @@ const EnrollStatusModel = ({
                 className="mdi mdi-alert-circle-outline"
                 style={{ fontSize: "9em", color: "orange" }}
               />
-              <h2>
-                Are you sure you want to {!user?.status ? "Enroll" : "Unenroll"}{" "}
-                <span></span>
-                {user?.learnername}?
-              </h2>
+              <h2>Are you sure you want to Unenroll {user?.learnername}?</h2>
               {/* <h4>{"You won't be able to revert this!"}</h4> */}
             </div>
           </Col>
@@ -85,7 +81,6 @@ const EnrollStatusModel = ({
             <div className="text-center mt-3">
               <button
                 onClick={() => {
-                  console.log("clicked")
                   handleEnroll({
                     id: user?.unikodeuserid,
                     courseId: user?.unikodecourseid,
@@ -94,7 +89,7 @@ const EnrollStatusModel = ({
                 type="button"
                 className="btn btn-success btn-lg ms-2"
               >
-                {!user?.status ? "Enroll" : "Unenroll"}
+                UnEnroll
               </button>
               <button
                 type="button"
