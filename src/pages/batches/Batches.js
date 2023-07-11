@@ -60,6 +60,7 @@ import Select from "react-select"
 import "./batches.css"
 import jsPDF from "jspdf"
 import "jspdf-autotable"
+import Nav from "react-bootstrap/Nav"
 
 const Batches = props => {
   const axios = require("axios")
@@ -91,13 +92,18 @@ const Batches = props => {
   const [selectedCourseId, setSelectedCourseId] = useState([])
   const [sendId, setSendId] = useState([])
 
+  // const[currBatch , setCurrBatch] = useState(onGetAllBatchesList)
+  const [activeTab, setActiveTab] = useState("true")
+
   // const [options, setOptions] = useState([
   //   {
   //     label: "Select Course Name",
   //     value: "0",
   //   },
   // ])
-
+  // useEffect(() => {
+  //   filterData(true)
+  // }, [manageUser])
   const confirmStatus = () => {
     setActive(true)
   }
@@ -368,7 +374,7 @@ const Batches = props => {
 
   const selectRow = {
     mode: "checkbox",
-    clickToSelect: true,
+    clickToSelect: false,
     onSelect: handleClick,
   }
 
@@ -492,6 +498,24 @@ const Batches = props => {
     // Save the PDF file
     doc.save("document.pdf")
   }
+  const filterData = clickedBatch => {
+    console.log("clicked", clickedBatch)
+    setActiveTab(clickedBatch)
+    const filteredBatch = manageUser.filter(item => {
+      return item.enable === clickedBatch
+    })
+    console.log(filteredBatch)
+
+    setItem(filteredBatch)
+    console.log("setted")
+  }
+  // const selectRow = {
+  //   mode: "checkbox",
+  //   clickToSelect: false,
+  //   // selected: this.state.selected,
+  //   // onSelect: this.handleOnSelect,
+  //   // onSelectAll: this.handleOnSelectAll,
+  // }
 
   return (
     <div className="page-content batches-home">
@@ -524,60 +548,70 @@ const Batches = props => {
           <h4 className="mb-3">BATCHES</h4>
           <Row>
             <Col>
-              <div className="batches-box">
-                <Card style={{ background: "#E5E9FF" }}>
-                  <CardBody>
-                    <div className="box">
-                      <div>
-                        <p className="box-heading">All Batches</p>
-                        <p className="score">{dashboard?.totalBatch}</p>
+              <Nav.Link eventKey="second" onClick={() => onGetBatchesList()}>
+                <div className="batches-box">
+                  <Card style={{ background: "#E5E9FF" }}>
+                    <CardBody>
+                      <div className="box">
+                        <div>
+                          <p className="box-heading">All Batches</p>
+                          <p className="score">{dashboard?.totalBatch}</p>
+                        </div>
+                        <div className="icon-circle">
+                          <span className="mdi mdi-account-circle" />
+                        </div>
                       </div>
-                      <div className="icon-circle">
-                        <span className="mdi mdi-account-circle" />
+                    </CardBody>
+                  </Card>
+                </div>
+              </Nav.Link>
+            </Col>
+            <Col>
+              <Nav.Link eventKey="second" onClick={() => filterData(true)}>
+                <div className="batches-box">
+                  <Card>
+                    <CardBody>
+                      <div className="box">
+                        <div>
+                          <p className="box-heading">Active Batches</p>
+                          <p className="score">{dashboard?.activeBatch}</p>
+                        </div>
+                        <div className="icon-circle">
+                          <span className="mdi mdi-account-circle" />
+                        </div>
                       </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </div>
+                    </CardBody>
+                  </Card>
+                </div>
+              </Nav.Link>
+            </Col>
+            <Col>
+              <Nav.Link eventKey="third" onClick={() => filterData(false)}>
+                <div className="batches-box">
+                  <Card>
+                    <CardBody>
+                      <div className="box">
+                        <div>
+                          <p className="box-heading">Inactive Batches</p>
+                          <p className="score">{dashboard?.disableBatch}</p>
+                        </div>
+                        <div className="icon-circle">
+                          <span className="mdi mdi-account-circle" />
+                        </div>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </div>
+              </Nav.Link>
             </Col>
             <Col>
               <div className="batches-box">
                 <Card>
                   <CardBody>
-                    <div className="box">
-                      <div>
-                        <p className="box-heading">Active Batches</p>
-                        <p className="score">{dashboard?.activeBatch}</p>
-                      </div>
-                      <div className="icon-circle">
-                        <span className="mdi mdi-account-circle" />
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </div>
-            </Col>
-            <Col>
-              <div className="batches-box">
-                <Card>
-                  <CardBody>
-                    <div className="box">
-                      <div>
-                        <p className="box-heading">Inactive Batches</p>
-                        <p className="score">{dashboard?.disableBatch}</p>
-                      </div>
-                      <div className="icon-circle">
-                        <span className="mdi mdi-account-circle" />
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </div>
-            </Col>
-            <Col>
-              <div className="batches-box">
-                <Card>
-                  <CardBody>
+                    {/* <Nav.Link
+                      eventKey="fourth"
+                      onClick={() => filterData("Past")}
+                    > */}
                     <div className="box">
                       <div>
                         <p className="box-heading">Past Batches</p>
@@ -587,6 +621,7 @@ const Batches = props => {
                         <span className="mdi mdi-account-circle" />
                       </div>
                     </div>
+                    {/* </Nav.Link> */}
                   </CardBody>
                 </Card>
               </div>
@@ -595,6 +630,10 @@ const Batches = props => {
               <div className="batches-box">
                 <Card>
                   <CardBody>
+                    {/* <Nav.Link
+                      eventKey="five"
+                      onClick={() => filterData("Ending")}
+                    > */}
                     <div className="box">
                       <div>
                         <p className="box-heading">Ending This Week</p>
@@ -604,6 +643,7 @@ const Batches = props => {
                         <span className="mdi mdi-account-circle" />
                       </div>
                     </div>
+                    {/* </Nav.Link> */}
                   </CardBody>
                 </Card>
               </div>
