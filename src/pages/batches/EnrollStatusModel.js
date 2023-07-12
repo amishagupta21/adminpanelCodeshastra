@@ -22,6 +22,7 @@ import { connect } from "react-redux"
 import { getBatchesLearner } from "store/Batches/actions"
 import tosterMsg from "components/Common/toster"
 import { use } from "i18next"
+import axios from "axios"
 
 const EnrollStatusModel = ({
   active,
@@ -41,6 +42,15 @@ const EnrollStatusModel = ({
         unikodecourseid: courseId,
         unikodeuserid: id,
       })
+      console.log(batchesLearner)
+
+      // if (response.data) {
+      //   const resp = await del(url.FILTER_UNENROLL + `${courseId}/${unikodecoursei}/${id}}`)
+      //   const finalItem = batchesLearner.filter(
+      //     item => id !== item?.unikodeuserid
+      //   )
+      //   console.log(finalItem)
+      // }
 
       setActive(false)
       onGetBatchesLearner({

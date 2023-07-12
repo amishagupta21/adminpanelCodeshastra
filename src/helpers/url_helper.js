@@ -147,7 +147,7 @@ export const GET_STATUS = "/admin/batch/enable"
 
 export const GET_LEARNER_STATUS = "/admin/batch/"
 export const UNENROLL_STUDENT = "admin/batch/learner/unenroll"
-
+export const FILTER_UNENROLL = "admin/batch/learner/unenroll/"
 
 export const CREATE_NEW_BATCHES = "/admin/batch"
 export const GET_BATCHES_LEARNER_LIST = "/admin/batch/learners/listing"
@@ -158,7 +158,6 @@ export const GET_GRADE_BOOK = "/admin/batch/learners/gradebook"
 
 export const GET_BATCHES_API = "/admin/batch"
 
-
 // NEW BATCHES
 
 export const BATCH_SYNC = "/admin/batch/sync"
@@ -168,8 +167,6 @@ export const BATCH_SYNC_GRADES = "/admin/batch/sync/grades"
 export const GET_NEW_BATCHES = "/admin/batch"
 
 export const ADD_NEW_LEARNER = "/admin/batch/enroll/user-unikode/course"
-
-
 
 // DASHBOARD
 

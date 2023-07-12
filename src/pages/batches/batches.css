@@ -13,6 +13,16 @@
 {
   position: relative;
 } */
+
+.nav-link.active {
+  color: #495057 !important;
+  background-color: #556ee6 !important;
+}
+
+.courseList .nav-pills .nav-link {
+  color: #495057 !important;
+}
+
 .vertical-menu,
 .navbar-brand-box,
 .navbar-header,
@@ -30,6 +40,7 @@
   justify-content: center;
   align-items: center;
 }
+
 #vertical-menu-btn {
   width: 40px;
   height: 40px;
@@ -45,27 +56,33 @@
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
 .btn-light-grey {
   background: #f1f1f3 !important;
   color: #747893 !important;
   border: 1px solid #f1f1f3 !important;
 }
+
 .btn-synch-now {
   background: #556ee6 !important;
   border: 1px solid #556ee6 !important;
 }
+
 .btn-synch-now:hover {
   background: #3853d5 !important;
   border: 1px solid #3853d5 !important;
 }
+
 .btn-light-grey:hover {
   background: #a5a5ab !important;
   color: #fff !important;
   border: 1px solid #a5a5ab !important;
 }
+
 .batches-home .filter-text {
   font-weight: 600;
 }
+
 .batches-home .app-search .form-control {
   border-radius: 4px !important;
   border: 1px solid hsl(0, 0%, 80%) !important;
@@ -115,16 +132,19 @@
   align-items: center;
   height: 60px;
 }
+
 .batches-box .box-heading {
   font-size: 13px;
   font-weight: 500;
   color: #495057;
   padding-bottom: 5px;
 }
+
 .batches-box .score {
   font-size: 20px;
   font-weight: 500;
 }
+
 .batches-box .icon-circle {
   background: #556ee6;
   width: 50px;
@@ -141,6 +161,7 @@
   z-index: 1;
   margin-left: 20px;
 }
+
 .batches-box .icon-circle::after {
   content: "";
   width: 10px;
@@ -150,13 +171,16 @@
   position: absolute;
   z-index: -1;
 }
+
 .box-r-btn {
   display: flex;
   justify-content: end;
 }
+
 .box-r-btn select {
   width: 150px;
 }
+
 /* .batches-home table th {
   min-width: 160px;
   border-top: 1px solid #eff2f7 !important;
@@ -165,19 +189,24 @@
 .batches-home table td {
   border-bottom: 1px solid #eff2f7 !important;
 }
+
 .batches-home table thead {
   background: #f8f9fa;
 }
+
 table thead {
   background: #f8f9fa;
 }
+
 .accordionItem-table {
   display: flex;
 }
+
 .batch-accord table th,
 .batch-accord table td {
   border: 0px solid #000000 !important;
 }
+
 /* .batch-accord
 {
     border-top: 1px solid #ced4da !important;
@@ -186,6 +215,7 @@ table thead {
   border-top: 0px solid #ced4da !important;
   border-bottom: 0px solid #ced4da !important;
 }
+
 .batch-accord .accordion-header .accordion-button {
   /* background: transparent !important; */
   /* border: 10px solid rgb(242, 244, 253) !important; */
@@ -194,19 +224,23 @@ table thead {
   font-size: 13px !important;
   font-weight: 600 !important;
 }
+
 .batch-accord .accordion-body {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+
 .batch-accord .my-padding {
   padding-left: 20px !important;
   padding-right: 20px !important;
 }
+
 .btn-grey {
   background: #f1f1f3 !important;
   border: 1px solid #f1f1f3 !important;
   color: #747893 !important;
 }
+
 /* .table-style table th,td
 {
     padding-top: 6px !important;
@@ -217,19 +251,23 @@ table thead {
   color: #495057;
   font-weight: 600;
 }
+
 .table-style table td {
   color: #74788d;
   font-size: 13px;
   font-weight: 400;
 }
+
 .batches-list .nav-tabs .nav-link {
   background: #fff;
   color: #495057;
   border: 0px solid #fff;
 }
+
 .batches-list .nav-tabs .nav-link:hover {
   border: 0px solid #000;
 }
+
 .batches-list .nav-tabs {
   border: 0px solid #000;
   margin: 0;
@@ -244,14 +282,19 @@ table thead {
   color: #556ee6;
   border-radius: 3px;
 }
+
+
+
 .batches-list .nav-tabs .nav-link.active {
   border-radius: 0px !important;
   border-bottom: 1px solid #556ee6;
 }
+
 .batches-list .nav-tabs .nav-link:hover {
   /* background: #000000; */
   border-bottom: 1px solid #556ee6;
 }
+
 .batches-list .tab-content {
   padding-top: 50px;
 }
@@ -259,15 +302,18 @@ table thead {
 .batches-list .table-list th {
   min-width: 120px;
 }
+
 .assign-text {
   text-align: center;
   font-size: 14px;
   font-weight: 400;
 }
+
 .assign-text span {
   font-size: 16px;
   font-weight: 500;
 }
+
 .my-progress-bar {
   display: flex;
   align-items: baseline;
@@ -277,33 +323,41 @@ table thead {
   margin-bottom: 20px;
   margin-top: 10px;
 }
+
 .my-progress-bar:last-child {
   border-bottom: 0px solid #eff2f7;
   margin-bottom: 0px;
 }
+
 .my-progress-bar .label {
   color: #74788d;
   margin-top: 12px;
   margin-bottom: 12px;
   font-weight: 400;
 }
+
 .my-progress-bar .label span {
   color: #495057;
   font-weight: 500;
 }
+
 .report table thead {
   background: #f8f9fa;
 }
+
 .report table td {
   border-bottom: 1px solid #eff2f7 !important;
 }
+
 .red {
   color: #e44d4d;
 }
+
 .report .report-table table tbody td,
 .report .report-table table thead th {
   border: 1px solid #b7bdc7 !important;
 }
+
 .btn-status-inactive {
   border-radius: 3px;
   text-align: center;
@@ -333,22 +387,27 @@ table thead {
   background: #6fc38f;
   color: #fff;
 }
+
 .card-height-470 {
   height: 740px !important;
 }
+
 .progress-bar-heading {
   font-size: 18px;
   font-weight: 600;
 }
+
 .progress-bar-subheading {
   font-size: 15px;
   font-weight: 600;
   color: #74788d;
 }
+
 .progress-bar-para {
   font-size: 15px;
   color: #74788d;
 }
+
 .text-limit {
   width: 190px;
   display: inline-block;
@@ -356,24 +415,30 @@ table thead {
   overflow: hidden !important;
   text-overflow: ellipsis;
 }
+
 .prog-bar-accordion .accordion .accordion-item button.accordion-button {
   background: #f8f9fa !important;
 }
+
 .prog-bar-accordion .accordion .accordion-item button.collapsed {
   background: transparent !important;
 }
+
 .form-check-inline {
   margin-right: 5px !important;
 }
+
 .check-label {
   margin-left: 0px;
   margin-bottom: 20px !important;
   font-weight: normal !important;
   font-size: 12px;
 }
+
 .checkbox {
   padding-left: 0px !important;
 }
+
 .select_box1 {
   overflow: hidden;
   border: 1px solid #ced4da !important;
@@ -381,6 +446,7 @@ table thead {
   background: transparent !important;
   border-radius: 0.25rem !important;
 }
+
 .select_box1:after {
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
@@ -392,6 +458,7 @@ table thead {
   content: "";
   z-index: 98;
 }
+
 .select_box1 select {
   border: 0;
   position: relative;
@@ -399,6 +466,7 @@ table thead {
   background: none;
   border: 1px solid #ced4da !important;
 }
+
 .my-date-icon input[type="date"]::-webkit-calendar-picker-indicator {
   color: #000;
   display: block;
@@ -409,9 +477,11 @@ table thead {
   position: relative;
   z-index: 2;
 }
+
 .date-bg {
   position: relative;
 }
+
 .date-bg::after {
   content: "";
   position: absolute;
@@ -422,9 +492,11 @@ table thead {
   background: #74788d;
   z-index: 1;
 }
+
 .tr-border {
   border-bottom: 1px solid #ced4da;
 }
+
 .my-modal-header .modal-title {
   display: flex !important;
   justify-content: space-between !important;
@@ -435,21 +507,26 @@ table thead {
   .batches-box {
     flex-direction: column;
   }
+
   .box-r-btn {
     flex-direction: column;
   }
+
   .box-r-btn select {
     width: 100%;
   }
+
   .card-height-470 {
     height: auto !important;
   }
 }
+
 @media (max-width: 992px) {
   .sidebar-enable #vertical-menu-btn i {
     transition: 0s;
     color: #2a3042;
   }
+
   #vertical-menu-btn {
     transition: 0s;
     margin-top: 20px;
@@ -462,15 +539,19 @@ table thead {
   .card-height-470 {
     min-height: 760px !important;
   }
+
   .batches-box {
     justify-content: flex-start;
   }
+
   .batches-box .card {
     margin-right: 5px;
   }
+
   .box-r-btn {
     justify-content: start;
   }
+
   .accordionItem-table {
     display: flex;
     flex-direction: column;
@@ -489,28 +570,29 @@ table thead {
   position: relative !important;
   top: 0px !important;
 }
-.bg-1
-{
+
+.bg-1 {
   background: #F1EEFF;
   display: flex;
   align-items: center;
 }
-.bg-2
-{
+
+.bg-2 {
   background: #E0E0E0;
   display: flex;
   align-items: center;
 }
-.bg-3
-{
+
+.bg-3 {
   background: #B9B9B9;
 }
-.total
-{
+
+.total {
   font-size: 26px;
   color: #6C57D2;
 }
-.my-table-border th, .my-table-border td
-{
+
+.my-table-border th,
+.my-table-border td {
   border: 1px solid #B9B9B9 !important;
 }
