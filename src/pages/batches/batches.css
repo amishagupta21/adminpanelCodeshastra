@@ -16,7 +16,7 @@
 
 .nav-link.active {
   color: #495057 !important;
-  background-color: #556ee6 !important;
+  /* background-color: #556ee6 !important; */
 }
 
 .courseList .nav-pills .nav-link {
@@ -279,7 +279,7 @@ table thead {
 .nav-tabs .nav-item.show .nav-links {
   /* background: #556EE6; */
   background: transparent;
-  color: #556ee6;
+  /* color: #556ee6; */
   border-radius: 3px;
 }
 

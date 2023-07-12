@@ -142,7 +142,7 @@ const Batches = props => {
 
   const defaultSorted = [
     {
-      dataField: "id",
+      dataField: "displayname",
       order: "desc",
     },
   ]
@@ -355,9 +355,7 @@ const Batches = props => {
 
       setActive(false)
       onGetBatchesList()
-    } catch (error) {
-      console.error("Error editing:", error)
-    }
+    } catch (error) {}
   }
 
   const handleClick = (row, isSelected, rowIndex, e) => {
@@ -410,9 +408,7 @@ const Batches = props => {
       .then(res => {
         tosterMsg(res?.data?.message)
       })
-      .catch(err => {
-        console.log("err", err)
-      })
+      .catch(err => {})
 
     await axios
       .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, {
@@ -499,15 +495,12 @@ const Batches = props => {
     doc.save("document.pdf")
   }
   const filterData = clickedBatch => {
-    console.log("clicked", clickedBatch)
     setActiveTab(clickedBatch)
     const filteredBatch = manageUser.filter(item => {
       return item.enable === clickedBatch
     })
- 
 
     setItem(filteredBatch)
-    
   }
   // const selectRow = {
   //   mode: "checkbox",
@@ -570,7 +563,6 @@ const Batches = props => {
                 </Card>
               </div>
             </Col>
-
             <Col>
               <div className="batches-box">
                 <Card>
@@ -590,7 +582,6 @@ const Batches = props => {
                 </Card>
               </div>
             </Col>
-
             <Col>
               <div className="batches-box">
                 <Card>
@@ -610,7 +601,6 @@ const Batches = props => {
                 </Card>
               </div>
             </Col>
-
             <Col>
               <div className="batches-box">
                 <Card>

@@ -34,22 +34,18 @@ const EnrollStatusModel = ({
   onGetBatchesLearner,
   batchesLearner,
 }) => {
-  const handleEnroll = async ({ id, courseId }) => {
+  const handleEnroll = async ({ id, courseId, userId }) => {
     try {
       // Make the unenroll request
-      const response = await post(url.UNENROLL_STUDENT, {
-        id: params?.id,
-        unikodecourseid: courseId,
-        unikodeuserid: id,
-      })
-      console.log(batchesLearner)
+      const response = await del(
+        url.UNENROLL_STUDENT + `${courseId}/${userId}/${id}`
+      )
+      console.log(response)
 
       // if (response.data) {
       //   const resp = await del(url.FILTER_UNENROLL + `${courseId}/${unikodecoursei}/${id}}`)
-      //   const finalItem = batchesLearner.filter(
-      //     item => id !== item?.unikodeuserid
-      //   )
-      //   console.log(finalItem)
+      const finalItem = batchesLearner.filter(item => params.id !== item?.id)
+      console.log(finalItem)
       // }
 
       setActive(false)
@@ -93,8 +89,9 @@ const EnrollStatusModel = ({
               <button
                 onClick={() => {
                   handleEnroll({
-                    id: user?.unikodeuserid,
+                    id: user?.id,
                     courseId: user?.unikodecourseid,
+                    userId: user?.unikodeuserid,
                   })
                 }}
                 type="button"
