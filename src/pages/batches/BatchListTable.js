@@ -40,6 +40,7 @@ import LearnerStatus from "./LearnerStatus"
 import "react-responsive-pagination/themes/classic.css"
 import ResponsivePagination from "react-responsive-pagination"
 import EnrollStatusModel from "./EnrollStatusModel"
+import DropdownPagination from "./DropdownPagination"
 
 const ref = React.createRef()
 
@@ -343,6 +344,7 @@ const BatchListTable = ({
                   // })}
                   noDataIndication={"No data found"}
                 />
+
                 <ResponsivePagination
                   current={currentPage}
                   total={totalPages}
@@ -352,21 +354,14 @@ const BatchListTable = ({
                   }}
                 />
 
-                {/* <div>
-                  <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </button>
-                  <span>{currentPage}</span>
-                  <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={totalPages === currentPage}
-                  >
-                    Next
-                  </button>
-                </div> */}
+                {/* <DropdownPagination 
+                current={currentPage}
+                total={totalPages}
+                onPageChange={n => {
+                  setCurrentPage(n)
+                  // onGetBatchesLearner(n)
+                }}
+                /> */}
               </div>
             </Col>
           </>
