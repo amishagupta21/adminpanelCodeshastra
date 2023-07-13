@@ -40,7 +40,6 @@ const EnrollStatusModel = ({
       const response = await del(
         url.UNENROLL_STUDENT + `${courseId}/${userId}/${id}`
       )
-      console.log(response)
 
       // if (response.data) {
       //   const resp = await del(url.FILTER_UNENROLL + `${courseId}/${unikodecoursei}/${id}}`)
