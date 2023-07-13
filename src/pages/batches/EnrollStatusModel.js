@@ -22,6 +22,7 @@ import { connect } from "react-redux"
 import { getBatchesLearner } from "store/Batches/actions"
 import tosterMsg from "components/Common/toster"
 import { use } from "i18next"
+import axios from "axios"
 
 const EnrollStatusModel = ({
   active,
@@ -33,14 +34,18 @@ const EnrollStatusModel = ({
   onGetBatchesLearner,
   batchesLearner,
 }) => {
-  const handleEnroll = async ({ id, courseId }) => {
+  const handleEnroll = async ({ id, courseId, userId }) => {
     try {
       // Make the unenroll request
-      const response = await post(url.UNENROLL_STUDENT, {
-        id: params?.id,
-        unikodecourseid: courseId,
-        unikodeuserid: id,
-      })
+      const response = await del(
+        url.UNENROLL_STUDENT + `${courseId}/${userId}/${id}`
+      )
+
+      // if (response.data) {
+      //   const resp = await del(url.FILTER_UNENROLL + `${courseId}/${unikodecoursei}/${id}}`)
+      const finalItem = batchesLearner.filter(item => params.id !== item?.id)
+      console.log(finalItem)
+      // }
 
       setActive(false)
       onGetBatchesLearner({
@@ -83,8 +88,9 @@ const EnrollStatusModel = ({
               <button
                 onClick={() => {
                   handleEnroll({
-                    id: user?.unikodeuserid,
+                    id: user?.id,
                     courseId: user?.unikodecourseid,
+                    userId: user?.unikodeuserid,
                   })
                 }}
                 type="button"

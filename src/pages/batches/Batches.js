@@ -142,7 +142,7 @@ const Batches = props => {
 
   const defaultSorted = [
     {
-      dataField: "id",
+      dataField: "displayname",
       order: "desc",
     },
   ]
@@ -355,9 +355,7 @@ const Batches = props => {
 
       setActive(false)
       onGetBatchesList()
-    } catch (error) {
-      console.error("Error editing:", error)
-    }
+    } catch (error) {}
   }
 
   const handleClick = (row, isSelected, rowIndex, e) => {
@@ -410,9 +408,7 @@ const Batches = props => {
       .then(res => {
         tosterMsg(res?.data?.message)
       })
-      .catch(err => {
-        console.log("err", err)
-      })
+      .catch(err => {})
 
     await axios
       .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, {
@@ -499,15 +495,12 @@ const Batches = props => {
     doc.save("document.pdf")
   }
   const filterData = clickedBatch => {
-    console.log("clicked", clickedBatch)
     setActiveTab(clickedBatch)
     const filteredBatch = manageUser.filter(item => {
       return item.enable === clickedBatch
     })
-    console.log(filteredBatch)
 
     setItem(filteredBatch)
-    console.log("setted")
   }
   // const selectRow = {
   //   mode: "checkbox",
@@ -548,9 +541,13 @@ const Batches = props => {
           <h4 className="mb-3">BATCHES</h4>
           <Row>
             <Col>
-              <Nav.Link eventKey="second" onClick={() => onGetBatchesList()}>
-                <div className="batches-box">
-                  <Card style={{ background: "#E5E9FF" }}>
+              <div className="batches-box">
+                <Card>
+                  <Nav.Link
+                    eventKey="first"
+                    onClick={() => onGetBatchesList()}
+                    style={{ background: "#E5E9FF" }}
+                  >
                     <CardBody>
                       <div className="box">
                         <div>
@@ -562,14 +559,14 @@ const Batches = props => {
                         </div>
                       </div>
                     </CardBody>
-                  </Card>
-                </div>
-              </Nav.Link>
+                  </Nav.Link>
+                </Card>
+              </div>
             </Col>
             <Col>
-              <Nav.Link eventKey="second" onClick={() => filterData(true)}>
-                <div className="batches-box">
-                  <Card>
+              <div className="batches-box">
+                <Card>
+                  <Nav.Link eventKey="second" onClick={() => filterData(true)}>
                     <CardBody>
                       <div className="box">
                         <div>
@@ -581,14 +578,14 @@ const Batches = props => {
                         </div>
                       </div>
                     </CardBody>
-                  </Card>
-                </div>
-              </Nav.Link>
+                  </Nav.Link>
+                </Card>
+              </div>
             </Col>
             <Col>
-              <Nav.Link eventKey="third" onClick={() => filterData(false)}>
-                <div className="batches-box">
-                  <Card>
+              <div className="batches-box">
+                <Card>
+                  <Nav.Link eventKey="third" onClick={() => filterData(false)}>
                     <CardBody>
                       <div className="box">
                         <div>
@@ -600,9 +597,9 @@ const Batches = props => {
                         </div>
                       </div>
                     </CardBody>
-                  </Card>
-                </div>
-              </Nav.Link>
+                  </Nav.Link>
+                </Card>
+              </div>
             </Col>
             <Col>
               <div className="batches-box">
