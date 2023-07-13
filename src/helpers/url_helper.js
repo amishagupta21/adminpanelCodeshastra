@@ -146,8 +146,8 @@ export const GET_STATUS = "/admin/batch/enable"
 // LEARNER BATCH
 
 export const GET_LEARNER_STATUS = "/admin/batch/"
-export const UNENROLL_STUDENT = "admin/batch/learner/unenroll"
-export const FILTER_UNENROLL = "admin/batch/learner/unenroll/"
+export const UNENROLL_STUDENT = "admin/batch/learner/unenroll/"
+// export const FILTER_UNENROLL = "admin/batch/learner/unenroll/"
 
 export const CREATE_NEW_BATCHES = "/admin/batch"
 export const GET_BATCHES_LEARNER_LIST = "/admin/batch/learners/listing"
