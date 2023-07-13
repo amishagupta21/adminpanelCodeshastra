@@ -41,12 +41,6 @@ const EnrollStatusModel = ({
         url.UNENROLL_STUDENT + `${courseId}/${userId}/${id}`
       )
 
-      // if (response.data) {
-      //   const resp = await del(url.FILTER_UNENROLL + `${courseId}/${unikodecoursei}/${id}}`)
-      const finalItem = batchesLearner.filter(item => params.id !== item?.id)
-      console.log(finalItem)
-      // }
-
       setActive(false)
       onGetBatchesLearner({
         id: params.id,
