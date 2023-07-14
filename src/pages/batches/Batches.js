@@ -91,22 +91,15 @@ const Batches = props => {
   const [courseIdData, setCourseIdData] = useState([])
   const [selectedCourseId, setSelectedCourseId] = useState([])
   const [sendId, setSendId] = useState([])
+  const [isSelected, setIsSelected] = useState("first")
 
   // const[currBatch , setCurrBatch] = useState(onGetAllBatchesList)
   const [activeTab, setActiveTab] = useState("true")
 
-  // const [options, setOptions] = useState([
-  //   {
-  //     label: "Select Course Name",
-  //     value: "0",
-  //   },
-  // ])
-  // useEffect(() => {
-  //   filterData(true)
-  // }, [manageUser])
   const confirmStatus = () => {
     setActive(true)
   }
+
   const closeModal = () => setActive(false)
 
   const editNewModal = id => {
@@ -155,6 +148,24 @@ const Batches = props => {
     return resp
   }
 
+  const sorting = () => {
+    let numarr = []
+    let strarr = []
+    manageUser.map(str => {
+      if (/[a-zA-Z].*\d|\d.*[a-zA-Z]/.test(str.name)) {
+        numarr.push(str)
+      } else {
+        strarr.push(str)
+      }
+    })
+    let filteredArr = numarr.concat(strarr)
+    setItem(filteredArr)
+  }
+
+  useEffect(() => {
+    setItem(sorting)
+  }, [manageUser])
+
   let state = {
     columns: [
       {
@@ -167,6 +178,9 @@ const Batches = props => {
         dataField: "displayname",
         text: "Batch Name",
         sort: true,
+        // onSort: () => {
+        //   sorting()
+        // },
         formatter: (cellContent, user) => (
           <div className="fw-bold">{user?.name}</div>
         ),
@@ -502,13 +516,16 @@ const Batches = props => {
 
     setItem(filteredBatch)
   }
-  // const selectRow = {
-  //   mode: "checkbox",
-  //   clickToSelect: false,
-  //   // selected: this.state.selected,
-  //   // onSelect: this.handleOnSelect,
-  //   // onSelectAll: this.handleOnSelectAll,
-  // }
+
+  const FilterPastBatches = clickedBatch => {
+    setActiveTab(clickedBatch)
+
+    let filteredPast = manageUser.filter(item => {
+      return new Date(item.end_date).getTime() > 0
+    })
+
+    setItem(filteredPast)
+  }
 
   return (
     <div className="page-content batches-home">
@@ -545,8 +562,11 @@ const Batches = props => {
                 <Card>
                   <Nav.Link
                     eventKey="first"
-                    onClick={() => onGetBatchesList()}
-                    style={{ background: "#E5E9FF" }}
+                    onClick={() => {
+                      setIsSelected("first")
+                      onGetBatchesList()
+                    }}
+                    style={{ background: isSelected === "first" && "#E5E9FF" }}
                   >
                     <CardBody>
                       <div className="box">
@@ -566,7 +586,14 @@ const Batches = props => {
             <Col>
               <div className="batches-box">
                 <Card>
-                  <Nav.Link eventKey="second" onClick={() => filterData(true)}>
+                  <Nav.Link
+                    eventKey="second"
+                    onClick={() => {
+                      setIsSelected("second")
+                      filterData(true)
+                    }}
+                    style={{ background: isSelected === "second" && "#E5E9FF" }}
+                  >
                     <CardBody>
                       <div className="box">
                         <div>
@@ -585,7 +612,14 @@ const Batches = props => {
             <Col>
               <div className="batches-box">
                 <Card>
-                  <Nav.Link eventKey="third" onClick={() => filterData(false)}>
+                  <Nav.Link
+                    eventKey="third"
+                    onClick={() => {
+                      setIsSelected("third")
+                      filterData(false)
+                    }}
+                    style={{ background: isSelected === "third" && "#E5E9FF" }}
+                  >
                     <CardBody>
                       <div className="box">
                         <div>
@@ -604,44 +638,52 @@ const Batches = props => {
             <Col>
               <div className="batches-box">
                 <Card>
-                  <CardBody>
-                    {/* <Nav.Link
-                      eventKey="fourth"
-                      onClick={() => filterData("Past")}
-                    > */}
-                    <div className="box">
-                      <div>
-                        <p className="box-heading">Past Batches</p>
-                        <p className="score">{dashboard?.postBatch}</p>
+                  <Nav.Link
+                    eventKey="fourth"
+                    onClick={() => {
+                      FilterPastBatches()
+                      setIsSelected("fourth")
+                    }}
+                    style={{ background: isSelected === "fourth" && "#E5E9FF" }}
+                  >
+                    <CardBody>
+                      <div className="box">
+                        <div>
+                          <p className="box-heading">Past Batches</p>
+                          <p className="score">{dashboard?.postBatch}</p>
+                        </div>
+                        <div className="icon-circle">
+                          <span className="mdi mdi-account-circle" />
+                        </div>
                       </div>
-                      <div className="icon-circle">
-                        <span className="mdi mdi-account-circle" />
-                      </div>
-                    </div>
-                    {/* </Nav.Link> */}
-                  </CardBody>
+                    </CardBody>
+                  </Nav.Link>
                 </Card>
               </div>
             </Col>
             <Col>
               <div className="batches-box">
                 <Card>
-                  <CardBody>
-                    {/* <Nav.Link
-                      eventKey="five"
-                      onClick={() => filterData("Ending")}
-                    > */}
-                    <div className="box">
-                      <div>
-                        <p className="box-heading">Ending This Week</p>
-                        <p className="score">{dashboard?.endThisWeek}</p>
+                  <Nav.Link
+                    eventKey="five"
+                    onClick={() => {
+                      filterData("Ending")
+                      setIsSelected("five")
+                    }}
+                    style={{ background: isSelected === "five" && "#E5E9FF" }}
+                  >
+                    <CardBody>
+                      <div className="box">
+                        <div>
+                          <p className="box-heading">Ending This Week</p>
+                          <p className="score">{dashboard?.endThisWeek}</p>
+                        </div>
+                        <div className="icon-circle">
+                          <span className="mdi mdi-account-circle" />
+                        </div>
                       </div>
-                      <div className="icon-circle">
-                        <span className="mdi mdi-account-circle" />
-                      </div>
-                    </div>
-                    {/* </Nav.Link> */}
-                  </CardBody>
+                    </CardBody>
+                  </Nav.Link>
                 </Card>
               </div>
             </Col>
