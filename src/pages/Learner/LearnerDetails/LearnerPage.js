@@ -175,6 +175,7 @@ class LearnerPage extends Component {
     // this.toggle = this.toggle.bind(this)
     // this.handleOnSelect = this.handleOnSelect.bind(this)
     // this.handleOnSelectAll = this.handleOnSelectAll.bind(this)
+
   }
 
   deleteRow = uid => {
@@ -372,18 +373,18 @@ class LearnerPage extends Component {
     }
   }
 
-  handleOnSelectAll = (isSelect, rows) => {
-    const ids = rows.map(r => r._id)
-    if (isSelect) {
-      this.setState(() => ({
-        selected: ids,
-      }))
-    } else {
-      this.setState(() => ({
-        selected: [],
-      }))
-    }
-  }
+  // handleOnSelectAll = (isSelect, rows) => {
+  //   const ids = rows.map(r => r._id)
+  //   if (isSelect) {
+  //     this.setState(() => ({
+  //       selected: ids,
+  //     }))
+  //   } else {
+  //     this.setState(() => ({
+  //       selected: [],
+  //     }))
+  //   }
+  // }
 
   render() {
     const { options, value, isFilterApplied, currentPage, totalPages } =
