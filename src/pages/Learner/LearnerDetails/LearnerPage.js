@@ -175,7 +175,6 @@ class LearnerPage extends Component {
     // this.toggle = this.toggle.bind(this)
     // this.handleOnSelect = this.handleOnSelect.bind(this)
     // this.handleOnSelectAll = this.handleOnSelectAll.bind(this)
-
   }
 
   deleteRow = uid => {
