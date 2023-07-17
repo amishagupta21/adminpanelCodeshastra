@@ -58,7 +58,7 @@ const INIT_STATE = {
   createNewBatch: "",
   dashboard: [],
   batchesLearner: [],
-  totalBatchesLearner: 0,
+  totalBatchesLearner: [],
   lecture: [],
   manageUserLoader: true,
 }
