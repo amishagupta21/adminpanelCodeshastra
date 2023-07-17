@@ -94,7 +94,7 @@ function* fetchBatches({ payload: data }) {
     const response = yield call(getBatches, data)
     tosterMsg(response?.message)
     yield put(getBatchesListSuccess(response?.data?.result))
-    yield put(getBatchesListCountSuccess(response?.data))
+    yield put(getBatchesListCountSuccess(response?.data?.count))
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getBatchesListCountFail(error))

@@ -61,6 +61,8 @@ import "./batches.css"
 import jsPDF from "jspdf"
 import "jspdf-autotable"
 import Nav from "react-bootstrap/Nav"
+import ResponsivePagination from "react-responsive-pagination"
+import "react-responsive-pagination/themes/classic.css"
 
 const Batches = props => {
   const axios = require("axios")
@@ -92,13 +94,19 @@ const Batches = props => {
   const [selectedCourseId, setSelectedCourseId] = useState([])
   const [sendId, setSendId] = useState([])
   const [isSelected, setIsSelected] = useState("first")
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState()
 
-  // const[currBatch , setCurrBatch] = useState(onGetAllBatchesList)
+  // const[currBatch , setCurrBatch] = useState(onGetAllusersCountList)
   const [activeTab, setActiveTab] = useState("true")
 
   const confirmStatus = () => {
     setActive(true)
   }
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(dashboard?.totalBatch / 10))
+  }, [dashboard?.totalBatch])
 
   const closeModal = () => setActive(false)
 
@@ -129,7 +137,10 @@ const Batches = props => {
   }, [manageUser])
 
   useEffect(() => {
-    onGetBatchesList()
+    onGetBatchesList({ id: params.id, page: currentPage })
+  }, [currentPage])
+
+  useEffect(() => {
     onGetDashboard()
   }, [])
 
@@ -886,7 +897,7 @@ const Batches = props => {
                                   classes={"table align-middle table-nowrap"}
                                   headerWrapperClasses={"thead-light"}
                                   {...toolkitProps.baseProps}
-                                  pagination={paginationFactory()}
+                                  // pagination={paginationFactory()}
                                   noDataIndication={
                                     manageUserLoader ? (
                                       <div className="d-flex justify-content-center">
@@ -904,6 +915,15 @@ const Batches = props => {
                                       "No data found"
                                     )
                                   }
+                                />
+                                <ResponsivePagination
+                                  current={currentPage}
+                                  total={totalPages}
+                                  onPageChange={n => {
+                                    setCurrentPage(n)
+                                    // onGetBatchesList(n)
+                                    // onGetBatchesLearner(n)
+                                  }}
                                 />
                               </div>
                             </Col>
@@ -933,7 +953,7 @@ const mapStateToProps = ({ Batches, state, count }) => {
   return {
     manageUser: Batches?.manageUser,
     manageUserLoader: Batches?.manageUserLoader,
-    usersCount: Batches?.count.count,
+    usersCount: Batches?.count,
     dashboard: Batches?.dashboard,
     userRoles: Batches?.roles,
     batchApi: Batches?.batchApi,

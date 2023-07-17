@@ -61,7 +61,6 @@ const AddNewLearner = ({
   const [selectData, setSelectData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState()
-  console.log(totalPages, "/////////totalPages")
 
   const defaultSorted = [
     {
