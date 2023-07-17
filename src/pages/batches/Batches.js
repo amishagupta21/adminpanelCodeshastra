@@ -521,9 +521,8 @@ const Batches = props => {
     setActiveTab(clickedBatch)
 
     let filteredPast = manageUser.filter(item => {
-      return new Date(item.end_date).getTime() > 0
+      return new Date(item.end_date).getTime() < new Date().getTime()
     })
-
     setItem(filteredPast)
   }
 
