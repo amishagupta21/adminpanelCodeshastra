@@ -882,7 +882,7 @@ const Batches = props => {
                             <Col xl="12">
                               <div className="table-responsive">
                                 <h6 className="mt-2">
-                                  Total Batches: &nbsp;{manageUser?.length}
+                                  Total Batches: &nbsp;{dashboard?.totalBatch}
                                 </h6>
                                 <BootstrapTable
                                   keyField={"id"}
