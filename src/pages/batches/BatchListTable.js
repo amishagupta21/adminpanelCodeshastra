@@ -41,6 +41,7 @@ import "react-responsive-pagination/themes/classic.css"
 import ResponsivePagination from "react-responsive-pagination"
 import EnrollStatusModel from "./EnrollStatusModel"
 import DropdownPagination from "./DropdownPagination"
+import { RxCrossCircled } from "react-icons/rx"
 
 const ref = React.createRef()
 
@@ -127,31 +128,20 @@ const BatchListTable = ({
           <span>{user?.attendance?.toFixed(2)}%</span>
         ),
       },
-      // {
-      //   dataField: "total",
-      //   text: "Total",
-      //   sort: true,
-      //   // formatter: (cellContent, user) => (
-      //   //   <div className="fw-bold">{user?.assessments
 
-      //   //   }</div>
-      //   // ),
-      // },
       {
         dataField: "status",
         text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
           <div
-            // onClick={confirmLearnerStatus}
             onClick={e => {
               e.stopPropagation()
               e.preventDefault()
               confirmLearnerStatus(user?.id)
               setData(user)
-              // fetchData()
+
               setActive(true)
-              // handleEdit(user?.id)
             }}
           >
             <div
@@ -164,8 +154,6 @@ const BatchListTable = ({
               {user?.status === true ? "Active" : "Inactive"}
             </div>
           </div>
-          // Active css className="btn-status-active"
-          // Inactive css className="btn-status-inactive"
         ),
       },
 
@@ -175,11 +163,7 @@ const BatchListTable = ({
         formatter: (cellContent, user) => (
           <div className="d-flex">
             <div className="me-2">
-              {/* <Link to="/batch-list" className="text-muted">
-                <i className="mdi mdi-step-forward-2 mdi-18px text-success" />
-              </Link> */}
               <span
-                // to={`/report/${user?.id}`}
                 onClick={() => {
                   setViewData(user)
                   toggle()
@@ -189,7 +173,6 @@ const BatchListTable = ({
                 <i className="mdi mdi-clipboard-account mdi-18px text-success" />
               </span>
               <span
-                // to={`/report/${user?.id}`}
                 onClick={e => {
                   e.stopPropagation()
                   e.preventDefault()
@@ -198,7 +181,13 @@ const BatchListTable = ({
                 }}
                 className="text-muted ms-2"
               >
-                <i className="mdi mdi-file-check font-size-18 text-primary"></i>
+                <RxCrossCircled
+                  style={{
+                    fontSize: "17px",
+                    color: "red",
+                    marginBottom: "5px",
+                  }}
+                />
               </span>
             </div>
           </div>
