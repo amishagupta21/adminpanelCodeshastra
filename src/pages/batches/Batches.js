@@ -147,7 +147,7 @@ const Batches = props => {
   const defaultSorted = [
     {
       dataField: "displayname",
-      order: "desc",
+      order: "asce",
     },
   ]
 
@@ -171,19 +171,9 @@ const Batches = props => {
   }
 
   const sorting = () => {
-    let numarr = []
-    let strarr = []
-    manageUser.map(str => {
-      if (/[a-zA-Z].*\d|\d.*[a-zA-Z]/.test(str.name)) {
-        numarr.push(str)
-      } else {
-        strarr.push(str)
-      }
-    })
+    manageUser.sort((a, b) => a.name.localeCompare(b.name))
 
-    const sortedValues = [...numarr].sort(customComparator)
-    let filteredArr = sortedValues.concat(strarr)
-    setItem(filteredArr)
+    setItem(manageUser)
   }
 
   useEffect(() => {
