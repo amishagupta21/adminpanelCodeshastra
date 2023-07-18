@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React from "react"
+import React, { useEffect } from "react"
 import firebase from "firebase/compat/app"
 
 import { Switch, BrowserRouter as Router } from "react-router-dom"
@@ -20,7 +20,8 @@ import NonAuthLayout from "./components/NonAuthLayout"
 import "./assets/scss/theme.scss"
 
 // Import Firebase Configuration file
-import { initFirebaseBackend, remoteConfig } from "./helpers/firebase_helper"
+import { initFirebaseBackend } from "./helpers/firebase_helper"
+import "firebase/remote-config"
 // Activating fake backend
 // fakeBackend()
 
@@ -53,6 +54,20 @@ const App = props => {
     return layoutCls
   }
 
+  // const config = async () => {
+  //   const config = firebase.remoteConfig()
+  //   // const template = await config.getTemplate()
+
+  //   // if (name === "skill_fit_data") {
+  //   //   defaultVal = (template.parameters.skill_fit_data?.defaultValue).value
+  //   //   defaultVal = JSON.parse(defaultVal)
+  //   // }
+  //   // console.log(defaultVal)
+  // }
+
+  // useEffect(() => {
+  //   config()
+  // }, [])
   // const fetchRemoteConfig = async () => {
   //   try {
   //     await remoteConfig.fetchAndActivate()

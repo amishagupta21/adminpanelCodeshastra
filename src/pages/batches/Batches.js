@@ -147,7 +147,7 @@ const Batches = props => {
   const defaultSorted = [
     {
       dataField: "displayname",
-      order: "desc",
+      order: "asce",
     },
   ]
 
@@ -159,18 +159,21 @@ const Batches = props => {
     return resp
   }
 
+  const customComparator = (a, b) => {
+    const aNum = parseInt(a.name.replace(/[^0-9]/g, ""))
+    const bNum = parseInt(b.name.replace(/[^0-9]/g, ""))
+
+    if (aNum !== bNum) {
+      return aNum - bNum
+    } else {
+      return a.name.localeCompare(b.name)
+    }
+  }
+
   const sorting = () => {
-    let numarr = []
-    let strarr = []
-    manageUser.map(str => {
-      if (/[a-zA-Z].*\d|\d.*[a-zA-Z]/.test(str.name)) {
-        numarr.push(str)
-      } else {
-        strarr.push(str)
-      }
-    })
-    let filteredArr = numarr.concat(strarr)
-    setItem(filteredArr)
+    manageUser.sort((a, b) => a.name.localeCompare(b.name))
+
+    setItem(manageUser)
   }
 
   useEffect(() => {
@@ -189,9 +192,7 @@ const Batches = props => {
         dataField: "displayname",
         text: "Batch Name",
         sort: true,
-        // onSort: () => {
-        //   sorting()
-        // },
+
         formatter: (cellContent, user) => (
           <div className="fw-bold">{user?.name}</div>
         ),
@@ -391,7 +392,7 @@ const Batches = props => {
     }
   }
 
-  // const handleClick = id => {
+  // const handleClick = id => {filteredArr
   //   setClickedIds(prevClickedIds => [...prevClickedIds, id])
   // }
 
@@ -535,6 +536,37 @@ const Batches = props => {
       return new Date(item.end_date).getTime() < new Date().getTime()
     })
     setItem(filteredPast)
+  }
+
+  // const filterNumContainingBatch = clickedBatch => {
+  //   setActiveTab(clickedBatch)
+
+  //   console.log("filterNumContainingBatch")
+  // }
+
+  // function getLastIndexNumber(str) {
+  //   // Extract the number at the last index of the string
+  //   const match = str.match(/[0-9]+$/)
+  //   return match ? parseInt(match[0]) : null
+  // }
+
+  const filterNums = clickedBatch => {
+    let numsarr = []
+    // Example array of strings
+    // const array = ['apple 5!', 'banana 3?', 'cherry 9*', 'date 2$'];
+
+    // Sort the array based on the numbers at the last index\\
+    setActive(clickedBatch)
+
+    // const sortedArray = item.sort((a, b) => {
+    //   const numA = getLastIndexNumber(a)
+    //   const numB = getLastIndexNumber(b)
+    //   return numA - numB
+    // })
+
+    manageUser.map(item => numsarr.push(item.name))
+
+    console.log(numsarr)
   }
 
   return (
