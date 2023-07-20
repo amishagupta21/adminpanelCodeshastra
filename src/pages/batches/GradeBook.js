@@ -33,8 +33,19 @@ import { getGradeBook } from "store/Batches/actions"
 import ReportCard from "./ReportCard"
 import jsPDF from "jspdf"
 import "jspdf-autotable"
+import ResponsivePagination from "react-responsive-pagination"
+import Batches from "./Batches"
 
-const GradeBook = ({ gradeBook, onGetGradeBook }) => {
+const GradeBook = ({
+  gradeBook,
+  onGetGradeBook,
+  count,
+  currentPage,
+  totalPages,
+  setCurrentPage,
+  totalBatchesLearner,
+  setTotalPages,
+}) => {
   const [isExpanded, setIsExpanded] = useState(null)
   const { ExportCSVButton } = CSVExport
 
@@ -89,6 +100,10 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
   // }, [gradeBook])
 
   useEffect(() => {
+    setTotalPages(Math.ceil(totalBatchesLearner / 10))
+  }, [totalBatchesLearner])
+
+  useEffect(() => {
     const finalColumn = []
 
     for (let x in gradeBook[0]) {
@@ -113,7 +128,7 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
                     dataField: x,
                     text: x,
                     sort: true,
-                    formatter: (cell, row) => `${cell.toFixed(2)}%`,
+                    formatter: (cell, row) => `${cell?.toFixed(2)}%`,
                   }
                 : {
                     dataField: x,
@@ -278,7 +293,7 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
             <Col xl="12">
               <div className="table-responsive">
                 <h6 className="mt-2">
-                  Total Batches: &nbsp;{gradeBook?.length}
+                  Total Batches: &nbsp;{totalBatchesLearner}
                 </h6>
                 <BootstrapTable
                   keyField={"id"}
@@ -293,6 +308,15 @@ const GradeBook = ({ gradeBook, onGetGradeBook }) => {
                   pagination={paginationFactory()}
                   noDataIndication={"No data found"}
                 />
+                {/* <ResponsivePagination
+                  current={currentPage}
+                  total={totalPages}
+                  onPageChange={n => {
+                    setCurrentPage(n)
+                    // onGetBatchesList(n)
+                    // onGetBatchesLearner(n)
+                  }}
+                /> */}
               </div>
             </Col>
           </>
