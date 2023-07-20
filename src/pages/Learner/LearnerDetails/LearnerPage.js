@@ -418,7 +418,7 @@ class LearnerPage extends Component {
       <React.Fragment>
         <div className="page-content">
           <Container fluid className="learnerListing">
-            <Breadcrumbs title="Unikaksha" breadcrumbItem="Learner" />
+            <Breadcrumbs title="Unikaksha" breadcrumbItem="Users" />
 
             <ModalDelete
               isOpen={this.state.modal}

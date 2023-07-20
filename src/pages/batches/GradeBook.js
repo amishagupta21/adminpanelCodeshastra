@@ -305,10 +305,10 @@ const GradeBook = ({
                   classes={"table align-middle table-nowrap"}
                   headerWrapperClasses={"thead-light"}
                   {...toolkitProps.baseProps}
-                  // pagination={paginationFactory()}
+                  pagination={paginationFactory()}
                   noDataIndication={"No data found"}
                 />
-                <ResponsivePagination
+                {/* <ResponsivePagination
                   current={currentPage}
                   total={totalPages}
                   onPageChange={n => {
@@ -316,7 +316,7 @@ const GradeBook = ({
                     // onGetBatchesList(n)
                     // onGetBatchesLearner(n)
                   }}
-                />
+                /> */}
               </div>
             </Col>
           </>

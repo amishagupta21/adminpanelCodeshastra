@@ -153,7 +153,7 @@ const getBatchesLearner = async data => {
 const getBatchesGrade = async (data, id) => {
   const resp = await getCourseData(
     url.GET_GRADE_BOOK +
-      `/${data?.id}?pageSize=${data?.pageSize || 10}&page=${
+      `/${data?.id}?pageSize=${data?.pageSize || 23}&page=${
         data?.page || 1
       }&sortBy=${data?.sortBy || "created_at"}&?sortOrder=${
         data?.sortOrder || "DESC"
