@@ -1,23 +1,23 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types"
+import React from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
 
 //i18n
-import { withTranslation } from "react-i18next";
-import SidebarContent from "./SidebarContent";
+import { withTranslation } from "react-i18next"
+import SidebarContent from "./SidebarContent"
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 // import logofull from "../../assets/images/logo.svg";
-import logofull from "../../assets/images/logo.png";
-import logo from "../../assets/images/logo-sm.png";
+import logofull from "../../assets/images/logo.png"
+import logo from "../../assets/images/logo-sm.png"
 
 const Sidebar = props => {
-
   return (
     <React.Fragment>
       <div className="vertical-menu">
+        <div className="arrowdesign"></div>
         <div className="navbar-brand-box">
           <Link to="/" className="logo logo-dark">
             <span className="logo-sm">
@@ -29,7 +29,7 @@ const Sidebar = props => {
           </Link>
 
           <Link to="/" className="logo logo-light">
-            <span className="logo-sm" style={{marginLeft:'-15px'}}>
+            <span className="logo-sm" style={{ marginLeft: "-15px" }}>
               <img src={logo} alt="" height="50" />
             </span>
             <span className="logo-lg">
@@ -43,19 +43,19 @@ const Sidebar = props => {
         <div className="sidebar-background"></div>
       </div>
     </React.Fragment>
-  );
-};
+  )
+}
 
 Sidebar.propTypes = {
   type: PropTypes.string,
-};
+}
 
 const mapStatetoProps = state => {
   return {
     layout: state.Layout,
-  };
-};
+  }
+}
 export default connect(
   mapStatetoProps,
   {}
-)(withRouter(withTranslation()(Sidebar)));
+)(withRouter(withTranslation()(Sidebar)))

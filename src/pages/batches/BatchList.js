@@ -39,6 +39,7 @@ import MentorListTable from "./MentorListTable"
 import { DeBounceSearch } from "common/DeBounceSearch"
 import LectureListTable from "./LectureListTable"
 import AddNewLearner from "./AddNewLearner"
+import Batches from "./Batches"
 
 const BatchList = props => {
   const [key, setKey] = useState("tab")
@@ -90,7 +91,7 @@ const BatchList = props => {
   const gradeBookApi = () => {
     const { onGetGradeBook } = props
 
-    onGetGradeBook(params.id)
+    onGetGradeBook({ id: params.id, page: currentPage })
   }
 
   const mentorsApi = () => {
@@ -198,6 +199,11 @@ const BatchList = props => {
                     <GradeBook
                       gradeBook={gradeBook || []}
                       onGetGradeBook={props.onGetGradeBook}
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      setCurrentPage={setCurrentPage}
+                      totalBatchesLearner={totalBatchesLearner}
+                      setTotalPages={setTotalPages}
                     />
                   </Tab>
                   <Tab eventKey="lectures" title="Lectures">

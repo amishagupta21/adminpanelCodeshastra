@@ -81,7 +81,7 @@ const Header = props => {
     <React.Fragment>
       <header id="page-topbar">
         <div className="navbar-header">
-          <div className="d-flex">
+          <div className="d-flex" style={{ marginLeft: "-40px" }}>
             <div className="navbar-brand-box d-lg-none d-md-block">
               <Link to="/" className="logo logo-dark">
                 <span className="logo-sm">
@@ -104,8 +104,8 @@ const Header = props => {
               className="btn btn-sm px-3 font-size-16 header-item "
               id="vertical-menu-btn"
             >
-              <i className="fa fa-fw fa-bars d-lg-none" />
-              <i className='bx bx-arrow-back d-none d-lg-block'></i>
+              {/* <i className="fa fa-fw fa-bars d-lg-none" /> */}
+              <i className="bx bx-arrow-back d-none d-lg-block"></i>
               {/* <i className='bx bx-right-arrow-alt right-arrow'></i> */}
             </button>
 

@@ -27,6 +27,7 @@ import {
 import BootstrapTable from "react-bootstrap-table-next"
 import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import Breadcrumbs from "components/Common/Breadcrumb"
+import Nav from "react-bootstrap/Nav"
 
 import {
   getLearner,
@@ -196,7 +197,7 @@ class LearnerPage extends Component {
     }
 
     this.setState({ manageUser, userRoles })
-    // this.setState({ totalPages: Math.ceil(totalBatchesLearner / 10) })
+    this.setState({ totalPages: Math.ceil(usersCount / 10) })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -418,8 +419,95 @@ class LearnerPage extends Component {
       <React.Fragment>
         <div className="page-content">
           <Container fluid className="learnerListing">
-            <Breadcrumbs title="Unikaksha" breadcrumbItem="Learner" />
-
+            <Breadcrumbs title="Unikaksha" breadcrumbItem="Users" />
+            <Row>
+              <Col>
+                <div className="batches-box">
+                  <Card>
+                    <Nav.Link eventKey="first">
+                      <CardBody>
+                        <div className="box">
+                          <div>
+                            <p className="box-heading">
+                              Today new learner (past 24 hours)
+                            </p>
+                            {/* <p className="score">{dashboard?.totalBatch}</p> */}
+                          </div>
+                          <div className="icon-circle">
+                            <span className="mdi mdi-account-circle" />
+                          </div>
+                        </div>
+                      </CardBody>
+                    </Nav.Link>
+                  </Card>
+                </div>
+              </Col>
+              <Col>
+                <div className="batches-box">
+                  <Card>
+                    <Nav.Link eventKey="second">
+                      <CardBody>
+                        <div className="box">
+                          <div>
+                            <p className="box-heading">Total Learner</p>
+                            <p className="score">{usersCount?.count}</p>
+                          </div>
+                          <div className="icon-circle">
+                            <span className="mdi mdi-account-circle" />
+                          </div>
+                        </div>
+                      </CardBody>
+                    </Nav.Link>
+                  </Card>
+                </div>
+              </Col>
+              <Col>
+                <div className="batches-box">
+                  <Card>
+                    <Nav.Link eventKey="third">
+                      <CardBody>
+                        <div className="box">
+                          <div>
+                            <p className="box-heading">
+                              Learner Enrolled in active batches
+                            </p>
+                            <p className="score">
+                              {usersCount?.learnersFromActiveBatches}
+                            </p>
+                          </div>
+                          <div className="icon-circle">
+                            <span className="mdi mdi-account-circle" />
+                          </div>
+                        </div>
+                      </CardBody>
+                    </Nav.Link>
+                  </Card>
+                </div>
+              </Col>
+              <Col>
+                <div className="batches-box">
+                  <Card>
+                    <Nav.Link eventKey="fourth">
+                      <CardBody>
+                        <div className="box">
+                          <div>
+                            <p className="box-heading">
+                              Learner Enrolled in All batches
+                            </p>
+                            <p className="score">
+                              {usersCount?.learnersFromAllBatches}
+                            </p>
+                          </div>
+                          <div className="icon-circle">
+                            <span className="mdi mdi-account-circle" />
+                          </div>
+                        </div>
+                      </CardBody>
+                    </Nav.Link>
+                  </Card>
+                </div>
+              </Col>
+            </Row>
             <ModalDelete
               isOpen={this.state.modal}
               toggle={this.toggle}
@@ -622,6 +710,7 @@ class LearnerPage extends Component {
                             currentPage={currentPage}
                             totalPages={totalPages}
                             usersCount={usersCount?.count}
+                            // setCurrentPage={setCurrentPage}
                           />
                         </React.Fragment>
                       )}
@@ -645,13 +734,16 @@ LearnerPage.propTypes = {
   manageUserLoader: PropTypes.any,
 }
 
-const mapStateToProps = ({ Learner, state, count }) => ({
-  manageUser: Learner?.manageUser,
-  manageUserLoader: Learner?.manageUserLoader,
-  usersCount: Learner?.count,
-  userRoles: Learner?.roles,
-  deleteData: false,
-})
+const mapStateToProps = ({ Learner, state, count }) => (
+  console.log(Learner, "//////////Learner"),
+  {
+    manageUser: Learner?.manageUser,
+    manageUserLoader: Learner?.manageUserLoader,
+    usersCount: Learner?.count,
+    userRoles: Learner?.roles,
+    deleteData: false,
+  }
+)
 
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),

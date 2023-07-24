@@ -308,7 +308,7 @@ function UsersList({
       />
       <div className="page-content">
         <Container fluid>
-          <h4>Users</h4>
+          <h4>System User</h4>
           <Row>
             <Col className="col-12">
               <Card>
