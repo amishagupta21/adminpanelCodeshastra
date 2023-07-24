@@ -569,7 +569,6 @@ const Batches = props => {
     console.log(numsarr)
   }
 
-  console.log(dashboard, "dashbord")
   return (
     <div className="page-content batches-home">
       <Status

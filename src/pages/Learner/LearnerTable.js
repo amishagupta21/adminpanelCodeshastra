@@ -29,6 +29,8 @@ function LearnerTable({
   usersCount,
   setState,
 }) {
+  console.log(usersCount, currentPage, "////////////////currentPage")
+
   return (
     <>
       <Row>
@@ -62,7 +64,7 @@ function LearnerTable({
                       columns={columns}
                       classes={"table align-middle table-nowrap"}
                       headerWrapperClasses={"thead-light"}
-                      pagination={paginationFactory()}
+                      // pagination={paginationFactory()}
                       {...toolkitProps.baseProps}
                       noDataIndication={
                         manageUserLoader ? (
@@ -74,14 +76,15 @@ function LearnerTable({
                         )
                       }
                     />
-                    {/* <ResponsivePagination
+                    <ResponsivePagination
                       currentPage={currentPage}
-                      total={totalPages}
+                      total={usersCount}
+                      maxWidth={4}
                       onPageChange={n => {
                         setCurrentPage(n)
-                        onGetBatchesLearner(n)
+                        // onGetBatchesLearner(n)
                       }}
-                    />{" "} */}
+                    />{" "}
                   </div>
                   {/* <div>
                     <button

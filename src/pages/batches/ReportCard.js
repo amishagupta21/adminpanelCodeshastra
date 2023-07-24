@@ -19,6 +19,8 @@ import axios from "axios"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import Pdf from "react-to-pdf"
+import tosterMsg from "components/Common/toster"
+import Select from "react-select"
 
 import Banner from "../../assets/images/report-card-banner.png"
 
@@ -27,16 +29,20 @@ const ref = React.createRef()
 const ReportCard = ({ modal, toggle, viewData }) => {
   const params = useParams()
   const [data, setData] = useState([])
+  const [selectedWeek, setSelectedWeek] = useState("")
 
   useEffect(() => {
     const newData = async () => {
       try {
         const response = await axios(
-          `https://lms.unikaksha.dev/api/lms/moodle/getStudentsReport/145/${viewData.id}`
+          `${process.env.REACT_APP_API_URL}${url.REPORT_CARD_DESIGN}/${viewData.unikodeuserid}/${viewData.unikodecourseid}/${selectedWeek?.label}/${viewData.id} 
+          `
         )
-        setData(response?.data?.data[0])
+        setData(response?.data?.data)
+        tosterMsg(response?.data?.message)
       } catch (error) {
         setData(error)
+        tosterMsg(error)
       }
     }
     if (modal) {
@@ -44,7 +50,21 @@ const ReportCard = ({ modal, toggle, viewData }) => {
     }
   }, [modal])
 
-  const DOWNLOAD_FILE_URL = "http://localhost:3000/batch-detail/edit/163cfef0-ce40-490b-a1e5-b27d142f759d?unikodecourseid=145"
+  const options = [
+    { label: "7", value: "7" },
+    { label: "14", value: "14" },
+    { label: "21", value: "21" },
+    { label: "28", value: "28" },
+  ]
+
+  const handleChange = selectedOption => {
+    setSelectedWeek(selectedOption)
+  }
+
+  const addSoftSkillsNumber =
+    parseInt(data?.softSkillAssignmentScore) +
+    parseInt(data?.softskillWeeklyAssessmentScore) +
+    parseInt(data?.softskillAggregateScore)
 
   return (
     <Modal
@@ -83,12 +103,19 @@ const ReportCard = ({ modal, toggle, viewData }) => {
             <div style={{ background: "#6C57D2", marginBottom: "20px" }}>
               <img src={Banner} style={{ width: "100%" }} />
             </div>
+            <Select
+              name="filter"
+              className="mb-4 select-width"
+              placeholder="Select Week"
+              options={options}
+              onChange={handleChange}
+            />
             <Row className="mx-5">
               <Col md={6}>
                 <FormGroup row>
                   <Label sm={3}>Student Name</Label>
                   <Col sm={9} className="bg-1">
-                    ABC
+                    {data?.studentName}
                   </Col>
                 </FormGroup>
               </Col>
@@ -97,7 +124,9 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                   <Label sm={3} className="text-center">
                     Batch Code
                   </Label>
-                  <Col sm={9} className="bg-1"></Col>
+                  <Col sm={9} className="bg-1">
+                    {data?.batchCode}
+                  </Col>
                 </FormGroup>
               </Col>
               <Col md={12}>
@@ -123,13 +152,17 @@ const ReportCard = ({ modal, toggle, viewData }) => {
               <Col md={12}>
                 <FormGroup row>
                   <Label sm={3}>Attendance (Technical) %</Label>
-                  <Col sm={9} className="bg-2"></Col>
+                  <Col sm={9} className="bg-2">
+                    {data?.technicalAttendance}%
+                  </Col>
                 </FormGroup>
               </Col>
               <Col md={12}>
                 <FormGroup row>
                   <Label sm={3}>Total No of Soft Skills Classes</Label>
-                  <Col sm={9} className="bg-1"></Col>
+                  <Col sm={9} className="bg-1">
+                    {addSoftSkillsNumber}
+                  </Col>
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -151,7 +184,9 @@ const ReportCard = ({ modal, toggle, viewData }) => {
               <Col md={12}>
                 <FormGroup row>
                   <Label sm={3}>Attendance (Soft skills) %</Label>
-                  <Col sm={9} className="bg-1"></Col>
+                  <Col sm={9} className="bg-1">
+                    {data?.softSkillAttendance}
+                  </Col>
                 </FormGroup>
               </Col>
             </Row>
@@ -176,25 +211,11 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{data?.Attendance?.toFixed(2)} %</td>
+                        <td>{data?.CurrentWeekAvgScore} %</td>
                         <td>No Data</td>
-                        <td>No Data</td>
+                        <td>{data?.totalAvgScore}%</td>
                       </tr>
-                      <tr>
-                        <td>{data?.Attendance?.toFixed(2)} %</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                      </tr>
-                      <tr>
-                        <td>{data?.Attendance?.toFixed(2)} %</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                      </tr>
-                      <tr>
-                        <td>{data?.Attendance?.toFixed(2)} %</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                      </tr>
+
                       {/* <tr>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
@@ -238,44 +259,49 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                         <th style={{ background: "#6C57D2", color: "#fff" }}>
                           Grade
                         </th>
-                        {/* <th colSpan={2}>Weekly Assessments</th> */}
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{data?.Attendance?.toFixed(2)} %</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                        {/* <td>{data?.Assignment - 11}</td>
-                  <td>{data?.Assignment - 21}</td> */}
-                        <td>No Data</td>
+                        <td></td>
+                        <td>Technical Assignment Score </td>
+                        <td>
+                          {data?.techchnicalAssignmentScore},{" "}
+                          {data?.technicalWeeklyAssessmentScore}
+                        </td>
+                        <td>{data?.technicalAggregateScore}</td>
+
+                        <td>{data?.technicalgrade}</td>
                       </tr>
                       <tr>
-                        <td>{data?.Attendance?.toFixed(2)} %</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
-                        {/* <td>{data?.Assignment - 11}</td>
-                  <td>{data?.Assignment - 21}</td> */}
-                        <td>No Data</td>
+                        <td></td>
+                        <td>Soft Skills</td>
+                        <td>
+                          {data?.softSkillAssignmentScore},{" "}
+                          {data?.softskillWeeklyAssessmentScore}
+                        </td>
+                        <td>{data?.softskillAggregateScore}</td>
+
+                        <td>{data?.softskillgrade}</td>
                       </tr>
                       <tr>
-                        <td>{data?.Attendance?.toFixed(2)} %</td>
+                        <td></td>
+                        <td>Module Clearance Test</td>
                         <td>No Data</td>
                         <td>No Data</td>
-                        <td>No Data</td>
-                        {/* <td>{data?.Assignment - 11}</td>
-                  <td>{data?.Assignment - 21}</td> */}
+
                         <td>No Data</td>
                       </tr>
                       <tr>
                         <td colSpan={2}>
                           <div className="total">Total Avg Score</div>
                         </td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td colSpan={2}>
+                          <div className="total">{data?.totalAvgScore}</div>
+                        </td>
+                        <td>
+                          <div className="total">{data?.totalGrade}</div>
+                        </td>
                       </tr>
                     </tbody>
                   </Table>
@@ -321,11 +347,17 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                   </Table>
                   <Button
                     color="success"
-                    onClick={() => {downloadPdf(DOWNLOAD_FILE_URL)}}
+                    onClick={() => {
+                      downloadPdf(DOWNLOAD_FILE_URL)
+                    }}
                   >
                     Email To Student
                   </Button>
-                  <Button color="primary" className="ms-4" onClick={() => console.log("Clicked")}>
+                  <Button
+                    color="primary"
+                    className="ms-4"
+                    onClick={() => console.log("Clicked")}
+                  >
                     Download PDF
                   </Button>
                 </div>

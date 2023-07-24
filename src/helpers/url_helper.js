@@ -168,6 +168,10 @@ export const GET_NEW_BATCHES = "/admin/batch"
 
 export const ADD_NEW_LEARNER = "/admin/batch/enroll/user-unikode/course"
 
+// report card
+
+export const REPORT_CARD_DESIGN = "/admin/batch/learners/reportcard"
+
 // DASHBOARD
 
 export const GET_DASHBOARD = "/admin/batch"
