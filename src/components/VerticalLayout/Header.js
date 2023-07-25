@@ -67,16 +67,6 @@ const Header = props => {
     }
   }
 
-  function tToggle() {
-    var body = document.body
-    if (window.screen.width <= 998) {
-      body.classList.toggle("sidebar-enable")
-    } else {
-      body.classList.toggle("vertical-collpsed")
-      body.classList.toggle("sidebar-enable")
-    }
-  }
-
   return (
     <React.Fragment>
       <header id="page-topbar">
@@ -95,19 +85,6 @@ const Header = props => {
                 </span>
               </Link>
             </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                tToggle()
-              }}
-              className="btn btn-sm px-3 font-size-16 header-item "
-              id="vertical-menu-btn"
-            >
-              {/* <i className="fa fa-fw fa-bars d-lg-none" /> */}
-              <i className="bx bx-arrow-back d-none d-lg-block"></i>
-              {/* <i className='bx bx-right-arrow-alt right-arrow'></i> */}
-            </button>
 
             {/* <form className="app-search d-none d-lg-block">
               <div className="position-relative">

@@ -387,8 +387,14 @@ class LearnerPage extends Component {
   // }
 
   render() {
-    const { options, value, isFilterApplied, currentPage, totalPages } =
-      this.state
+    const {
+      options,
+      value,
+      isFilterApplied,
+      currentPage,
+      totalPages,
+      setCurrentPage,
+    } = this.state
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser, manageUserLoader } = this.props
 
@@ -428,9 +434,7 @@ class LearnerPage extends Component {
                       <CardBody>
                         <div className="box">
                           <div>
-                            <p className="box-heading">
-                              Today new learner (past 24 hours)
-                            </p>
+                            <p className="box-heading">Today New learner</p>
                             {/* <p className="score">{dashboard?.totalBatch}</p> */}
                           </div>
                           <div className="icon-circle">
@@ -710,7 +714,7 @@ class LearnerPage extends Component {
                             currentPage={currentPage}
                             totalPages={totalPages}
                             usersCount={usersCount?.count}
-                            // setCurrentPage={setCurrentPage}
+                            setCurrentPage={setCurrentPage}
                           />
                         </React.Fragment>
                       )}
@@ -734,20 +738,17 @@ LearnerPage.propTypes = {
   manageUserLoader: PropTypes.any,
 }
 
-const mapStateToProps = ({ Learner, state, count }) => (
-  console.log(Learner, "//////////Learner"),
-  {
-    manageUser: Learner?.manageUser,
-    manageUserLoader: Learner?.manageUserLoader,
-    usersCount: Learner?.count,
-    userRoles: Learner?.roles,
-    deleteData: false,
-  }
-)
+const mapStateToProps = ({ Learner, state, count }) => ({
+  manageUser: Learner?.manageUser,
+  manageUserLoader: Learner?.manageUserLoader,
+  usersCount: Learner?.count,
+  userRoles: Learner?.roles,
+  deleteData: false,
+})
 
 const mapDispatchToProps = dispatch => ({
   onGetLearner: data => dispatch(getLearner(data)),
-  onGetAllLearner: data => dispatch(getAllLearner(data)),
+  // onGetAllLearner: data => dispatch(getAllLearner(data)),
   onGetDeleteLearner: id => dispatch(deleteLearner(id)),
   onGetStatusFilter: data => dispatch(getStatusFilter(data)),
 })

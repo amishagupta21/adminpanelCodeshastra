@@ -94,6 +94,16 @@ const SidebarContent = props => {
     return false
   }
 
+  function tToggle() {
+    var body = document.body
+    if (window.screen.width <= 998) {
+      body.classList.toggle("sidebar-enable")
+    } else {
+      body.classList.toggle("vertical-collpsed")
+      body.classList.toggle("sidebar-enable")
+    }
+  }
+
   return (
     <React.Fragment>
       <SimpleBar className="h-100" ref={ref}>
@@ -130,12 +140,7 @@ const SidebarContent = props => {
                 <span>{props.t("System Users")}</span>
               </Link>
             </li>
-            <li>
-              <Link to="/learner">
-                <i className="bx bx-user-circle" />
-                <span>{props.t("Users")}</span>
-              </Link>
-            </li>
+
             <li>
               <Link to="/application">
                 <i className="mdi mdi-file-document" />
@@ -173,10 +178,30 @@ const SidebarContent = props => {
               </Link>
             </li>
             <li>
+              <Link to="/learner">
+                <i className="bx bx-user-circle" />
+                <span>{props.t("Users")}</span>
+              </Link>
+            </li>
+            <li>
               <Link to="/firebase">
                 <i className="mdi mdi-account-plus" />
-                <span>{props.t("Firebase Config")}</span>
+                <span>{props.t("Settings")}</span>
               </Link>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  tToggle()
+                }}
+                className="btn btn-sm px-3 font-size-22 header-item "
+                id="vertical-menu-btn"
+              >
+                {/* <i className="fa fa-fw fa-bars d-lg-none" /> */}
+                <i className="bx bx-arrow-back d-none d-lg-block"></i>
+                {/* <i className='bx bx-right-arrow-alt right-arrow'></i> */}
+              </button>
             </li>
           </ul>
         </div>
