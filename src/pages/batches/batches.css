@@ -42,7 +42,7 @@
 }
 
 #vertical-menu-btn {
-  width: 40px;
+  width: 95%;
   height: 40px;
   position: relative;
   box-shadow: none !important;
@@ -51,7 +51,7 @@
   background: #2a3042;
   margin-top: 0px;
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -282,8 +282,6 @@ table thead {
   /* color: #556ee6; */
   border-radius: 3px;
 }
-
-
 
 .batches-list .nav-tabs .nav-link.active {
   border-radius: 0px !important;
@@ -572,27 +570,27 @@ table thead {
 }
 
 .bg-1 {
-  background: #F1EEFF;
+  background: #f1eeff;
   display: flex;
   align-items: center;
 }
 
 .bg-2 {
-  background: #E0E0E0;
+  background: #e0e0e0;
   display: flex;
   align-items: center;
 }
 
 .bg-3 {
-  background: #B9B9B9;
+  background: #b9b9b9;
 }
 
 .total {
   font-size: 26px;
-  color: #6C57D2;
+  color: #6c57d2;
 }
 
 .my-table-border th,
 .my-table-border td {
-  border: 1px solid #B9B9B9 !important;
+  border: 1px solid #b9b9b9 !important;
 }

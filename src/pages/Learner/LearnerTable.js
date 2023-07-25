@@ -29,8 +29,6 @@ function LearnerTable({
   usersCount,
   setState,
 }) {
-  console.log(usersCount, currentPage, "////////////////currentPage")
-
   return (
     <>
       <Row>
@@ -81,7 +79,8 @@ function LearnerTable({
                       total={usersCount}
                       maxWidth={4}
                       onPageChange={n => {
-                        setCurrentPage(n)
+                        setState(setCurrentPage(n))
+
                         // onGetBatchesLearner(n)
                       }}
                     />{" "}
