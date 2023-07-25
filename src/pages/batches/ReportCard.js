@@ -29,13 +29,14 @@ const ref = React.createRef()
 const ReportCard = ({ modal, toggle, viewData }) => {
   const params = useParams()
   const [data, setData] = useState([])
-  const [selectedWeek, setSelectedWeek] = useState("")
+  const [selectedWeek, setSelectedWeek] = useState(28)
+  console.log(selectedWeek, "/////////selectedWeek")
 
   useEffect(() => {
     const newData = async () => {
       try {
         const response = await axios(
-          `${process.env.REACT_APP_API_URL}${url.REPORT_CARD_DESIGN}/${viewData.unikodeuserid}/${viewData.unikodecourseid}/${selectedWeek?.label}/${viewData.id} 
+          `${process.env.REACT_APP_API_URL}${url.REPORT_CARD_DESIGN}/${viewData.unikodeuserid}/${viewData.unikodecourseid}/${selectedWeek}/${viewData.id} 
           `
         )
         setData(response?.data?.data)
@@ -48,18 +49,18 @@ const ReportCard = ({ modal, toggle, viewData }) => {
     if (modal) {
       newData()
     }
-  }, [modal])
+  }, [modal, selectedWeek])
 
-  const options = [
-    { label: "7", value: "7" },
-    { label: "14", value: "14" },
-    { label: "21", value: "21" },
-    { label: "28", value: "28" },
-  ]
+  // const options = [
+  //   { label: "7", value: "7" },
+  //   { label: "14", value: "14" },
+  //   { label: "21", value: "21" },
+  //   { label: "28", value: "28" },
+  // ]
 
-  const handleChange = selectedOption => {
-    setSelectedWeek(selectedOption)
-  }
+  // const handleChange = (selectedOption, e) => {
+  //   setSelectedWeek(e.target.value)
+  // }
 
   const addSoftSkillsNumber =
     parseInt(data?.softSkillAssignmentScore) +
@@ -103,14 +104,39 @@ const ReportCard = ({ modal, toggle, viewData }) => {
             <div style={{ background: "#6C57D2", marginBottom: "20px" }}>
               <img src={Banner} style={{ width: "100%" }} />
             </div>
-            <Select
+            {/* <Select
               name="filter"
+              value={selectedWeek}
               className="mb-4 select-width"
               placeholder="Select Week"
               options={options}
-              onChange={handleChange}
-            />
+              onChange={event => {
+                setSelectedWeek(event)
+              }}
+            /> */}
+
             <Row className="mx-5">
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={3}>Select Weekly Report</Label>
+                  <Col sm={9}>
+                    <Input
+                      sm={6}
+                      type="select"
+                      value={selectedWeek}
+                      onChange={event => {
+                        setSelectedWeek(event.target.value)
+                      }}
+                    >
+                      <option value="7">7</option>
+                      <option value="14">14</option>
+                      <option value="21">21</option>
+                      <option value="28">28</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}></Col>
               <Col md={6}>
                 <FormGroup row>
                   <Label sm={3}>Student Name</Label>
