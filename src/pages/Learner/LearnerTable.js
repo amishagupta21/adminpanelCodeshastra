@@ -13,6 +13,7 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap
 import paginationFactory from "react-bootstrap-table2-paginator"
 import { Link } from "react-router-dom"
 import ResponsivePagination from "react-responsive-pagination"
+import "react-responsive-pagination/themes/classic.css"
 
 function LearnerTable({
   manageUser,
@@ -75,39 +76,14 @@ function LearnerTable({
                       }
                     />
                     <ResponsivePagination
-                      currentPage={currentPage}
+                      current={currentPage}
                       total={usersCount}
-                      maxWidth={4}
+                      maxWidth={3}
                       onPageChange={n => {
-                        setState(setCurrentPage(n))
-
-                        // onGetBatchesLearner(n)
+                        setCurrentPage(n)
                       }}
                     />{" "}
                   </div>
-                  {/* <div>
-                    <button
-                      onClick={() =>
-                        setState({
-                          currentPage: currentPage - 1,
-                        })
-                      }
-                      disabled={currentPage === 1}
-                    >
-                      Previous
-                    </button>
-                    <span>{currentPage}</span>
-                    <button
-                      onClick={() =>
-                        setState({
-                          currentPage: currentPage + 1,
-                        })
-                      }
-                      disabled={currentPage === totalPages}
-                    >
-                      Next
-                    </button>
-                  </div> */}
                 </Col>
               </React.Fragment>
             )}

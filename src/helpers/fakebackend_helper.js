@@ -288,8 +288,8 @@ const getLearnerList = async data => {
   const res = await getData(
     url.GET_LEARNER +
       `?page=${data?.page || data?.currentPage || 1}&pageSize=${
-        data?.pageSize || 39511
-      }&search=${data?.search || ""}`
+        data?.pageSize || 10
+      }&search=${data?.search || ""}&duration=${data?.duration || 24}`
   )
 
   return res

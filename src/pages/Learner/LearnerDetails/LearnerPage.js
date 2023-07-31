@@ -184,7 +184,7 @@ class LearnerPage extends Component {
     this.toggle(!this.state.modal)
   }
 
-  componentDidMount(page, sizePerPage, currentPage, usersCount) {
+  componentDidMount(page, sizePerPage, currentPage, usersCount, duration) {
     const {
       manageUser,
       userRoles,
@@ -193,7 +193,14 @@ class LearnerPage extends Component {
       onGetStatusFilter,
     } = this.props
     if (manageUser && !manageUser.length) {
-      onGetLearner({ search: "", page: page, usersCount })
+      onGetLearner({
+        search: "",
+        page: page,
+        usersCount,
+        duration,
+        currentPage,
+        sizePerPage,
+      })
     }
 
     this.setState({ manageUser, userRoles })
@@ -201,7 +208,8 @@ class LearnerPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { manageUser, userRoles, onGetLearner, deleteData } = this.props
+    const { manageUser, userRoles, onGetLearner, deleteData, currentPage } =
+      this.props
     if (
       !isEmpty(manageUser) &&
       size(prevProps.manageUser) !== size(manageUser)
@@ -215,6 +223,7 @@ class LearnerPage extends Component {
     if (prevProps.deleteData !== deleteData) {
       onGetLearner({ search: "" })
     }
+
     if (prevState.currentPage !== this.state.currentPage) {
       onGetLearner({ currentPage: this.state.currentPage })
     }
@@ -419,6 +428,12 @@ class LearnerPage extends Component {
       // selected: this.state.selected,
       // onSelect: this.handleOnSelect,
       // onSelectAll: this.handleOnSelectAll,
+    }
+
+    const sendState = value => {
+      this.setState({
+        currentPage: value,
+      })
     }
 
     return (
@@ -714,7 +729,7 @@ class LearnerPage extends Component {
                             currentPage={currentPage}
                             totalPages={totalPages}
                             usersCount={usersCount?.count}
-                            setCurrentPage={setCurrentPage}
+                            setCurrentPage={sendState}
                           />
                         </React.Fragment>
                       )}
