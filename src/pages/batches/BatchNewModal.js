@@ -79,10 +79,11 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       day: [],
       start_time: "",
       end_time: "",
-      started_time: "",
-      ended_time: "",
+      started_time: "AM",
+      ended_time: "AM",
     },
   ])
+
   const [options, setOptions] = useState([
     {
       label: "Select Course Name",
@@ -221,7 +222,6 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       data: temp,
     })
       .then(res => {
-        console.log("res", res)
         setIsLoading(false)
         setModal(false)
         setItem([...item, res.data.data])
