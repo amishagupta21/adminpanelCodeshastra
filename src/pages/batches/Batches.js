@@ -953,8 +953,6 @@ const Batches = props => {
                                   total={totalPages}
                                   onPageChange={n => {
                                     setCurrentPage(n)
-                                    // onGetBatchesList(n)
-                                    // onGetBatchesLearner(n)
                                   }}
                                 />
                               </div>

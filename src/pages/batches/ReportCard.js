@@ -82,24 +82,31 @@ const ReportCard = ({ modal, toggle, viewData }) => {
         style={{ height: "70vh", overflowY: "auto", marginTop: "40px" }}
       >
         <Row>
+          <Row className="mx-5 mb-3">
+            <Col md={2}>
+              <Pdf targetRef={ref} filename="code-example.pdf">
+                {({ toPdf }) => (
+                  <Button onClick={toPdf} color="success">
+                    Download PDF
+                  </Button>
+                )}
+              </Pdf>
+            </Col>
+            <Col md={3}>
+              <Button
+                color="primary"
+                className="ms-4"
+                onClick={() => console.log("Clicked")}
+              >
+                Email To Student
+              </Button>
+            </Col>
+          </Row>
           <Col md={12}>
             <div className="d-flex justify-content-between">
-              <div>
-                {/* <Link to={`/batch-detail/${params?.id}`}>
-                <i className="mdi mdi-chevron-left"></i> Batch
-              </Link> */}
-              </div>
-              {/* <div>Batch List / Batch Information</div> */}
-              <div>
-                {/* <Breadcrumb>
-                  <BreadcrumbItem>
-                    <Link to="/batch-list">Batch</Link>
-                  </BreadcrumbItem>
-                  <BreadcrumbItem active>Report</BreadcrumbItem>
-                </Breadcrumb> */}
-              </div>
+              <div></div>
+              <div></div>
             </div>
-            {/* <h4 className="mb-4">REPORTS</h4> */}
             <div style={{ background: "#6C57D2", marginBottom: "20px" }}>
               <img src={Banner} style={{ width: "100%" }} />
             </div>
@@ -113,136 +120,136 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                 setSelectedWeek(event)
               }}
             /> */}
-
+            <div ref={ref}>
+              <Row className="mx-5">
+                <Col md={6}>
+                  <FormGroup row>
+                    <Label sm={3}>Select Weekly Report</Label>
+                    <Col sm={9}>
+                      <Input
+                        sm={6}
+                        type="select"
+                        value={selectedWeek}
+                        onChange={event => {
+                          setSelectedWeek(event.target.value)
+                        }}
+                      >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                      </Input>
+                    </Col>
+                  </FormGroup>
+                </Col>
+                <Col md={6}></Col>
+                <Col md={6}>
+                  <FormGroup row>
+                    <Label sm={3}>Student Name</Label>
+                    <Col sm={9} className="bg-1">
+                      {data?.studentName}
+                    </Col>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup row>
+                    <Label sm={3} className="text-center">
+                      Batch Code
+                    </Label>
+                    <Col sm={9} className="bg-1">
+                      {data?.batchCode}
+                    </Col>
+                  </FormGroup>
+                </Col>
+                <Col md={12}>
+                  <FormGroup row>
+                    <Label sm={3}>Total No of Live Tech Classes</Label>
+                    <Col sm={9} className="bg-2"></Col>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup row>
+                    <Label sm={6}>Attended Live Tech Classes</Label>
+                    <Col sm={6} className="bg-1"></Col>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup row>
+                    <Label sm={3} className="text-center">
+                      Absent
+                    </Label>
+                    <Col sm={9} className="bg-1"></Col>
+                  </FormGroup>
+                </Col>
+                <Col md={12}>
+                  <FormGroup row>
+                    <Label sm={3}>Attendance (Technical) %</Label>
+                    <Col sm={9} className="bg-2">
+                      {data?.technicalAttendance}%
+                    </Col>
+                  </FormGroup>
+                </Col>
+                <Col md={12}>
+                  <FormGroup row>
+                    <Label sm={3}>Total No of Soft Skills Classes</Label>
+                    <Col sm={9} className="bg-1">
+                      {addSoftSkillsNumber}
+                    </Col>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup row>
+                    <Label sm={6}>Attended Soft Skills Classes</Label>
+                    <Col sm={6} className="bg-2">
+                      {" "}
+                    </Col>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup row>
+                    <Label sm={3} className="text-center">
+                      Absent
+                    </Label>
+                    <Col sm={9} className="bg-2"></Col>
+                  </FormGroup>
+                </Col>
+                <Col md={12}>
+                  <FormGroup row>
+                    <Label sm={3}>Attendance (Soft skills) %</Label>
+                    <Col sm={9} className="bg-1">
+                      {data?.softSkillAttendance}
+                    </Col>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </div>
             <Row className="mx-5">
-              <Col md={6}>
-                <FormGroup row>
-                  <Label sm={3}>Select Weekly Report</Label>
-                  <Col sm={9}>
-                    <Input
-                      sm={6}
-                      type="select"
-                      value={selectedWeek}
-                      onChange={event => {
-                        setSelectedWeek(event.target.value)
-                      }}
-                    >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                      <option value="13">13</option>
-                      <option value="14">14</option>
-                      <option value="15">15</option>
-                      <option value="16">16</option>
-                      <option value="17">17</option>
-                      <option value="18">18</option>
-                      <option value="19">19</option>
-                      <option value="20">20</option>
-                      <option value="21">21</option>
-                      <option value="22">22</option>
-                      <option value="23">23</option>
-                      <option value="24">24</option>
-                      <option value="25">25</option>
-                      <option value="26">26</option>
-                      <option value="27">27</option>
-                      <option value="28">28</option>
-                    </Input>
-                  </Col>
-                </FormGroup>
-              </Col>
-              <Col md={6}></Col>
-              <Col md={6}>
-                <FormGroup row>
-                  <Label sm={3}>Student Name</Label>
-                  <Col sm={9} className="bg-1">
-                    {data?.studentName}
-                  </Col>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup row>
-                  <Label sm={3} className="text-center">
-                    Batch Code
-                  </Label>
-                  <Col sm={9} className="bg-1">
-                    {data?.batchCode}
-                  </Col>
-                </FormGroup>
-              </Col>
               <Col md={12}>
-                <FormGroup row>
-                  <Label sm={3}>Total No of Live Tech Classes</Label>
-                  <Col sm={9} className="bg-2"></Col>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup row>
-                  <Label sm={6}>Attended Live Tech Classes</Label>
-                  <Col sm={6} className="bg-1"></Col>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup row>
-                  <Label sm={3} className="text-center">
-                    Absent
-                  </Label>
-                  <Col sm={9} className="bg-1"></Col>
-                </FormGroup>
-              </Col>
-              <Col md={12}>
-                <FormGroup row>
-                  <Label sm={3}>Attendance (Technical) %</Label>
-                  <Col sm={9} className="bg-2">
-                    {data?.technicalAttendance}%
-                  </Col>
-                </FormGroup>
-              </Col>
-              <Col md={12}>
-                <FormGroup row>
-                  <Label sm={3}>Total No of Soft Skills Classes</Label>
-                  <Col sm={9} className="bg-1">
-                    {addSoftSkillsNumber}
-                  </Col>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup row>
-                  <Label sm={6}>Attended Soft Skills Classes</Label>
-                  <Col sm={6} className="bg-2">
-                    {" "}
-                  </Col>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup row>
-                  <Label sm={3} className="text-center">
-                    Absent
-                  </Label>
-                  <Col sm={9} className="bg-2"></Col>
-                </FormGroup>
-              </Col>
-              <Col md={12}>
-                <FormGroup row>
-                  <Label sm={3}>Attendance (Soft skills) %</Label>
-                  <Col sm={9} className="bg-1">
-                    {data?.softSkillAttendance}
-                  </Col>
-                </FormGroup>
-              </Col>
-            </Row>
-
-            <Row className="mx-5">
-              <Col md={12}>
-                <div className="table-responsive report-table" ref={ref}>
+                <div className="table-responsive report-table">
                   <div className="text-end my-3"></div>
                   <Table bordered className="mb-5" striped>
                     <thead>
@@ -394,21 +401,6 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                       </tr>
                     </tbody>
                   </Table>
-                  <Button
-                    color="success"
-                    onClick={() => {
-                      downloadPdf(DOWNLOAD_FILE_URL)
-                    }}
-                  >
-                    Email To Student
-                  </Button>
-                  <Button
-                    color="primary"
-                    className="ms-4"
-                    onClick={() => console.log("Clicked")}
-                  >
-                    Download PDF
-                  </Button>
                 </div>
               </Col>
             </Row>

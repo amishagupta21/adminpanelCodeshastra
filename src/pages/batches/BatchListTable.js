@@ -342,15 +342,6 @@ const BatchListTable = ({
                     // onGetBatchesLearner(n)
                   }}
                 />
-
-                {/* <DropdownPagination 
-                current={currentPage}
-                total={totalPages}
-                onPageChange={n => {
-                  setCurrentPage(n)
-                  // onGetBatchesLearner(n)
-                }}
-                /> */}
               </div>
             </Col>
           </>
