@@ -161,6 +161,7 @@ export const GET_BATCHES_API = "/admin/batch"
 // NEW BATCHES
 
 export const BATCH_SYNC = "/admin/batch/sync"
+export const BATCH_SYNC_DETAIL = "/admin/batch/detail/sync"
 
 export const BATCH_SYNC_GRADES = "/admin/batch/sync/grades"
 
