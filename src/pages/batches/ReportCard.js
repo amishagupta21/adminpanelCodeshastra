@@ -18,9 +18,10 @@ import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import { post, getCourseData } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
-import Pdf from "react-to-pdf"
 import tosterMsg from "components/Common/toster"
 import Select from "react-select"
+import html2canvas from "html2canvas"
+import jsPdf from "jspdf"
 
 import Banner from "../../assets/images/report-card-banner.png"
 
@@ -61,6 +62,49 @@ const ReportCard = ({ modal, toggle, viewData }) => {
   //   setSelectedWeek(e.target.value)
   // }
 
+  // const captureScreenshot = () => {
+  //   const elementToCapture = document.getElementById("element-id-to-capture")
+
+  //   html2canvas(elementToCapture).then(canvas => {
+  //     const imgData = canvas.toDataURL("image/png")
+  //     const pdf = new jsPdf("p", "mm", "a4")
+  //     const componentWidth = pdf.internal.pageSize.getWidth()
+  //     const componentHeight = pdf.internal.pageSize.getHeight()
+
+  //     pdf.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight)
+  //     pdf.save("reportCard.pdf")
+  //   })
+  // }
+
+  const captureScreenshot = () => {
+    const elementToCapture = document.getElementById("element-id-to-capture")
+
+    html2canvas(elementToCapture).then(canvas => {
+      const imgData = canvas.toDataURL("image/png")
+      const pdf = new jsPdf("p", "mm", "a4")
+      const componentWidth = pdf.internal.pageSize.getWidth()
+      const componentHeight = pdf.internal.pageSize.getHeight()
+      const imgWidth = canvas.width
+      const imgHeight = canvas.height
+      const ratio = Math.min(
+        componentWidth / imgWidth,
+        componentHeight / imgHeight
+      )
+
+      const imgX = (componentWidth - imgWidth * ratio) / 2
+      const imgY = 0
+      pdf.addImage(
+        imgData,
+        "PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      )
+      pdf.save("reportCard.pdf")
+    })
+  }
+
   const addSoftSkillsNumber =
     parseInt(data?.softSkillAssignmentScore) +
     parseInt(data?.softskillWeeklyAssessmentScore) +
@@ -82,206 +126,191 @@ const ReportCard = ({ modal, toggle, viewData }) => {
         style={{ height: "70vh", overflowY: "auto", marginTop: "40px" }}
       >
         <Row>
-          <Row className="mx-5 mb-3">
-            <Col md={2}>
-              <Pdf targetRef={ref} filename="code-example.pdf">
-                {({ toPdf }) => (
-                  <Button onClick={toPdf} color="success">
-                    Download PDF
-                  </Button>
-                )}
-              </Pdf>
-            </Col>
-            <Col md={3}>
-              <Button
-                color="primary"
-                className="ms-4"
-                onClick={() => console.log("Clicked")}
-              >
-                Email To Student
-              </Button>
-            </Col>
-          </Row>
-          <Col md={12}>
-            <div className="d-flex justify-content-between">
-              <div></div>
-              <div></div>
-            </div>
-            <div style={{ background: "#6C57D2", marginBottom: "20px" }}>
-              <img src={Banner} style={{ width: "100%" }} />
-            </div>
-            {/* <Select
-              name="filter"
-              value={selectedWeek}
-              className="mb-4 select-width"
-              placeholder="Select Week"
-              options={options}
-              onChange={event => {
-                setSelectedWeek(event)
-              }}
-            /> */}
-            <div ref={ref}>
-              <Row className="mx-5">
-                <Col md={6}>
-                  <FormGroup row>
-                    <Label sm={3}>Select Weekly Report</Label>
-                    <Col sm={9}>
-                      <Input
-                        sm={6}
-                        type="select"
-                        value={selectedWeek}
-                        onChange={event => {
-                          setSelectedWeek(event.target.value)
-                        }}
-                      >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                      </Input>
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col md={6}></Col>
-                <Col md={6}>
-                  <FormGroup row>
-                    <Label sm={3}>Student Name</Label>
-                    <Col sm={9} className="bg-1">
-                      {data?.studentName}
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup row>
-                    <Label sm={3} className="text-center">
-                      Batch Code
-                    </Label>
-                    <Col sm={9} className="bg-1">
-                      {data?.batchCode}
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col md={12}>
-                  <FormGroup row>
-                    <Label sm={3}>Total No of Live Tech Classes</Label>
-                    <Col sm={9} className="bg-2"></Col>
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup row>
-                    <Label sm={6}>Attended Live Tech Classes</Label>
-                    <Col sm={6} className="bg-1"></Col>
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup row>
-                    <Label sm={3} className="text-center">
-                      Absent
-                    </Label>
-                    <Col sm={9} className="bg-1"></Col>
-                  </FormGroup>
-                </Col>
-                <Col md={12}>
-                  <FormGroup row>
-                    <Label sm={3}>Attendance (Technical) %</Label>
-                    <Col sm={9} className="bg-2">
-                      {data?.technicalAttendance}%
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col md={12}>
-                  <FormGroup row>
-                    <Label sm={3}>Total No of Soft Skills Classes</Label>
-                    <Col sm={9} className="bg-1">
-                      {addSoftSkillsNumber}
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup row>
-                    <Label sm={6}>Attended Soft Skills Classes</Label>
-                    <Col sm={6} className="bg-2">
-                      {" "}
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup row>
-                    <Label sm={3} className="text-center">
-                      Absent
-                    </Label>
-                    <Col sm={9} className="bg-2"></Col>
-                  </FormGroup>
-                </Col>
-                <Col md={12}>
-                  <FormGroup row>
-                    <Label sm={3}>Attendance (Soft skills) %</Label>
-                    <Col sm={9} className="bg-1">
-                      {data?.softSkillAttendance}
-                    </Col>
-                  </FormGroup>
-                </Col>
-              </Row>
-            </div>
-            <Row className="mx-5">
-              <Col md={12}>
-                <div className="table-responsive report-table">
-                  <div className="text-end my-3"></div>
-                  <Table bordered className="mb-5" striped>
-                    <thead>
-                      <tr>
-                        <th style={{ background: "#6C57D2", color: "#fff" }}>
-                          Current Week Avg Score
-                        </th>
-                        <th style={{ background: "#8E78F9", color: "#fff" }}>
-                          Previous Week Avg Score
-                        </th>
-                        <th style={{ background: "#6C57D2", color: "#fff" }}>
-                          Total Avg Score
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{data?.CurrentWeekAvgScore} %</td>
-                        <td>No Data</td>
-                        <td>{data?.totalAvgScore}%</td>
-                      </tr>
+          <Col md={2}>
+            <Button color="success" onClick={captureScreenshot}>
+              Download PDF
+            </Button>
+          </Col>
+          <Col md={3}>
+            <Button
+              color="primary"
+              className="ms-4"
+              onClick={() => console.log("Clicked")}
+            >
+              Email To Student
+            </Button>
+          </Col>
+        </Row>
+        <Col md={12} id="element-id-to-capture">
+          <div
+            className="mt-3"
+            style={{ background: "#6C57D2", marginBottom: "20px" }}
+          >
+            <img src={Banner} style={{ width: "100%" }} />
+          </div>
 
-                      {/* <tr>
+          <div>
+            <Row className="mx-5">
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={3}>Select Weekly Report</Label>
+                  <Col sm={9}>
+                    <Input
+                      sm={6}
+                      type="select"
+                      value={selectedWeek}
+                      onChange={event => {
+                        setSelectedWeek(event.target.value)
+                      }}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                      <option value="24">24</option>
+                      <option value="25">25</option>
+                      <option value="26">26</option>
+                      <option value="27">27</option>
+                      <option value="28">28</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}></Col>
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={3}>Student Name</Label>
+                  <Col sm={9} className="bg-1">
+                    {data?.studentName}
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={3} className="text-center">
+                    Batch Code
+                  </Label>
+                  <Col sm={9} className="bg-1">
+                    {data?.batchCode}
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={12}>
+                <FormGroup row>
+                  <Label sm={3}>Total No of Live Tech Classes</Label>
+                  <Col sm={9} className="bg-2"></Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={6}>Attended Live Tech Classes</Label>
+                  <Col sm={6} className="bg-1"></Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={3} className="text-center">
+                    Absent
+                  </Label>
+                  <Col sm={9} className="bg-1"></Col>
+                </FormGroup>
+              </Col>
+              <Col md={12}>
+                <FormGroup row>
+                  <Label sm={3}>Attendance (Technical) %</Label>
+                  <Col sm={9} className="bg-2">
+                    {data?.technicalAttendance}%
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={12}>
+                <FormGroup row>
+                  <Label sm={3}>Total No of Soft Skills Classes</Label>
+                  <Col sm={9} className="bg-1">
+                    {addSoftSkillsNumber}
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={6}>Attended Soft Skills Classes</Label>
+                  <Col sm={6} className="bg-2">
+                    {" "}
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup row>
+                  <Label sm={3} className="text-center">
+                    Absent
+                  </Label>
+                  <Col sm={9} className="bg-2"></Col>
+                </FormGroup>
+              </Col>
+              <Col md={12}>
+                <FormGroup row>
+                  <Label sm={3}>Attendance (Soft skills) %</Label>
+                  <Col sm={9} className="bg-1">
+                    {data?.softSkillAttendance}
+                  </Col>
+                </FormGroup>
+              </Col>
+            </Row>
+          </div>
+          <Row className="mx-5">
+            <Col md={12}>
+              <div className="table-responsive report-table">
+                <div className="text-end my-3"></div>
+                <Table bordered className="mb-5" striped>
+                  <thead>
+                    <tr>
+                      <th style={{ background: "#6C57D2", color: "#fff" }}>
+                        Current Week Avg Score
+                      </th>
+                      <th style={{ background: "#8E78F9", color: "#fff" }}>
+                        Previous Week Avg Score
+                      </th>
+                      <th style={{ background: "#6C57D2", color: "#fff" }}>
+                        Total Avg Score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{data?.CurrentWeekAvgScore} %</td>
+                      <td>No Data</td>
+                      <td>{data?.totalAvgScore}%</td>
+                    </tr>
+
+                    {/* <tr>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     
                   </tr> */}
-                    </tbody>
-                  </Table>
-                  <Table bordered className="mb-5 my-table-border" striped>
-                    {/* <thead className="bg-transparent">
+                  </tbody>
+                </Table>
+                <Table bordered className="mb-5 my-table-border" striped>
+                  {/* <thead className="bg-transparent">
                   <tr>
                     <th colSpan={7}>
                       <div className="d-flex">
@@ -298,114 +327,116 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                     </th>
                   </tr>
                 </thead> */}
-                    <thead>
-                      <tr>
-                        <th style={{ background: "#6C57D2", color: "#fff" }}>
-                          S.No.
-                        </th>
-                        <th style={{ background: "#8E78F9", color: "#fff" }}>
-                          Class
-                        </th>
-                        <th style={{ background: "#6C57D2", color: "#fff" }}>
-                          Score (Max.100)
-                        </th>
-                        <th style={{ background: "#8E78F9", color: "#fff" }}>
-                          Aggregate Score(Max. 100)
-                        </th>
-                        <th style={{ background: "#6C57D2", color: "#fff" }}>
-                          Grade
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td></td>
-                        <td>Technical Assignment Score </td>
-                        <td>
-                          {data?.techchnicalAssignmentScore},{" "}
-                          {data?.technicalWeeklyAssessmentScore}
-                        </td>
-                        <td>{data?.technicalAggregateScore}</td>
+                  <thead>
+                    <tr>
+                      <th style={{ background: "#6C57D2", color: "#fff" }}>
+                        S.No.
+                      </th>
+                      <th style={{ background: "#8E78F9", color: "#fff" }}>
+                        Class
+                      </th>
+                      <th style={{ background: "#6C57D2", color: "#fff" }}>
+                        Score (Max.100)
+                      </th>
+                      <th style={{ background: "#8E78F9", color: "#fff" }}>
+                        Aggregate Score(Max. 100)
+                      </th>
+                      <th style={{ background: "#6C57D2", color: "#fff" }}>
+                        Grade
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td>Technical Assignment Score </td>
+                      <td>
+                        {data?.techchnicalAssignmentScore},{" "}
+                        {data?.technicalWeeklyAssessmentScore}
+                      </td>
+                      <td>{data?.technicalAggregateScore}</td>
 
-                        <td>{data?.technicalgrade}</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>Soft Skills</td>
-                        <td>
-                          {data?.softSkillAssignmentScore},{" "}
-                          {data?.softskillWeeklyAssessmentScore}
-                        </td>
-                        <td>{data?.softskillAggregateScore}</td>
+                      <td>{data?.technicalgrade}</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>Soft Skills</td>
+                      <td>
+                        {data?.softSkillAssignmentScore},{" "}
+                        {data?.softskillWeeklyAssessmentScore}
+                      </td>
+                      <td>{data?.softskillAggregateScore}</td>
 
-                        <td>{data?.softskillgrade}</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>Module Clearance Test</td>
-                        <td>No Data</td>
-                        <td>No Data</td>
+                      <td>{data?.softskillgrade}</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>Module Clearance Test</td>
+                      <td>No Data</td>
+                      <td>No Data</td>
 
-                        <td>No Data</td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
-                          <div className="total">Total Avg Score</div>
-                        </td>
-                        <td colSpan={2}>
-                          <div className="total">{data?.totalAvgScore}</div>
-                        </td>
-                        <td>
-                          <div className="total">{data?.totalGrade}</div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                  <Table bordered className="mb-5 my-table-border">
-                    <tbody>
-                      <tr>
-                        <th
-                          style={{ backgroundColor: "#6C57D2", color: "#fff" }}
-                        >
-                          Grades
-                        </th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                        <th className="bg-3">A+</th>
-                      </tr>
-                      <tr>
-                        <th style={{ background: "#8E78F9", color: "#fff" }}>
-                          Grades
-                        </th>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                        <td>A+</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+                      <td>No Data</td>
+                    </tr>
+                    <tr>
+                      <td colSpan={2}>
+                        <div className="total">Total Avg Score</div>
+                      </td>
+                      <td colSpan={2}>
+                        <div className="total">{data?.totalAvgScore}</div>
+                      </td>
+                      <td>
+                        <div className="total">{data?.totalGrade}</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+                <Table bordered className="mb-5 my-table-border">
+                  <tbody>
+                    <tr>
+                      <th
+                        style={{
+                          backgroundColor: "#6C57D2",
+                          color: "#fff",
+                        }}
+                      >
+                        Grades
+                      </th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                      <th className="bg-3">A+</th>
+                    </tr>
+                    <tr>
+                      <th style={{ background: "#8E78F9", color: "#fff" }}>
+                        Grades
+                      </th>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                      <td>A+</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+            </Col>
+          </Row>
+        </Col>
       </ModalBody>
     </Modal>
   )

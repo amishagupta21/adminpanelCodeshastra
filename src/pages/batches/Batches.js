@@ -437,6 +437,14 @@ const Batches = props => {
       .catch(err => {})
 
     await axios
+      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_DETAIL}`, {
+        batchIdArray: clickedIds,
+      })
+      .then(res => {
+        tosterMsg(res?.data?.message)
+      })
+      .catch(err => {})
+    await axios
       .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, {
         batchIdArray: clickedIds,
       })
