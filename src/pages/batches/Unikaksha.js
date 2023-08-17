@@ -36,8 +36,6 @@ const Unikaksha = ({ unikaksha, openUnikasha }) => {
     email: "",
   })
 
-  console.log(data, "/////////data")
-
   const temp = formData
 
   const createUnikaksha = () => {
