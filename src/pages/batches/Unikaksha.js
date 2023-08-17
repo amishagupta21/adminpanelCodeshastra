@@ -36,6 +36,8 @@ const Unikaksha = ({ unikaksha, openUnikasha }) => {
     email: "",
   })
 
+  console.log(data, "/////////data")
+
   const temp = formData
 
   const createUnikaksha = () => {
@@ -103,7 +105,7 @@ const Unikaksha = ({ unikaksha, openUnikasha }) => {
                     }}
                     value={formData?.full_name}
                     type="text"
-                    placeholder="Enter Full Name"
+                    placeholder="Enter First and Last Name"
                     required
                   />
                 </FormGroup>
@@ -113,8 +115,8 @@ const Unikaksha = ({ unikaksha, openUnikasha }) => {
                   <>
                     <h5>id: {data?.data?.unikodeINFO[0]?.id}</h5>
 
-                    <h5>Email: {data?.data?.unikodeINFO[0]?.password}</h5>
-                    <h5>Full Name: {data?.data?.unikodeINFO[0]?.username}</h5>
+                    <h5>Password: {data?.data?.unikodeINFO[0]?.password}</h5>
+                    <h5>UserName: {data?.data?.unikodeINFO[0]?.username}</h5>
                   </>
                 )}
               </div>
