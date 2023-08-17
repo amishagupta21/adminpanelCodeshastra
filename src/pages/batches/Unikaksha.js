@@ -103,7 +103,7 @@ const Unikaksha = ({ unikaksha, openUnikasha }) => {
                     }}
                     value={formData?.full_name}
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Enter Full Name"
                     required
                   />
                 </FormGroup>
