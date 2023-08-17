@@ -96,6 +96,7 @@ export default class FirebaseAuthBackend {
         })
     })
   }
+  
 
   /**
    * Logout the user

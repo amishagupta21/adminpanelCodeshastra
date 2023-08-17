@@ -22,6 +22,10 @@ import tosterMsg from "components/Common/toster"
 import Select from "react-select"
 import html2canvas from "html2canvas"
 import jsPdf from "jspdf"
+import firebase from "firebase/compat/app"
+// import "firebase/functions"
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
 import Banner from "../../assets/images/report-card-banner.png"
 
@@ -31,6 +35,7 @@ const ReportCard = ({ modal, toggle, viewData }) => {
   const params = useParams()
   const [data, setData] = useState([])
   const [selectedWeek, setSelectedWeek] = useState(28)
+  const [emailSent, setEmailSent] = useState(false)
 
   useEffect(() => {
     const newData = async () => {
@@ -51,30 +56,16 @@ const ReportCard = ({ modal, toggle, viewData }) => {
     }
   }, [modal, selectedWeek])
 
-  // const options = [
-  //   { label: "7", value: "7" },
-  //   { label: "14", value: "14" },
-  //   { label: "21", value: "21" },
-  //   { label: "28", value: "28" },
-  // ]
-
-  // const handleChange = (selectedOption, e) => {
-  //   setSelectedWeek(e.target.value)
-  // }
-
-  // const captureScreenshot = () => {
-  //   const elementToCapture = document.getElementById("element-id-to-capture")
-
-  //   html2canvas(elementToCapture).then(canvas => {
-  //     const imgData = canvas.toDataURL("image/png")
-  //     const pdf = new jsPdf("p", "mm", "a4")
-  //     const componentWidth = pdf.internal.pageSize.getWidth()
-  //     const componentHeight = pdf.internal.pageSize.getHeight()
-
-  //     pdf.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight)
-  //     pdf.save("reportCard.pdf")
-  //   })
-  // }
+  const sendEmail = async () => {
+    try {
+      await axios.get(
+        "https://unikaksha2022.cloudfunctions.net/sendEmail"
+      )
+      console.log("Email sent!")
+    } catch (error) {
+      console.error("Error sending email:", error)
+    }
+  }
 
   const captureScreenshot = () => {
     const elementToCapture = document.getElementById("element-id-to-capture")
@@ -132,11 +123,7 @@ const ReportCard = ({ modal, toggle, viewData }) => {
             </Button>
           </Col>
           <Col md={3}>
-            <Button
-              color="primary"
-              className="ms-4"
-              onClick={() => console.log("Clicked")}
-            >
+            <Button color="primary" className="ms-4" onClick={sendEmail}>
               Email To Student
             </Button>
           </Col>

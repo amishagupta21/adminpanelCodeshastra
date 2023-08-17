@@ -63,6 +63,7 @@ import "jspdf-autotable"
 import Nav from "react-bootstrap/Nav"
 import ResponsivePagination from "react-responsive-pagination"
 import "react-responsive-pagination/themes/classic.css"
+import Unikaksha from "./Unikaksha"
 
 const Batches = props => {
   const axios = require("axios")
@@ -96,6 +97,12 @@ const Batches = props => {
   const [isSelected, setIsSelected] = useState("first")
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState()
+
+  const [unikaksha, setUnikaksha] = useState(false)
+
+  const openUnikasha = () => {
+    setUnikaksha(!unikaksha)
+  }
 
   // const[currBatch , setCurrBatch] = useState(onGetAllusersCountList)
   const [activeTab, setActiveTab] = useState("true")
@@ -744,6 +751,13 @@ const Batches = props => {
                 {/* <div>Clicked IDs: {clickedIds.join(", ")}</div> */}
                 <h4>ALL BATCHES</h4>
                 <span style={{ display: "flex" }}>
+                  <Button
+                    color="success"
+                    className="rounded-pill mb-3 me-3 px-4"
+                    onClick={openUnikasha}
+                  >
+                    Unikode Login
+                  </Button>
                   {isLoading ? (
                     <Button
                       color="primary"
@@ -787,6 +801,12 @@ const Batches = props => {
                   setItem={setItem}
                   item={item}
                   // createBatches={createBatches}
+                />
+
+                <Unikaksha
+                  setUnikaksha={setUnikaksha}
+                  openUnikasha={openUnikasha}
+                  unikaksha={unikaksha}
                 />
               </div>
             </Col>

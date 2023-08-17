@@ -54,34 +54,6 @@ const App = props => {
     return layoutCls
   }
 
-  // const config = async () => {
-  //   const config = firebase.remoteConfig()
-  //   // const template = await config.getTemplate()
-
-  //   // if (name === "skill_fit_data") {
-  //   //   defaultVal = (template.parameters.skill_fit_data?.defaultValue).value
-  //   //   defaultVal = JSON.parse(defaultVal)
-  //   // }
-  //   // console.log(defaultVal)
-  // }
-
-  // useEffect(() => {
-  //   config()
-  // }, [])
-  // const fetchRemoteConfig = async () => {
-  //   try {
-  //     await remoteConfig.fetchAndActivate()
-  //     const value = remoteConfig.getString("skill_fit_data")
-  //     console.log("Fetched value:", value)
-  //   } catch (error) {
-  //     console.error("Error fetching remote config:", error)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchRemoteConfig()
-  // }, [])
-
   const Layout = getLayout()
   return (
     <React.Fragment>
