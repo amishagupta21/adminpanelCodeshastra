@@ -42,7 +42,6 @@ const Unikaksha = ({ unikaksha, openUnikasha }) => {
     axios({
       method: "POST",
       url: `${process.env.REACT_APP_API_URL}${url.UNIKAKSHA_DATA}`,
-      url: "https://lms.unikaksha.com/api/lms/admin/batch/unikode-check-create-user11",
       data: temp,
     })
       .then(res => {
