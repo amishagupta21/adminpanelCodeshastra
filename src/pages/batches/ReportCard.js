@@ -26,6 +26,8 @@ import firebase from "firebase/compat/app"
 // import "firebase/functions"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
+// import fs from "fs"
+import jsPDF from "jspdf"
 
 import Banner from "../../assets/images/report-card-banner.png"
 
@@ -35,7 +37,8 @@ const ReportCard = ({ modal, toggle, viewData }) => {
   const params = useParams()
   const [data, setData] = useState([])
   const [selectedWeek, setSelectedWeek] = useState(28)
-  const [emailSent, setEmailSent] = useState(false)
+  const [file, setFile] = useState(null)
+  const [pdfContent, setPdfContent] = useState(null)
 
   useEffect(() => {
     const newData = async () => {
@@ -56,23 +59,13 @@ const ReportCard = ({ modal, toggle, viewData }) => {
     }
   }, [modal, selectedWeek])
 
-  const sendEmail = async () => {
+  const captureScreenshot = async () => {
     try {
-      await axios.get(
-        "https://unikaksha2022.cloudfunctions.net/sendEmail"
-      )
-      console.log("Email sent!")
-    } catch (error) {
-      console.error("Error sending email:", error)
-    }
-  }
-
-  const captureScreenshot = () => {
-    const elementToCapture = document.getElementById("element-id-to-capture")
-
-    html2canvas(elementToCapture).then(canvas => {
+      const elementToCapture = document.getElementById("element-id-to-capture")
+      const canvas = await html2canvas(elementToCapture)
       const imgData = canvas.toDataURL("image/png")
-      const pdf = new jsPdf("p", "mm", "a4")
+
+      const pdf = new jsPdf("p", "mm", "a4", true)
       const componentWidth = pdf.internal.pageSize.getWidth()
       const componentHeight = pdf.internal.pageSize.getHeight()
       const imgWidth = canvas.width
@@ -93,7 +86,65 @@ const ReportCard = ({ modal, toggle, viewData }) => {
         imgHeight * ratio
       )
       pdf.save("reportCard.pdf")
-    })
+
+      // Get the PDF data as a Uint8Array
+      const pdfData = pdf.output("datauristring")
+      storePDFInLocalStorage(pdfData)
+      // Now you can do whatever you want with pdfData, such as sending it to a server or storing it in state
+    } catch (error) {
+      console.error("Error generating PDF:", error)
+    }
+  }
+
+  const sendPDF = async () => {
+    try {
+      const elementToCapture = document.getElementById("element-id-to-capture")
+      const canvas = await html2canvas(elementToCapture)
+      const imgData = canvas.toDataURL("image/png")
+
+      const pdf = new jsPdf("p", "mm", "a4", true)
+      const componentWidth = pdf.internal.pageSize.getWidth()
+      const componentHeight = pdf.internal.pageSize.getHeight()
+      const imgWidth = canvas.width
+      const imgHeight = canvas.height
+      const ratio = Math.min(
+        componentWidth / imgWidth,
+        componentHeight / imgHeight
+      )
+
+      const imgX = (componentWidth - imgWidth * ratio) / 2
+      const imgY = 0
+      pdf.addImage(
+        imgData,
+        "PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      )
+
+      const pdfBlob = pdf.output("blob") // Get PDF data as a Blob
+      const formData = new FormData()
+      formData.append("file", pdfBlob, "reportCard.pdf")
+
+      // Use the Fetch API to send the PDF to the backend
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}${url.EMAIL_TO_STUDENT}?unikodeuserid=${viewData?.unikodeuserid}&testemail=sharad.kumar@codeshastra.com`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+      if (response.ok) {
+        tosterMsg("Email Sent SuccessFully")
+      } else {
+        tosterMsg("Error sending PDF to the backend:")
+      }
+
+      // Now you can do whatever you want with the response from the backend
+    } catch (error) {
+      tosterMsg("Error generating PDF:", error)
+    }
   }
 
   const addSoftSkillsNumber =
@@ -123,7 +174,7 @@ const ReportCard = ({ modal, toggle, viewData }) => {
             </Button>
           </Col>
           <Col md={3}>
-            <Button color="primary" className="ms-4" onClick={sendEmail}>
+            <Button color="primary" onClick={sendPDF} className="ms-4">
               Email To Student
             </Button>
           </Col>
@@ -287,33 +338,9 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                       <td>No Data</td>
                       <td>{data?.totalAvgScore}%</td>
                     </tr>
-
-                    {/* <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    
-                  </tr> */}
                   </tbody>
                 </Table>
                 <Table bordered className="mb-5 my-table-border" striped>
-                  {/* <thead className="bg-transparent">
-                  <tr>
-                    <th colSpan={7}>
-                      <div className="d-flex">
-                        <div style={{ fontSize: "16px", fontWeight: "500" }}>
-                          <strong>Name :</strong> {data?.name}
-                        </div>
-                        <div
-                          style={{ fontSize: "16px", fontWeight: "500" }}
-                          className="ms-5"
-                        >
-                          <strong>ID number :</strong> {data?.id}
-                        </div>
-                      </div>
-                    </th>
-                  </tr>
-                </thead> */}
                   <thead>
                     <tr>
                       <th style={{ background: "#6C57D2", color: "#fff" }}>

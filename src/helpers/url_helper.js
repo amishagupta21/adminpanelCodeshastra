@@ -175,6 +175,8 @@ export const ADD_NEW_LEARNER = "/admin/batch/enroll/user-unikode/course"
 
 export const REPORT_CARD_DESIGN = "/admin/batch/learners/reportcard"
 
+export const EMAIL_TO_STUDENT = "/email/sent"
+
 // DASHBOARD
 
 export const GET_DASHBOARD = "/admin/batch"
