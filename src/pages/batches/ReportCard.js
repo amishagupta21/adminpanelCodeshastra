@@ -89,7 +89,7 @@ const ReportCard = ({ modal, toggle, viewData }) => {
 
       // Get the PDF data as a Uint8Array
       const pdfData = pdf.output("datauristring")
-      storePDFInLocalStorage(pdfData)
+      // storePDFInLocalStorage(pdfData)
       // Now you can do whatever you want with pdfData, such as sending it to a server or storing it in state
     } catch (error) {
       console.error("Error generating PDF:", error)
@@ -129,7 +129,7 @@ const ReportCard = ({ modal, toggle, viewData }) => {
 
       // Use the Fetch API to send the PDF to the backend
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}${url.EMAIL_TO_STUDENT}?unikodeuserid=${viewData?.unikodeuserid}&testemail=sharad.kumar@codeshastra.com`,
+        `${process.env.REACT_APP_API_URL}${url.EMAIL_TO_STUDENT}?unikodeuserid=5582`,
         {
           method: "POST",
           body: formData,
