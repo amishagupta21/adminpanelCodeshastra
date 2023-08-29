@@ -129,7 +129,7 @@ const ReportCard = ({ modal, toggle, viewData }) => {
 
       // Use the Fetch API to send the PDF to the backend
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}${url.EMAIL_TO_STUDENT}?unikodeuserid=5582`,
+        `${process.env.REACT_APP_API_URL}${url.EMAIL_TO_STUDENT}?unikodeuserid=${viewData?.unikodeuserid}`,
         {
           method: "POST",
           body: formData,
@@ -146,11 +146,6 @@ const ReportCard = ({ modal, toggle, viewData }) => {
       tosterMsg("Error generating PDF:", error)
     }
   }
-
-  const addSoftSkillsNumber =
-    parseInt(data?.softSkillAssignmentScore) +
-    parseInt(data?.softskillWeeklyAssessmentScore) +
-    parseInt(data?.softskillAggregateScore)
 
   return (
     <Modal
@@ -284,7 +279,9 @@ const ReportCard = ({ modal, toggle, viewData }) => {
                 <FormGroup row>
                   <Label sm={3}>Total No of Soft Skills Classes</Label>
                   <Col sm={9} className="bg-1">
-                    {addSoftSkillsNumber}
+                    {parseInt(data?.softSkillAssignmentScore) +
+                      parseInt(data?.softskillWeeklyAssessmentScore) +
+                      parseInt(data?.softskillAggregateScore)}
                   </Col>
                 </FormGroup>
               </Col>
