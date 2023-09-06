@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import _debounce from "lodash/debounce"
-import { isEmpty, size } from "lodash"
+import { isEmpty, isNumber, size } from "lodash"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import {
@@ -46,6 +46,7 @@ import ModalDelete from "components/Common/ModalDelete"
 import { default as ReactSelect } from "react-select"
 import LearnerTable from "../LearnerTable"
 import blueTick from "../../../assets/fonts/blue-tick.svg"
+import UserDashboard from "./UserDashboard"
 
 const Option = props => {
   return (
@@ -83,7 +84,7 @@ class LearnerPage extends Component {
       multiSelectTestResult: [],
       optionSelected: null,
       isFilterApplied: false,
-      totalPages: "",
+      totalPages: 1,
       currentPage: 1,
       totalLearner: "",
       columns: [
@@ -184,14 +185,16 @@ class LearnerPage extends Component {
     this.toggle(!this.state.modal)
   }
 
-  componentDidMount(page, sizePerPage, currentPage, usersCount, duration) {
+  componentDidMount(page, sizePerPage, currentPage, totalPages, duration) {
     const {
       manageUser,
       userRoles,
       onGetLearner,
       onGetAllLearner,
       onGetStatusFilter,
+      usersCount,
     } = this.props
+
     if (manageUser && !manageUser.length) {
       onGetLearner({
         search: "",
@@ -200,16 +203,26 @@ class LearnerPage extends Component {
         duration,
         currentPage,
         sizePerPage,
+        totalPages,
       })
     }
 
-    this.setState({ manageUser, userRoles })
-    this.setState({ totalPages: Math.ceil(usersCount / 10) })
+    this.setState({
+      manageUser,
+      userRoles,
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { manageUser, userRoles, onGetLearner, deleteData, currentPage } =
-      this.props
+    const {
+      manageUser,
+      userRoles,
+      onGetLearner,
+      deleteData,
+      currentPage,
+      totalPages,
+    } = this.props
+
     if (
       !isEmpty(manageUser) &&
       size(prevProps.manageUser) !== size(manageUser)
@@ -401,12 +414,12 @@ class LearnerPage extends Component {
       value,
       isFilterApplied,
       currentPage,
-      totalPages,
       setCurrentPage,
+      totalPages,
     } = this.state
+
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser, manageUserLoader } = this.props
-
     // const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
@@ -441,92 +454,7 @@ class LearnerPage extends Component {
         <div className="page-content">
           <Container fluid className="learnerListing">
             <Breadcrumbs title="Unikaksha" breadcrumbItem="Users" />
-            <Row>
-              <Col>
-                <div className="batches-box">
-                  <Card>
-                    <Nav.Link eventKey="first">
-                      <CardBody>
-                        <div className="box">
-                          <div>
-                            <p className="box-heading">Today New learner</p>
-                            {/* <p className="score">{dashboard?.totalBatch}</p> */}
-                          </div>
-                          <div className="icon-circle">
-                            <span className="mdi mdi-account-circle" />
-                          </div>
-                        </div>
-                      </CardBody>
-                    </Nav.Link>
-                  </Card>
-                </div>
-              </Col>
-              <Col>
-                <div className="batches-box">
-                  <Card>
-                    <Nav.Link eventKey="second">
-                      <CardBody>
-                        <div className="box">
-                          <div>
-                            <p className="box-heading">Total Learner</p>
-                            <p className="score">{usersCount?.count}</p>
-                          </div>
-                          <div className="icon-circle">
-                            <span className="mdi mdi-account-circle" />
-                          </div>
-                        </div>
-                      </CardBody>
-                    </Nav.Link>
-                  </Card>
-                </div>
-              </Col>
-              <Col>
-                <div className="batches-box">
-                  <Card>
-                    <Nav.Link eventKey="third">
-                      <CardBody>
-                        <div className="box">
-                          <div>
-                            <p className="box-heading">
-                              Learner Enrolled in active batches
-                            </p>
-                            <p className="score">
-                              {usersCount?.learnersFromActiveBatches}
-                            </p>
-                          </div>
-                          <div className="icon-circle">
-                            <span className="mdi mdi-account-circle" />
-                          </div>
-                        </div>
-                      </CardBody>
-                    </Nav.Link>
-                  </Card>
-                </div>
-              </Col>
-              <Col>
-                <div className="batches-box">
-                  <Card>
-                    <Nav.Link eventKey="fourth">
-                      <CardBody>
-                        <div className="box">
-                          <div>
-                            <p className="box-heading">
-                              Learner Enrolled in All batches
-                            </p>
-                            <p className="score">
-                              {usersCount?.learnersFromAllBatches}
-                            </p>
-                          </div>
-                          <div className="icon-circle">
-                            <span className="mdi mdi-account-circle" />
-                          </div>
-                        </div>
-                      </CardBody>
-                    </Nav.Link>
-                  </Card>
-                </div>
-              </Col>
-            </Row>
+            <UserDashboard usersCount={usersCount} />
             <ModalDelete
               isOpen={this.state.modal}
               toggle={this.toggle}

@@ -22,7 +22,6 @@ function LearnerTable({
   key,
   columns,
   manageUserLoader,
-  totalPages,
   handlePerPageChange,
   currentPage,
   setCurrentPage,
@@ -77,7 +76,7 @@ function LearnerTable({
                     />
                     <ResponsivePagination
                       current={currentPage}
-                      total={usersCount}
+                      total={Math.ceil(usersCount / 10)}
                       maxWidth={3}
                       onPageChange={n => {
                         setCurrentPage(n)
