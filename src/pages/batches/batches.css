@@ -594,3 +594,8 @@ table thead {
 .my-table-border td {
   border: 1px solid #b9b9b9 !important;
 }
+
+.export-dropdown-item .dropdown-item {
+  position: relative !important;
+  right: 10px !important;
+}
