@@ -782,7 +782,6 @@ const Batches = props => {
                       Sync Now
                     </Button>
                   )}
-
                   <Button
                     color="success"
                     className="rounded-pill mb-3"
@@ -896,19 +895,17 @@ const Batches = props => {
                                         Export
                                         <i className="mdi mdi-menu-down"></i>
                                       </DropdownToggle>
-                                      <DropdownMenu>
+                                      <DropdownMenu className="export-dropdown-item">
                                         <DropdownItem
                                           onClick={handleDownloadPDF}
                                         >
                                           Download as pdf
                                         </DropdownItem>
-                                        <DropdownItem>
-                                          <ExportCSVButton
-                                            {...toolkitProps.csvProps}
-                                          >
-                                            Download as CSV
-                                          </ExportCSVButton>
-                                        </DropdownItem>
+                                        <ExportCSVButton
+                                          {...toolkitProps.csvProps}
+                                        >
+                                          Download as CSV
+                                        </ExportCSVButton>
                                       </DropdownMenu>
                                     </UncontrolledDropdown>
                                   </div>
