@@ -298,15 +298,13 @@ const BatchListTable = ({
                     <DropdownToggle caret color="primary">
                       Export <i className="mdi mdi-menu-down"></i>
                     </DropdownToggle>
-                    <DropdownMenu>
+                    <DropdownMenu className="export-dropdown-item">
                       <DropdownItem onClick={handleDownloadPDF}>
                         Download as pdf
                       </DropdownItem>
-                      <DropdownItem>
-                        <ExportCSVButton {...toolkitProps.csvProps}>
-                          Download as excel
-                        </ExportCSVButton>
-                      </DropdownItem>{" "}
+                      <ExportCSVButton {...toolkitProps.csvProps}>
+                        Download as excel
+                      </ExportCSVButton>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </div>
