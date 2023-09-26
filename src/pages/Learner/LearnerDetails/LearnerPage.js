@@ -25,9 +25,11 @@ import {
 } from "reactstrap"
 // datatable related plugins
 import BootstrapTable from "react-bootstrap-table-next"
-import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
+import ToolkitProvider, { CSVExport } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import Breadcrumbs from "components/Common/Breadcrumb"
 import Nav from "react-bootstrap/Nav"
+import jsPDF from "jspdf"
+import "jspdf-autotable"
 
 import {
   getLearner,
@@ -47,6 +49,8 @@ import { default as ReactSelect } from "react-select"
 import LearnerTable from "../LearnerTable"
 import blueTick from "../../../assets/fonts/blue-tick.svg"
 import UserDashboard from "./UserDashboard"
+import { ExportCSVButton } from "react-bootstrap-table"
+
 
 const Option = props => {
   return (
@@ -92,6 +96,8 @@ class LearnerPage extends Component {
           dataField: "_id",
           sort: true,
           hidden: true,
+          csvExport: false,
+          // formatter: (cellContent, user) => <>{user?.id}</>
           // formatter: (cellContent, user) => <>{row?._id}</>,
         },
         {
@@ -222,7 +228,6 @@ class LearnerPage extends Component {
       currentPage,
       totalPages,
     } = this.props
-
     if (
       !isEmpty(manageUser) &&
       size(prevProps.manageUser) !== size(manageUser)
@@ -241,7 +246,6 @@ class LearnerPage extends Component {
       onGetLearner({ currentPage: this.state.currentPage })
     }
   }
-
   // handlePageChange = page => {
   //   this.setState({ currentPage: page })
   //   const data = {
@@ -290,6 +294,82 @@ class LearnerPage extends Component {
       })
   }
 
+
+  handleDownloadPDF = () => {
+    const doc = new jsPDF("landscape");
+  
+    const headers = this.state.columns.map(column => {
+      return column.text;
+    });
+  
+    const data = this.state.manageUser.map(user => {
+      return [
+        user._id, 
+        user.fullName, 
+        user.email, 
+        user.phone, 
+        user.status,
+        user.userProfileData?.education_details?.highest_qualification, 
+        user.userProfileData?.occupation, 
+        dateFormate(user.updatedAt), 
+        dateFormate(user.createdAt), 
+      ];
+    });
+  
+    doc.autoTable({
+      head: [headers],
+      body: data,
+    });
+  
+    doc.save("document.pdf");
+  }
+  
+  exportToCSV = () => {
+    const { manageUser } = this.state; // Replace with your data source
+    const headers = [
+      'Name', // Replace with your column headers
+      'Email',
+      'Mobile',
+      'Status',
+      'Highest Education',
+      'Learner Type',
+      'Updated At',
+      'Created At',
+    ];
+  
+    const csvRows = [];
+    csvRows.push(headers.join(',')); // Add the headers as the first row
+  
+    manageUser.forEach(user => {
+      const rowData = [
+        user.fullName,
+        user.email,
+        user.phone,
+        user.status,
+        user.userProfileData?.education_details?.highest_qualification,
+        user.userProfileData?.occupation,
+        dateFormate(user.updatedAt),
+        dateFormate(user.createdAt),
+      ];
+      csvRows.push(rowData.join(','));
+    });
+  
+    const csvData = csvRows.join('\n');
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'data.csv';
+  
+    document.body.appendChild(a);
+    a.click();
+  
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
+   
+  
   handleTestStatus = selectedOption => {
     let multiSelectTestResult = []
     selectedOption.map(item => {
@@ -525,9 +605,9 @@ class LearnerPage extends Component {
                                   </div>
                                   <div>
                                     {this?.state.selectedStatus?.length > 0 ||
-                                    this.state.multiSelectTestResult?.length >
+                                      this.state.multiSelectTestResult?.length >
                                       0 ||
-                                    this.state.selectedCourseType?.length >
+                                      this.state.selectedCourseType?.length >
                                       0 ? (
                                       <Button
                                         type="button"
@@ -549,13 +629,26 @@ class LearnerPage extends Component {
                                       </Button>
                                     )}
 
-                                    <Button
-                                      type="button"
-                                      color="secondary"
-                                      className="btn mb-2 me-2"
-                                    >
-                                      Export
-                                    </Button>
+                                    <Col md={6}>
+                                      <div className="text-end">
+                                        {/* <Button color="secondary">Export</Button> */}
+                                        <UncontrolledDropdown className="me-2" direction="down">
+                                          <DropdownToggle caret color="primary">
+                                            Export <i className="mdi mdi-menu-down"></i>
+                                          </DropdownToggle>
+                                          <DropdownMenu>
+                                            <DropdownItem onClick={this.handleDownloadPDF}>
+                                              Download as pdf
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                            <DropdownItem onClick={this.exportToCSV}>
+                                            Download as CSV
+                                              </DropdownItem>
+                                            </DropdownItem>{" "}
+                                          </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                      </div>
+                                    </Col>
                                   </div>
                                 </Col>
                               </div>
