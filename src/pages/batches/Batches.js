@@ -101,13 +101,9 @@ const Batches = props => {
 
   const [unikaksha, setUnikaksha] = useState(false)
 
-  console.log(selectedCourseId, "/////////selectedCourseId")
-
   const openUnikasha = () => {
     setUnikaksha(!unikaksha)
   }
-
-  console.log(courseIdData, "////////courseIdData")
 
   // const[currBatch , setCurrBatch] = useState(onGetAllusersCountList)
   const [activeTab, setActiveTab] = useState("true")
@@ -472,7 +468,6 @@ const Batches = props => {
   useEffect(() => {
     const getNewBatches = async () => {
       const resp = await getCourseData(url.GET_MOODLE_COURSE)
-      console.log(resp, "////////resp")
       setCourseIdData(resp?.data)
       return resp
     }
