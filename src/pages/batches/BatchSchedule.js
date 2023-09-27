@@ -87,7 +87,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
             </tr>
           </thead>
           <tbody>
-            {editData?.batch_schedule?.value?.map((item, index) => {
+            {editValue?.map((item, index) => {
               const time = item?.start_time
               const response = time?.split(" ")
 
@@ -96,7 +96,128 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
 
               return (
                 <tr key={index} className="tr-border">
-                  <td>
+                  <>
+                    <td key={index}>
+                      <div className="accordionItem-table">
+                        <FormGroup>
+                          <TimeField
+                            name="start_time"
+                            type="text"
+                            // className="me-2 bg-grey border-0"
+                            className="form-control me-2"
+                            style={{ width: "64px" }}
+                            placeholder="09:00"
+                            value={response?.length ? response[0] : ""}
+                            onChange={e => handleChange(e, index)}
+                          />
+                        </FormGroup>
+                        <FormGroup className="select_box1 border-0">
+                          <Input
+                            style={{ width: "64px" }}
+                            type="select"
+                            name="started_time"
+                            value={item?.started_time}
+                            onChange={
+                              e => handleChange(e, index)
+                              // setEditData({
+                              //   ...editData,
+                              //   editData: e.target.value,
+                              // })
+                            }
+                          >
+                            <option value="PM">PM</option>
+                            <option value="AM">AM</option>
+                          </Input>
+                        </FormGroup>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="d-flex">
+                        <FormGroup>
+                          <TimeField
+                            type="text"
+                            name="end_time"
+                            // className="me-2 bg-grey border-0"
+                            className="me-2 form-control"
+                            style={{ width: "64px" }}
+                            placeholder="05:00"
+                            value={response1?.length ? response1[0] : ""}
+                            onChange={e => handleChange(e, index)}
+                          />
+                        </FormGroup>
+                        <FormGroup className="select_box1 border-0">
+                          <Input
+                            style={{ width: "64px" }}
+                            type="select"
+                            name="ended_time"
+                            value={item?.ended_time}
+                            onChange={
+                              e => handleChange(e, index)
+                              // setEditData({
+                              //   ...editData,
+                              //   editData: e.target.value,
+                              // })
+                            }
+                          >
+                            <option value="PM">PM</option>
+                            <option value="AM">AM</option>
+                          </Input>
+                        </FormGroup>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="d-flex justify-content-between">
+                        {days.map((dayValue, dayIndex) => {
+                          return (
+                            <FormGroup
+                              key={dayIndex}
+                              className="checkbox"
+                              inline
+                            >
+                              <input
+                                name="day"
+                                id="day"
+                                value={dayValue.value}
+                                type="checkbox"
+                                checked={
+                                  item?.day &&
+                                  item?.day?.includes(
+                                    dayValue?.value?.toString()
+                                  )
+                                }
+                                onClick={e => handleDaysChange(e, index)}
+                              />
+                              &nbsp;
+                              <label className="check-label">
+                                {dayValue?.name}
+                              </label>
+                            </FormGroup>
+                          )
+                        })}
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        className="me-3"
+                        onClick={() => {
+                          if (editValue.length > 1) {
+                            const newUpdateDays = [...editValue]
+                            newUpdateDays.splice(index, 1)
+                            setValue(newUpdateDays)
+                          }
+                        }}
+                      >
+                        <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                      </span>
+                    </td>
+                  </>
+                </tr>
+              )
+            })}
+            {/* {editValue?.map((item, index) => {
+              return (
+                <tr key={index}>
+                  <td key={index}>
                     <div className="accordionItem-table">
                       <FormGroup>
                         <TimeField
@@ -106,8 +227,8 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                           className="form-control me-2"
                           style={{ width: "64px" }}
                           placeholder="09:00"
-                          value={response?.length ? response[0] : ""}
-                          onChange={e => handleChange(e, index)}
+                          // value={response?.length ? response[0] : ""}
+                          // onChange={e => handleChange(e, index)}
                         />
                       </FormGroup>
                       <FormGroup className="select_box1 border-0">
@@ -115,97 +236,24 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                           style={{ width: "64px" }}
                           type="select"
                           name="started_time"
-                          value={item?.started_time}
-                          onChange={
-                            e => handleChange(e, index)
-                            // setEditData({
-                            //   ...editData,
-                            //   editData: e.target.value,
-                            // })
-                          }
+                          // value={item?.started_time}
+                          // onChange={
+                          //   e => handleChange(e, index)
+                          //   // setEditData({
+                          //   //   ...editData,
+                          //   //   editData: e.target.value,
+                          //   // })
+                          // }
                         >
                           <option value="PM">PM</option>
                           <option value="AM">AM</option>
                         </Input>
                       </FormGroup>
                     </div>
-                  </td>
-                  <td>
-                    <div className="d-flex">
-                      <FormGroup>
-                        <TimeField
-                          type="text"
-                          name="end_time"
-                          // className="me-2 bg-grey border-0"
-                          className="me-2 form-control"
-                          style={{ width: "64px" }}
-                          placeholder="05:00"
-                          value={response1?.length ? response1[0] : ""}
-                          onChange={e => handleChange(e, index)}
-                        />
-                      </FormGroup>
-                      <FormGroup className="select_box1 border-0">
-                        <Input
-                          style={{ width: "64px" }}
-                          type="select"
-                          name="ended_time"
-                          value={item?.ended_time}
-                          onChange={
-                            e => handleChange(e, index)
-                            // setEditData({
-                            //   ...editData,
-                            //   editData: e.target.value,
-                            // })
-                          }
-                        >
-                          <option value="PM">PM</option>
-                          <option value="AM">AM</option>
-                        </Input>
-                      </FormGroup>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="d-flex justify-content-between">
-                      {days.map((dayValue, dayIndex) => {
-                        return (
-                          <FormGroup key={dayIndex} className="checkbox" inline>
-                            <input
-                              name="day"
-                              id="day"
-                              value={dayValue.value}
-                              type="checkbox"
-                              checked={
-                                item?.day &&
-                                item?.day?.includes(dayValue?.value?.toString())
-                              }
-                              onClick={e => handleDaysChange(e, index)}
-                            />
-                            &nbsp;
-                            <label className="check-label">
-                              {dayValue?.name}
-                            </label>
-                          </FormGroup>
-                        )
-                      })}
-                    </div>
-                  </td>
-                  <td>
-                    <span
-                      className="me-3"
-                      onClick={() => {
-                        if (editValue.length > 1) {
-                          const newUpdateDays = [...editValue]
-                          newUpdateDays.splice(index, 1)
-                          setValue(newUpdateDays)
-                        }
-                      }}
-                    >
-                      <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                    </span>
                   </td>
                 </tr>
               )
-            })}
+            })} */}
           </tbody>
         </Table>
         <Row>
