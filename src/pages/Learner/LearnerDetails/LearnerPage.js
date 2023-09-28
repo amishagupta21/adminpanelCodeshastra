@@ -135,17 +135,15 @@ class LearnerPage extends Component {
           dataField: "status",
           text: "Status",
           sort: true,
-          formatter: (cellContent, user) => (
-            <span
-              className={
-                user?.status === true
-                  ? "btn-status-active"
-                  : "btn-status-inactive"
-              }
-            >
-              {user?.status === true ? "Active" : "Inactive"}
-            </span>
-          ),
+          formatter: (cellContent, user) => {
+            if (user?.status === true) {
+              return <span className="btn-status-active">Active</span>
+            } else if (user?.status === false) {
+              return <span className="btn-status-inactive">Inactive</span>
+            } else {
+              return <span></span>
+            }
+          },
         },
         {
           dataField: "userProfileData.education_details.highest_qualification",
@@ -485,6 +483,10 @@ class LearnerPage extends Component {
     }
   }
 
+  // componentDidMount() {
+  //   if()
+  // }
+
   // handleOnSelectAll = (isSelect, rows) => {
   //   const ids = rows.map(r => r._id)
   //   if (isSelect) {
@@ -539,6 +541,11 @@ class LearnerPage extends Component {
         currentPage: value,
       })
     }
+
+    console.log(
+      this.state.multiSelectTestResult,
+      "/////////this.state.multiSelectTestResult"
+    )
 
     return (
       <React.Fragment>
