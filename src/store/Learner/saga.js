@@ -69,7 +69,7 @@ function* onFilterLearner({ payload: data }) {
     const response = yield call(getStatusFilter, data)
     tosterMsg(response?.message)
     yield put(getLearnerSuccess(response?.data?.docs))
-    yield put(getLearnerCountSuccess(response?.data?.totalDocs))
+    yield put(getLearnerCountSuccess(response?.data?.totalDocs||response?.data))
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getLearnerFail(error))

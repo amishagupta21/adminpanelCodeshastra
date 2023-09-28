@@ -13,7 +13,7 @@ const UserDashboard = ({ usersCount }) => {
                 <div className="box">
                   <div>
                     <p className="box-heading">Today New learner</p>
-                    {/* <p className="score">{dashboard?.totalBatch}</p> */}
+                    <p className="score">{usersCount?.todayNewLearner}</p>
                   </div>
                   <div className="icon-circle">
                     <span className="mdi mdi-account-circle" />
