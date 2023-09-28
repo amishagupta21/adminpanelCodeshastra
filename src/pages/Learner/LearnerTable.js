@@ -41,15 +41,19 @@ function LearnerTable({
           >
             {toolkitProps => (
               <React.Fragment>
-                {selectRow?.selected?.length > 0 ? (
+                {/* {selectRow?.selected?.length > 0 ? (
                   <h6 className="mt-5">
                     All {selectRow?.selected?.length} Learner on this page are
                     selected. <Link>Select All {usersCount} Learners</Link>{" "}
                   </h6>
                 ) : (
                   <h6 className="mt-5"> Users: {usersCount}</h6>
+                )} */}
+                {usersCount ? (
+                  <h6 className="mt-5"> Users: {usersCount}</h6>
+                ) : (
+                  <h6 className="mt-5"> Showing Result: {manageUser.length}</h6>
                 )}
-
                 <Col xl="12">
                   <div className="table-responsive">
                     <BootstrapTable
