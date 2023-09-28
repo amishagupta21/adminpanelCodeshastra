@@ -314,11 +314,11 @@ class LearnerPage extends Component {
 
     const data = this.state.manageUser.map(user => {
       return [
-        user._id,
+        "",
         user.fullName,
         user.email,
         user.phone,
-        user.status,
+        user.status === true ? "Active" : "Inactive",
         user.userProfileData?.education_details?.highest_qualification,
         user.userProfileData?.occupation,
         dateFormate(user.updatedAt),
@@ -445,14 +445,9 @@ class LearnerPage extends Component {
       params.courseType = selectedCourseType[0]
     }
     this.setState({ isFilterApplied: true })
-    
-   this.props.onGetStatusFilter(params)
+
+    this.props.onGetStatusFilter(params)
   }
-
-
-
-
-
 
   removeStatus = removeItem => {
     const options = this?.state?.selectedStatus?.filter(
@@ -515,7 +510,7 @@ class LearnerPage extends Component {
 
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser, manageUserLoader } = this.props
-   
+
     // const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
@@ -610,15 +605,7 @@ class LearnerPage extends Component {
                                       }}
                                     />
                                   </div>
-                                  <div>
-                                    <Select
-                                      className="sel-width"
-                                      name="filter"
-                                      placeholder="Course Type"
-                                      onChange={this.handleCourseType}
-                                      options={this.courseType}
-                                    />
-                                  </div>
+
                                   <div>
                                     {this?.state.selectedStatus?.length > 0 ||
                                     this.state.multiSelectTestResult?.length >
@@ -644,35 +631,30 @@ class LearnerPage extends Component {
                                         Apply Filter
                                       </Button>
                                     )}
-
-                                    <Col md={6}>
-                                      <div className="text-end">
-                                        {/* <Button color="secondary">Export</Button> */}
-                                        <UncontrolledDropdown
-                                          className="me-2"
-                                          direction="down"
+                                  </div>
+                                  <div className="text-end">
+                                    {/* <Button color="secondary">Export</Button> */}
+                                    <UncontrolledDropdown
+                                      className="me-2"
+                                      direction="down"
+                                    >
+                                      <DropdownToggle caret color="primary">
+                                        Export{" "}
+                                        <i className="mdi mdi-menu-down"></i>
+                                      </DropdownToggle>
+                                      <DropdownMenu>
+                                        <DropdownItem
+                                          onClick={this.handleDownloadPDF}
                                         >
-                                          <DropdownToggle caret color="primary">
-                                            Export{" "}
-                                            <i className="mdi mdi-menu-down"></i>
-                                          </DropdownToggle>
-                                          <DropdownMenu>
-                                            <DropdownItem
-                                              onClick={this.handleDownloadPDF}
-                                            >
-                                              Download as pdf
-                                            </DropdownItem>
-                                            <DropdownItem>
-                                              <DropdownItem
-                                                onClick={this.exportToCSV}
-                                              >
-                                                Download as CSV
-                                              </DropdownItem>
-                                            </DropdownItem>{" "}
-                                          </DropdownMenu>
-                                        </UncontrolledDropdown>
-                                      </div>
-                                    </Col>
+                                          Download as pdf
+                                        </DropdownItem>
+                                        <DropdownItem
+                                          onClick={this.exportToCSV}
+                                        >
+                                          Download as CSV
+                                        </DropdownItem>{" "}
+                                      </DropdownMenu>
+                                    </UncontrolledDropdown>
                                   </div>
                                 </Col>
                               </div>
@@ -798,9 +780,7 @@ LearnerPage.propTypes = {
   manageUserLoader: PropTypes.any,
 }
 
-const mapStateToProps = ({ Learner, state, count }) => 
- (
-  {
+const mapStateToProps = ({ Learner, state, count }) => ({
   manageUser: Learner?.manageUser,
   manageUserLoader: Learner?.manageUserLoader,
   usersCount: Learner?.count,
