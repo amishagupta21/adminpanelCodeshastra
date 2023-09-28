@@ -135,6 +135,17 @@ class LearnerPage extends Component {
           dataField: "status",
           text: "Status",
           sort: true,
+          formatter: (cellContent, user) => (
+            <span
+              className={
+                user?.status === true
+                  ? "btn-status-active"
+                  : "btn-status-inactive"
+              }
+            >
+              {user?.status === true ? "Active" : "Inactive"}
+            </span>
+          ),
         },
         {
           dataField: "userProfileData.education_details.highest_qualification",
@@ -201,7 +212,6 @@ class LearnerPage extends Component {
       onGetStatusFilter,
       usersCount,
     } = this.props
-
     if (manageUser && !manageUser.length) {
       onGetLearner({
         search: "",
@@ -421,7 +431,7 @@ class LearnerPage extends Component {
     } = this.state
     let params = {
       page: 1,
-      perPage: 5102,
+      perPage: 39548,
     }
     if (selectedStatus.length) {
       params.status = selectedStatus[0]

@@ -363,7 +363,7 @@ const getFilters = data => {
 const getStatusFilter = data =>
   getData(
     url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.perPage || 5102}&search=${
+      `?page=${data?.page || 1}&perPage=${data?.perPage || 39548}&search=${
         data?.search || ""
       }${getFilters(data)}`
   )
