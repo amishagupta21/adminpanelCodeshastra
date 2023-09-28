@@ -435,8 +435,14 @@ class LearnerPage extends Component {
       params.courseType = selectedCourseType[0]
     }
     this.setState({ isFilterApplied: true })
-    this.props.onGetStatusFilter(params)
+    
+   this.props.onGetStatusFilter(params)
   }
+
+
+
+
+
 
   removeStatus = removeItem => {
     const options = this?.state?.selectedStatus?.filter(
@@ -499,6 +505,7 @@ class LearnerPage extends Component {
 
     const { manageUserDataCount } = this.state
     const { usersCount, manageUser, manageUserLoader } = this.props
+   
     // const paginationPage = Array.apply(null, new Array(pageCount))
 
     const defaultSorted = [
@@ -781,7 +788,9 @@ LearnerPage.propTypes = {
   manageUserLoader: PropTypes.any,
 }
 
-const mapStateToProps = ({ Learner, state, count }) => ({
+const mapStateToProps = ({ Learner, state, count }) => 
+ (
+  {
   manageUser: Learner?.manageUser,
   manageUserLoader: Learner?.manageUserLoader,
   usersCount: Learner?.count,
