@@ -378,6 +378,7 @@ class LearnerPage extends Component {
   }
 
   handleTestStatus = selectedOption => {
+    this.removeAll()
     let multiSelectTestResult = []
     selectedOption.map(item => {
       // test += "," + item.value
@@ -542,11 +543,7 @@ class LearnerPage extends Component {
       })
     }
 
-    console.log(
-      this.state.multiSelectTestResult,
-      "/////////this.state.multiSelectTestResult"
-    )
-
+   
     return (
       <React.Fragment>
         <div className="page-content">
