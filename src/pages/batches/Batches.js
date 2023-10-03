@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import "../batches/batches.css"
-import axios from "axios"
 
 import {
   Row,
@@ -65,6 +64,7 @@ import ResponsivePagination from "react-responsive-pagination"
 import "react-responsive-pagination/themes/classic.css"
 import Unikaksha from "./Unikaksha"
 import FilterBatches from "./FilterBatches"
+import BatchesFunctionality from "./BatchesFunctionality"
 
 const Batches = props => {
   const axios = require("axios")
@@ -81,14 +81,12 @@ const Batches = props => {
     manageUserLoader,
     onGetAllBatchesList,
   } = props
-  const [item, setItem] = useState(manageUser)
   const [isExpanded, setIsExpanded] = useState(null)
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
   const [user, setUser] = useState({})
   const [users, setUsers] = useState([])
   const [editModal, setEditModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [clickedIds, setClickedIds] = useState([])
   const { ExportCSVButton } = CSVExport
   const [active, setActive] = useState(false)
   const [data, setData] = useState([])
@@ -98,12 +96,8 @@ const Batches = props => {
   const [isSelected, setIsSelected] = useState("first")
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState()
-
-  const [unikaksha, setUnikaksha] = useState(false)
-
-  const openUnikasha = () => {
-    setUnikaksha(!unikaksha)
-  }
+  const [item, setItem] = useState(manageUser)
+  const [clickedIds, setClickedIds] = useState([])
 
   // const[currBatch , setCurrBatch] = useState(onGetAllusersCountList)
   const [activeTab, setActiveTab] = useState("true")
@@ -132,17 +126,7 @@ const Batches = props => {
     }
   }
 
-  const [modal, setModal] = useState(false)
-  const toggle = e => {
-    setModal(!modal)
-    e.stopPropagation()
-    e.preventDefault()
-  }
   const history = useHistory()
-
-  useEffect(() => {
-    setItem(manageUser)
-  }, [manageUser])
 
   useEffect(() => {
     onGetBatchesList({ id: params.id, page: currentPage })
@@ -158,24 +142,6 @@ const Batches = props => {
       order: "asce",
     },
   ]
-
-  const onClickDelete = async id => {
-    const resp = await del(url.GET_DELETE_BATCHES + `${user?.id}`)
-    const finalItem = item.filter(item => item.id !== user?.id)
-    setItem(finalItem)
-    setDeleteModalIsOpen(false)
-    return resp
-  }
-
-  const sorting = () => {
-    manageUser.sort((a, b) => a.name.localeCompare(b.name))
-
-    setItem(manageUser)
-  }
-
-  useEffect(() => {
-    setItem(sorting)
-  }, [manageUser])
 
   let state = {
     columns: [
@@ -418,38 +384,6 @@ const Batches = props => {
     // setState({ Batches })
   }
 
-  const syncNow = async () => {
-    setIsLoading(true)
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC}`, {
-        batchIdArray: clickedIds,
-      })
-      .then(res => {
-        tosterMsg(res?.data?.message)
-      })
-      .catch(err => {})
-
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_DETAIL}`, {
-        batchIdArray: clickedIds,
-      })
-      .then(res => {
-        tosterMsg(res?.data?.message)
-      })
-      .catch(err => {})
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}${url.BATCH_SYNC_GRADES}`, {
-        batchIdArray: clickedIds,
-      })
-      .then(res => {
-        tosterMsg(res?.data?.message)
-        setIsLoading(false)
-      })
-      .catch(() => {
-        setIsLoading(false)
-      })
-  }
-
   useEffect(() => {
     const getNewBatches = async () => {
       const resp = await getCourseData(url.GET_MOODLE_COURSE)
@@ -545,6 +479,24 @@ const Batches = props => {
     setItem(filteredPast)
   }
 
+  const onClickDelete = async id => {
+    const resp = await del(url.GET_DELETE_BATCHES + `${user?.id}`)
+    const finalItem = item.filter(item => item.id !== user?.id)
+    setItem(finalItem)
+    setDeleteModalIsOpen(false)
+    return resp
+  }
+
+  const sorting = () => {
+    manageUser.sort((a, b) => a.name.localeCompare(b.name))
+
+    setItem(manageUser)
+  }
+
+  useEffect(() => {
+    setItem(sorting)
+  }, [manageUser])
+
   return (
     <div className="page-content batches-home">
       <Status
@@ -583,71 +535,16 @@ const Batches = props => {
             FilterPastBatches={FilterPastBatches}
           />
 
-          <Row>
-            <Col>
-              <div className="d-flex justify-content-between my-2">
-                {/* <div>Clicked IDs: {clickedIds.join(", ")}</div> */}
-                <h4>ALL BATCHES</h4>
-                <span style={{ display: "flex" }}>
-                  <Button
-                    color="success"
-                    className="rounded-pill mb-3 me-3 px-4"
-                    onClick={openUnikasha}
-                  >
-                    Unikode Login
-                  </Button>
-                  {isLoading ? (
-                    <Button
-                      color="primary"
-                      className="rounded-pill mb-3 me-3 px-4"
-                      disabled
-                      style={{
-                        display: "flex",
-                        gap: "5px",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Spinner style={{ width: "1rem", height: "1rem" }} />
-                      syncing...
-                    </Button>
-                  ) : (
-                    <Button
-                      disabled={clickedIds.length === 0}
-                      color="primary"
-                      className="rounded-pill mb-3 me-3 px-4"
-                      onClick={syncNow}
-                    >
-                      Sync Now
-                    </Button>
-                  )}
-                  <Button
-                    color="success"
-                    className="rounded-pill mb-3"
-                    onClick={toggle}
-                  >
-                    + Create New Batch
-                  </Button>
-                </span>
-
-                <BatchNewModal
-                  modal={modal}
-                  toggle={toggle}
-                  setModal={setModal}
-                  createNewBatch={createNewBatch}
-                  onGetBatchesList={onGetBatchesList}
-                  setItem={setItem}
-                  item={item}
-                  // createBatches={createBatches}
-                />
-
-                <Unikaksha
-                  setUnikaksha={setUnikaksha}
-                  openUnikasha={openUnikasha}
-                  unikaksha={unikaksha}
-                />
-              </div>
-            </Col>
-          </Row>
+          <BatchesFunctionality
+            isLoading={isLoading}
+            createNewBatch={createNewBatch}
+            onGetBatchesList={onGetBatchesList}
+            manageUser={manageUser}
+            setItem={setItem}
+            item={item}
+            clickedIds={clickedIds}
+            setIsLoading={setIsLoading}
+          />
           <Card>
             <CardBody>
               <div className="mt-2 batches-home">
