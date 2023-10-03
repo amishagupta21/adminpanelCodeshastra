@@ -203,7 +203,7 @@ class LearnerPage extends Component {
     this.toggle(!this.state.modal)
   }
 
-  componentDidMount(page, sizePerPage, currentPage, totalPages, duration) {
+  componentDidMount(page, sizePerPage, currentPage, totalPages) {
     const {
       manageUser,
       userRoles,
@@ -212,12 +212,12 @@ class LearnerPage extends Component {
       onGetStatusFilter,
       usersCount,
     } = this.props
+
     if (manageUser && !manageUser.length) {
       onGetLearner({
         search: "",
         page: page,
         usersCount,
-        duration,
         currentPage,
         sizePerPage,
         totalPages,
@@ -239,6 +239,7 @@ class LearnerPage extends Component {
       currentPage,
       totalPages,
     } = this.props
+
     if (
       !isEmpty(manageUser) &&
       size(prevProps.manageUser) !== size(manageUser)
@@ -283,8 +284,8 @@ class LearnerPage extends Component {
   }
 
   options = [
-    { label: "true ", value: "true" },
-    { label: "false", value: "false" },
+    { label: "Active ", value: "true" },
+    { label: "Inactive", value: "false" },
   ]
 
   testResult = [
@@ -558,7 +559,7 @@ class LearnerPage extends Component {
               usersCount={usersCount}
               isSelected={this.state.isSelected}
               setIsSelected={sendValue}
-              onGetLearner={this.props.onGetLearner}
+              // onGetLearner={this.props.onGetLearner}
               filterData={this.filterData}
               topFilter={this.topFilter}
               totalLearner={this.totalLearner}

@@ -113,8 +113,8 @@ const Batches = props => {
   }
 
   useEffect(() => {
-    setTotalPages(Math.ceil(dashboard?.totalBatch / 10))
-  }, [dashboard?.totalBatch])
+    setTotalPages(Math.ceil(usersCount / 10))
+  }, [usersCount])
 
   const closeModal = () => setActive(false)
 
@@ -165,17 +165,6 @@ const Batches = props => {
     setItem(finalItem)
     setDeleteModalIsOpen(false)
     return resp
-  }
-
-  const customComparator = (a, b) => {
-    const aNum = parseInt(a.name.replace(/[^0-9]/g, ""))
-    const bNum = parseInt(b.name.replace(/[^0-9]/g, ""))
-
-    if (aNum !== bNum) {
-      return aNum - bNum
-    } else {
-      return a.name.localeCompare(b.name)
-    }
   }
 
   const sorting = () => {
@@ -400,10 +389,6 @@ const Batches = props => {
     }
   }
 
-  // const handleClick = id => {filteredArr
-  //   setClickedIds(prevClickedIds => [...prevClickedIds, id])
-  // }
-
   const selectRow = {
     mode: "checkbox",
     clickToSelect: false,
@@ -560,39 +545,8 @@ const Batches = props => {
     setItem(filteredPast)
   }
 
-  // const filterNumContainingBatch = clickedBatch => {
-  //   setActiveTab(clickedBatch)
-
-  //   console.log("filterNumContainingBatch")
-  // }
-
-  // function getLastIndexNumber(str) {
-  //   // Extract the number at the last index of the string
-  //   const match = str.match(/[0-9]+$/)
-  //   return match ? parseInt(match[0]) : null
-  // }
-
-  const filterNums = clickedBatch => {
-    let numsarr = []
-    // Example array of strings
-    // const array = ['apple 5!', 'banana 3?', 'cherry 9*', 'date 2$'];
-
-    // Sort the array based on the numbers at the last index\\
-    setActive(clickedBatch)
-
-    // const sortedArray = item.sort((a, b) => {
-    //   const numA = getLastIndexNumber(a)
-    //   const numB = getLastIndexNumber(b)
-    //   return numA - numB
-    // })
-
-    manageUser.map(item => numsarr.push(item.name))
-
-    console.log(numsarr)
-  }
-
   return (
-    <div className="pag e-content batches-home">
+    <div className="page-content batches-home">
       <Status
         active={active}
         confirmStatus={confirmStatus}
@@ -889,6 +843,7 @@ Batches.propTypes = {
 }
 
 const mapStateToProps = ({ Batches, state, count }) => {
+  console.log(Batches, "///////////Batches")
   return {
     manageUser: Batches?.manageUser,
     manageUserLoader: Batches?.manageUserLoader,

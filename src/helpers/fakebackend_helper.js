@@ -363,7 +363,7 @@ const getLearnerList = async data => {
 const getStatusFilter = data =>
   getData(
     url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.pageSize || 39548}&search=${
+      `?page=${data?.page || 1}&perPage=${data?.pageSize || 10}&search=${
         data?.search || ""
       }${getFilters(data)}`
   )
