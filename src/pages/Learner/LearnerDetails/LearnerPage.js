@@ -92,6 +92,8 @@ class LearnerPage extends Component {
       totalPages: 1,
       currentPage: 1,
       totalLearner: "",
+      isSelected: "first",
+      topFilter: "",
       columns: [
         {
           dataField: "_id",
@@ -484,22 +486,20 @@ class LearnerPage extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   if()
-  // }
+  filterData = () => {
+    let params = {
+      page: 1,
+      perPage: 10,
+      // search: "",
+    }
+    params.search = "todayNewLeaner"
 
-  // handleOnSelectAll = (isSelect, rows) => {
-  //   const ids = rows.map(r => r._id)
-  //   if (isSelect) {
-  //     this.setState(() => ({
-  //       selected: ids,
-  //     }))
-  //   } else {
-  //     this.setState(() => ({
-  //       selected: [],
-  //     }))
-  //   }
-  // }
+    this.props.onGetLearner(params)
+  }
+
+  totalLearner = () => {
+    this.props.onGetLearner()
+  }
 
   render() {
     const {
@@ -543,13 +543,27 @@ class LearnerPage extends Component {
       })
     }
 
-   
+    const sendValue = value => {
+      this.setState({
+        isSelected: value,
+      })
+    }
+
     return (
       <React.Fragment>
         <div className="page-content">
           <Container fluid className="learnerListing">
             <Breadcrumbs title="Unikaksha" breadcrumbItem="Users" />
-            <UserDashboard usersCount={usersCount} />
+            <UserDashboard
+              usersCount={usersCount}
+              isSelected={this.state.isSelected}
+              setIsSelected={sendValue}
+              onGetLearner={this.props.onGetLearner}
+              filterData={this.filterData}
+              topFilter={this.topFilter}
+              totalLearner={this.totalLearner}
+            />
+
             <ModalDelete
               isOpen={this.state.modal}
               toggle={this.toggle}
