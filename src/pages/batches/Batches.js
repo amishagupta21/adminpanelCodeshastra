@@ -843,7 +843,6 @@ Batches.propTypes = {
 }
 
 const mapStateToProps = ({ Batches, state, count }) => {
-  console.log(Batches, "///////////Batches")
   return {
     manageUser: Batches?.manageUser,
     manageUserLoader: Batches?.manageUserLoader,
