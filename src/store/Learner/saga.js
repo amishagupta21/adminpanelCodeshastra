@@ -29,7 +29,6 @@ import tosterMsg from "components/Common/toster"
 function* fetchDemoData({ payload: data }) {
   try {
     const response = yield call(getLearnerList, data)
-
     tosterMsg(response?.message)
     yield put(getLearnerSuccess(response?.data?.docs))
     yield put(getLearnerCountSuccess(response?.data))
@@ -69,7 +68,9 @@ function* onFilterLearner({ payload: data }) {
     const response = yield call(getStatusFilter, data)
     tosterMsg(response?.message)
     yield put(getLearnerSuccess(response?.data?.docs))
-    yield put(getLearnerCountSuccess(response?.data?.totalDocs||response?.data))
+    yield put(
+      getLearnerCountSuccess(response?.data?.totalDocs || response?.data)
+    )
   } catch (error) {
     tosterMsg(error?.message)
     yield put(getLearnerFail(error))
