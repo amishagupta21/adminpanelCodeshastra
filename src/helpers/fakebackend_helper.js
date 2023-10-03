@@ -284,17 +284,6 @@ const editCourseDetail = async data => {
 //   // return getLearnerList({ perPage: res?.data?.count })
 // }
 
-const getLearnerList = async data => {
-  const res = await getData(
-    url.GET_LEARNER +
-      `?page=${data?.page || data?.currentPage || 1}&pageSize=${
-        data?.pageSize || 10
-      }&search=${data?.search || ""}&duration=${data?.duration || 24}`
-  )
-
-  return res
-}
-
 const getLearnerDetailsList = async uid =>
   getData(url.GET_LEARNER_DETAIL + `/${uid}/detail`)
 
@@ -360,10 +349,21 @@ const getFilters = data => {
   }
 }
 
+const getLearnerList = async data => {
+  const res = await getData(
+    url.GET_LEARNER +
+      `?page=${data?.page || data?.currentPage || 1}&pageSize=${
+        data?.pageSize || 10
+      }&search=${data?.search || ""}`
+  )
+
+  return res
+}
+
 const getStatusFilter = data =>
   getData(
     url.GET_LEARNER +
-      `?page=${data?.page || 1}&perPage=${data?.perPage || 39548}&search=${
+      `?page=${data?.page || 1}&perPage=${data?.pageSize || 39548}&search=${
         data?.search || ""
       }${getFilters(data)}`
   )
