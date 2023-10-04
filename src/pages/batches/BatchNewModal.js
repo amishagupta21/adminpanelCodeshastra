@@ -336,14 +336,14 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                       <FormGroup>
                         <Label>Course</Label>
                         <Select
-                          name="filter"
-                          placeholder="Course Name"
+                          name='filter'
+                          placeholder='Course Name'
                           onChange={e => {
                             setSelectedCourseId(e)
                           }}
                           value={selectedCourseId}
                           options={options}
-                          className="couserId-width"
+                          className='couserId-width'
                         />
                       </FormGroup>
                     </Col>
@@ -355,7 +355,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                   Batch Configuration
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
                 </AccordionHeader>
-                <AccordionBody accordionId="1" className="my-padding">
+                <AccordionBody accordionId='1' className="my-padding">
                   <Row>
                     <Col md={3}>
                       <FormGroup>

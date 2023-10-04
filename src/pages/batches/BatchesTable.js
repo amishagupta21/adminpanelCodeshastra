@@ -160,14 +160,14 @@ const BatchesTable = ({
       },
 
       {
-        dataField: "learner_limit",
-        text: "Learners",
+        dataField: 'learner_limit',
+        text: 'Learners',
         sort: true,
       },
 
       {
-        dataField: "enable",
-        text: "Status",
+        dataField: 'enable',
+        text: 'Status',
         sort: true,
         formatter: (cellContent, user) => (
           <div
