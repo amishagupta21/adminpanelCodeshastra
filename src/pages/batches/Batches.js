@@ -30,7 +30,6 @@ import Unikaksha from "./Unikaksha"
 import FilterBatches from "./FilterBatches"
 import BatchesFunctionality from "./BatchesFunctionality"
 import BatchesTable from "./BatchesTable"
-import { Link, useParams, useHistory } from "react-router-dom"
 
 const Batches = props => {
   const axios = require("axios")
@@ -81,8 +80,6 @@ const Batches = props => {
       setDeleteModalIsOpen(false)
     }
   }
-
-  const history = useHistory()
 
   useEffect(() => {
     onGetDashboard()

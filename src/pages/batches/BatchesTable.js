@@ -61,6 +61,7 @@ const BatchesTable = ({
   const [isExpanded, setIsExpanded] = useState(null)
   const [courseIdData, setCourseIdData] = useState([])
   const [totalPages, setTotalPages] = useState()
+  const history = useHistory()
 
   const [currentPage, setCurrentPage] = useState(1)
   const params = useParams()
