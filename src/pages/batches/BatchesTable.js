@@ -259,10 +259,19 @@ const BatchesTable = ({
   }
 
   const handleChange = (selectedOption, e) => {
+    if (selectedOption.length === 0) {
+      removeAll()
+    }
     setSelectedCourseId(selectedOption)
     // setSelectedCourseId(oldItem => {
     //   return [...oldItem, selectedOption]
     // })
+  }
+
+  const removeAll = () => {
+    onGetBatchesList()
+
+    setSelectedCourseId([])
   }
 
   useEffect(() => {
@@ -281,11 +290,11 @@ const BatchesTable = ({
     setSelectedCourseId(deleteValue)
   }
 
-  useEffect(() => {
-    if (selectedCourseId.length === 0) {
-      onGetBatchesList(data)
-    }
-  }, [selectedCourseId])
+  // useEffect(() => {
+  //   if (selectedCourseId.length === 0) {
+  //     onGetBatchesList(data)
+  //   }
+  // }, [selectedCourseId])
 
   const handleFilter = e => {
     // const { onGetBatchesList } = props
