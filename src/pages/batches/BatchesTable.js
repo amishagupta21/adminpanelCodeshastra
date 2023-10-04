@@ -56,6 +56,7 @@ const BatchesTable = ({
   confirmStatus,
   setData,
   setActive,
+  setClickedIds,
 }) => {
   const { ExportCSVButton } = CSVExport
   const [isExpanded, setIsExpanded] = useState(null)
