@@ -381,7 +381,9 @@ class LearnerPage extends Component {
   }
 
   handleTestStatus = selectedOption => {
-    this.removeAll()
+    if (selectedOption.length === 0) {
+      this.removeAll()
+    }
     let multiSelectTestResult = []
     selectedOption.map(item => {
       // test += "," + item.value
