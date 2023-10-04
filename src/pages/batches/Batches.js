@@ -202,6 +202,7 @@ const Batches = props => {
             manageUser={manageUser}
             confirmStatus={confirmStatus}
             setActive={setActive}
+            setClickedIds={setClickedIds}
           />
         </Col>
       </Row>
