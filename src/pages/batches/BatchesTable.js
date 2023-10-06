@@ -25,6 +25,8 @@ import {
   AccordionBody,
 } from "reactstrap"
 import { DeBounceSearch } from "common/DeBounceSearch"
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+
 import Select from "react-select"
 import BootstrapTable from "react-bootstrap-table-next"
 import ResponsivePagination from "react-responsive-pagination"
@@ -33,7 +35,7 @@ import ToolkitProvider, {
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
-import { del, post, patch, getCourseData } from "../../helpers/api_helper"
+import { del, post, patch, getCourseData, getBatches } from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import { Link, useParams, useHistory } from "react-router-dom"
 import jsPDF from "jspdf"
@@ -62,6 +64,9 @@ const BatchesTable = ({
   const [isExpanded, setIsExpanded] = useState(null)
   const [courseIdData, setCourseIdData] = useState([])
   const [totalPages, setTotalPages] = useState()
+  const [statusFilter, setStatusFilter] = useState("Status");
+
+
   const history = useHistory()
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -297,13 +302,16 @@ const BatchesTable = ({
   //   }
   // }, [selectedCourseId])
 
-  const handleFilter = e => {
-    // const { onGetBatchesList } = props
+  const handleFilter = () => {
     const data = {
       courseName: selectedCourseId.map(item => item.label).toLocaleString(),
-    }
-    onGetBatchesList(data)
-  }
+      status: statusFilter === "Status" ? null : statusFilter.toLowerCase(),
+    };
+    onGetBatchesList(data);
+  };
+  
+
+
 
   const handleDownloadPDF = () => {
     // Create a new instance of jsPDF
@@ -365,6 +373,7 @@ const BatchesTable = ({
     },
   }
 
+
   const defaultSorted = [
     {
       dataField: "displayname",
@@ -373,7 +382,7 @@ const BatchesTable = ({
   ]
 
   useEffect(() => {
-    onGetBatchesList({ id: params.id, page: currentPage })
+     onGetBatchesList({ id: params.id, page: currentPage })
   }, [currentPage])
 
   const handleClick = (row, isSelected, rowIndex, e) => {
@@ -427,12 +436,20 @@ const BatchesTable = ({
                         <Col xl={10}>
                           <div className="box-r-btn">
                             <div className="ms-lg-3 mb-3">
-                              <Input type="select">
+                              <Input
+                                type="select"
+                                value={statusFilter}
+                                onChange={(e) => {
+                                  setStatusFilter(e.target.value);
+                                }}
+                              >
                                 <option value="Status">Status</option>
-                                <option value="Not Started">Active</option>
-                                <option value="In-Progress">Inactive</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
                               </Input>
                             </div>
+
+
 
                             <div className="ms-lg-3 mb-3">
                               <Select
@@ -445,14 +462,13 @@ const BatchesTable = ({
                               />
                             </div>
                             <div className="ms-lg-3 mb-3">
-                              {selectedCourseId.length > 0 ? (
+                              {statusFilter === "Active"||statusFilter === "Inactive" ||selectedCourseId.length > 0 ? (
                                 <Button
                                   color="primary"
                                   className="btn-light-grey"
                                   onClick={handleFilter}
                                 >
-                                  <i className="mdi mdi-filter"></i> Apply
-                                  Filter
+                                  <i className="mdi mdi-filter"></i> Apply Filter
                                 </Button>
                               ) : (
                                 <Button
@@ -460,11 +476,11 @@ const BatchesTable = ({
                                   className="btn-light-grey"
                                   disabled
                                 >
-                                  <i className="mdi mdi-filter"></i> Apply
-                                  Filter
+                                  <i className="mdi mdi-filter"></i> Apply Filter
                                 </Button>
                               )}
                             </div>
+
                             <div className="ms-lg-3 mb-3">
                               <UncontrolledDropdown
                                 className="me-2"
@@ -516,8 +532,6 @@ const BatchesTable = ({
                           </h6>
                           <BootstrapTable
                             keyField={"id"}
-                            // trClassName="clickable-row"
-                            // onRowClick={onRowClick}
                             rowEvents={rowEvents}
                             responsive
                             bordered={false}
@@ -527,25 +541,19 @@ const BatchesTable = ({
                             classes={"table align-middle table-nowrap"}
                             headerWrapperClasses={"thead-light"}
                             {...toolkitProps.baseProps}
-                            // pagination={paginationFactory()}
                             noDataIndication={
                               manageUserLoader ? (
                                 <div className="d-flex justify-content-center">
-                                  <Spinner
-                                    size=""
-                                    color="primary"
-                                    // style={{
-                                    //   width: "3rem",
-                                    //   height: "3rem",
-                                    //   color: "#556ee6",
-                                    // }}
-                                  />
+                                  <Spinner size="" color="primary" />
                                 </div>
                               ) : (
                                 "No data found"
                               )
                             }
+                            // Add the following filter function
+                            filter={filterFactory()}
                           />
+
                           <ResponsivePagination
                             current={currentPage}
                             total={totalPages}
