@@ -46,6 +46,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
 
   const axios = require("axios")
   const [isFormValid, setIsFormValid] = useState(false)
+  const [isDeleteIconEnabled, setIsDeleteIconEnabled] = useState(false);
 
   const [batchName, setBatchName] = useState("")
   const [description, setDescription] = useState("")
@@ -692,18 +693,21 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                               </div>
                             </td>
                             <td>
-                              <span
-                                className="me-3"
-                                onClick={() => {
-                                  if (updateDays.length > 1) {
-                                    const newUpdateDays = [...updateDays]
-                                    newUpdateDays.splice(index, 1)
-                                    setUpdateDays(newUpdateDays)
-                                  }
-                                }}
-                              >
-                                <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                              </span>
+                              {updateDays.length > 1 && (
+                                <span
+                                  className="me-3"
+                                  onClick={() => {
+                                    const newUpdateDays = [...updateDays];
+                                    newUpdateDays.splice(index, 1);
+                                    setUpdateDays(newUpdateDays);
+
+                                    // Enable the delete icon after removing a batch schedule
+                                    setIsDeleteIconEnabled(true);
+                                  }}
+                                >
+                                  <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                                </span>
+                              )}
                             </td>
                           </tr>
                         )
@@ -721,7 +725,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                           ])
                         }
                       >
-                        Add A Schedule +
+                        Add A Schedule +!11
                       </button>
                     </Col>
                   </Row>
