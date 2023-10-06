@@ -46,7 +46,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
 
   const axios = require("axios")
   const [isFormValid, setIsFormValid] = useState(false)
-  const [isDeleteIconEnabled, setIsDeleteIconEnabled] = useState(false);
+  const [isDeleteIconEnabled, setIsDeleteIconEnabled] = useState(false)
 
   const [batchName, setBatchName] = useState("")
   const [description, setDescription] = useState("")
@@ -337,14 +337,14 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                       <FormGroup>
                         <Label>Course</Label>
                         <Select
-                          name='filter'
-                          placeholder='Course Name'
+                          name="filter"
+                          placeholder="Course Name"
                           onChange={e => {
                             setSelectedCourseId(e)
                           }}
                           value={selectedCourseId}
                           options={options}
-                          className='couserId-width'
+                          className="couserId-width"
                         />
                       </FormGroup>
                     </Col>
@@ -356,7 +356,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                   Batch Configuration
                   <i className="mdi mdi-information-outline font-size-16 ms-2"></i>
                 </AccordionHeader>
-                <AccordionBody accordionId='1' className="my-padding">
+                <AccordionBody accordionId="1" className="my-padding">
                   <Row>
                     <Col md={3}>
                       <FormGroup>
@@ -697,12 +697,12 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                                 <span
                                   className="me-3"
                                   onClick={() => {
-                                    const newUpdateDays = [...updateDays];
-                                    newUpdateDays.splice(index, 1);
-                                    setUpdateDays(newUpdateDays);
+                                    const newUpdateDays = [...updateDays]
+                                    newUpdateDays.splice(index, 1)
+                                    setUpdateDays(newUpdateDays)
 
                                     // Enable the delete icon after removing a batch schedule
-                                    setIsDeleteIconEnabled(true);
+                                    setIsDeleteIconEnabled(true)
                                   }}
                                 >
                                   <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
@@ -725,7 +725,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                           ])
                         }
                       >
-                        Add A Schedule +!11
+                        Add A Schedule
                       </button>
                     </Col>
                   </Row>
