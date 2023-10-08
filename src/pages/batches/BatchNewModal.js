@@ -134,6 +134,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       // batchName !== "" &&
       // description !== "" &&
       course !== "Select" &&
+      (moodleDetail[0]?.displayname || "") !== "" && 
       variantType !== "Select" &&
       // classLink !== "" &&
       mentor !== "Select" &&
@@ -147,6 +148,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     description,
     course,
     variantType,
+    moodleDetail[0]?.displayname,
     classLink,
     mentor,
     learnersLimit,
@@ -725,7 +727,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
                           ])
                         }
                       >
-                        Add A Schedule +!11
+                        Add A Schedule
                       </button>
                     </Col>
                   </Row>
