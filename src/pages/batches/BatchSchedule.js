@@ -54,6 +54,20 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
     started_time: "",
     ended_time: "",
   }
+  useEffect(() => {
+    // Check if editValue is not defined or empty, then initialize it
+    if (!editValue || editValue.length === 0) {
+      setValue([
+        {
+          day: [],
+          start_time: "",
+          end_time: "",
+          started_time: "",
+          ended_time: "",
+        },
+      ]);
+    }
+  }, [editValue]);
 
   return (
     <AccordionItem className="mb-2">
