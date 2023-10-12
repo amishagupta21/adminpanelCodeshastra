@@ -2,7 +2,7 @@ import React from "react";
 import Chart from 'react-apexcharts';
 
 const BarGraph = ({ totalUsers, todayUsers }) => {
- 
+ console.log("totalUsers",totalUsers)
   const courseData = [
     { label: 'Total Users', value: totalUsers },
     { label: 'Today Users', value: todayUsers },
