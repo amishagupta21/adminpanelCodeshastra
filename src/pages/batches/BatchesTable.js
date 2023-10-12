@@ -34,7 +34,13 @@ import ToolkitProvider, {
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
-import { del, post, patch, getCourseData, getBatches } from "../../helpers/api_helper"
+import {
+  del,
+  post,
+  patch,
+  getCourseData,
+  getBatches,
+} from "../../helpers/api_helper"
 import * as url from "../../helpers/url_helper"
 import { Link, useParams, useHistory } from "react-router-dom"
 import jsPDF from "jspdf"
@@ -63,8 +69,7 @@ const BatchesTable = ({
   const [isExpanded, setIsExpanded] = useState(null)
   const [courseIdData, setCourseIdData] = useState([])
   const [totalPages, setTotalPages] = useState()
-  const [statusFilter, setStatusFilter] = useState("Status");
-
+  const [statusFilter, setStatusFilter] = useState("Status")
 
   const history = useHistory()
 
@@ -164,14 +169,14 @@ const BatchesTable = ({
       },
 
       {
-        dataField: 'learner_limit',
-        text: 'Learners',
+        dataField: "learner_limit",
+        text: "Learners",
         sort: true,
       },
 
       {
-        dataField: 'enable',
-        text: 'Status',
+        dataField: "enable",
+        text: "Status",
         sort: true,
         formatter: (cellContent, user) => (
           <div
@@ -305,12 +310,9 @@ const BatchesTable = ({
     const data = {
       courseName: selectedCourseId.map(item => item.label).toLocaleString(),
       status: statusFilter === "Status" ? null : statusFilter.toLowerCase(),
-    };
-    onGetBatchesList(data);
-  };
-  
-
-
+    }
+    onGetBatchesList(data)
+  }
 
   const handleDownloadPDF = () => {
     // Create a new instance of jsPDF
@@ -349,7 +351,7 @@ const BatchesTable = ({
   }
 
   const handleSearch = e => {
-    const { onGetBatchesList } = props
+    // const { onGetBatchesList } = props
     const data = {
       search: e,
     }
@@ -372,7 +374,6 @@ const BatchesTable = ({
     },
   }
 
-
   const defaultSorted = [
     {
       dataField: "displayname",
@@ -381,7 +382,7 @@ const BatchesTable = ({
   ]
 
   useEffect(() => {
-     onGetBatchesList({ id: params.id, page: currentPage })
+    onGetBatchesList({ id: params.id, page: currentPage })
   }, [currentPage])
 
   const handleClick = (row, isSelected, rowIndex, e) => {
@@ -438,8 +439,8 @@ const BatchesTable = ({
                               <Input
                                 type="select"
                                 value={statusFilter}
-                                onChange={(e) => {
-                                  setStatusFilter(e.target.value);
+                                onChange={e => {
+                                  setStatusFilter(e.target.value)
                                 }}
                               >
                                 <option value="Status">Status</option>
@@ -447,8 +448,6 @@ const BatchesTable = ({
                                 <option value="Inactive">Inactive</option>
                               </Input>
                             </div>
-
-
 
                             <div className="ms-lg-3 mb-3">
                               <Select
@@ -461,13 +460,16 @@ const BatchesTable = ({
                               />
                             </div>
                             <div className="ms-lg-3 mb-3">
-                              {statusFilter === "Active"||statusFilter === "Inactive" ||selectedCourseId.length > 0 ? (
+                              {statusFilter === "Active" ||
+                              statusFilter === "Inactive" ||
+                              selectedCourseId.length > 0 ? (
                                 <Button
                                   color="primary"
                                   className="btn-light-grey"
                                   onClick={handleFilter}
                                 >
-                                  <i className="mdi mdi-filter"></i> Apply Filter
+                                  <i className="mdi mdi-filter"></i> Apply
+                                  Filter
                                 </Button>
                               ) : (
                                 <Button
@@ -475,7 +477,8 @@ const BatchesTable = ({
                                   className="btn-light-grey"
                                   disabled
                                 >
-                                  <i className="mdi mdi-filter"></i> Apply Filter
+                                  <i className="mdi mdi-filter"></i> Apply
+                                  Filter
                                 </Button>
                               )}
                             </div>

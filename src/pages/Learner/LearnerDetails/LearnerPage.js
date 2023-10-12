@@ -735,34 +735,10 @@ class LearnerPage extends Component {
                                       })}
                                 </div>
                               </h6>
-                              <h6 className="filter-text d-flex align-items-baseline">
-                                Course Name:
-                                <div className="filter-status d-flex">
-                                  {this.state.selectedCourseType.map(
-                                    (item, index) => {
-                                      return (
-                                        <div
-                                          key={index}
-                                          className="filter-chips me-3"
-                                        >
-                                          {item}
-                                          <span
-                                            className="badge"
-                                            onClick={() =>
-                                              this.removeCourse(item)
-                                            }
-                                          >
-                                            X
-                                          </span>
-                                        </div>
-                                      )
-                                    }
-                                  )}{" "}
-                                </div>
-                                <Link>
-                                  <p onClick={this.removeAll}>Remove All</p>
-                                </Link>
-                              </h6>
+
+                              <Link>
+                                <p onClick={this.removeAll}>Remove All</p>
+                              </Link>
                             </Row>
                           )}
 
