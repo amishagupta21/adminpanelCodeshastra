@@ -25,8 +25,7 @@ import {
   AccordionBody,
 } from "reactstrap"
 import { DeBounceSearch } from "common/DeBounceSearch"
-import filterFactory, { textFilter } from "react-bootstrap-table2-filter"
-
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Select from "react-select"
 import BootstrapTable from "react-bootstrap-table-next"
 import ResponsivePagination from "react-responsive-pagination"

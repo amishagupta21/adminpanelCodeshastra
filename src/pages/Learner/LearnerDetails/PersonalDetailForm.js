@@ -35,7 +35,6 @@ const PersonalDetailForm = props => {
     uploadProfilePicture,
     editLearnerDetail,
   } = props
-
   const [image, setImage] = useState({ preview: "", raw: "" })
   const [profilePicture, setProfilePicture] = useState(null)
   const data =
@@ -316,7 +315,7 @@ const PersonalDetailForm = props => {
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    onChange={(date: Date) => {
+                    onChange={(date) => {
                       setLearnerData({
                         ...learnerData,
                         birth_month: date.getMonth() + 1,

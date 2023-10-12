@@ -109,6 +109,7 @@ const WorkDetails = props => {
                     name="text"
                     type="text"
                     placeholder="Total Experience"
+                    maxLength="2"
                     onChange={e =>
                       setWorkData({
                         ...workData,

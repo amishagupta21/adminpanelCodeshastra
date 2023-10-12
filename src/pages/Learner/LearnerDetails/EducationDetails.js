@@ -283,22 +283,26 @@ const EducationDetails = props => {
                       </div>
                     </Col>
                     <Col sm={4}>
-                      <div className="mb-3">
-                        <Label className="form-label">Duration in Months</Label>
-                        <Input
-                          name="text"
-                          type="text"
-                          placeholder="Duration in Months"
-                          onChange={e =>
-                            setEducationData({
-                              ...educationData,
-                              other_program_course_duration: e.target.value,
-                            })
-                          }
-                          value={educationData?.other_program_course_duration}
-                        />
-                      </div>
-                    </Col>
+  <div className="mb-3">
+    <Label className="form-label">Duration in Months</Label>
+    <Input
+      name="text"
+      type="text"
+      placeholder="Duration in Months"
+      onChange={e => {
+        const value = e.target.value.replace(/\D/g, ''); 
+        const threeDigitValue = value.slice(0, 3); 
+
+        setEducationData({
+          ...educationData,
+          other_program_course_duration: threeDigitValue,
+        });
+      }}
+      value={educationData?.other_program_course_duration}
+    />
+  </div>
+</Col>
+
                   </Row>
                 )}
 

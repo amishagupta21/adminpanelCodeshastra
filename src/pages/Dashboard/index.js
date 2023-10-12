@@ -22,22 +22,44 @@ import Chart from "../../assets/images/chart.png"
 import circleChart from "../../assets/images/circle-chart.png"
 import Linechart from "./Linechart"
 import DoughnutChart from "./DoughnutChart"
+import getDashboardData, { getDashboardApi, getDashboardApi_ } from "../../helpers/fakebackend_helper"
+import BarGraph from "./BarGraph"
+
 
 class Dashboard extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      update: 0,
-    }
+      totalUsers: 0, 
+      todayUsers: 0, 
+      dashboardData: null,
+    };
   }
 
   componentDidMount() {
-    const { learnersData, userRoles, onGetDashboard } = this.props
-    // if (learnersData && !learnersData.length) {
-    onGetDashboard({ search: "", day: "All" })
-    // }
-    this.setState({ learnersData, userRoles })
+    const { onGetDashboard } = this.props;
+  
+    getDashboardApi_({})
+      .then(response => {
+  
+        if (response && response.code === 200 && response.data && response.data.totalusers && response.data.todayusers) {
+  
+          this.setState({
+            totalUsers: response.data.totalusers,
+            todayUsers: response.data.todayusers,
+            dashboardData: response.data,
+          }, () => {
+            this.forceUpdate();
+          });
+        } else {
+          console.error("Unexpected API response:", response);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching dashboard data:", error);
+      });
   }
+  
 
   options = [
     { label: "All", value: "All" },
@@ -51,6 +73,8 @@ class Dashboard extends Component {
   ]
 
   render() {
+    const { dashboardData, totalUsers, todayUsers } = this.state;
+    const courseData = dashboardData && dashboardData.courseData ? dashboardData.courseData : [];
     return (
       <React.Fragment>
         <div className="page-content">
@@ -98,7 +122,8 @@ class Dashboard extends Component {
                     placeholder="Update"
                     options={this.options}
                     defaultValue={this.options[0]}
-                    onChange={e => {
+                    onChange={(selectedOption) => {
+                      const e = { value: selectedOption.value }; // Define e here
                       this.setState({ update: e.value })
                       this.props.onGetDashboard({ search: "", day: e.value })
                     }}
@@ -293,8 +318,7 @@ class Dashboard extends Component {
                       </div>
                     </div>
                     <Row>
-                      <Col md={12}>
-                        {/* <img src={circleChart} alt="" className="img-fluid" /> */}
+                    <Col md={12}>
                         <DoughnutChart />
                       </Col>
                     </Row>
@@ -308,7 +332,7 @@ class Dashboard extends Component {
                   <CardBody>
                     <div className="d-flex justify-content-between align-items-baseline mb-4">
                       <div className="chart-heading">
-                        Learner Analysis: Live courses
+                        Total Users and Daily Users Chart
                       </div>
                       <div className="chart-subheading">
                         <FormGroup>
@@ -323,7 +347,7 @@ class Dashboard extends Component {
                     </div>
                     <Row>
                       <Col md={12}>
-                        <DoughnutChart />
+                        <BarGraph totalUsers={totalUsers} todayUsers={todayUsers} />
                       </Col>
                       <div className="mt-3 text-center">
                         <button className="btn btn-primary btn-blue">
@@ -370,18 +394,7 @@ class Dashboard extends Component {
                             </td>
                             <td>
                               <div className="circle-progress-bar">
-                                <progress
-                                  value="30"
-                                  min="0"
-                                  max="100"
-                                  style={{
-                                    visibility: "hidden",
-                                    height: "0",
-                                    width: "0",
-                                  }}
-                                >
-                                  20%
-                                </progress>
+                                <progress value="30" min="0" max="100" style={{ visibility: 'hidden', height: '0', width: '0' }}>20%</progress>
                               </div>
                             </td>
                             <td>
@@ -398,18 +411,7 @@ class Dashboard extends Component {
                             </td>
                             <td>
                               <div className="circle-progress-bar gradient-1">
-                                <progress
-                                  value="30"
-                                  min="0"
-                                  max="100"
-                                  style={{
-                                    visibility: "hidden",
-                                    height: "0",
-                                    width: "0",
-                                  }}
-                                >
-                                  20%
-                                </progress>
+                                <progress value="30" min="0" max="100" style={{ visibility: 'hidden', height: '0', width: '0' }}>20%</progress>
                               </div>
                             </td>
                             <td>
@@ -552,9 +554,29 @@ const mapStateToProps = ({ Dashboard, state, count }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onGetDashboard: data => {
-    dispatch(apiFetch(data))
+  onGetDashboard: async data => {
+    try {
+      const action = await dispatch(apiFetch(data));
+
+      if (action.type === "API_FETCH") {
+        const response = action.payload;
+
+
+        const responseData = response.data;
+
+        return responseData;
+      } else {
+        console.error("Unexpected action type:", action.type);
+        throw new Error("Unexpected action type");
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      throw error;
+    }
   },
-})
+});
+
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
