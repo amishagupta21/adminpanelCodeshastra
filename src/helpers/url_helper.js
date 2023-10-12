@@ -87,6 +87,7 @@ export const DELETE_PROJECT = "/delete/project"
 export const GET_TASKS = "/tasks"
 
 //dashboard charts data
+export const GET_DASHBOARD_API = `${process.env.REACT_APP_URL}/centralised/all`;
 export const GET_DASHBOARD_DATA = "/admin/dashboard"
 // export const GET_YEARLY_DATA = "/yearly-data"
 // export const GET_MONTHLY_DATA = "/monthly-data"

@@ -348,7 +348,9 @@ const getFilters = data => {
     return `&course_type=${data?.courseType || ""}`
   }
 }
-
+export const getDashboardApi_ = data => {
+  return get(url.GET_DASHBOARD_API, { params: data });
+};
 const getLearnerList = async data => {
   const res = await getData(
     url.GET_LEARNER +
@@ -645,6 +647,7 @@ export {
   editNewBatchesData,
   getNewBatches,
   getDashboardApi,
+  // getDashboardApi_,
   getMentorApi,
   getBatchesApi,
   createNewBatchesData,
