@@ -321,7 +321,7 @@ const Batches = (state = INIT_STATE, action) => {
     case GET_DASHBOARD_COUNT_SUCCESS:
       return {
         ...state,
-        count: action.payload,
+        countDashboard: action.payload,
       }
 
     case GET_DASHBOARD_COUNT_FAIL:
