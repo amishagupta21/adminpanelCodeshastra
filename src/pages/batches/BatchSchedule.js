@@ -65,9 +65,9 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
           started_time: "",
           ended_time: "",
         },
-      ]);
+      ])
     }
-  }, [editValue]);
+  }, [editValue])
 
   return (
     <AccordionItem className="mb-2">
@@ -211,18 +211,22 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                       </div>
                     </td>
                     <td>
-                      <span
-                        className="me-3"
-                        onClick={() => {
-                          if (editValue.length > 1) {
-                            const newUpdateDays = [...editValue]
-                            newUpdateDays.splice(index, 1)
-                            setValue(newUpdateDays)
-                          }
-                        }}
-                      >
-                        <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
-                      </span>
+                      {editValue.length !== 1 ? (
+                        <span
+                          className="me-3"
+                          onClick={() => {
+                            if (editValue.length > 1) {
+                              const newUpdateDays = [...editValue]
+                              newUpdateDays.splice(index, 1)
+                              setValue(newUpdateDays)
+                            }
+                          }}
+                        >
+                          <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </td>
                   </>
                 </tr>
