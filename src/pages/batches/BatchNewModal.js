@@ -140,11 +140,11 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       mentor !== "Select" &&
       learnersLimit !== "" &&
       startDate !== "" &&
-      endDate !== "" &&
-      // updateDays?.start_time !== "" &&
-      // updateDays?.end_time !== "" &&
-      // startTime !== "" &&
-      endTime !== ""
+      endDate !== ""
+    // updateDays?.start_time !== "" &&
+    // updateDays?.end_time !== "" &&
+    // startTime !== "" &&
+    endTime !== ""
 
     setIsFormValid(isValid)
   }, [

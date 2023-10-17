@@ -70,7 +70,6 @@ const EditNewModal = ({
 
   const updateBatches = event => {
     event.preventDefault()
-
     onEditNewBatch({
       data: { ...editData, unikodecourseid: selectedCourseId?.value },
       id: batchId,
