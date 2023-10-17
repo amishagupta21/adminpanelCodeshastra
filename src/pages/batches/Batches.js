@@ -119,7 +119,7 @@ const Batches = props => {
     setItem(filteredPast)
   }
 
-  const onClickDelete = async id => {
+  const onDeleteClick = async id => {
     const resp = await del(url.GET_DELETE_BATCHES + `${user?.id}`)
     const finalItem = item.filter(item => item.id !== user?.id)
     setItem(finalItem)
@@ -148,8 +148,8 @@ const Batches = props => {
       />
       <DeleteModal
         show={deleteModalIsOpen}
-        onDeleteClick={handleDeleteUser}
-        onClickDelete={onClickDelete}
+        // onDeleteClick={handleDeleteUser}
+        onDeleteClick={onDeleteClick}
         onCloseClick={() => setDeleteModalIsOpen(false)}
       />
       {editModal && (
