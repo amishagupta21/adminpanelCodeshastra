@@ -1,11 +1,27 @@
 import React from "react";
 import Chart from 'react-apexcharts';
 
-const BarGraph = ({ totalUsers, todayUsers }) => {
- console.log("totalUsers",totalUsers)
+const BarGraph = ({ totalUsers,jobready,signupform,fullstack,hirefromus, collaborationlandingform,industryReadyFrom,contactus,todayUsers,vTiger,userTable,login,zoomData,techFitApplication,zoomwebinartechfit,sendInBlue,industryReadyProForm,homePagePopUp,signup}) => {
   const courseData = [
     { label: 'Total Users', value: totalUsers },
     { label: 'Today Users', value: todayUsers },
+    { label: 'vTiger', value: vTiger },
+    { label: 'userTable', value: userTable },
+    { label: 'zoomData', value: zoomData },
+    { label: 'techFitApplication', value: techFitApplication },
+    { label: 'zoomwebinartechfit', value: zoomwebinartechfit },
+    { label: 'sendInBlue', value: sendInBlue },
+    { label: 'industryReadyProForm', value: industryReadyProForm },
+    { label: 'homePagePopUp', value: homePagePopUp },
+    { label: 'signup', value: signup },
+    { label: 'login', value: login },
+    { label: 'hirefromus', value: hirefromus },
+    { label: 'contactus', value: contactus },
+    { label: 'jobready', value: jobready },
+    { label: 'fullstack', value: fullstack },
+    { label: 'signupform', value: signupform },
+    { label: 'collaborationlandingform', value: collaborationlandingform },
+    { label: 'industryReadyFrom', value: industryReadyFrom },
   ];
 
   try {
@@ -16,7 +32,7 @@ const BarGraph = ({ totalUsers, todayUsers }) => {
             type="bar"
             height="auto"
             series={[
-              { name: 'Users', data: [totalUsers, todayUsers] },
+              { name: 'Users', data: [totalUsers, login,hirefromus,jobready,contactus,todayUsers,vTiger,userTable,zoomData,techFitApplication,collaborationlandingform,industryReadyFrom,zoomwebinartechfit,sendInBlue,fullstack,signupform,industryReadyProForm,homePagePopUp,signup] },
             ]}
             options={{
               plotOptions: {
