@@ -24,7 +24,11 @@ const days = [
 ]
 
 function BatchSchedule({ editData, handleChange, setEditData }) {
-  const [editValue, setValue] = useState(editData?.batch_schedule?.value)
+  const [editValue, setEditValue] = useState([])
+
+  useEffect(() => {
+    setEditValue(editData?.batch_schedule?.value)
+  }, [editData?.batch_schedule?.value])
 
   const handleDaysChange = (e, index) => {
     const indexDays = { ...editValue[index] }
@@ -44,7 +48,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
       ...editData,
       batch_schedule: { ...editData?.batch_schedule, value: mainArray },
     })
-    setValue(mainArray)
+    setEditValue(mainArray)
   }
 
   const INITIAL_BATCH_SCHEDULE_OBJ = {
@@ -54,20 +58,20 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
     started_time: "",
     ended_time: "",
   }
-  useEffect(() => {
-    // Check if editValue is not defined or empty, then initialize it
-    if (!editValue || editValue.length === 0) {
-      setValue([
-        {
-          day: [],
-          start_time: "",
-          end_time: "",
-          started_time: "",
-          ended_time: "",
-        },
-      ])
-    }
-  }, [editValue])
+  // useEffect(() => {
+  //   // Check if editValue is not defined or empty, then initialize it
+  //   if (!editValue || editValue.length === 0) {
+  //     setEditValue([
+  //       {
+  //         day: [],
+  //         start_time: "",
+  //         end_time: "",
+  //         started_time: "",
+  //         ended_time: "",
+  //       },
+  //     ])
+  //   }
+  // }, [editValue])
 
   return (
     <AccordionItem className="mb-2">
@@ -111,7 +115,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
               return (
                 <tr key={index} className="tr-border">
                   <>
-                    <td key={index}>
+                    <td>
                       <div className="accordionItem-table">
                         <FormGroup>
                           <TimeField
@@ -218,7 +222,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                             if (editValue.length > 1) {
                               const newUpdateDays = [...editValue]
                               newUpdateDays.splice(index, 1)
-                              setValue(newUpdateDays)
+                              setEditValue(newUpdateDays)
                             }
                           }}
                         >
@@ -277,9 +281,14 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
         <Row>
           <Col md={12}>
             <button
-              onClick={() =>
-                setValue([...editValue, INITIAL_BATCH_SCHEDULE_OBJ])
-              }
+              onClick={() => {
+                setEditValue([...editValue, INITIAL_BATCH_SCHEDULE_OBJ])
+                // setEditValue(
+                //   editData?.batch_schedule?.value.push(
+                //     INITIAL_BATCH_SCHEDULE_OBJ
+                //   )
+                // )
+              }}
               className="px-4 ms-3 create-new-appointment"
             >
               Add A Schedule +

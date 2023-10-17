@@ -134,13 +134,17 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       // batchName !== "" &&
       // description !== "" &&
       course !== "Select" &&
-      (moodleDetail[0]?.displayname || "") !== "" && 
+      (moodleDetail[0]?.displayname || "") !== "" &&
       variantType !== "Select" &&
       // classLink !== "" &&
       mentor !== "Select" &&
       learnersLimit !== "" &&
       startDate !== "" &&
-      endDate !== ""
+      endDate !== "" &&
+      // updateDays?.start_time !== "" &&
+      // updateDays?.end_time !== "" &&
+      // startTime !== "" &&
+      endTime !== ""
 
     setIsFormValid(isValid)
   }, [
@@ -154,6 +158,10 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     learnersLimit,
     startDate,
     endDate,
+    // updateDays?.start_time,
+    // updateDays?.end_time,
+    // startTime,
+    // endTime,
   ])
 
   const [days, setDays] = useState([
