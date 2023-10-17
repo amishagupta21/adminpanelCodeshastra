@@ -31,7 +31,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
   }, [editData?.batch_schedule?.value])
 
   const handleDaysChange = (e, index) => {
-    const indexDays = { ...editValue[index] }
+    const indexDays = { day: [], ...editValue[index] }
     const mainArray = [...editValue]
     const result = [...indexDays.day]
     if (indexDays?.day?.includes(e.target.value)) {
@@ -215,7 +215,7 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                       </div>
                     </td>
                     <td>
-                      {editValue.length !== 1 ? (
+                      {editValue.length > 1 && (
                         <span
                           className="me-3"
                           onClick={() => {
@@ -223,13 +223,18 @@ function BatchSchedule({ editData, handleChange, setEditData }) {
                               const newUpdateDays = [...editValue]
                               newUpdateDays.splice(index, 1)
                               setEditValue(newUpdateDays)
+                              setEditData({
+                                ...editData,
+                                batch_schedule: {
+                                  ...editData?.batch_schedule,
+                                  value: newUpdateDays,
+                                },
+                              })
                             }
                           }}
                         >
                           <i className="mdi mdi-trash-can font-size-16 text-danger"></i>
                         </span>
-                      ) : (
-                        ""
                       )}
                     </td>
                   </>
