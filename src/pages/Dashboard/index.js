@@ -42,12 +42,29 @@ class Dashboard extends Component {
     getDashboardApi_({})
       .then(response => {
   
-        if (response && response.code === 200 && response.data && response.data.totalusers && response.data.todayusers) {
+        if (response && response.data.signupform && response.data.fullstack && response.data.collaborationlandingform && response.data.industryReadyFrom && response.data.jobready && response.code === 200 && response.data.contactus && response.data && response.data.totalusers && response.data.vTiger && response.data.todayusers && response.data.userTable &&  response.data.zoomData && response.data.techFitApplication && response.data.zoomwebinartechfit && response.data.sendInBlue && response.data.industryReadyProForm && response.data.homePagePopUp && response.data.signup && response.data.login && response.data.hirefromus) {
   
           this.setState({
             totalUsers: response.data.totalusers,
             todayUsers: response.data.todayusers,
             dashboardData: response.data,
+            vTiger:response.data.vTiger,
+            userTable:response.data.userTable,
+            zoomData: response.data.zoomData,
+            techFitApplication: response.data.techFitApplication,
+            zoomwebinartechfit:response.data.zoomwebinartechfit,
+            sendInBlue:response.data.sendInBlue,
+            industryReadyProForm:response.data.industryReadyProForm,
+            homePagePopUp:response.data.homePagePopUp,
+            signup:response.data.signup,
+            login:response.data.login,
+            hirefromus:response.data.hirefromus,
+            contactus:response.data.contactus,
+            jobready:response.data.jobready,
+            fullstack:response.data.fullstack,
+            signupform:response.data.signupform,
+            collaborationlandingform:response.data.collaborationlandingform,
+            industryReadyFrom:response.data.industryReadyFrom,
           }, () => {
             this.forceUpdate();
           });
@@ -73,7 +90,7 @@ class Dashboard extends Component {
   ]
 
   render() {
-    const { dashboardData, totalUsers, todayUsers } = this.state;
+    const { dashboardData, jobready ,signupform, collaborationlandingform,industryReadyFrom,fullstack,totalUsers, todayUsers ,vTiger ,contactus,userTable,zoomData,techFitApplication,zoomwebinartechfit,sendInBlue,industryReadyProForm,homePagePopUp,signup,login,hirefromus} = this.state;
     const courseData = dashboardData && dashboardData.courseData ? dashboardData.courseData : [];
     return (
       <React.Fragment>
@@ -327,7 +344,7 @@ class Dashboard extends Component {
               </Col>
             </Row>
             <Row>
-              <Col md={6} xxl={4}>
+              <Col md={10} xxl={10}>
                 <Card className="card-height">
                   <CardBody>
                     <div className="d-flex justify-content-between align-items-baseline mb-4">
@@ -335,25 +352,25 @@ class Dashboard extends Component {
                         Total Users and Daily Users Chart
                       </div>
                       <div className="chart-subheading">
-                        <FormGroup>
+                        {/* <FormGroup>
                           <Input id="exampleSelect" name="select" type="select">
                             <option selected>Last 1 month</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
                           </Input>
-                        </FormGroup>
+                        </FormGroup> */}
                       </div>
                     </div>
                     <Row>
                       <Col md={12}>
-                        <BarGraph totalUsers={totalUsers} todayUsers={todayUsers} />
+                        <BarGraph signupform={signupform} collaborationlandingform={collaborationlandingform} industryReadyFrom={industryReadyFrom} fullstack={fullstack} jobready={jobready} totalUsers={totalUsers} contactus={contactus} todayUsers={todayUsers} vTiger={vTiger} userTable={userTable} zoomData={zoomData}  techFitApplication={techFitApplication} zoomwebinartechfit={zoomwebinartechfit} sendInBlue={sendInBlue} industryReadyProForm={industryReadyProForm} homePagePopUp={homePagePopUp} signup={signup} login={login} hirefromus={hirefromus}/>
                       </Col>
-                      <div className="mt-3 text-center">
-                        <button className="btn btn-primary btn-blue">
+                      {/* <div className="mt-3 text-center"> */}
+                        {/* <button className="btn btn-primary btn-blue">
                           View All
-                        </button>
-                      </div>
+                        </button> */}
+                      {/* </div> */}
                     </Row>
                   </CardBody>
                 </Card>
