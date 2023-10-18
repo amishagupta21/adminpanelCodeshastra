@@ -298,6 +298,9 @@ const BatchesTable = ({
       item => item?.value !== removeItem?.value && item
     )
     setSelectedCourseId(deleteValue)
+    if (selectedCourseId.length === 1) {
+      removeAll()
+    }
   }
 
   // useEffect(() => {
