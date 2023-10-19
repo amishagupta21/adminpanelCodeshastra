@@ -64,7 +64,7 @@ const ApplicationPersonalDetailForm = () => {
                   <Label className="form-label">Date of Birth</Label>
                   <DatePicker
                     selected={startDate}
-                    onChange={(date: Date) => setStartDate(date)}
+                    onChange={(date) => setStartDate(date)}
                   />
                 </div>
               </Col>
