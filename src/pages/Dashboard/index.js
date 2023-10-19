@@ -42,8 +42,7 @@ class Dashboard extends Component {
     getDashboardApi_({})
       .then(response => {
   
-        if (response && response.data.signupform && response.data.fullstack && response.data.collaborationlandingform && response.data.industryReadyFrom && response.data.jobready && response.code === 200 && response.data.contactus && response.data && response.data.totalusers && response.data.vTiger && response.data.todayusers && response.data.userTable &&  response.data.zoomData && response.data.techFitApplication && response.data.zoomwebinartechfit && response.data.sendInBlue && response.data.industryReadyProForm && response.data.homePagePopUp && response.data.signup && response.data.login && response.data.hirefromus) {
-  
+        if (response || response.data.signupform && response.data.fullstack && response.data.collaborationlandingform && response.data.industryReadyFrom && response.data.jobready && response.code === 200 && response.data.contactus && response.data && response.data.totalusers && response.data.vTiger && response.data.todayusers && response.data.userTable &&  response.data.zoomData && response.data.techFitApplication && response.data.zoomwebinartechfit && response.data.sendInBlue && response.data.industryReadyProForm && response.data.homePagePopUp && response.data.signup && response.data.login && response.data.hirefromus) {
           this.setState({
             totalUsers: response.data.totalusers,
             todayUsers: response.data.todayusers,
