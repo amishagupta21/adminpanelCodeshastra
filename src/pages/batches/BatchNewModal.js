@@ -140,12 +140,8 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       mentor !== "Select" &&
       learnersLimit !== "" &&
       startDate !== "" &&
-      endDate !== ""
-    // updateDays?.start_time !== "" &&
-    // updateDays?.end_time !== "" &&
-    // startTime !== "" &&
-    endTime !== ""
-
+      endDate !== "" &&
+      updateDaysValidation()
     setIsFormValid(isValid)
   }, [
     batchName,
@@ -158,10 +154,7 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     learnersLimit,
     startDate,
     endDate,
-    // updateDays?.start_time,
-    // updateDays?.end_time,
-    // startTime,
-    // endTime,
+    updateDays,
   ])
 
   const [days, setDays] = useState([
@@ -173,6 +166,20 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
     { day: 5, name: "Fri", isSelected: false },
     { day: 6, name: "Sat", isSelected: false },
   ])
+
+  const updateDaysValidation = () => {
+    let isValid = true
+    updateDays?.map((item, index) => {
+      if (
+        !item.day.length ||
+        item?.start_time === "" ||
+        item?.end_time === ""
+      ) {
+        isValid = false
+      }
+    })
+    return isValid
+  }
 
   // const selectDays = day => {
   //   // console.log(day)
@@ -266,9 +273,11 @@ const BatchNewModal = ({ modal, toggle, setModal, setItem, item }) => {
       ...item,
       [e.target.name]: e.target.value,
     }
+
     const updateArray = [...updateDays]
     updateArray[index] = updateObj
     setUpdateDays(updateArray)
+    setIsFormValid(updateArray)
   }
 
   useEffect(() => {
