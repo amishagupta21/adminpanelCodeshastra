@@ -47,27 +47,17 @@ const PersonalDetailForm = props => {
           email: userProfile?.personal_details?.email
             ? userProfile?.personal_details?.email
             : user?.email || "",
-          mobile_number: userProfile?.personal_details?.mobile_number
-            ? userProfile?.personal_details?.mobile_number
-            : user?.mobileNumber || "",
+          mobile_number: user?.phone || "",
           gender: userProfile?.personal_details?.gender
             ? userProfile?.personal_details?.gender
             : user?.gender || "",
-          whatsapp_number: userProfile?.personal_details?.whatsapp_number
-            ? userProfile?.personal_details?.whatsapp_number
-            : user?.whatsappNumber || "",
+          whatsapp_number: user?.phone || "",
           guardian_details: userProfile?.personal_details?.guardian_details
             ? userProfile?.personal_details?.guardian_details
             : user?.guardianDetails || "",
-          birth_date: userProfile?.personal_details?.birth_date
-            ? userProfile?.personal_details?.birth_date
-            : user?.birthDate || "",
-          birth_month: userProfile?.personal_details?.birth_month
-            ? userProfile?.personal_details?.birth_month
-            : user?.birthMonth || "",
-          birth_year: userProfile?.personal_details?.birth_year
-            ? userProfile?.personal_details?.birth_year
-            : user?.birthYear || "",
+          birth_date: userProfile?.information_data?.birth_date || "",
+          birth_month: userProfile?.information_data?.birth_month || "",
+          birth_year: userProfile?.information_data?.birth_year|| "",
           uid: userProfile?.uid || user?.uid,
         }
   const [learnerData, setLearnerData] = useState(data)
@@ -76,6 +66,7 @@ const PersonalDetailForm = props => {
 
   useEffect(() => {
     setLearnerData(data)
+    console.log("cgghv",setLearnerData(data))
   }, [userProfile])
 
   // useEffect(() => {
@@ -447,6 +438,7 @@ const mapDispatchToProps = dispatch => ({
   onGetDeleteProfilePicture: uid => dispatch(deleteProfilePicture(uid)),
   onGetUploadProfilePicture: data => dispatch(uploadProfilePicture(data)),
   onGetEditLearnerDetail: data => dispatch(editLearnerDetail(data)),
+  
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonalDetailForm)
