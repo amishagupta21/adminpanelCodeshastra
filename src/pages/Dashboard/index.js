@@ -343,7 +343,7 @@ class Dashboard extends Component {
               </Col>
             </Row>
             <Row>
-              <Col md={10} xxl={10}>
+              <Col md={10} xxl={12}>
                 <Card className="card-height">
                   <CardBody>
                     <div className="d-flex justify-content-between align-items-baseline mb-4">
